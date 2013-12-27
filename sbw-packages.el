@@ -21,25 +21,24 @@
   (package-initialize)
   (sbw/pkg-ensure-packages-are-installed
     '(
+       ;; Standard stuff
        color-theme                      ;; Color theme support
        undo-tree                        ;; Undo tree visualisation
        ido-ubiquitous                   ;; Interactive completion everywhere
        auto-complete                    ;; Auto-completion
        smex                             ;; M-x enhanced
 
+       ;; Clojure
+       clojure-mode                     ;; Clojure mode
+       clojure-test-mode                ;; Clojure test mode
+       cider                            ;; REPL support
+       smartparens                      ;; Improved paredit
+
        ;paredit
-       ;clojure-mode
-       ;clojure-test-mode
-       
        ;find-file-in-project
        ;nrepl
        ;ac-nrepl
        ;smart-tab
-
-       ;; Clojure stuff to look at
-       ;; cider                 ;; nREPL alternative
-       ;; smartparens           ;; paredit alternative
-
        ;idle-highlight-mode
      )))
 

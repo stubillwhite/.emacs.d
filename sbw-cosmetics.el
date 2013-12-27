@@ -14,13 +14,26 @@
 (set-default-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
 
 ;; Favor horizontal splits over vertical splits
-(setq split-width-threshold nil)
-(setq split-height-threshold 0)
+(setq 
+  split-width-threshold  nil
+  split-height-threshold 0)
 
 ;; No scrollbars
 (scroll-bar-mode -1)
 
 ;; Smooth scrolling
 (setq scroll-conservatively 10000)
+
+;; Show matching parenthesis
+(show-paren-mode 1)
+
+;; Start with a maximised window
+(defun sbw-maximise-window ()
+  (interactive)
+  (w32-send-sys-command #xf030))
+
+(setq 
+  term-setup-hook   'sbw-maximise-window
+  window-setup-hook 'sbw-maximise-window)
 
 (provide 'sbw-cosmetics)

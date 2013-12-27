@@ -17,7 +17,10 @@
       (*normal*             "gray80")
       (*strings*            "burlywood1")
       (*warnings*           "IndianRed3")
-      (*regexes*            "gray100")
+      (*match-fg*           "gray100")
+      (*match-bg*           "darkslategray")
+      (*mismatch-fg*        "gray100")
+      (*mismatch-bg*        "IndianRed3")
 
       (*current-line*       "#1b1e2b")
       (*mode-line-bg*       "#555")
@@ -51,9 +54,14 @@
            "Face for normal text."
            :group 'sbw-dark-faces)
 
-  (defface sbw-dark-regex
-           `((t (:background ,*background* :foreground ,*regexes*)))
-           "Face for regexes."
+  (defface sbw-dark-match
+           `((t (:background ,*match-bg* :foreground ,*match-fg*)))
+           "Face for matches."
+           :group 'sbw-dark-faces)
+
+  (defface sbw-dark-mismatch
+           `((t (:background ,*mismatch-bg* :foreground ,*mismatch-fg*)))
+           "Face for mismatches."
            :group 'sbw-dark-faces)
 
   (defface sbw-dark-string
@@ -98,8 +106,8 @@
     `(font-lock-number-face               ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-constant)))))
     `(font-lock-preprocessor-face         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
     `(font-lock-reference-face            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-constant)))))
-    `(font-lock-regexp-grouping-backslash ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-regex)))))
-    `(font-lock-regexp-grouping-construct ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-regex)))))
+    `(font-lock-regexp-grouping-backslash ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-match)))))
+    `(font-lock-regexp-grouping-construct ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-match)))))
     `(font-lock-string-face               ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-string)))))
     `(font-lock-type-face                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(font-lock-variable-name-face        ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
@@ -146,14 +154,13 @@
     `(vertical-border                     ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
 
     ;; show-paren
-    `(show-paren-match                    ((t (:background ,*keywords* :foreground ,*normal* :weight bold))))
-    `(show-paren-mismatch                 ((t (:background ,*warnings*  :foreground ,*normal* :weight bold))))
+    `(show-paren-match                    ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-match)))))
+    `(show-paren-mismatch                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-mismatch)))))
 
     ;; search
-    `(isearch-fail                        ((t (:background ,*warnings*))))
-    `(isearch                             ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-regex)))))
-    `(lazy-highlight                      ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-regex)))))
-
+    `(isearch-fail                        ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-mismatch)))))
+    `(isearch                             ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-match)))))
+    `(lazy-highlight                      ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-match)))))
     ))
 
 (provide-theme 'sbw-dark)
