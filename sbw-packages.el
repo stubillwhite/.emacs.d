@@ -33,11 +33,11 @@
        clojure-test-mode                ;; Clojure test mode
        cider                            ;; REPL support
        smartparens                      ;; Improved paredit
+       ac-nrepl                         ;; Cider REPL autocomplete and documentation
 
        ;paredit
        ;find-file-in-project
        ;nrepl
-       ;ac-nrepl
        ;smart-tab
        ;idle-highlight-mode
      )))

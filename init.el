@@ -6,11 +6,11 @@
 
 ;; Configure my settings
 (require 'sbw-bindings)
-;(require 'sbw-clojure)
 (require 'sbw-misc)
 (require 'sbw-cosmetics)
 
 ;; Setup plugins
+(require 'sbw-setup-ac-nrepl)
 (require 'sbw-setup-auto-complete)
 (require 'sbw-setup-cider)
 (require 'sbw-setup-clojure-mode)

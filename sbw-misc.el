@@ -3,21 +3,26 @@
 
 ;; General settings
 (setq
-  inhibit-startup-message       t                   ;; No splash screen
-  initial-scratch-message       nil                 ;; No scratch message
-  visible-bell                  t                   ;; No beep
+  backup-directory-alist        `(("." . ,(expand-file-name "~/.emacs.d/backups")))
   color-theme-is-global         t
-  sentence-end-double-space     nil
-  shift-select-mode             nil
-  mouse-yank-at-point           t
-  uniquify-buffer-name-style    'forward
-  whitespace-style              '(face trailing lines-tail tabs)
-  whitespace-line-column        80
+  diff-switches                 "-u"
   ediff-window-setup-function   'ediff-setup-windows-plain
+  inhibit-startup-message       t                                                       ;; No splash screen
+  initial-scratch-message       nil                                                     ;; No scratch message
+  ispell-dictionary             "british"                                               ;; British English
+  mouse-yank-at-point           t
   oddmuse-directory             "~/.emacs.d/oddmuse"
   save-place-file               "~/.emacs.d/places"
-  backup-directory-alist        `(("." . ,(expand-file-name "~/.emacs.d/backups")))
-  diff-switches                 "-u")
+  sentence-end-double-space     nil
+  shift-select-mode             nil
+  uniquify-buffer-name-style    'forward
+  visible-bell                  t                                                       ;; No beep
+  whitespace-line-column        80                                                      ;; 80 columns
+  whitespace-style              '(face trailing lines-tail tabs)
+  )
+
+;; Shift-cursor to move between windows
+(windmove-default-keybindings)
 
 ;; Remove automatic line breaking
 (auto-fill-mode -1)
