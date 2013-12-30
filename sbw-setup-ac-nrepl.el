@@ -1,6 +1,6 @@
 (require 'ac-nrepl)
 
-;; Enable in Cider mode
+;; Enable autocomplete in Cider mode
 (add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
 (add-hook 'cider-mode-hook      'ac-nrepl-setup)
 

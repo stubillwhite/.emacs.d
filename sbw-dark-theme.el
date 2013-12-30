@@ -8,25 +8,23 @@
   :group 'faces)
 
 (let (
-      (*background*         "gray10")
-      (*comments*           "DarkSeaGreen3")
-      (*constants*          "burlywood1")
-      (*highlight-bg*       "darkslategray")
-      (*highlight-fg*       "gray100")
-      (*keywords*           "CadetBlue2")
-      (*normal*             "gray80")
-      (*strings*            "burlywood1")
-      (*warnings*           "IndianRed3")
-      (*match-fg*           "gray100")
-      (*match-bg*           "darkslategray")
-      (*mismatch-fg*        "gray100")
-      (*mismatch-bg*        "IndianRed3")
-
-      (*current-line*       "#1b1e2b")
-      (*mode-line-bg*       "#555")
-      (*mode-inactive-bg*   "#999")
-      (*mode-line-fg*       "#EEE")
-      (*selection*          "#CCC")
+      (*background*            "gray10")
+      (*comments*              "DarkSeaGreen3")
+      (*constants*             "burlywood1")
+      (*highlight-bg*          "darkslategray")
+      (*highlight-fg*          "gray100")
+      (*keywords*              "CadetBlue2")
+      (*normal*                "gray80")
+      (*strings*               "burlywood1")
+      (*warnings*              "IndianRed3")
+      (*match-fg*              "gray100")
+      (*match-bg*              "darkslategray")
+      (*mismatch-fg*           "gray100")
+      (*mismatch-bg*           "IndianRed3")
+      (*mode-line-bg*          "PaleTurquoise4")
+      (*mode-line-inactive-bg* "gray30")
+      (*mode-line-fg*          "gray100")
+      (*selection-bg*          "gray30")
       )
 
   (defface sbw-dark-comment
@@ -79,6 +77,16 @@
            "Face for warnings."
            :group 'sbw-dark-faces)
 
+  (defface sbw-dark-mode-line-inactive
+           `((t (:background ,*mode-line-inactive-bg* :foreground ,*mode-line-fg*)))
+           "Face for active mode line."
+           :group 'sbw-dark-faces)
+
+  (defface sbw-dark-mode-line
+           `((t (:background ,*mode-line-bg* :foreground ,*mode-line-fg*)))
+           "Face for inactive mode line."
+           :group 'sbw-dark-faces)
+
   (custom-theme-set-faces
     'sbw-dark
 
@@ -88,9 +96,8 @@
     `(header-line    ((t   (:background ,*mode-line-bg*         :foreground ,*normal*))))
     `(highlight      ((t   (:background ,*highlight-bg*         :foreground ,*highlight-fg*))))
     `(highlight-face ((t   (:background ,*highlight-bg*         :foreground ,*highlight-fg*))))
-    `(hl-line        ((t   (:background ,*current-line*         :underline  t))))
     `(info-xref      ((t   (:foreground ,*keywords*             :underline  t))))
-    `(region         ((t   (:background ,*selection*))))
+    `(region         ((t   (:background ,*selection-bg*))))
     `(underline      ((nil (:underline  t))))
 
     ;; font-lock
@@ -133,7 +140,7 @@
     `(org-level-9                         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(org-link                            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword) :underline t))))
     `(org-mode-line-clock-overrun         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-tag)))))
-    `(org-scheduled-previously            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-tag)))))
+    `(org-scheduled-previously            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-warning)))))
     `(org-scheduled-today                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(org-scheduled                       ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(org-special-keyword                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
@@ -148,8 +155,8 @@
     `(cursor                              ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(fringe                              ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(minibuffer-prompt                   ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
-    `(mode-line-inactive                  ((t (:background ,*mode-inactive-bg*      :foreground ,*background*))))
-    `(mode-line                           ((t (:background ,*mode-line-bg*          :foreground ,*mode-line-fg*))))
+    `(mode-line-inactive                  ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-mode-line-inactive)))))
+    `(mode-line                           ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-mode-line)))))
     `(text-cursor                         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(vertical-border                     ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
 
