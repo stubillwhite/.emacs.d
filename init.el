@@ -16,6 +16,7 @@
 (require 'sbw-setup-clojure-mode)
 (require 'sbw-setup-flyspell)
 (require 'sbw-setup-ido-ubiquitous)
+(require 'sbw-setup-multiple-cursors)
 (require 'sbw-setup-org-mode)
 (require 'sbw-setup-smartparens)
 (require 'sbw-setup-smex)

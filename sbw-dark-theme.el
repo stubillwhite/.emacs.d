@@ -72,6 +72,11 @@
            "Face for tags."
            :group 'sbw-dark-faces)
 
+  (defface sbw-dark-success
+           `((t (:background ,*background* :foreground ,*comments*)))
+           "Face for success."
+           :group 'sbw-dark-faces)
+
   (defface sbw-dark-warning
            `((t (:background ,*background* :foreground ,*warnings*)))
            "Face for warnings."
@@ -122,7 +127,7 @@
 
     ;; org-mode
     `(org-agenda-clocking                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
-    `(org-agenda-done                     ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-tag)))))
+    `(org-agenda-done                     ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-success)))))
     `(org-checkbox                        ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(org-date                            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     '(org-done                            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-tag)))))

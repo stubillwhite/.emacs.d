@@ -35,11 +35,12 @@
        smartparens                      ;; Improved paredit
        ac-nrepl                         ;; Cider REPL autocomplete and documentation
 
+       multiple-cursors                 ;; Multiple cursor mode
+
        ;paredit
        ;find-file-in-project
        ;nrepl
        ;smart-tab
-       ;idle-highlight-mode
      )))
 
 (provide 'sbw-packages)
