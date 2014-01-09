@@ -7,8 +7,24 @@
 (sbw-keys-mode 1)
 
 ;; Key groups
+;;  f   flyspell
 ;;  o   org-mode
 ;;  u   undo
+
+;; flyspell
+;;  b   spellcheck buffer
+;;  n   spellcheck next error
+;;  w   spellcheck word
+
+(defun sbw-flyspell-check-next-error ()
+  "Spellcheck next error in buffer."
+  (interactive)
+  (flyspell-goto-next-error)
+  (ispell-word))
+
+(define-key sbw-keys-mode-map (kbd "C-j f b")   'flyspell-buffer)
+(define-key sbw-keys-mode-map (kbd "C-j f n")   'sbw-flyspell-check-next-error)
+(define-key sbw-keys-mode-map (kbd "C-j f w")   'ispell-word)
 
 ;; org-mode
 ;;  a   open agenda
@@ -20,6 +36,7 @@
 ;;  i   clock in
 ;;  o   clock out
 ;;  g   go to current task
+;;  r   right-align tags
 ;;  u   update all dynamic blocks
 ;;
 ;;  v   Change view
@@ -34,12 +51,11 @@
 (define-key sbw-keys-mode-map (kbd "C-j o i")   'org-clock-in)
 (define-key sbw-keys-mode-map (kbd "C-j o o")   'org-clock-out)
 (define-key sbw-keys-mode-map (kbd "C-j o g")   'org-clock-goto)
+(define-key sbw-keys-mode-map (kbd "C-j o r")   'sbw-org-mode-right-align-tags)
 (define-key sbw-keys-mode-map (kbd "C-j o u")   'org-update-all-dblocks)
 (define-key sbw-keys-mode-map (kbd "C-j o v n") 'org-narrow-to-subtree)
 (define-key sbw-keys-mode-map (kbd "C-j o v w") 'widen)
-;(defun sbw/org-layout-tags () 
-  ;(setq org-tags-column (- (window-width)))
-  ;(org-align-all-tags))
+; need something for org-insert-drawer
 
 ;; undo
 (define-key sbw-keys-mode-map (kbd "C-j u") 'undo-tree-visualize)

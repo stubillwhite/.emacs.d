@@ -16,7 +16,8 @@
       (*keywords*              "CadetBlue2")
       (*normal*                "gray80")
       (*strings*               "burlywood1")
-      (*warnings*              "IndianRed3")
+      (*warnings*              "burlywood1")
+      (*errors*                "IndianRed3")
       (*match-fg*              "gray100")
       (*match-bg*              "darkslategray")
       (*mismatch-fg*           "gray100")
@@ -77,6 +78,11 @@
            "Face for success."
            :group 'sbw-dark-faces)
 
+  (defface sbw-dark-error
+           `((t (:background ,*background* :foreground ,*errors*)))
+           "Face for errors."
+           :group 'sbw-dark-faces)
+
   (defface sbw-dark-warning
            `((t (:background ,*background* :foreground ,*warnings*)))
            "Face for warnings."
@@ -114,7 +120,7 @@
     `(font-lock-doc-string-face           ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-string)))))
     `(font-lock-function-name-face        ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
     `(font-lock-keyword-face              ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
-    `(font-lock-negation-char-face        ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-warning)))))
+    `(font-lock-negation-char-face        ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-error)))))
     `(font-lock-number-face               ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-constant)))))
     `(font-lock-preprocessor-face         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
     `(font-lock-reference-face            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-constant)))))
@@ -123,7 +129,7 @@
     `(font-lock-string-face               ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-string)))))
     `(font-lock-type-face                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(font-lock-variable-name-face        ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
-    `(font-lock-warning-face              ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-warning)))))
+    `(font-lock-warning-face              ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-error)))))
 
     ;; org-mode
     `(org-agenda-clocking                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
@@ -145,7 +151,7 @@
     `(org-level-9                         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(org-link                            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword) :underline t))))
     `(org-mode-line-clock-overrun         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-tag)))))
-    `(org-scheduled-previously            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-warning)))))
+    `(org-scheduled-previously            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-error)))))
     `(org-scheduled-today                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(org-scheduled                       ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
     `(org-special-keyword                 ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
@@ -154,7 +160,11 @@
     `(org-time-grid                       ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-keyword)))))
     `(org-todo                            ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-tag)))))
     `(org-upcoming-deadline               ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-tag)))))
-    `(org-warning                         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-warning)))))
+    `(org-warning                         ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-error)))))
+
+    ;; Flyspell
+    `(flyspell-duplicate                  ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-warning)))))
+    `(flyspell-incorrect                  ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-error)))))
 
     ;; GUI
     `(cursor                              ((t (:background unspecified :foreground unspecified :inherit (sbw-dark-normal)))))
