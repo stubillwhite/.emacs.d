@@ -1,73 +1,104 @@
-(defvar sbw-keys-mode-map (make-keymap) "sbw-keys-mode keymap.")
+;; -----------------------------------------------------------------------------
+;; Common
+;; -----------------------------------------------------------------------------
 
-(define-minor-mode sbw-keys-mode
+(defun sbw-bindings/ensure-is-first (key alist)
+  "Mutates alist so that the value for key is first."
+  (let ((entry (assq key alist)))
+    (assq-delete-all key alist)
+    (add-to-list 'alist entry)))
+
+(defun sbw-bindings/ensure-mode-has-precedence (mode)
+  "Ensure that mode has precedence over other modes."
+  (sbw-bindings/ensure-is-first mode minor-mode-map-alist))
+
+(defgroup sbw-modes nil
+  "My custom modes.")
+
+;; -----------------------------------------------------------------------------
+;; Global key bindings
+;; -----------------------------------------------------------------------------
+
+(defvar sbw-global-mode-map (make-keymap) "sbw-global-mode keymap.")
+
+(define-minor-mode sbw-global-mode
   "A minor mode to give my key binding precedence."
-  t " SBW" 'sbw-keys-mode-map)
+  t nil 'sbw-global-mode-map)
 
-(sbw-keys-mode 1)
+(sbw-global-mode 1)
 
-;; Key groups
-;;  f   flyspell
-;;  o   org-mode
-;;  u   undo
+;; Ensure that bindings are done last
+(defadvice load (after sbw-keys-mode-has-precedence)
+  "Ensure that my keybindings have precedence."
+  (sbw-bindings/ensure-mode-has-precedence 'sbw-global-mode))
 
-;; flyspell
-;;  b   spellcheck buffer
-;;  n   spellcheck next error
-;;  w   spellcheck word
+(ad-activate 'load)
 
-(defun sbw-flyspell-check-next-error ()
+;; undo
+(define-key sbw-global-mode-map (kbd "C-j u") 'undo-tree-visualize)
+
+;; -----------------------------------------------------------------------------
+;; Flyspell mode bindings
+;; -----------------------------------------------------------------------------
+
+(defun sbw-bindings/flyspell-check-next-error ()
   "Spellcheck next error in buffer."
   (interactive)
   (flyspell-goto-next-error)
   (ispell-word))
 
-(define-key sbw-keys-mode-map (kbd "C-j f b")   'flyspell-buffer)
-(define-key sbw-keys-mode-map (kbd "C-j f n")   'sbw-flyspell-check-next-error)
-(define-key sbw-keys-mode-map (kbd "C-j f w")   'ispell-word)
+(defvar sbw-flyspell-minor-mode-keymap
+  (let ((map (make-sparse-keymap))) 
+    (define-key map (kbd "C-j f b") #'flyspell-buffer)
+    (define-key map (kbd "C-j f n") #'sbw-bindings/flyspell-check-next-error)
+    (define-key map (kbd "C-j f w") #'ispell-word)
+    map) 
+  "Keymap used when sbw-flyspell-minor-mode is active.")
 
-;; org-mode
-;;  a   open agenda
-;;  t   set tags
-;;  e   set effort
-;;  s   set status
-;;  c   schedule in calendar
-;;  d   set deadline
-;;  i   clock in
-;;  o   clock out
-;;  g   go to current task
-;;  r   right-align tags
-;;  u   update all dynamic blocks
-;;
-;;  v   Change view
-;;    n   narrow buffer to subtree
-;;    w   widen buffer
-(define-key sbw-keys-mode-map (kbd "C-j o a")   'org-agenda-list)
-(define-key sbw-keys-mode-map (kbd "C-j o t")   'org-set-tags-command)
-(define-key sbw-keys-mode-map (kbd "C-j o e")   'org-set-effort)
-(define-key sbw-keys-mode-map (kbd "C-j o s")   'org-todo)
-(define-key sbw-keys-mode-map (kbd "C-j o c")   'org-schedule)
-(define-key sbw-keys-mode-map (kbd "C-j o d")   'org-deadline)
-(define-key sbw-keys-mode-map (kbd "C-j o i")   'org-clock-in)
-(define-key sbw-keys-mode-map (kbd "C-j o o")   'org-clock-out)
-(define-key sbw-keys-mode-map (kbd "C-j o g")   'org-clock-goto)
-(define-key sbw-keys-mode-map (kbd "C-j o r")   'sbw-org-mode-right-align-tags)
-(define-key sbw-keys-mode-map (kbd "C-j o u")   'org-update-all-dblocks)
-(define-key sbw-keys-mode-map (kbd "C-j o v n") 'org-narrow-to-subtree)
-(define-key sbw-keys-mode-map (kbd "C-j o v w") 'widen)
-; need something for org-insert-drawer
+(define-minor-mode sbw-flyspell-minor-mode
+  "Custom minor mode for flyspell."
+  :group   'sbw-modes
+  ;:lighter " [sbw-f]"
+  :keymap  sbw-flyspell-minor-mode-keymap
+  (if sbw-flyspell-minor-mode
+    (sbw-bindings/ensure-mode-has-precedence 'sbw-flyspell-minor-mode-keymap)))
 
-;; undo
-(define-key sbw-keys-mode-map (kbd "C-j u") 'undo-tree-visualize)
+;; TODO: There is duplication here between sbw-setup-flyspell and the key
+;; bindings. Join them up.
+(dolist (hook '(text-mode-hook))
+      (add-hook hook #'sbw-flyspell-minor-mode))
 
-;; Ensure that bindings are done last
-(defadvice load (after sbw-keys-mode-has-precedence)
-  "Ensure that my keybindings have precedence."
-  (if (not (eq (car (car minor-mode-map-alist)) 'sbw-keys-mode))
-    (let ((mykeys (assq 'sbw-keys-mode minor-mode-map-alist)))
-      (assq-delete-all 'sbw-keys-mode minor-mode-map-alist)
-      (add-to-list 'minor-mode-map-alist mykeys))))
+;; -----------------------------------------------------------------------------
+;; org-mode mode bindings
+;; -----------------------------------------------------------------------------
 
-(ad-activate 'load)
+(defvar sbw-org-mode-minor-mode-keymap
+  (let ((map (make-sparse-keymap))) 
+    (define-key map (kbd "C-j a")   #'org-agenda)
+    (define-key map (kbd "C-j t")   #'org-set-tags-command)
+    (define-key map (kbd "C-j e")   #'org-set-effort)
+    (define-key map (kbd "C-j s")   #'org-todo)
+    (define-key map (kbd "C-j c")   #'org-schedule)
+    (define-key map (kbd "C-j d")   #'org-deadline)
+    (define-key map (kbd "C-j i")   #'org-clock-in)
+    ;(define-key map (kbd "C-j n")   #'(lambda () (interactive) (org-insert-drawer)))
+    (define-key map (kbd "C-j o")   #'org-clock-out)
+    (define-key map (kbd "C-j g")   #'org-clock-goto)
+    (define-key map (kbd "C-j r")   #'sbw-org-mode-right-align-tags)
+    (define-key map (kbd "C-j u")   #'org-update-all-dblocks)
+    (define-key map (kbd "C-j v n") #'org-narrow-to-subtree)
+    (define-key map (kbd "C-j v w") #'widen)
+    map) 
+  "Keymap used when sbw-org-mode-minor-mode is active.")
+
+(define-minor-mode sbw-org-mode-minor-mode
+  "Custom minor mode for org-mode."
+  :group   'sbw-modes
+  ;:lighter " [sbw]"
+  :keymap  sbw-org-mode-minor-mode-keymap
+  (if sbw-org-mode-minor-mode
+    (sbw-bindings/ensure-mode-has-precedence 'sbw-org-mode-minor-mode-keymap)))
+
+(add-hook 'org-mode-hook #'sbw-org-mode-minor-mode)
 
 (provide 'sbw-bindings)
