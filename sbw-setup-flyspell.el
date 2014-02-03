@@ -7,4 +7,8 @@
 ;; We're using aspell, so use ultra mode to improve performance
 (add-to-list 'ispell-extra-args "--sug-mode=ultra")
 
+(setq
+  ispell-silently-savep t                        ;; Don't prompt when adding to the dictionary
+)
+
 (provide 'sbw-setup-flyspell)

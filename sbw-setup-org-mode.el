@@ -13,12 +13,25 @@
                                (list "todo-personal.org" "todo-work.org" "timesheet.org" "incoming.org" "weekly-plan.org")))
 (setq org-default-notes-file (concat org-directory "incoming.org") )
 
-(setq org-replace-disputed-keys     t       ;; Prevent org-mode from binding shift-cursor keys
-      org-use-property-inheritance  t       ;; Child items should inherit all from parents
-      org-clock-into-drawer         t       ;; Clock into drawers
-      org-log-into-drawer           t       ;; Log into drawers
-      org-ellipsis                  "..."   ;; Ellipsis string
+(setq 
+  org-clock-into-drawer         t           ;; Clock into drawers
+  org-ellipsis                  "\u2026"    ;; Small ellipsis character
+  org-indent-mode               t           ;; Use indent mode
+  org-log-into-drawer           t           ;; Log into drawers
+  org-M-RET-may-split-line      nil         ;; Don't split lines
+  org-replace-disputed-keys     t           ;; Prevent org-mode from binding shift-cursor keys
+  org-return-follows-link       t           ;; Easy link navigation
+  org-use-property-inheritance  t           ;; Child items should inherit all from parents
 )
+
+(defun sbw-org-mode/clock-in-switch-to-started (state) 
+  "When clocking in, switch the task state STARTED if it is still in TODO." 
+  (if (and (string-equal state "TODO") 
+           (not (string-equal (buffer-name) "*Remember*"))) 
+    "STARTED" 
+    nil))
+
+(setq org-clock-in-switch-to-state (quote sbw-org-mode/clock-in-switch-to-started))
 
 ;; Tag alignment
 ;; Ensure new tags are created right-aligned based on the window size, and

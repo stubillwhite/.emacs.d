@@ -58,7 +58,6 @@
 (define-minor-mode sbw-flyspell-minor-mode
   "Custom minor mode for flyspell."
   :group   'sbw-modes
-  ;:lighter " [sbw-f]"
   :keymap  sbw-flyspell-minor-mode-keymap
   (if sbw-flyspell-minor-mode
     (sbw-bindings/ensure-mode-has-precedence 'sbw-flyspell-minor-mode-keymap)))
@@ -94,7 +93,6 @@
 (define-minor-mode sbw-org-mode-minor-mode
   "Custom minor mode for org-mode."
   :group   'sbw-modes
-  ;:lighter " [sbw]"
   :keymap  sbw-org-mode-minor-mode-keymap
   (if sbw-org-mode-minor-mode
     (sbw-bindings/ensure-mode-has-precedence 'sbw-org-mode-minor-mode-keymap)))
