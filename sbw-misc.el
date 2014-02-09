@@ -1,6 +1,16 @@
 ;; RET should auto-indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Unicode
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-clipboard-coding-system 'utf-16le-dos)
+(setq 
+  default-buffer-file-coding-system 'utf-8
+  x-select-request-type             '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
 ;; General settings
 (setq
   backup-directory-alist        `(("." . ,(expand-file-name "~/.emacs.d/backups")))
