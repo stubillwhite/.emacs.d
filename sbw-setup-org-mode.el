@@ -37,16 +37,16 @@
 ;; Ensure new tags are created right-aligned based on the window size, and
 ;; provide a handy function to re-align all tags in the buffer
 
-(defun sbw-org-mode-set-org-tags-column-based-on-window-size ()
+(defun sbw-org-mode/set-org-tags-column-based-on-window-size ()
   "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
   (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
 
-(add-hook 'window-configuration-change-hook 'sbw-org-mode-set-org-tags-column-based-on-window-size)
+(add-hook 'window-configuration-change-hook 'sbw-org-mode/set-org-tags-column-based-on-window-size)
 
-(defun sbw-org-mode-right-align-tags ()
+(defun sbw-org-mode/right-align-tags ()
   "Right-align the all tags in the buffer."
   (interactive)
-  (sbw-org-mode-set-org-tags-column-based-on-window-size)
+  (sbw-org-mode/set-org-tags-column-based-on-window-size)
   (org-align-all-tags)
   (redisplay t))
 

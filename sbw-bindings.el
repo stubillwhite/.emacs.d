@@ -58,6 +58,7 @@
 (define-minor-mode sbw-flyspell-minor-mode
   "Custom minor mode for flyspell."
   :group   'sbw-modes
+  ;:lighter " [sbw-f]"
   :keymap  sbw-flyspell-minor-mode-keymap
   (if sbw-flyspell-minor-mode
     (sbw-bindings/ensure-mode-has-precedence 'sbw-flyspell-minor-mode-keymap)))
@@ -83,7 +84,7 @@
     ;(define-key map (kbd "C-j n")   #'(lambda () (interactive) (org-insert-drawer)))
     (define-key map (kbd "C-j o")   #'org-clock-out)
     (define-key map (kbd "C-j g")   #'org-clock-goto)
-    (define-key map (kbd "C-j r")   #'sbw-org-mode-right-align-tags)
+    (define-key map (kbd "C-j r")   #'sbw-org-mode/right-align-tags)
     (define-key map (kbd "C-j u")   #'org-update-all-dblocks)
     (define-key map (kbd "C-j v n") #'org-narrow-to-subtree)
     (define-key map (kbd "C-j v w") #'widen)
@@ -93,6 +94,7 @@
 (define-minor-mode sbw-org-mode-minor-mode
   "Custom minor mode for org-mode."
   :group   'sbw-modes
+  ;:lighter " [sbw-o]"
   :keymap  sbw-org-mode-minor-mode-keymap
   (if sbw-org-mode-minor-mode
     (sbw-bindings/ensure-mode-has-precedence 'sbw-org-mode-minor-mode-keymap)))

@@ -1,4 +1,8 @@
 (require 'cider)
+(require 'sbw-cosmetics)
+
+;; Hide DOS EOL characters in the REPL
+(add-hook 'cider-repl-mode-hook 'sbw-cosmetics/hide-dos-eol)
 
 ;; Enable eldoc in Clojure buffers
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
@@ -17,6 +21,7 @@
 ;; Better naming for the REPL buffer
 (setq 
   nrepl-buffer-name-separator "-"
+  nrepl-port                  "4555"
   nrepl-buffer-name-show-port t)
 
 (provide 'sbw-setup-cider)

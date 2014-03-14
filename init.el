@@ -18,6 +18,7 @@
 (require 'sbw-setup-ido-ubiquitous)
 (require 'sbw-setup-multiple-cursors)
 (require 'sbw-setup-org-mode)
+(require 'sbw-setup-projectile)
 (require 'sbw-setup-smartparens)
 (require 'sbw-setup-smex)
 (require 'sbw-setup-undo-tree)

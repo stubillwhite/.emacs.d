@@ -1,3 +1,7 @@
+;; Turn off beginner modes
+(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+  (when (fboundp mode) (funcall mode -1)))
+
 ;; RET should auto-indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 

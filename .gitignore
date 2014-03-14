@@ -1,7 +1,10 @@
-backups/
-elpa/
-server/
-ac-comphist.dat
 .mc-lists.el
 .org-id-locations
 .smex-items
+ac-comphist.dat
+backups/
+elpa/
+projectile-bookmarks.eld
+projectile.cache
+server/
+url/cookies

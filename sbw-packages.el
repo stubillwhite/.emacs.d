@@ -14,6 +14,7 @@
 
 (defun sbw-pkg/install-missing-packages ()
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (package-initialize)
   (sbw-pkg/ensure-packages-are-installed
     '(
@@ -24,6 +25,7 @@
        auto-complete                    ;; Auto-completion
        smex                             ;; M-x enhanced
        multiple-cursors                 ;; Multiple cursor mode
+       projectile                       ;; Project navigation
 
        ;; Clojure
        clojure-mode                     ;; Clojure mode
