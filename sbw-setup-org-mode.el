@@ -1,9 +1,6 @@
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
 
-;; Tags and shortcut keys
-(setq org-tag-alist '(("Bug" . ?b) ("Support" . ?s) ("Unplanned" . ?u)))
-
 ;; Org directory
 (setq org-directory 
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
@@ -25,8 +22,10 @@
 )
 
 (defun sbw-org-mode/clock-in-switch-to-started (state) 
-  "When clocking in, switch the task state STARTED if it is still in TODO." 
-  (if (and (string-equal state "TODO") 
+  "When clocking in, switch the task state STARTED if it is still in a stalled state." 
+  (if (and (or (string-equal state "TODO")
+               (string-equal state "BLOCKED")
+               (string-equal state "POSTPONED"))
            (not (string-equal (buffer-name) "*Remember*"))) 
     "STARTED" 
     nil))

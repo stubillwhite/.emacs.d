@@ -28,13 +28,13 @@
 (show-paren-mode 1)
 
 ;; Start with a maximised window
-(defun sbw-maximise-window ()
+(defun sbw-cosmetics/maximise-window ()
   (interactive)
   (w32-send-sys-command #xf030))
 
 (setq 
-  term-setup-hook   'sbw-maximise-window
-  window-setup-hook 'sbw-maximise-window)
+  term-setup-hook   'sbw-cosmetics/maximise-window
+  window-setup-hook 'sbw-cosmetics/maximise-window)
 
 ;; Hide DOS EOL characters
 (defun sbw-cosmetics/hide-dos-eol ()
