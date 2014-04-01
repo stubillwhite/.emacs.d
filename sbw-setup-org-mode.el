@@ -1,3 +1,5 @@
+(require 'org)
+
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
 
@@ -10,6 +12,8 @@
                                (list "todo-personal.org" "todo-work.org" "timesheet.org" "incoming.org" "weekly-plan.org")))
 (setq org-default-notes-file (concat org-directory "incoming.org") )
 
+;; General settings
+
 (setq 
   org-clock-into-drawer         t           ;; Clock into drawers
   org-ellipsis                  "\u2026"    ;; Small ellipsis character
@@ -21,6 +25,9 @@
   org-use-property-inheritance  t           ;; Child items should inherit all from parents
 )
 
+;; Clocking
+;; Clock into a task should switch state to started if it is still in a stalled state
+
 (defun sbw-org-mode/clock-in-switch-to-started (state) 
   "When clocking in, switch the task state STARTED if it is still in a stalled state." 
   (if (and (or (string-equal state "TODO")
@@ -31,6 +38,14 @@
     nil))
 
 (setq org-clock-in-switch-to-state (quote sbw-org-mode/clock-in-switch-to-started))
+
+;; Link type for opening a file in a running Eclipse instance
+
+(org-add-link-type "eclipse" 'sbw-org-mode/org-eclipse-open)
+     
+(defun sbw-org-mode/org-eclipse-open (path)
+  "Open the file specified by PATH in the running Eclipse instance."
+  (shell-command (concat "\"c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe\" --launcher.openFile " path)))
 
 ;; Tag alignment
 ;; Ensure new tags are created right-aligned based on the window size, and
