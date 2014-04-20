@@ -1,4 +1,4 @@
-(require 'org)
+;; (require 'org)
 
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
@@ -41,11 +41,14 @@
 
 ;; Link type for opening a file in a running Eclipse instance
 
-(org-add-link-type "eclipse" 'sbw-org-mode/org-eclipse-open)
-     
-(defun sbw-org-mode/org-eclipse-open (path)
-  "Open the file specified by PATH in the running Eclipse instance."
-  (shell-command (concat "\"c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe\" --launcher.openFile " path)))
+;;(org-add-link-type "eclipse" 'sbw-org-mode/org-eclipse-open)
+;;     
+;;(defun sbw-org-mode/org-eclipse-open (path)
+;;  "Open the file specified by PATH in the running Eclipse instance."
+;;  (shell-command (concat "\"c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe\" --launcher.openFile " path)))
+
+;; TODO Add a protocol for opening in Vim. Need to find out why requiring org is
+;; screwing up my key bindings
 
 ;; Tag alignment
 ;; Ensure new tags are created right-aligned based on the window size, and
