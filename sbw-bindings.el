@@ -4,15 +4,9 @@
 ;; Common
 ;; -----------------------------------------------------------------------------
 
-(defun sbw-bindings/ensure-is-first (key alist)
-  "Mutates alist so that the value for key is first."
-  (let ((entry (assq key alist)))
-    (assq-delete-all key alist)
-    (add-to-list 'alist entry)))
-
 (defun sbw-bindings/ensure-mode-has-precedence (mode)
   "Ensure that mode has precedence over other modes."
-  (sbw-bindings/ensure-is-first mode minor-mode-map-alist))
+  (sbw-utils/assq-ensure-is-first mode minor-mode-map-alist))
 
 (defgroup sbw-modes nil
   "My custom modes.")
