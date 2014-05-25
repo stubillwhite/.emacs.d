@@ -47,20 +47,16 @@
 
 ;; Link type for opening a file in a running Eclipse instance
 
-(org-add-link-type "eclipse" 'sbw-org-mode/org-eclipse-open)
-     
-(defun sbw-org-mode/org-eclipse-open (path)
-  "Open the file specified by PATH in the running Eclipse instance."
-  (start-process "Eclipse" nil "c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe" "--launcher.openFile" path))
+(org-add-link-type "eclipse"
+  (lambda (path)
+    (start-process "Eclipse" nil "c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe" "--launcher.openFile" path)))
 
 ;; Link type for opening a file in a running Vim instance
 
-(org-add-link-type "vim" 'sbw-org-mode/org-vim-open)
+(org-add-link-type "vim"
+  (lambda (path)
+    (start-process "Vim" nil "gvim.exe" path)))
      
-(defun sbw-org-mode/org-vim-open (path)
-  "Open the file specified by PATH in a new Vim instance."
-  (start-process "Vim" nil "gvim.exe" "--remote" path))
-
 ;; Tag alignment
 ;; Ensure new tags are created right-aligned based on the window size, and
 ;; provide a handy function to re-align all tags in the buffer
