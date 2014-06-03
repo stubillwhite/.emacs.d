@@ -17,7 +17,6 @@
 
 ;; General settings
 (setq
-  backup-directory-alist        `(("." . ,(expand-file-name "~/.emacs.d/backups")))
   color-theme-is-global         t
   diff-switches                 "-u"
   ediff-window-setup-function   'ediff-setup-windows-plain
@@ -45,10 +44,11 @@
 ;; Open files in running instance if possible
 (server-start)
 
-;; Create backup files in .emacs-backup instead of everywhere
+;; Backups
 (defvar user-temporary-file-directory "~/.emacs-backup")
 (make-directory user-temporary-file-directory t)
 (setq
+  backup-directory-alist         '(("." . ,(expand-file-name user-temporary-file-directory)))
   backup-by-copying                 t
   backup-directory-alist            `(("." . ,user-temporary-file-directory) (,tramp-file-name-regexp nil))
   auto-save-list-file-prefix        (concat user-temporary-file-directory ".auto-saves-")

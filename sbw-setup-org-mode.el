@@ -6,8 +6,21 @@
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
 
 ;; Agenda files
-(setq org-agenda-files (mapcar (lambda (x) (concat org-directory x)) 
-                               (list "todo-personal.org" "todo-work.org" "timesheet.org" "incoming.org" "weekly-plan.org")))
+(defun sbw-org/org-files (&rest args)
+  (mapcar (lambda (x) (concat org-directory x)) args))
+
+(defconst sbw-org/personal-files
+  (sbw-org/org-files "todo-personal.org"))
+
+(defconst sbw-org/work-files
+  (sbw-org/org-files "todo-work.org" "timesheet.org"))
+
+(defconst sbw-org/planning-files
+  (sbw-org/org-files "incoming.org" "weekly-plan.org"))
+
+(setq org-agenda-files
+  (append sbw-org/personal-files sbw-org/work-files sbw-org/planning-files (list)))
+
 (setq org-default-notes-file (concat org-directory "incoming.org") )
 
 ;; General settings
@@ -21,6 +34,7 @@
   org-replace-disputed-keys     t           ;; Prevent org-mode from binding shift-cursor keys
   org-return-follows-link       t           ;; Easy link navigation
   org-use-property-inheritance  t           ;; Child items should inherit all from parents
+  org-default-priority          ?B          ;; Default priority for unprioritised items
 )
 
 ;; Clocking
@@ -51,6 +65,11 @@
   (lambda (path)
     (start-process "Eclipse" nil "c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe" "--launcher.openFile" path)))
 
+;; Temporary -- Link type for opening in Aurora vintage Eclipse
+(org-add-link-type "aurora"
+  (lambda (path)
+    (start-process "Aurora" nil "c:\\dev_fp\\eclipse-for-sdk\\eclipse.exe" "--launcher.openFile" path)))
+
 ;; Link type for opening a file in a running Vim instance
 
 (org-add-link-type "vim"
@@ -65,7 +84,7 @@
   "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
   (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
 
-(add-hook 'window-configuration-change-hook 'sbw-org-mode/set-org-tags-column-based-on-window-size)
+;; (add-hook 'window-configuration-change-hook 'sbw-org-mode/set-org-tags-column-based-on-window-size)
 
 (defun sbw-org-mode/right-align-tags ()
   "Right-align the all tags in the buffer."
@@ -73,6 +92,86 @@
   (sbw-org-mode/set-org-tags-column-based-on-window-size)
   (org-align-all-tags)
   (redisplay t))
+
+
+
+(defun org-sort-list-by-checkbox-type-1 ()
+  (if (looking-at org-list-full-item-re)
+    (cdr (assoc (match-string 3)
+           '(("[X]" . 1) ("[-]" . 2) ("[ ]" . 3) (nil . 4))))
+    4))
+
+(defun sbw-org/make-title-string (title)
+  (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
+
+(defun sbw-org/org-agenda-common-display ()
+  (org-agenda-overriding-header "\nFoo\n---"))
+
+;; TODO Look into http://newartisans.com/2007/08/using-org-mode-as-a-day-planner/
+
+(setq org-agenda-custom-commands
+  '(
+     
+     ("P" "Personal agenda"
+       ( (agenda "" ((org-agenda-ndays 7)))
+;;         (todo (sbw-org/org-agenda-common-display))
+         (tags-todo "+PRIORITY=\"A\""
+           ((org-agenda-overriding-header (sbw-org/make-title-string  "High-priority tasks"))))
+
+;;         (org-agenda-files sbw-org/personal-files)
+         (tags-todo "+PRIORITY=\"A\""
+           ((org-agenda-overriding-header (sbw-org/make-title-string "foo"))))
+
+         ))
+     
+     ("W" "Work agenda"
+       ( (agenda "" ((org-agenda-ndays 7)))
+         (org-agenda-files sbw-org/work-files)
+         
+         (tags "+PRIORITY=\"A\""
+           ( (org-agenda-overriding-header (sbw-org/make-title-string "High priority tasks"))
+             (org-agenda-files sbw-org/work-files)
+             ))
+
+         (tags "+PRIORITY=\"B\""
+           ( (org-agenda-overriding-header (sbw-org/make-title-string  "Normal priority tasks"))
+             (org-agenda-files sbw-org/work-files)            
+             ))
+
+         (tags "+PRIORITY=\"C\""
+           ( (org-agenda-overriding-header (sbw-org/make-title-string  "Low priority tasks"))
+             (org-agenda-files sbw-org/work-files)            
+             ))
+
+         ))
+
+
+     
+     ("p" . "Priorities")
+     ("pa" "A items" tags-todo "+PRIORITY=\"A\"")
+     ("pb" "B items" tags-todo "+PRIORITY=\"B\"")
+     ("pc" "C items" tags-todo "+PRIORITY=\"C\"")
+
+     ("J" "My agenda"
+       ( (agenda "" ((org-agenda-ndays 7)))
+         (tags-todo "+PRIORITY=\"A\""
+           ((org-agenda-overriding-header "\nHigh-priority tasks\n-------------------\n")))
+         (todo "BLOCKED")
+
+       (todo "TODO"
+                ((org-agenda-prefix-format "[ ] %T: ")
+                 (org-agenda-sorting-strategy '(tag-up priority-down))
+                 (org-agenda-todo-keyword-format "")
+                 (org-agenda-overriding-header "\nTasks by Context\n------------------\n")))
+
+         
+  
+         ))
+     
+     ))
+
+
+(setq org-agenda-fontify-priorities t)
 
 ;; Key bindings
 ;; (global-set-key "\C-cl" 'org-store-link)

@@ -79,6 +79,7 @@
     (define-key map (kbd "C-j i")   #'org-clock-in)
     ;(define-key map (kbd "C-j n")   #'(lambda () (interactive) (org-insert-drawer)))
     (define-key map (kbd "C-j o")   #'org-clock-out)
+    (define-key map (kbd "C-j p")   #'org-priority)
     (define-key map (kbd "C-j g")   #'org-clock-goto)
     (define-key map (kbd "C-j r")   #'sbw-org-mode/right-align-tags)
     (define-key map (kbd "C-j u")   #'org-update-all-dblocks)
