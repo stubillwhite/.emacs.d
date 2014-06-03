@@ -2,7 +2,7 @@
 
 ;; Install any missing pre-requisites
 (require 'sbw-packages)
-(sbw-pkg/install-missing-packages)
+(sbw/install-missing-packages)
 
 ;; Configure my settings
 (require 'sbw-bindings)

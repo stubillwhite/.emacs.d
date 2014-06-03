@@ -6,20 +6,20 @@
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
 
 ;; Agenda files
-(defun sbw-org/org-files (&rest args)
+(defun sbw/org-files (&rest args)
   (mapcar (lambda (x) (concat org-directory x)) args))
 
-(defconst sbw-org/personal-files
-  (sbw-org/org-files "todo-personal.org"))
+(defconst sbw/personal-files
+  (sbw/org-files "todo-personal.org"))
 
-(defconst sbw-org/work-files
-  (sbw-org/org-files "todo-work.org" "timesheet.org"))
+(defconst sbw/work-files
+  (sbw/org-files "todo-work.org" "timesheet.org"))
 
-(defconst sbw-org/planning-files
-  (sbw-org/org-files "incoming.org" "weekly-plan.org"))
+(defconst sbw/planning-files
+  (sbw/org-files "incoming.org" "weekly-plan.org"))
 
 (setq org-agenda-files
-  (append sbw-org/personal-files sbw-org/work-files sbw-org/planning-files (list)))
+  (append sbw/personal-files sbw/work-files sbw/planning-files (list)))
 
 (setq org-default-notes-file (concat org-directory "incoming.org") )
 
@@ -40,7 +40,7 @@
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
 
-(defun sbw-org-mode/clock-in-switch-to-started (state) 
+(defun sbw/clock-in-switch-to-started (state) 
   "When clocking in, switch the task state STARTED if it is still in a stalled state." 
   (if (and (or (string-equal state "TODO")
                (string-equal state "BLOCKED")
@@ -49,7 +49,7 @@
     "STARTED" 
     nil))
 
-(setq org-clock-in-switch-to-state (quote sbw-org-mode/clock-in-switch-to-started))
+(setq org-clock-in-switch-to-state (quote sbw/clock-in-switch-to-started))
 
 ;;
 ;; Pull in org
@@ -80,16 +80,16 @@
 ;; Ensure new tags are created right-aligned based on the window size, and
 ;; provide a handy function to re-align all tags in the buffer
 
-(defun sbw-org-mode/set-org-tags-column-based-on-window-size ()
+(defun sbw/set-org-tags-column-based-on-window-size ()
   "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
   (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
 
-;; (add-hook 'window-configuration-change-hook 'sbw-org-mode/set-org-tags-column-based-on-window-size)
+;; (add-hook 'window-configuration-change-hook 'sbw/set-org-tags-column-based-on-window-size)
 
-(defun sbw-org-mode/right-align-tags ()
+(defun sbw/right-align-tags ()
   "Right-align the all tags in the buffer."
   (interactive)
-  (sbw-org-mode/set-org-tags-column-based-on-window-size)
+  (sbw/set-org-tags-column-based-on-window-size)
   (org-align-all-tags)
   (redisplay t))
 
@@ -101,10 +101,10 @@
            '(("[X]" . 1) ("[-]" . 2) ("[ ]" . 3) (nil . 4))))
     4))
 
-(defun sbw-org/make-title-string (title)
+(defun sbw/make-title-string (title)
   (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
 
-(defun sbw-org/org-agenda-common-display ()
+(defun sbw/org-agenda-common-display ()
   (org-agenda-overriding-header "\nFoo\n---"))
 
 ;; TODO Look into http://newartisans.com/2007/08/using-org-mode-as-a-day-planner/
@@ -114,33 +114,33 @@
      
      ("P" "Personal agenda"
        ( (agenda "" ((org-agenda-ndays 7)))
-;;         (todo (sbw-org/org-agenda-common-display))
+;;         (todo (sbw/org-agenda-common-display))
          (tags-todo "+PRIORITY=\"A\""
-           ((org-agenda-overriding-header (sbw-org/make-title-string  "High-priority tasks"))))
+           ((org-agenda-overriding-header (sbw/make-title-string  "High-priority tasks"))))
 
-;;         (org-agenda-files sbw-org/personal-files)
+;;         (org-agenda-files sbw/personal-files)
          (tags-todo "+PRIORITY=\"A\""
-           ((org-agenda-overriding-header (sbw-org/make-title-string "foo"))))
+           ((org-agenda-overriding-header (sbw/make-title-string "foo"))))
 
          ))
      
      ("W" "Work agenda"
        ( (agenda "" ((org-agenda-ndays 7)))
-         (org-agenda-files sbw-org/work-files)
+         (org-agenda-files sbw/work-files)
          
          (tags "+PRIORITY=\"A\""
-           ( (org-agenda-overriding-header (sbw-org/make-title-string "High priority tasks"))
-             (org-agenda-files sbw-org/work-files)
+           ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
+             (org-agenda-files sbw/work-files)
              ))
 
          (tags "+PRIORITY=\"B\""
-           ( (org-agenda-overriding-header (sbw-org/make-title-string  "Normal priority tasks"))
-             (org-agenda-files sbw-org/work-files)            
+           ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
+             (org-agenda-files sbw/work-files)            
              ))
 
          (tags "+PRIORITY=\"C\""
-           ( (org-agenda-overriding-header (sbw-org/make-title-string  "Low priority tasks"))
-             (org-agenda-files sbw-org/work-files)            
+           ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
+             (org-agenda-files sbw/work-files)            
              ))
 
          ))

@@ -4,9 +4,9 @@
 ;; Common
 ;; -----------------------------------------------------------------------------
 
-(defun sbw-bindings/ensure-mode-has-precedence (mode)
+(defun sbw/ensure-mode-has-precedence (mode)
   "Ensure that mode has precedence over other modes."
-  (sbw-utils/assq-ensure-is-first mode minor-mode-map-alist))
+  (sbw/assq-ensure-is-first mode minor-mode-map-alist))
 
 (defgroup sbw-modes nil
   "My custom modes.")
@@ -26,7 +26,7 @@
 ;; Ensure that bindings are done last
 (defadvice load (after sbw-keys-mode-has-precedence)
   "Ensure that my keybindings have precedence."
-  (sbw-bindings/ensure-mode-has-precedence 'sbw-global-mode))
+  (sbw/ensure-mode-has-precedence 'sbw-global-mode))
 
 (ad-activate 'load)
 
@@ -37,7 +37,7 @@
 ;; Flyspell mode bindings
 ;; -----------------------------------------------------------------------------
 
-(defun sbw-bindings/flyspell-check-next-error ()
+(defun sbw/flyspell-check-next-error ()
   "Spellcheck next error in buffer."
   (interactive)
   (flyspell-goto-next-error)
@@ -46,7 +46,7 @@
 (defvar sbw-flyspell-minor-mode-keymap
   (let ((map (make-sparse-keymap))) 
     (define-key map (kbd "C-j f b") #'flyspell-buffer)
-    (define-key map (kbd "C-j f n") #'sbw-bindings/flyspell-check-next-error)
+    (define-key map (kbd "C-j f n") #'sbw/flyspell-check-next-error)
     (define-key map (kbd "C-j f w") #'ispell-word)
     map) 
   "Keymap used when sbw-flyspell-minor-mode is active.")
@@ -57,7 +57,7 @@
   ;:lighter " [sbw-f]"
   :keymap  sbw-flyspell-minor-mode-keymap
   (if sbw-flyspell-minor-mode
-    (sbw-bindings/ensure-mode-has-precedence 'sbw-flyspell-minor-mode-keymap)))
+    (sbw/ensure-mode-has-precedence 'sbw-flyspell-minor-mode-keymap)))
 
 ;; TODO: There is duplication here between sbw-setup-flyspell and the key
 ;; bindings. Join them up.
@@ -81,7 +81,7 @@
     (define-key map (kbd "C-j o")   #'org-clock-out)
     (define-key map (kbd "C-j p")   #'org-priority)
     (define-key map (kbd "C-j g")   #'org-clock-goto)
-    (define-key map (kbd "C-j r")   #'sbw-org-mode/right-align-tags)
+    (define-key map (kbd "C-j r")   #'sbw/right-align-tags)
     (define-key map (kbd "C-j u")   #'org-update-all-dblocks)
     (define-key map (kbd "C-j v n") #'org-narrow-to-subtree)
     (define-key map (kbd "C-j v w") #'widen)
@@ -94,7 +94,7 @@
   ;:lighter " [sbw-o]"
   :keymap  sbw-org-mode-minor-mode-keymap
   (if sbw-org-mode-minor-mode
-    (sbw-bindings/ensure-mode-has-precedence 'sbw-org-mode-minor-mode-keymap)))
+    (sbw/ensure-mode-has-precedence 'sbw-org-mode-minor-mode-keymap)))
 
 (add-hook 'org-mode-hook #'sbw-org-mode-minor-mode)
 

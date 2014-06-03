@@ -28,16 +28,16 @@
 (show-paren-mode 1)
 
 ;; Start with a maximised window
-(defun sbw-cosmetics/maximise-window ()
+(defun sbw/maximise-window ()
   (interactive)
   (w32-send-sys-command #xf030))
 
 (setq 
-  term-setup-hook   'sbw-cosmetics/maximise-window
-  window-setup-hook 'sbw-cosmetics/maximise-window)
+  term-setup-hook   'sbw/maximise-window
+  window-setup-hook 'sbw/maximise-window)
 
 ;; Hide DOS EOL characters
-(defun sbw-cosmetics/hide-dos-eol ()
+(defun sbw/hide-dos-eol ()
   "Do not show ^M in files containing mixed UNIX and DOS line endings."
   (interactive)
   (setq buffer-display-table (make-display-table))

@@ -2,7 +2,7 @@
 (require 'sbw-cosmetics)
 
 ;; Hide DOS EOL characters in the REPL
-(add-hook 'cider-repl-mode-hook 'sbw-cosmetics/hide-dos-eol)
+(add-hook 'cider-repl-mode-hook 'sbw/hide-dos-eol)
 
 ;; Enable eldoc in Clojure buffers
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
