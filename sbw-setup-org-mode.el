@@ -109,65 +109,54 @@
 
 ;; TODO Look into http://newartisans.com/2007/08/using-org-mode-as-a-day-planner/
 
+(setq org-agenda-remove-tags 1)
 (setq org-agenda-custom-commands
   '(
-     
-     ("P" "Personal agenda"
-       ( (agenda "" ((org-agenda-ndays 7)))
-;;         (todo (sbw/org-agenda-common-display))
-         (tags-todo "+PRIORITY=\"A\""
-           ((org-agenda-overriding-header (sbw/make-title-string  "High-priority tasks"))))
-
-;;         (org-agenda-files sbw/personal-files)
-         (tags-todo "+PRIORITY=\"A\""
-           ((org-agenda-overriding-header (sbw/make-title-string "foo"))))
-
-         ))
-     
-     ("W" "Work agenda"
+     ("c" . "Custom agenda")
+     ("cw" "Work agenda"
        ( (agenda "" ((org-agenda-ndays 7)))
          (org-agenda-files sbw/work-files)
          
-         (tags "+PRIORITY=\"A\""
+         (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
              (org-agenda-files sbw/work-files)
+             (org-agenda-prefix-format "%-10c %-10T")                          
              ))
 
-         (tags "+PRIORITY=\"B\""
+         (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
-             (org-agenda-files sbw/work-files)            
+             (org-agenda-files sbw/work-files)
+             (org-agenda-prefix-format "%-10c %-10T")                          
              ))
 
-         (tags "+PRIORITY=\"C\""
+         (tags-todo "+PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
-             (org-agenda-files sbw/work-files)            
+             (org-agenda-files sbw/work-files)
+             (org-agenda-prefix-format "%-10c %-10T")                          
              ))
 
          ))
-
-
-     
-     ("p" . "Priorities")
-     ("pa" "A items" tags-todo "+PRIORITY=\"A\"")
-     ("pb" "B items" tags-todo "+PRIORITY=\"B\"")
-     ("pc" "C items" tags-todo "+PRIORITY=\"C\"")
-
-     ("J" "My agenda"
+     ("cp" "Personal agenda"
        ( (agenda "" ((org-agenda-ndays 7)))
          (tags-todo "+PRIORITY=\"A\""
-           ((org-agenda-overriding-header "\nHigh-priority tasks\n-------------------\n")))
-         (todo "BLOCKED")
+           ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
+             (org-agenda-files sbw/personal-files)
+             (org-agenda-prefix-format "%-10c %-10T")             
+             ))
 
-       (todo "TODO"
-                ((org-agenda-prefix-format "[ ] %T: ")
-                 (org-agenda-sorting-strategy '(tag-up priority-down))
-                 (org-agenda-todo-keyword-format "")
-                 (org-agenda-overriding-header "\nTasks by Context\n------------------\n")))
+         (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
+           ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
+             (org-agenda-files sbw/personal-files)
+             (org-agenda-prefix-format "%-10c %-10T")
+             ))
 
-         
-  
+         (tags-todo "+PRIORITY=\"C\""
+           ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
+             (org-agenda-files sbw/personal-files)
+             (org-agenda-prefix-format "%-10c %-10T")
+             ))
+
          ))
-     
      ))
 
 
