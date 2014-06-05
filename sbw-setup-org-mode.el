@@ -114,8 +114,10 @@
   '(
      ("c" . "Custom agenda")
      ("cw" "Work agenda"
-       ( (agenda "" ((org-agenda-ndays 7)))
-         (org-agenda-files sbw/work-files)
+       ( (agenda ""
+           ( (org-agenda-ndays 7)
+             (org-agenda-files sbw/work-files)
+             ))
          
          (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
@@ -134,10 +136,13 @@
              (org-agenda-files sbw/work-files)
              (org-agenda-prefix-format "%-10c %-10T")                          
              ))
-
          ))
+     
      ("cp" "Personal agenda"
-       ( (agenda "" ((org-agenda-ndays 7)))
+       ( (agenda ""
+           ( (org-agenda-ndays 7)
+             (org-agenda-files sbw/personal-files)
+             ))
          (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
              (org-agenda-files sbw/personal-files)
