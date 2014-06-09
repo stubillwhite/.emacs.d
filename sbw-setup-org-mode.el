@@ -10,7 +10,7 @@
   (mapcar (lambda (x) (concat org-directory x)) args))
 
 (defconst sbw/personal-files
-  (sbw/org-files "todo-personal.org"))
+  (sbw/org-files "todo-personal.org" "google-calendar.org"))
 
 (defconst sbw/work-files
   (sbw/org-files "todo-work.org" "timesheet.org"))
@@ -28,6 +28,7 @@
 (setq 
   org-clock-into-drawer         t           ;; Clock into drawers
   org-ellipsis                  "\u2026"    ;; Small ellipsis character
+  org-agenda-fontify-priorities nil         ;; Don't let priority change task representation
   org-indent-mode               t           ;; Use indent mode
   org-log-into-drawer           t           ;; Log into drawers
   org-M-RET-may-split-line      nil         ;; Don't split lines
@@ -122,19 +123,25 @@
          (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
              (org-agenda-files sbw/work-files)
-             (org-agenda-prefix-format "%-10c %-10T")                          
+             (org-agenda-todo-ignore-scheduled t)
+             (org-agenda-prefix-format "%-10c %-10T")
+             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
              (org-agenda-files sbw/work-files)
+             (org-agenda-todo-ignore-scheduled t)
              (org-agenda-prefix-format "%-10c %-10T")                          
+             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "+PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
              (org-agenda-files sbw/work-files)
+             (org-agenda-todo-ignore-scheduled t)
              (org-agenda-prefix-format "%-10c %-10T")                          
+             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
          ))
      
@@ -143,29 +150,34 @@
            ( (org-agenda-ndays 7)
              (org-agenda-files sbw/personal-files)
              ))
+         
          (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
              (org-agenda-files sbw/personal-files)
+             (org-agenda-todo-ignore-scheduled t)
              (org-agenda-prefix-format "%-10c %-10T")             
+             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
              (org-agenda-files sbw/personal-files)
+             (org-agenda-todo-ignore-scheduled t)
              (org-agenda-prefix-format "%-10c %-10T")
+             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "+PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
              (org-agenda-files sbw/personal-files)
+             (org-agenda-todo-ignore-scheduled t)
              (org-agenda-prefix-format "%-10c %-10T")
+             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
-
          ))
      ))
 
 
-(setq org-agenda-fontify-priorities t)
 
 ;; Key bindings
 ;; (global-set-key "\C-cl" 'org-store-link)
