@@ -81,10 +81,12 @@
     (define-key map (kbd "C-j o")   #'org-clock-out)
     (define-key map (kbd "C-j p")   #'org-priority)
     (define-key map (kbd "C-j g")   #'org-clock-goto)
-    (define-key map (kbd "C-j r")   #'sbw/right-align-tags)
-    (define-key map (kbd "C-j u")   #'org-update-all-dblocks)
+    (define-key map (kbd "C-j r t") #'sbw/right-align-tags)
+    (define-key map (kbd "C-j r u") #'org-update-all-dblocks)
+    (define-key map (kbd "C-j r s") #'sbw/org-sort-subtree)
     (define-key map (kbd "C-j v n") #'org-narrow-to-subtree)
     (define-key map (kbd "C-j v w") #'widen)
+
     map) 
   "Keymap used when sbw-org-mode-minor-mode is active.")
 

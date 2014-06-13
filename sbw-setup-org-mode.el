@@ -38,6 +38,9 @@
   org-default-priority          ?B          ;; Default priority for unprioritised items
 )
 
+(setq org-todo-keywords
+  '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)" "POSTPONED(p)"))
+
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
 
@@ -94,7 +97,21 @@
   (org-align-all-tags)
   (redisplay t))
 
+;; Sorting
+;; Ensure that subtrees can be sorted in some sort of useful order.
 
+(defun sbw/org-multisort (&rest criteria)
+  "Sort subtree by multiple criteria. See org-sort-entries for sort types."
+  (interactive)
+  (mapc #'(lambda (x) (org-sort-entries nil x))
+    (reverse criteria)))
+
+(defun sbw/org-sort-subtree ()
+  "Sort the current subtree by TODO state then priority."
+  (interactive)
+  (sbw/org-multisort ?O ?p))
+
+;; TODO check this stuff
 
 (defun org-sort-list-by-checkbox-type-1 ()
   (if (looking-at org-list-full-item-re)
