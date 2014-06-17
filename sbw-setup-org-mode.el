@@ -109,7 +109,9 @@
 (defun sbw/org-sort-subtree ()
   "Sort the current subtree by TODO state then priority."
   (interactive)
-  (sbw/org-multisort ?O ?p))
+  (sbw/org-multisort ?O ?p)
+  (hide-subtree)
+  (show-children))
 
 ;; TODO check this stuff
 

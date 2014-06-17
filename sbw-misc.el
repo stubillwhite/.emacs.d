@@ -32,6 +32,7 @@
   visible-bell                  t                                                       ;; No beep
   whitespace-line-column        80                                                      ;; 80 columns
   whitespace-style              '(face trailing lines-tail tabs)
+  sentence-end-double-space     nil                                                     ;; Sentences end in a single space
   )
 
 ;; Shift-cursor to move between windows
@@ -48,7 +49,7 @@
 (defvar user-temporary-file-directory "~/.emacs-backup")
 (make-directory user-temporary-file-directory t)
 (setq
-  backup-directory-alist         '(("." . ,(expand-file-name user-temporary-file-directory)))
+  backup-directory-alist            '(("." . ,(expand-file-name user-temporary-file-directory)))
   backup-by-copying                 t
   backup-directory-alist            `(("." . ,user-temporary-file-directory) (,tramp-file-name-regexp nil))
   auto-save-list-file-prefix        (concat user-temporary-file-directory ".auto-saves-")
