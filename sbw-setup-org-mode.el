@@ -107,9 +107,9 @@
     (reverse criteria)))
 
 (defun sbw/org-sort-subtree ()
-  "Sort the current subtree by TODO state then priority."
+  "Sort the current subtree by TODO state, then priority, then alphabetic."
   (interactive)
-  (sbw/org-multisort ?O ?p)
+  (sbw/org-multisort ?O ?p ?a)
   (hide-subtree)
   (show-children))
 
@@ -126,8 +126,6 @@
 
 (defun sbw/org-agenda-common-display ()
   (org-agenda-overriding-header "\nFoo\n---"))
-
-;; TODO Look into http://newartisans.com/2007/08/using-org-mode-as-a-day-planner/
 
 (setq org-agenda-remove-tags 1)
 (setq org-agenda-custom-commands
