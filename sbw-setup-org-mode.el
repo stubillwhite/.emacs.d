@@ -38,8 +38,11 @@
   org-default-priority          ?B          ;; Default priority for unprioritised items
 )
 
-(setq org-todo-keywords
+ (setq org-todo-keywords
   '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)" "POSTPONED(p)"))
+
+(setq org-drawers
+  '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
 
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
@@ -107,11 +110,11 @@
     (reverse criteria)))
 
 (defun sbw/org-sort-subtree ()
-  "Sort the current subtree by TODO state, then priority, then alphabetic."
+  "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
   (interactive)
-  (sbw/org-multisort ?O ?p ?a)
+  (sbw/org-multisort ?O ?p ?s ?d ?a)
   (hide-subtree)
-  (show-children))
+  (org-cycle))
 
 ;; TODO check this stuff
 
