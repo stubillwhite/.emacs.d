@@ -129,13 +129,10 @@
 
 
 ;; Custom agendas
-
 ;; TODO Remove boilerplate
-;(defun sbw/make-title-string (title)
-;  (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
-;
-;(defun sbw/org-agenda-common-display ()
-;  (org-agenda-overriding-header "\nFoo\n---"))
+
+(defun sbw/make-title-string (title)
+  (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
 
 (setq org-agenda-remove-tags 1)
 (setq org-agenda-custom-commands
@@ -232,3 +229,4 @@
    ))
 
 (provide 'sbw-setup-org-mode)
+
