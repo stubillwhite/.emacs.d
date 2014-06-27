@@ -1,13 +1,16 @@
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
 
-;; Org directory
+;; Org files
+
 (setq org-directory 
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
 
-;; Agenda files
+(defun sbw/org-file (fnam)
+  (concat org-directory fnam))
+
 (defun sbw/org-files (&rest args)
-  (mapcar (lambda (x) (concat org-directory x)) args))
+  (mapcar 'sbw/org-file args))
 
 (defconst sbw/personal-files
   (sbw/org-files "todo-personal.org" "google-calendar.org"))
@@ -38,11 +41,14 @@
   org-default-priority          ?B          ;; Default priority for unprioritised items
 )
 
- (setq org-todo-keywords
+(setq org-todo-keywords
   '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)" "POSTPONED(p)"))
 
 (setq org-drawers
   '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
+
+(setq org-archive-save-context-info
+  '(time file ltags itags todo category olpath))
 
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
@@ -77,7 +83,7 @@
   (lambda (path)
     (start-process "Aurora" nil "c:\\dev_fp\\eclipse-for-sdk\\eclipse.exe" "--launcher.openFile" path)))
 
-;; Link type for opening a file in a running Vim instance
+;; Link type for opening a file in Vim
 
 (org-add-link-type "vim"
   (lambda (path)
@@ -90,8 +96,6 @@
 (defun sbw/set-org-tags-column-based-on-window-size ()
   "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
   (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
-
-;; (add-hook 'window-configuration-change-hook 'sbw/set-org-tags-column-based-on-window-size)
 
 (defun sbw/right-align-tags ()
   "Right-align the all tags in the buffer."
@@ -116,19 +120,22 @@
   (hide-subtree)
   (org-cycle))
 
-;; TODO check this stuff
-
+; TODO Sort this out
 (defun org-sort-list-by-checkbox-type-1 ()
   (if (looking-at org-list-full-item-re)
     (cdr (assoc (match-string 3)
            '(("[X]" . 1) ("[-]" . 2) ("[ ]" . 3) (nil . 4))))
     4))
 
-(defun sbw/make-title-string (title)
-  (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
 
-(defun sbw/org-agenda-common-display ()
-  (org-agenda-overriding-header "\nFoo\n---"))
+;; Custom agendas
+
+;; TODO Remove boilerplate
+;(defun sbw/make-title-string (title)
+;  (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
+;
+;(defun sbw/org-agenda-common-display ()
+;  (org-agenda-overriding-header "\nFoo\n---"))
 
 (setq org-agenda-remove-tags 1)
 (setq org-agenda-custom-commands
@@ -197,34 +204,31 @@
          ))
      ))
 
+;; Appointments
+;; Refresh at startup and when the agenda is displayed
 
+(defun sbw/org-refresh-appointments-from-agenda ()
+  "Update the appointment list from the agenda."
+  (interactive)
+  (setq appt-time-msg-list nil)
+  (org-agenda-to-appt))
 
-;; Key bindings
-;; (global-set-key "\C-cl" 'org-store-link)
-;; (global-set-key "\C-cc" 'org-capture)
-;; (global-set-key "\C-ca" 'org-agenda)
-;; (global-set-key "\C-cb" 'org-iswitchb)
+(add-hook 'org-finalize-agenda-hook 'sbw/org-refresh-appointments-from-agenda 'append)
+(sbw/org-refresh-appointments-from-agenda)
 
-;; Notes configuration
+(appt-activate t)
 
-;; (setq org-protocol-default-template-key "l")
-;; (setq org-capture-templates
-;;  '(("t" "Todo" entry (file+headline "/path/to/notes.org" "Tasks")
-;;         "* TODO %?\n  %i\n  %a")
-;;    ("l" "Link" entry (file+olp "/path/to/notes.org" "Web Links")
-;;         "* %a\n %?\n %i")
-;;    ("j" "Journal" entry (file+datetree "/path/to/journal.org")
-;;         "* %?\nEntered on %U\n  %i\n  %a")))
-;; 
-;; ;; Archive as much information as possible
-;; (setq org-archive-save-context-info
-;;   '(time file ltags itags todo category olpath))
+;; org-protocol
 
-;;;; ;; Not working :(
-;;;; ;;
-;;;; ;; (add-hook 'org-mode-hook
-;;;; ;;       '(lambda ()
-;;;; ;;          (delete '("\\.pdf\\'" . default) org-file-apps)
-;;;; ;;          (add-to-list 'org-file-apps '("\\.pdf\\'" . "explorer %s"))))
+(require 'org-protocol)
+
+(setq org-protocol-default-template-key "l")
+
+(setq org-capture-templates
+ '(("t" "Todo" entry (file+headline (sbw/org-file "incoming.org") "Tasks")
+        "* TODO %?\n  %i\n  %a")
+   ("l" "Link" entry (file+olp (sbw/org-file "incoming.org") "Links")
+        "* %a\n %?\n %i")
+   ))
 
 (provide 'sbw-setup-org-mode)
