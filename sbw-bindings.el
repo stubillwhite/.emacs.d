@@ -72,18 +72,18 @@
 (defvar sbw-org-mode-minor-mode-keymap
   (let ((map (make-sparse-keymap))) 
     (define-key map (kbd "C-j a")   #'org-agenda)
-    (define-key map (kbd "C-j s t") #'org-set-tags-command)
+    (define-key map (kbd "C-j s m") #'org-set-tags-command)
     (define-key map (kbd "C-j s p") #'org-priority)
     (define-key map (kbd "C-j s e") #'org-set-effort)
     (define-key map (kbd "C-j s s") #'org-schedule)
     (define-key map (kbd "C-j s d") #'org-deadline)
     (define-key map (kbd "C-j t")   #'org-todo)
     (define-key map (kbd "C-j i")   #'org-clock-in)
-    ;(define-key map (kbd "C-j n")   #'(lambda () (interactive) (org-insert-drawer)))
+    (define-key map (kbd "C-j n")   #'(lambda () (interactive) (org-insert-drawer "BEEF")))
     (define-key map (kbd "C-j o")   #'org-clock-out)
     (define-key map (kbd "C-j g")   #'org-clock-goto)
     (define-key map (kbd "C-j r t") #'sbw/right-align-tags)
-    (define-key map (kbd "C-j r u") #'org-update-all-dblocks)
+    (define-key map (kbd "C-j r r") #'sbw/org-mode-redraw)
     (define-key map (kbd "C-j r s") #'sbw/org-sort-subtree)
     (define-key map (kbd "C-j v n") #'org-narrow-to-subtree)
     (define-key map (kbd "C-j v w") #'widen)
@@ -92,6 +92,13 @@
 
     map) 
   "Keymap used when sbw-org-mode-minor-mode is active.")
+
+;; Make windmove work in org-mode
+;; TODO Fix this up
+(add-hook 'org-shiftup-final-hook 'windmove-up)
+(add-hook 'org-shiftleft-final-hook 'windmove-left)
+(add-hook 'org-shiftdown-final-hook 'windmove-down)
+(add-hook 'org-shiftright-final-hook 'windmove-right)
 
 (define-minor-mode sbw-org-mode-minor-mode
   "Custom minor mode for org-mode."

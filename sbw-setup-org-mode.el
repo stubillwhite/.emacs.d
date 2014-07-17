@@ -13,7 +13,10 @@
   (mapcar 'sbw/org-file args))
 
 (defconst sbw/personal-files
-  (sbw/org-files "todo-personal.org" "google-calendar.org"))
+  (sbw/org-files "todo-personal.org"))
+
+(defconst sbw/calendar-files
+  (sbw/org-files "google-calendar.org"))
 
 (defconst sbw/work-files
   (sbw/org-files "todo-work.org" "timesheet.org"))
@@ -22,9 +25,9 @@
   (sbw/org-files "incoming.org" "weekly-plan.org"))
 
 (setq org-agenda-files
-  (append sbw/personal-files sbw/work-files sbw/planning-files (list)))
+  (append sbw/personal-files sbw/work-files sbw/planning-files sbw/calendar-files (list)))
 
-(setq org-default-notes-file (concat org-directory "incoming.org") )
+(setq org-default-notes-file (sbw/org-file "incoming.org"))
 
 ;; General settings
 
@@ -35,7 +38,7 @@
   org-indent-mode               t           ;; Use indent mode
   org-log-into-drawer           t           ;; Log into drawers
   org-M-RET-may-split-line      nil         ;; Don't split lines
-  org-replace-disputed-keys     t           ;; Prevent org-mode from binding shift-cursor keys
+;;  org-replace-disputed-keys     t           ;; Prevent org-mode from binding shift-cursor keys
   org-return-follows-link       t           ;; Easy link navigation
   org-use-property-inheritance  t           ;; Child items should inherit all from parents
   org-default-priority          ?B          ;; Default priority for unprioritised items
@@ -49,6 +52,13 @@
 
 (setq org-archive-save-context-info
   '(time file ltags itags todo category olpath))
+
+(setq org-refile-targets
+  (quote ((org-agenda-files :maxlevel . 1))))
+
+;(setq org-refile-targets
+;  (let ((targets (sbw/filter (lambda (x) (not (member x sbw/calendar-files))) org-agenda-files)))
+;    (quote ((targets . (:maxlevel . 1))))))
 
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
@@ -199,6 +209,11 @@
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
          ))
+
+     ("2" "Weekly review sans routines" agenda ""
+       ( (org-agenda-log-mode t)
+         (org-agenda-span 7)         
+         ))    
      ))
 
 ;; Appointments
@@ -219,14 +234,96 @@
 
 (require 'org-protocol)
 
-(setq org-protocol-default-template-key "l")
+(setq org-protocol-default-template-key nil)
 
 (setq org-capture-templates
- '(("t" "Todo" entry (file+headline (sbw/org-file "incoming.org") "Tasks")
+ '( ("t" "Todo" entry (file+headline (sbw/org-file "incoming.org") "Tasks")
         "* TODO %?\n  %i\n  %a")
-   ("l" "Link" entry (file+olp (sbw/org-file "incoming.org") "Links")
+    ("l" "Link" entry (file+olp (sbw/org-file "incoming.org") "Links")
         "* %a\n %?\n %i")
+    ("j" "Jira task" entry (file+headline (sbw/org-file "timesheet.org") "Project-X")
+        "* TODO [#A] %?%a")
    ))
 
-(provide 'sbw-setup-org-mode)
 
+(defun sbw/eclipse-link (data)
+  "Push a link to open a file in Eclipse."
+  (message data)
+  nil)
+
+(add-to-list 'org-protocol-protocol-alist
+  '("eclipse-link"
+     :protocol "eclipse-link"
+     :function sbw/eclipse-link))
+
+(add-to-list 'org-protocol-protocol-alist
+  '("white-test"
+     :protocol "white-test"
+     :function sbw/white-test))
+
+(defun sbw/white-test (data)
+  (let* ( (parts    (org-protocol-split-data data))
+          (path     (car parts))
+          (filename (cadr parts)) )
+;;    (interactive)
+    (message (concat "path=" path ", filename=" filename))
+;;    (insert (org-make-link path filename))
+    )
+  nil)
+
+(defun hello-world (data)
+  "Say hello to the world."
+  (message data)
+nil)
+
+(add-to-list 'org-protocol-protocol-alist
+             '("Hello World"
+               :protocol "hello-world"
+               :function hello-world))
+
+;;
+
+(defun sbw/org-mode-redraw ()
+  "Redraw org-mode buffer, updating dynamic blocks and aligning tags."
+  (interactive)
+  (org-update-all-dblocks)
+  (sbw/right-align-tags)
+  nil)
+
+(defun sbw/goto-first-heading ()
+  (interactive)
+  (beginning-of-buffer)
+  (when (not (outline-on-heading-p))
+    (outline-next-heading))
+  nil)
+
+(defun sbw/current-line ()
+  (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
+
+(defun sbw/map-to-headings (f)
+  (interactive)
+  (save-excursion
+    (sbw/goto-first-heading)
+    (funcall f (sbw/current-line))
+    (while (outline-next-heading)
+      (funcall f (sbw/current-line))))
+  nil)
+
+(defun sbw/log-all-headings ()
+  (interactive)
+  (sbw/map-to-headings '(lambda (x) (message (concat (number-to-string (outline-level)) " " x)))))
+
+(defun sbw/is-top-level-heading-p ()
+  (= (outline-level) 2))
+
+(defun sbw/sort-all-subtrees ()
+  (interactive)
+  (sbw/map-to-headings
+    '(lambda (x)
+       (when (sbw/is-top-level-heading-p)
+         
+         (condition-case ex
+           (sbw/org-sort-subtree)
+           ('error (message (format "Caught exception: [%s]" ex))))))))
+
+(provide 'sbw-setup-org-mode)
