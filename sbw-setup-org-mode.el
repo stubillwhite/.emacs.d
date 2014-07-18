@@ -114,23 +114,6 @@
   (org-align-all-tags)
   (redisplay t))
 
-;; Sorting
-;; Ensure that subtrees can be sorted in some sort of useful order.
-
-(defun sbw/org-multisort (&rest criteria)
-  "Sort subtree by multiple criteria. See org-sort-entries for sort types."
-  (interactive)
-  (mapc #'(lambda (x) (org-sort-entries nil x))
-    (reverse criteria)))
-
-(defun sbw/org-sort-subtree ()
-  "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
-  (interactive)
-  (save-excursion
-    (sbw/org-multisort ?O ?p ?s ?d ?a)
-    (hide-subtree)
-    (org-cycle)))
-
 ; TODO Sort this out
 (defun org-sort-list-by-checkbox-type-1 ()
   (if (looking-at org-list-full-item-re)
@@ -282,7 +265,7 @@ nil)
                :protocol "hello-world"
                :function hello-world))
 
-;; Functions to sort all subtrees within a file
+;; Helper to apply a function to all headings in a buffer
 
 (defun sbw/goto-first-heading ()
   (interactive)
@@ -295,12 +278,31 @@ nil)
   (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 
 (defun sbw/map-to-headings (f)
+  "Apply f to all headings in the buffer."
   (save-excursion
     (sbw/goto-first-heading)
     (funcall f (sbw/current-line))
     (while (outline-next-heading)
       (funcall f (sbw/current-line))))
   nil)
+
+;; Sorting subtrees
+
+(defun sbw/org-multisort (&rest criteria)
+  "Sort subtree by multiple criteria. See org-sort-entries for sort types."
+  (interactive)
+  (mapc #'(lambda (x) (org-sort-entries nil x))
+    (reverse criteria)))
+
+(defun sbw/org-sort-subtree ()
+  "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
+  (interactive)
+  (save-excursion
+    (sbw/org-multisort ?O ?p ?s ?d ?a)
+    (hide-subtree)
+    (org-cycle)))
+
+;; Sorting all subtrees
 
 (defun sbw/is-top-level-heading-p ()
   (= (outline-level) 2))
