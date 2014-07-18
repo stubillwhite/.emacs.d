@@ -83,7 +83,7 @@
     (define-key map (kbd "C-j o")   #'org-clock-out)
     (define-key map (kbd "C-j g")   #'org-clock-goto)
     (define-key map (kbd "C-j r t") #'sbw/right-align-tags)
-    (define-key map (kbd "C-j r r") #'sbw/org-mode-redraw)
+    (define-key map (kbd "C-j r r") #'sbw/org-mode-reformat)
     (define-key map (kbd "C-j r s") #'sbw/org-sort-subtree)
     (define-key map (kbd "C-j v n") #'org-narrow-to-subtree)
     (define-key map (kbd "C-j v w") #'widen)

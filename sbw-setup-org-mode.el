@@ -126,9 +126,10 @@
 (defun sbw/org-sort-subtree ()
   "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
   (interactive)
-  (sbw/org-multisort ?O ?p ?s ?d ?a)
-  (hide-subtree)
-  (org-cycle))
+  (save-excursion
+    (sbw/org-multisort ?O ?p ?s ?d ?a)
+    (hide-subtree)
+    (org-cycle)))
 
 ; TODO Sort this out
 (defun org-sort-list-by-checkbox-type-1 ()
@@ -281,14 +282,7 @@ nil)
                :protocol "hello-world"
                :function hello-world))
 
-;;
-
-(defun sbw/org-mode-redraw ()
-  "Redraw org-mode buffer, updating dynamic blocks and aligning tags."
-  (interactive)
-  (org-update-all-dblocks)
-  (sbw/right-align-tags)
-  nil)
+;; Functions to sort all subtrees within a file
 
 (defun sbw/goto-first-heading ()
   (interactive)
@@ -301,17 +295,12 @@ nil)
   (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 
 (defun sbw/map-to-headings (f)
-  (interactive)
   (save-excursion
     (sbw/goto-first-heading)
     (funcall f (sbw/current-line))
     (while (outline-next-heading)
       (funcall f (sbw/current-line))))
   nil)
-
-(defun sbw/log-all-headings ()
-  (interactive)
-  (sbw/map-to-headings '(lambda (x) (message (concat (number-to-string (outline-level)) " " x)))))
 
 (defun sbw/is-top-level-heading-p ()
   (= (outline-level) 2))
@@ -321,9 +310,17 @@ nil)
   (sbw/map-to-headings
     '(lambda (x)
        (when (sbw/is-top-level-heading-p)
-         
-         (condition-case ex
-           (sbw/org-sort-subtree)
-           ('error (message (format "Caught exception: [%s]" ex))))))))
+         (message (format "Sorting subtree under [%s]" (sbw/current-line)))
+         (ignore-errors (sbw/org-sort-subtree))))))
+
+;; Reformat the current org-mode buffer
+
+(defun sbw/org-mode-reformat ()
+  "Reformat the current org-mode buffer, updating dynamic blocks, aligning tags, sorting subtrees."
+  (interactive)
+  (org-update-all-dblocks)
+  (sbw/right-align-tags)
+  (sbw/sort-all-subtrees)
+  nil)
 
 (provide 'sbw-setup-org-mode)
