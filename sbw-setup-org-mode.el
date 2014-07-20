@@ -222,9 +222,9 @@
 
 (setq org-capture-templates
  '( ("t" "Todo" entry (file+headline (sbw/org-file "incoming.org") "Tasks")
-        "* TODO %?\n  %i\n  %a")
+        "* TODO %?\n %i %a")
     ("l" "Link" entry (file+olp (sbw/org-file "incoming.org") "Links")
-        "* %a\n %?\n %i")
+        "* TODO %a\n %?\n %i")
     ("j" "Jira task" entry (file+headline (sbw/org-file "timesheet.org") "Project-X")
         "* TODO [#A] %?%a")
    ))
@@ -298,7 +298,7 @@ nil)
   "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
   (interactive)
   (save-excursion
-    (sbw/org-multisort ?O ?p ?s ?d ?a)
+    (sbw/org-multisort ?o ?p ?s ?d ?a)
     (hide-subtree)
     (org-cycle)))
 
