@@ -15,6 +15,9 @@
 (defconst sbw/required-packages
   '(
      ;; Standard stuff
+     use-package      ;; Easy package use
+     dash             ;; Modern list library
+     dash-functional  ;; Further functions for dash
      color-theme      ;; Color theme support
      undo-tree        ;; Undo tree visualisation
      ido-ubiquitous   ;; Interactive completion everywhere

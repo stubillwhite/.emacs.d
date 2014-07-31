@@ -37,6 +37,7 @@
   org-agenda-fontify-priorities nil         ;; Don't let priority change task representation
   org-indent-mode               t           ;; Use indent mode
   org-log-into-drawer           t           ;; Log into drawers
+  org-log-done                  'time       ;; Timestamp task completion so it can be used in reports
   org-M-RET-may-split-line      nil         ;; Don't split lines
 ;;  org-replace-disputed-keys     t           ;; Prevent org-mode from binding shift-cursor keys
   org-return-follows-link       t           ;; Easy link navigation
@@ -45,7 +46,7 @@
 )
 
 (setq org-todo-keywords
-  '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)" "POSTPONED(p)"))
+  '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE(d!)" "CANCELLED(c)" "POSTPONED(p)"))
 
 (setq org-drawers
   '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
@@ -55,10 +56,6 @@
 
 (setq org-refile-targets
   (quote ((org-agenda-files :maxlevel . 1))))
-
-;(setq org-refile-targets
-;  (let ((targets (sbw/filter (lambda (x) (not (member x sbw/calendar-files))) org-agenda-files)))
-;    (quote ((targets . (:maxlevel . 1))))))
 
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
@@ -124,6 +121,7 @@
 
 ;; Custom agendas
 ;; TODO Remove boilerplate
+;; TODO Look at http://stackoverflow.com/questions/22394394/orgmode-a-report-of-tasks-that-are-done-within-the-week for how to tidy this up
 
 (defun sbw/make-title-string (title)
   (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
@@ -137,7 +135,7 @@
            ( (org-agenda-ndays 7)
              (org-agenda-files sbw/work-files)
              ))
-         
+                  
          (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
              (org-agenda-files sbw/work-files)
@@ -222,16 +220,17 @@
 
 (setq org-capture-templates
  '( ("t" "Todo" entry (file+headline (sbw/org-file "incoming.org") "Tasks")
-        "* TODO %?\n %i %a")
+        "* TODO %?%a\n%i")
     ("l" "Link" entry (file+olp (sbw/org-file "incoming.org") "Links")
-        "* TODO %a\n %?\n %i")
+        "* TODO %?%a\n%i")
     ("j" "Jira task" entry (file+headline (sbw/org-file "timesheet.org") "Project-X")
         "* TODO [#A] %?%a")
    ))
 
+;; org-protocol experimental, not working
 
 (defun sbw/eclipse-link (data)
-  "Push a link to open a file in Eclipse."
+  "Link to open a file in Eclipse."
   (message data)
   nil)
 
@@ -275,15 +274,16 @@ nil)
   nil)
 
 (defun sbw/current-line ()
+  (interactive)
   (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 
 (defun sbw/map-to-headings (f)
-  "Apply f to all headings in the buffer."
+  "Apply f(p) to all headings in the buffer, where p is the point in the buffer." 
   (save-excursion
     (sbw/goto-first-heading)
-    (funcall f (sbw/current-line))
+    (funcall f (point))
     (while (outline-next-heading)
-      (funcall f (sbw/current-line))))
+      (funcall f (point))))
   nil)
 
 ;; Sorting subtrees
@@ -297,13 +297,16 @@ nil)
 (defun sbw/org-sort-subtree ()
   "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
   (interactive)
-  (save-excursion
-    (sbw/org-multisort ?o ?p ?s ?d ?a)
-    (hide-subtree)
-    (org-cycle)))
+  (if (org-clocking-p)
+    (message "Currently clocked in on a task. Clock out and re-run the command to sort the subtree.")
+    (save-excursion
+      (sbw/org-multisort ?o ?p ?s ?d ?a)
+      (hide-subtree)
+      (org-cycle))))
 
 ;; Sorting all subtrees
 
+;; TODO rename to ?
 (defun sbw/is-top-level-heading-p ()
   (= (outline-level) 2))
 
@@ -324,5 +327,113 @@ nil)
   (sbw/right-align-tags)
   (sbw/sort-all-subtrees)
   nil)
+
+;; Weekly report
+
+(defun sbw/org-heading-points ()
+  "Returns a list of the points of all the headings in the current org-mode buffer."
+  (let ((points nil))
+    (save-excursion
+      (show-all)
+      (end-of-buffer)
+      (setq points
+        (-unfold
+          (lambda (x)
+            (when (outline-previous-heading)
+              (cons (point) x)))
+          :unused-seed))
+      (org-overview))
+    points))
+
+;; TODO look at org-bracket-link-regexp
+(defun sbw/extract-string (x)
+  "Returns a string extracted from the org property."
+  (when x
+    (substring-no-properties x)))
+
+(defun sbw/extract-timestamp (x)
+  "Returns a timestamp extracted from the org property."
+  (when x
+    (date-to-time x)))
+
+(defun sbw/org-extract-heading-summary (x)
+  "Returns a summary of the org-mode heading at point x."
+  (let* ((summary (sbw/hash-table)))
+    (save-excursion
+      (goto-char x)
+      (puthash :category (sbw/extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
+      (puthash :state    (sbw/extract-string (org-get-todo-state)) summary)
+      (puthash :tags     (sbw/extract-string (org-get-tags-at)) summary)
+      (puthash :heading  (sbw/extract-string (org-get-heading nil t)) summary)
+      (puthash :closed   (sbw/extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
+    summary))
+
+(defun sbw/is-included-in-report? (start end x)
+  "Returns t if the specified task should be included in the report."
+  (let* ( (closed (gethash :closed x)) )
+    (and
+      (gethash :state x)
+      closed
+;      (and (time-less-p start closed) (time-less-p closed end))
+      )))
+
+(defun sbw/group-tasks-by-category (x)
+  "Returns a hash-table of lists of tasks, keyed by task category."
+  (-reduce-from    
+    (lambda (acc val)
+      (let* ( (category (gethash :category val))
+              (curr-val (gethash category acc (list))) )
+        (puthash category (cons val curr-val) acc)
+        acc))
+    (sbw/hash-table)
+    x))
+
+(defun sbw/generate-report-for-task-category (category completed-tasks)
+  (concat
+    (sbw/heading-two category)
+    "\n"
+    (apply 'concat
+      (-map
+        (lambda (x) (concat " - " (gethash :heading x) "\n"))
+        completed-tasks))
+    "\n"))
+
+;;; TODO Rename from completed if we're passing in a filter function
+;;; Pass in the generation-report-for-task-category function
+;;; Or make it two-phase, collect (up to the filter) and process
+(defun sbw/generate-report-for-completed-tasks (filter-func)
+  "Returns a summary of the completed tasks in the specified period."
+  (apply 'concat
+    (->> (sbw/org-heading-points)
+      (-map 'sbw/org-extract-heading-summary)
+      (-filter filter-func)
+      (sbw/group-tasks-by-category)
+      (sbw/map-hash 'sbw/generate-report-for-task-category)
+      )))
+
+(defun sbw/adjust-date-by (date n)
+  "Returns a timestamp for the specified date plus n days."
+  (days-to-time (+ (time-to-number-of-days date) n)))
+
+(defun sbw/generate-report-for-period (start end)
+  "Returns a report for the specified period."
+  (let* ( (format-date (-partial 'format-time-string "%A %e %B %Y")) )
+    (concat
+      (sbw/heading-one (concat "Review for " (funcall format-date start) " to " (funcall format-date end)))
+      "\n"
+      (sbw/generate-report-for-completed-tasks (-partial 'sbw/is-included-in-report? start end))
+      "\n")))
+
+(defun sbw/generate-weekly-report ()
+  "Returns the weekly report."
+  (let* ( (base  (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
+          (start (sbw/adjust-date-by base -6))
+          (end   (sbw/adjust-date-by base  1)) )
+    (sbw/generate-report-for-period start end)))
+
+(defun sbw/white-test ()
+  "Just for testing"
+  (interactive)
+  (message (sbw/generate-weekly-report)))
 
 (provide 'sbw-setup-org-mode)
