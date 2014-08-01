@@ -28,7 +28,6 @@
 
      ;; Clojure
      clojure-mode      ;; Clojure mode
-     clojure-test-mode ;; Clojure test mode
      cider             ;; REPL support
      smartparens       ;; Improved paredit
      ac-nrepl          ;; Cider REPL autocomplete and documentation

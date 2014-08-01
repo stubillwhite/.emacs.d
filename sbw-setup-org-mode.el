@@ -1,3 +1,5 @@
+(require 'org-clock)
+
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
 
@@ -307,14 +309,14 @@ nil)
 ;; Sorting all subtrees
 
 ;; TODO rename to ?
-(defun sbw/is-top-level-heading-p ()
+(defun sbw/is-top-level-heading? ()
   (= (outline-level) 2))
 
 (defun sbw/sort-all-subtrees ()
   (interactive)
   (sbw/map-to-headings
     '(lambda (x)
-       (when (sbw/is-top-level-heading-p)
+       (when (sbw/is-top-level-heading?)
          (message (format "Sorting subtree under [%s]" (sbw/current-line)))
          (ignore-errors (sbw/org-sort-subtree))))))
 
@@ -368,26 +370,6 @@ nil)
       (puthash :closed   (sbw/extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
     summary))
 
-(defun sbw/is-included-in-report? (start end x)
-  "Returns t if the specified task should be included in the report."
-  (let* ( (closed (gethash :closed x)) )
-    (and
-      (gethash :state x)
-      closed
-;      (and (time-less-p start closed) (time-less-p closed end))
-      )))
-
-(defun sbw/group-tasks-by-category (x)
-  "Returns a hash-table of lists of tasks, keyed by task category."
-  (-reduce-from    
-    (lambda (acc val)
-      (let* ( (category (gethash :category val))
-              (curr-val (gethash category acc (list))) )
-        (puthash category (cons val curr-val) acc)
-        acc))
-    (sbw/hash-table)
-    x))
-
 (defun sbw/generate-report-for-task-category (category completed-tasks)
   (concat
     (sbw/heading-two category)
@@ -398,22 +380,28 @@ nil)
         completed-tasks))
     "\n"))
 
-;;; TODO Rename from completed if we're passing in a filter function
-;;; Pass in the generation-report-for-task-category function
-;;; Or make it two-phase, collect (up to the filter) and process
 (defun sbw/generate-report-for-completed-tasks (filter-func)
   "Returns a summary of the completed tasks in the specified period."
-  (apply 'concat
-    (->> (sbw/org-heading-points)
-      (-map 'sbw/org-extract-heading-summary)
-      (-filter filter-func)
-      (sbw/group-tasks-by-category)
-      (sbw/map-hash 'sbw/generate-report-for-task-category)
-      )))
+  (let* ( (extract-headings         (lambda (x) (-map 'sbw/org-extract-heading-summary x)))
+          (prune-irrelevant-tasks   (lambda (x) (-filter filter-func x)))
+          (group-by-category        (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x)))
+          (generate-category-report (lambda (x) (sbw/map-hash 'sbw/generate-report-for-task-category x))) )
+    (apply 'concat
+      (->> (sbw/org-heading-points)
+        (funcall extract-headings)
+        (funcall prune-irrelevant-tasks)
+        (funcall group-by-category)
+        (funcall generate-category-report)))))
 
 (defun sbw/adjust-date-by (date n)
   "Returns a timestamp for the specified date plus n days."
   (days-to-time (+ (time-to-number-of-days date) n)))
+
+(defun sbw/is-closed-between? (start end x)
+  "Returns t if task x was closed between start and end."
+  (let* ( (closed (gethash :closed x)) )
+    (when closed
+      (and (time-less-p start closed) (time-less-p closed end)))))
 
 (defun sbw/generate-report-for-period (start end)
   "Returns a report for the specified period."
@@ -421,7 +409,7 @@ nil)
     (concat
       (sbw/heading-one (concat "Review for " (funcall format-date start) " to " (funcall format-date end)))
       "\n"
-      (sbw/generate-report-for-completed-tasks (-partial 'sbw/is-included-in-report? start end))
+      (sbw/generate-report-for-completed-tasks (-partial 'sbw/is-closed-between? start end))
       "\n")))
 
 (defun sbw/generate-weekly-report ()
@@ -430,6 +418,30 @@ nil)
           (start (sbw/adjust-date-by base -6))
           (end   (sbw/adjust-date-by base  1)) )
     (sbw/generate-report-for-period start end)))
+
+
+
+
+
+
+
+
+(setq org-fontify-done-headline t)
+(custom-set-faces
+ '(org-done ((t (;:foreground "PaleGreen"   
+                 :weight normal
+                 :strike-through t))))
+ '(org-headline-done 
+            ((((class color) (min-colors 16) (background dark)) 
+               (; :foreground "LightSalmon"
+                 :strike-through t))))
+  )
+
+;(custom-set-faces
+; '(org-done          ((t (:background unspecified :foreground unspecified :weight normal :strike-through t :inherit (sbw-dark-tag)))))
+; '(org-headling-done ((t (:background unspecified :foreground unspecified :weight normal :strike-through t :inherit (sbw-dark-normal)))))
+; )
+
 
 (defun sbw/white-test ()
   "Just for testing"

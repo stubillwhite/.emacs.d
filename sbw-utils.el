@@ -63,6 +63,7 @@
     (maphash (lambda (k v) (push (funcall f k v) results)) hash-table)
     results))
 
+;; TODO Test this
 (defun sbw/map-hash (f hash-table)
   "Returns a list of the result of calling f on each key value entry in the specified hash-table."
   (let ( (results) )
@@ -71,5 +72,15 @@
     ))
 
 ;; TODO Test this
+(defun sbw/collect-by (f l)
+  "Returns a hash-table of lists of items, keyed by the result of (f item) for each item in list l."
+  (-reduce-from    
+    (lambda (acc val)
+      (let* ( (category (funcall f val))
+              (curr-val (gethash category acc (list))) )
+        (puthash category (cons val curr-val) acc)
+        acc))
+    (sbw/hash-table)
+    l))
 
 (provide 'sbw-utils)
