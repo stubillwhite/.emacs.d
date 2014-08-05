@@ -306,31 +306,7 @@ nil)
       (hide-subtree)
       (org-cycle))))
 
-;; Sorting all subtrees
-
-;; TODO rename to ?
-(defun sbw/is-top-level-heading? ()
-  (= (outline-level) 2))
-
-(defun sbw/sort-all-subtrees ()
-  (interactive)
-  (sbw/map-to-headings
-    '(lambda (x)
-       (when (sbw/is-top-level-heading?)
-         (message (format "Sorting subtree under [%s]" (sbw/current-line)))
-         (ignore-errors (sbw/org-sort-subtree))))))
-
-;; Reformat the current org-mode buffer
-
-(defun sbw/org-mode-reformat ()
-  "Reformat the current org-mode buffer, updating dynamic blocks, aligning tags, sorting subtrees."
-  (interactive)
-  (org-update-all-dblocks)
-  (sbw/right-align-tags)
-  (sbw/sort-all-subtrees)
-  nil)
-
-;; Weekly report
+;; Navigating org buffers
 
 (defun sbw/org-heading-points ()
   "Returns a list of the points of all the headings in the current org-mode buffer."
@@ -347,11 +323,20 @@ nil)
       (org-overview))
     points))
 
-;; TODO look at org-bracket-link-regexp
+(defun sbw/org-strip-urls (s)
+  "Return string s with any URLs replaced with their descriptions."
+  (let* ( (str s) )
+    (while (string-match org-bracket-link-regexp str)
+      (setq str
+        (replace-regexp-in-string (regexp-quote (match-string 0 str)) (match-string 3 str) str)))
+    str))
+
 (defun sbw/extract-string (x)
   "Returns a string extracted from the org property."
   (when x
-    (substring-no-properties x)))
+    (-> x
+      (substring-no-properties)
+      (sbw/org-strip-urls))))
 
 (defun sbw/extract-timestamp (x)
   "Returns a timestamp extracted from the org property."
@@ -363,12 +348,46 @@ nil)
   (let* ((summary (sbw/hash-table)))
     (save-excursion
       (goto-char x)
+      (puthash :point    x summary)
       (puthash :category (sbw/extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
       (puthash :state    (sbw/extract-string (org-get-todo-state)) summary)
       (puthash :tags     (sbw/extract-string (org-get-tags-at)) summary)
       (puthash :heading  (sbw/extract-string (org-get-heading nil t)) summary)
+      (puthash :level    (funcall outline-level) summary)
       (puthash :closed   (sbw/extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
     summary))
+
+(defun sbw/org-heading-summaries ()
+  "Returns summaries for all the headings in the current org-mode buffer. See sbw/org-extract-heading-summary."
+  (->> (sbw/org-heading-points)
+    (-map 'sbw/org-extract-heading-summary)))
+
+;; Sorting all subtrees
+
+(defun sbw/sort-all-subtrees ()
+  "Sorts all the subtrees in the current org-mode buffer."
+  (interactive)
+  (-each
+    (->> (sbw/org-heading-summaries)
+      (-filter (lambda (x) (equal 1 (gethash :level x)))))
+    (lambda (x)
+      (goto-char (gethash :point x))
+      (message (format "Sorting subtree under [%s]" (sbw/current-line)))
+      (ignore-errors (sbw/org-sort-subtree)))))
+
+;; Reformat the current org-mode buffer
+
+(defun sbw/org-mode-reformat ()
+  "Reformat the current org-mode buffer, updating dynamic blocks, aligning tags, sorting subtrees."
+  (interactive)
+  (org-update-all-dblocks)
+  (sbw/right-align-tags)
+  (sbw/sort-all-subtrees)
+  nil)
+
+;; Weekly report
+
+(setq edebug-trace t)
 
 (defun sbw/generate-report-for-task-category (category completed-tasks)
   (concat
@@ -382,13 +401,11 @@ nil)
 
 (defun sbw/generate-report-for-completed-tasks (filter-func)
   "Returns a summary of the completed tasks in the specified period."
-  (let* ( (extract-headings         (lambda (x) (-map 'sbw/org-extract-heading-summary x)))
-          (prune-irrelevant-tasks   (lambda (x) (-filter filter-func x)))
+  (let* ( (prune-irrelevant-tasks   (lambda (x) (-filter filter-func x)))
           (group-by-category        (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x)))
           (generate-category-report (lambda (x) (sbw/map-hash 'sbw/generate-report-for-task-category x))) )
     (apply 'concat
-      (->> (sbw/org-heading-points)
-        (funcall extract-headings)
+      (->> (sbw/org-heading-summaries)
         (funcall prune-irrelevant-tasks)
         (funcall group-by-category)
         (funcall generate-category-report)))))
@@ -401,7 +418,11 @@ nil)
   "Returns t if task x was closed between start and end."
   (let* ( (closed (gethash :closed x)) )
     (when closed
-      (and (time-less-p start closed) (time-less-p closed end)))))
+      t
+      ;(and (time-less-p start closed) (time-less-p closed end))
+      )))
+
+
 
 (defun sbw/generate-report-for-period (start end)
   "Returns a report for the specified period."
@@ -447,5 +468,25 @@ nil)
   "Just for testing"
   (interactive)
   (message (sbw/generate-weekly-report)))
+
+(defun sbw/dump-to-file (fnam str)
+  (save-excursion
+    (let ( (buf (find-file-noselect fnam)) )
+      (set-buffer buf)
+      (erase-buffer)
+      (insert str)
+      (save-buffer)
+      (kill-buffer)
+      )))
+
+(defun sbw/dump-to-file (fnam str)
+  (append-to-file str nil fnam))
+
+(defun sbw/white-test ()
+  "Just for testing"
+  (interactive)
+  (sbw/dump-to-file "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/weekly-reports/test.txt" (sbw/generate-weekly-report)))
+
+
 
 (provide 'sbw-setup-org-mode)
