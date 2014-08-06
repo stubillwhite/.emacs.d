@@ -327,8 +327,11 @@ nil)
   "Return string s with any URLs replaced with their descriptions."
   (let* ( (str s) )
     (while (string-match org-bracket-link-regexp str)
-      (setq str
-        (replace-regexp-in-string (regexp-quote (match-string 0 str)) (match-string 3 str) str)))
+      (let* ( (url   (match-string 1 str))
+              (descr (match-string 3 str))
+              (repl  (if descr descr url)) )
+        (setq str
+          (replace-regexp-in-string (regexp-quote (match-string 0 str)) repl str))))
     str))
 
 (defun sbw/extract-string (x)
