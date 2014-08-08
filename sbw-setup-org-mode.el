@@ -26,8 +26,11 @@
 (defconst sbw/planning-files
   (sbw/org-files "incoming.org" "weekly-plan.org"))
 
+(defconst sbw/habits-files
+  (sbw/org-files "habits.org"))
+
 (setq org-agenda-files
-  (append sbw/personal-files sbw/work-files sbw/planning-files sbw/calendar-files (list)))
+  (append sbw/personal-files sbw/work-files sbw/planning-files sbw/calendar-files sbw/habits-files (list)))
 
 (setq org-default-notes-file (sbw/org-file "incoming.org"))
 
@@ -436,14 +439,23 @@ nil)
       (sbw/generate-report-for-completed-tasks (-partial 'sbw/is-closed-between? start end))
       "\n")))
 
+(setq sbw/org-report-dir
+  "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/reports")
+
 (defun sbw/generate-weekly-report ()
   "Returns the weekly report."
-  (let* ( (base  (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
-          (start (sbw/adjust-date-by base -6))
-          (end   (sbw/adjust-date-by base  1)) )
-    (sbw/generate-report-for-period start end)))
-
-
+  (let* ( (base        (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
+          (start       (sbw/adjust-date-by base -6))
+          (end         (sbw/adjust-date-by base  1))
+          (report      (sbw/generate-report-for-period start end))
+          (format-date (-partial 'format-time-string "%Y%m%d"))
+          (fnam        (format "%s/weekly-report-%s-to-%s.txt"
+                         sbw/org-report-dir
+                         (funcall format-date start)
+                         (funcall format-date end))))
+    (with-temp-file fnam (insert report))
+    (message (format "Created '%s'" fnam))
+    nil))
 
 
 
@@ -467,29 +479,18 @@ nil)
 ; )
 
 
-(defun sbw/white-test ()
-  "Just for testing"
-  (interactive)
-  (message (sbw/generate-weekly-report)))
 
-(defun sbw/dump-to-file (fnam str)
-  (save-excursion
-    (let ( (buf (find-file-noselect fnam)) )
-      (set-buffer buf)
-      (erase-buffer)
-      (insert str)
-      (save-buffer)
-      (kill-buffer)
-      )))
 
-(defun sbw/dump-to-file (fnam str)
-  (append-to-file str nil fnam))
+
+(add-to-list 'org-modules 'org-habit)
+
+
+
+
 
 (defun sbw/white-test ()
   "Just for testing"
   (interactive)
-  (sbw/dump-to-file "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/weekly-reports/test.txt" (sbw/generate-weekly-report)))
-
-
+  (sbw/generate-weekly-report))
 
 (provide 'sbw-setup-org-mode)

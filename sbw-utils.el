@@ -26,17 +26,6 @@
     (should (equal (sbw/assq-ensure-is-first 'c (list a-entry b-entry c-entry)) (list c-entry a-entry b-entry)))
     (should (equal (sbw/assq-ensure-is-first 'a (list a-entry b-entry a-entry)) (list a-entry b-entry)))))
 
-(defun sbw/interleave (l1 l2)
-  "Returns a list of the first item in l1 and l2, then the second, etc. The shortest list will stop the interleaving."  
-  (if (eql l1 nil)
-    nil
-    (cons (first l1) (sbw/interleave l2 (rest l1)))))
-
-(ert-deftest sbw/interleave-then-interleves-two-lists ()
-  (should (equal (sbw/interleave (list)     (list 1 2))   (list)))
-  (should (equal (sbw/interleave (list 1 2) (list 3 4 5)) (list 1 3 2 4)))
-  (should (equal (sbw/interleave (list 1 2) (list))       (list 1))))
-
 (defun sbw/hash-table ()
   "Returns a new hash-table with equal comparator."
   (make-hash-table :test 'equal))
