@@ -33,6 +33,28 @@
 ;; Undo
 (define-key sbw-global-mode-map (kbd "C-j u") 'undo-tree-visualize)
 
+;; -----------------------------------------------------------------------------
+;; Cider mode bindings
+;; -----------------------------------------------------------------------------
+
+
+(defvar sbw/cider-minor-mode-keymap
+  (let ((map (make-sparse-keymap))) 
+    (define-key map (kbd "C-j r") #'sbw/cider-reset-repl)
+    map) 
+  "Keymap used when sbw/cider-minor-mode is active.")
+
+(define-minor-mode sbw/cider-minor-mode
+  "Custom minor mode for cider."
+  :group   'sbw-modes
+  ;:lighter " [sbw-c]"
+  :keymap  sbw/cider-minor-mode-keymap
+  (if sbw/cider-minor-mode
+    (sbw/ensure-mode-has-precedence 'sbw/cider-minor-mode-keymap)))
+
+(dolist (hook '(cider-mode-hook))
+      (add-hook hook #'sbw/cider-minor-mode))
+
 
 ;; -----------------------------------------------------------------------------
 ;; Flyspell mode bindings
