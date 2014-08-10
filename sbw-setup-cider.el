@@ -26,16 +26,30 @@
 
 ;; Helper functions
 
+(defun sbw/cider-switch-to-repl-buffer ()
+  "Open the REPL window if it not currently open and switch focus to it."
+  (let* ( (repl-buffer (cider-current-repl-buffer)) )
+    (if (not (get-buffer-window repl-buffer))
+      (progn
+        (split-window-below 15)
+        (switch-to-buffer repl-buffer))
+      (switch-to-buffer-other-window repl-buffer))))
+
 (defun sbw/cider-reset-repl ()
   "Open the REPL window if it not currently open, switch focus to it, and reset."
   (interactive)
-  (let* ( (repl-buffer (cider-current-repl-buffer)))
-    (if (not (get-buffer-window repl-buffer))
-      (progn
-        (split-window-below 10)
-        (switch-to-buffer repl-buffer))
-      (switch-to-buffer-other-window repl-buffer))
-    (cider-find-and-clear-repl-buffer)
-    (cider-insert-in-repl "(reset)" t)))
+  (save-some-buffers t)
+  (sbw/cider-switch-to-repl-buffer)
+  (cider-find-and-clear-repl-buffer)
+  (cider-insert-in-repl "(reset)" t))
+
+(defun sbw/cider-refresh-repl ()
+  "Open the REPL window if it not currently open, switch focus to it, and refresh."
+  (interactive)
+  (save-some-buffers t)
+  (sbw/cider-switch-to-repl-buffer)
+  (cider-find-and-clear-repl-buffer)
+  (cider-insert-in-repl "(refresh)" t)
+  (cider-insert-in-repl "(reset)" t))
 
 (provide 'sbw-setup-cider)

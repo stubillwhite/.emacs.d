@@ -37,10 +37,10 @@
 ;; Cider mode bindings
 ;; -----------------------------------------------------------------------------
 
-
 (defvar sbw/cider-minor-mode-keymap
   (let ((map (make-sparse-keymap))) 
     (define-key map (kbd "C-j r") #'sbw/cider-reset-repl)
+    (define-key map (kbd "C-j R") #'sbw/cider-refresh-repl)
     map) 
   "Keymap used when sbw/cider-minor-mode is active.")
 
