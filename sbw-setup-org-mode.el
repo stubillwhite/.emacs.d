@@ -48,6 +48,8 @@
   org-return-follows-link       t           ;; Easy link navigation
   org-use-property-inheritance  t           ;; Child items should inherit all from parents
   org-default-priority          ?B          ;; Default priority for unprioritised items
+  appt-display-interval         5           ;; Reminder for an appointment every five minutes...
+  appt-message-warning-time     15          ;; ...starting fifteeen minutes before it is due
 )
 
 (setq org-todo-keywords
@@ -309,7 +311,7 @@ nil)
       (hide-subtree)
       (org-cycle))))
 
-;; Navigating org buffers
+;; Helper functions for extracting data from org buffers
 
 (defun sbw/org-heading-points ()
   "Returns a list of the points of all the headings in the current org-mode buffer."
@@ -423,12 +425,10 @@ nil)
 (defun sbw/is-closed-between? (start end x)
   "Returns t if task x was closed between start and end."
   (let* ( (closed (gethash :closed x)) )
-    (when closed
-      t
-      ;(and (time-less-p start closed) (time-less-p closed end))
-      )))
-
-
+    (and
+      closed
+      (time-less-p start closed)
+      (time-less-p closed end))))
 
 (defun sbw/generate-report-for-period (start end)
   "Returns a report for the specified period."
@@ -455,10 +455,20 @@ nil)
                          (funcall format-date end))))
     (with-temp-file fnam (insert report))
     (message (format "Created '%s'" fnam))
+    (find-file fnam)
     nil))
 
 
-
+(let* ( (base (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
+        (start       (sbw/adjust-date-by base -6))
+        (end         (sbw/adjust-date-by base  1))
+        (format-date (-partial 'format-time-string "%Y%m%d"))
+        )
+  (print (funcall format-date base))
+  (print (funcall format-date start))
+  (print (funcall format-date end))
+  (print (and (time-less-p start base) (time-less-p base end)))
+  nil)
 
 
 
@@ -492,5 +502,8 @@ nil)
   "Just for testing"
   (interactive)
   (sbw/generate-weekly-report))
+
+
+
 
 (provide 'sbw-setup-org-mode)
