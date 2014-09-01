@@ -25,12 +25,13 @@
      smex             ;; M-x enhanced
      multiple-cursors ;; Multiple cursor mode
      projectile       ;; Project navigation
+     ;diminish         ;; Tweak minor modes indicators
 
      ;; Clojure
      clojure-mode      ;; Clojure mode
      cider             ;; REPL support
      smartparens       ;; Improved paredit
-     ac-nrepl          ;; Cider REPL autocomplete and documentation
+     ac-cider          ;; Cider REPL autocomplete and documentation
      )
   "List of the packages required for this Emacs configuration.")
 

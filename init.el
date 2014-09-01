@@ -9,11 +9,12 @@
 (require 'sbw-misc)
 (require 'sbw-cosmetics)
 
-;; Setup plugins
+;; Configure plugins
 (require 'sbw-setup-ac-nrepl)
 (require 'sbw-setup-auto-complete)
 (require 'sbw-setup-cider)
 (require 'sbw-setup-clojure-mode)
+;(require 'sbw-setup-diminish)
 (require 'sbw-setup-flyspell)
 (require 'sbw-setup-ido-ubiquitous)
 (require 'sbw-setup-multiple-cursors)
