@@ -430,12 +430,12 @@ nil)
 (defun sbw/generate-report-for-task-category (category completed-tasks)
   (concat
     (sbw/heading-two category)
-    "=\n"
+    "\n"
     (apply 'concat
       (-map
-        (lambda (x) (concat " - (" (gethash :heading x) ")\n"))
+        (lambda (x) (concat " - " (gethash :heading x)  "\n"))
         completed-tasks))
-    "=\n"))
+    "\n"))
 
 (defun sbw/generate-report-for-completed-tasks (filter-func)
   "Returns a summary of the completed tasks in the specified period."
@@ -474,22 +474,27 @@ nil)
 (setq sbw/org-report-dir
   "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/reports")
 
+(defun sbw/report-filename (start end title)
+  "Returns the filename for a report in standard form."
+  (let* ( (format-date (-partial 'format-time-string "%Y%m%d")) )
+    (format "%s/%s-%s-to-%s.txt"
+      sbw/org-report-dir
+      title
+      (funcall format-date start)
+      (funcall format-date end))))
+
 (defun sbw/generate-weekly-report ()
   "Returns the weekly report."
-  (let* ( (base        (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
-          (start       (sbw/adjust-date-by base -6))
-          (end         (sbw/adjust-date-by base  1))
-          (report      (sbw/generate-report-for-period start end))
-          (format-date (-partial 'format-time-string "%Y%m%d"))
-          (fnam        (format "%s/weekly-report-%s-to-%s.txt"
-                         sbw/org-report-dir
-                         (funcall format-date start)
-                         (funcall format-date end))))
+  (interactive)
+  (let* ( (base   (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
+          (start  (sbw/adjust-date-by base -6))
+          (end    (sbw/adjust-date-by base  1))
+          (report (sbw/generate-report-for-period start end))
+          (fnam   (sbw/report-filename start end "weekly-report")) )
     (with-temp-file fnam (insert report))
     (message (format "Created '%s'" fnam))
     (find-file fnam)
     nil))
-
 
 
 
