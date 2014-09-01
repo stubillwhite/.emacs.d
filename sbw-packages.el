@@ -25,7 +25,7 @@
      smex             ;; M-x enhanced
      multiple-cursors ;; Multiple cursor mode
      projectile       ;; Project navigation
-     ;diminish         ;; Tweak minor modes indicators
+     diminish         ;; Tweak minor modes indicators
 
      ;; Clojure
      clojure-mode      ;; Clojure mode

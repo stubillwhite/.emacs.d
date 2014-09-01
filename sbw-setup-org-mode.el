@@ -1,29 +1,5 @@
 (require 'org-clock)
 
-(defun sbw/windows-process-status (name)
-  (let* ( (cmd    (concat "sc query \"" name "\""))
-          (str    (shell-command-to-string cmd))
-          (regex  "SERVICE_NAME: \\(.+\\)\n.*\n.*STATE\\W+: \\(\\w+\\)\\W+\\(\\w+\\)")
-          (status (sbw/hash-table)) )
-    (when (string-match regex str)
-      (puthash :name   (match-string 1 str) status)
-      (puthash :code   (match-string 2 str) status)
-      (puthash :status (match-string 3 str) status)
-      status)))
-
-(defun sbw/windows-process-start (name)
-  (let* ( (cmd (concat "sc start \"" name "\"")) )
-    (shell-command-to-string cmd)))
-
-(defun sbw/ensure-symantec-is-running ()
-  (let* ( (proc-name  "SepMasterService")
-          (proc-status (sbw/windows-process-status proc-name)) )
-    (when (string-equal "STOPPED" (gethash :status proc-status))
-      (sbw/windows-process-start proc-name)
-      (message "Symantec service is not currently running. Starting it."))))
-
-(sbw/ensure-symantec-is-running)
-
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
 
@@ -32,31 +8,34 @@
 (setq org-directory 
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
 
-(defun sbw/org-file (&rest args)
-  (mapcar (-partial 'concat org-directory) args))
+(defun sbw/org-file (fnam)
+  (concat org-directory fnam))
+
+(defun sbw/org-files (&rest args)
+  (mapcar 'sbw/org-file args))
 
 (defconst sbw/personal-files
-  (sbw/org-file "todo-personal.org" "personal/architecture.org" "personal/car.org" "personal/edinburgh.org" "personal/health.org" "personal/music.org" "personal/go.org"))
+  (sbw/org-files "todo-personal.org" "personal/architecture.org" "personal/car.org" "personal/edinburgh.org" "personal/health.org" "personal/music.org"))
 
 (defconst sbw/calendar-files
-  (sbw/org-file "google-calendar.org"))
+  (sbw/org-files "google-calendar.org"))
 
 (defconst sbw/work-files
-  (sbw/org-file "todo-work.org" "timesheet.org" "work/apollo.org" "work/aurora.org"))
+  (sbw/org-files "todo-work.org" "timesheet.org" "work/apollo.org" "work/aurora.org"))
 
 (defconst sbw/planning-files
-  (sbw/org-file "incoming.org" "weekly-plan.org"))
+  (sbw/org-files "incoming.org" "weekly-plan.org"))
 
 (defconst sbw/habits-files
-  (sbw/org-file "habits.org"))
+  (sbw/org-files "habits.org"))
 
-(defconst sbw/org-files
+(defconst sbw/all-org-files
   (append sbw/personal-files sbw/work-files sbw/planning-files sbw/calendar-files sbw/habits-files (list)))
 
-(setq org-agenda-files sbw/org-files)
+(setq org-agenda-files sbw/all-org-files)
 
 (defconst sbw/org-refile-targets
-  (-filter (lambda (x) (not (-contains? sbw/calendar-files x))) sbw/org-files))
+  (-filter (lambda (x) (not (-contains? sbw/calendar-files x))) sbw/all-org-files))
 
 (setq org-refile-targets
   (quote ((sbw/org-refile-targets :maxlevel . 1))))
@@ -73,7 +52,6 @@
   org-log-into-drawer           t           ;; Log into drawers
   org-log-done                  'time       ;; Timestamp task completion so it can be used in reports
   org-M-RET-may-split-line      nil         ;; Don't split lines
-;;  org-replace-disputed-keys     t           ;; Prevent org-mode from binding shift-cursor keys
   org-return-follows-link       t           ;; Easy link navigation
   org-use-property-inheritance  t           ;; Child items should inherit all from parents
   org-default-priority          ?B          ;; Default priority for unprioritised items
@@ -120,11 +98,6 @@
 (org-add-link-type "eclipse"
   (lambda (path)
     (start-process "Eclipse" nil "c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe" "--launcher.openFile" path)))
-
-;; Temporary -- Link type for opening in Aurora vintage Eclipse
-(org-add-link-type "aurora"
-  (lambda (path)
-    (start-process "Aurora" nil "c:\\dev_fp\\eclipse-for-sdk\\eclipse.exe" "--launcher.openFile" path)))
 
 ;; Link type for opening a file in Vim
 
@@ -300,28 +273,6 @@ nil)
                :protocol "hello-world"
                :function hello-world))
 
-;; Helper to apply a function to all headings in a buffer
-
-(defun sbw/goto-first-heading ()
-  (interactive)
-  (beginning-of-buffer)
-  (when (not (outline-on-heading-p))
-    (outline-next-heading))
-  nil)
-
-(defun sbw/current-line ()
-  (interactive)
-  (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
-
-(defun sbw/map-to-headings (f)
-  "Apply f(p) to all headings in the buffer, where p is the point in the buffer." 
-  (save-excursion
-    (sbw/goto-first-heading)
-    (funcall f (point))
-    (while (outline-next-heading)
-      (funcall f (point))))
-  nil)
-
 ;; Sorting subtrees
 
 (defun sbw/org-multisort (&rest criteria)
@@ -402,6 +353,10 @@ nil)
 
 ;; Sorting all subtrees
 
+(defun sbw/current-line ()
+  "Returns the text from the current line."
+  (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
+
 (defun sbw/sort-all-subtrees ()
   "Sorts all the subtrees in the current org-mode buffer."
   (interactive)
@@ -425,8 +380,6 @@ nil)
 
 ;; Weekly report
 
-(setq edebug-trace t)
-
 (defun sbw/generate-report-for-task-category (category completed-tasks)
   (concat
     (sbw/heading-two category)
@@ -444,7 +397,7 @@ nil)
           (group-by-category         (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x)))
           (generate-category-report  (lambda (x) (sbw/map-hash 'sbw/generate-report-for-task-category x))) )
     (apply 'concat
-      (->> sbw/org-files
+      (->> sbw/all-org-files
         (funcall extract-heading-summaries)
         (funcall prune-irrelevant-tasks)
         (funcall group-by-category)
@@ -497,7 +450,7 @@ nil)
     nil))
 
 
-
+;; Stuff to rationalise
 
 
 (setq org-fontify-done-headline t)
@@ -521,15 +474,6 @@ nil)
 
 
 (add-to-list 'org-modules 'org-habit)
-
-;;(sbw/growl-message "Hello this is a message from emacs")
-
-
-
-(defun sbw/white-test ()
-  "Just for testing"
-  (interactive)
-  (sbw/generate-weekly-report))
 
 ;; Notify appointment reminders using Growl
 
