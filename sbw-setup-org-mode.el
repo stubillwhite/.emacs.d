@@ -1,5 +1,29 @@
 (require 'org-clock)
 
+(defun sbw/windows-process-status (name)
+  (let* ( (cmd    (concat "sc query \"" name "\""))
+          (str    (shell-command-to-string cmd))
+          (regex  "SERVICE_NAME: \\(.+\\)\n.*\n.*STATE\\W+: \\(\\w+\\)\\W+\\(\\w+\\)")
+          (status (sbw/hash-table)) )
+    (when (string-match regex str)
+      (puthash :name   (match-string 1 str) status)
+      (puthash :code   (match-string 2 str) status)
+      (puthash :status (match-string 3 str) status)
+      status)))
+
+(defun sbw/windows-process-start (name)
+  (let* ( (cmd (concat "sc start \"" name "\"")) )
+    (shell-command-to-string cmd)))
+
+(defun sbw/ensure-symantec-is-running ()
+  (let* ( (proc-name  "SepMasterService")
+          (proc-status (sbw/windows-process-status proc-name)) )
+    (when (string-equal "STOPPED" (gethash :status proc-status))
+      (sbw/windows-process-start proc-name)
+      (message "Symantec service is not currently running. Starting it."))))
+
+(sbw/ensure-symantec-is-running)
+
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
 
@@ -8,29 +32,34 @@
 (setq org-directory 
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
 
-(defun sbw/org-file (fnam)
-  (concat org-directory fnam))
-
-(defun sbw/org-files (&rest args)
-  (mapcar 'sbw/org-file args))
+(defun sbw/org-file (&rest args)
+  (mapcar (-partial 'concat org-directory) args))
 
 (defconst sbw/personal-files
-  (sbw/org-files "todo-personal.org"))
+  (sbw/org-file "todo-personal.org" "personal/architecture.org" "personal/car.org" "personal/edinburgh.org" "personal/health.org" "personal/music.org" "personal/go.org"))
 
 (defconst sbw/calendar-files
-  (sbw/org-files "google-calendar.org"))
+  (sbw/org-file "google-calendar.org"))
 
 (defconst sbw/work-files
-  (sbw/org-files "todo-work.org" "timesheet.org"))
+  (sbw/org-file "todo-work.org" "timesheet.org" "work/apollo.org" "work/aurora.org"))
 
 (defconst sbw/planning-files
-  (sbw/org-files "incoming.org" "weekly-plan.org"))
+  (sbw/org-file "incoming.org" "weekly-plan.org"))
 
 (defconst sbw/habits-files
-  (sbw/org-files "habits.org"))
+  (sbw/org-file "habits.org"))
 
-(setq org-agenda-files
+(defconst sbw/org-files
   (append sbw/personal-files sbw/work-files sbw/planning-files sbw/calendar-files sbw/habits-files (list)))
+
+(setq org-agenda-files sbw/org-files)
+
+(defconst sbw/org-refile-targets
+  (-filter (lambda (x) (not (-contains? sbw/calendar-files x))) sbw/org-files))
+
+(setq org-refile-targets
+  (quote ((sbw/org-refile-targets :maxlevel . 1))))
 
 (setq org-default-notes-file (sbw/org-file "incoming.org"))
 
@@ -52,6 +81,9 @@
   appt-message-warning-time     15          ;; ...starting fifteeen minutes before it is due
 )
 
+;; Don't use any tags yet. This needs some attention
+(setq org-tag-alist nil)
+
 (setq org-todo-keywords
   '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE(d!)" "CANCELLED(c)" "POSTPONED(p)"))
 
@@ -60,9 +92,6 @@
 
 (setq org-archive-save-context-info
   '(time file ltags itags todo category olpath))
-
-(setq org-refile-targets
-  (quote ((org-agenda-files :maxlevel . 1))))
 
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
@@ -356,6 +385,7 @@ nil)
   (let* ((summary (sbw/hash-table)))
     (save-excursion
       (goto-char x)
+      (puthash :filename (buffer-file-name) summary)
       (puthash :point    x summary)
       (puthash :category (sbw/extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
       (puthash :state    (sbw/extract-string (org-get-todo-state)) summary)
@@ -365,10 +395,10 @@ nil)
       (puthash :closed   (sbw/extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
     summary))
 
-(defun sbw/org-heading-summaries ()
-  "Returns summaries for all the headings in the current org-mode buffer. See sbw/org-extract-heading-summary."
-  (->> (sbw/org-heading-points)
-    (-map 'sbw/org-extract-heading-summary)))
+(defun sbw/org-heading-summaries (fnam)
+  "Returns summaries for all the headings in file fnam. See sbw/org-extract-heading-summary for a description of the content of a summary."
+  (set-buffer (find-file-noselect fnam))
+  (-map 'sbw/org-extract-heading-summary (sbw/org-heading-points)))
 
 ;; Sorting all subtrees
 
@@ -376,7 +406,7 @@ nil)
   "Sorts all the subtrees in the current org-mode buffer."
   (interactive)
   (-each
-    (->> (sbw/org-heading-summaries)
+    (->> (sbw/org-heading-summaries (buffer-file-name))
       (-filter (lambda (x) (equal 1 (gethash :level x)))))
     (lambda (x)
       (goto-char (gethash :point x))
@@ -400,20 +430,22 @@ nil)
 (defun sbw/generate-report-for-task-category (category completed-tasks)
   (concat
     (sbw/heading-two category)
-    "\n"
+    "=\n"
     (apply 'concat
       (-map
-        (lambda (x) (concat " - " (gethash :heading x) "\n"))
+        (lambda (x) (concat " - (" (gethash :heading x) ")\n"))
         completed-tasks))
-    "\n"))
+    "=\n"))
 
 (defun sbw/generate-report-for-completed-tasks (filter-func)
   "Returns a summary of the completed tasks in the specified period."
-  (let* ( (prune-irrelevant-tasks   (lambda (x) (-filter filter-func x)))
-          (group-by-category        (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x)))
-          (generate-category-report (lambda (x) (sbw/map-hash 'sbw/generate-report-for-task-category x))) )
+  (let* ( (extract-heading-summaries (lambda (x) (-mapcat 'sbw/org-heading-summaries x)))
+          (prune-irrelevant-tasks    (lambda (x) (-filter filter-func x)))
+          (group-by-category         (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x)))
+          (generate-category-report  (lambda (x) (sbw/map-hash 'sbw/generate-report-for-task-category x))) )
     (apply 'concat
-      (->> (sbw/org-heading-summaries)
+      (->> sbw/org-files
+        (funcall extract-heading-summaries)
         (funcall prune-irrelevant-tasks)
         (funcall group-by-category)
         (funcall generate-category-report)))))
@@ -459,16 +491,7 @@ nil)
     nil))
 
 
-(let* ( (base (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
-        (start       (sbw/adjust-date-by base -6))
-        (end         (sbw/adjust-date-by base  1))
-        (format-date (-partial 'format-time-string "%Y%m%d"))
-        )
-  (print (funcall format-date base))
-  (print (funcall format-date start))
-  (print (funcall format-date end))
-  (print (and (time-less-p start base) (time-less-p base end)))
-  nil)
+
 
 
 
@@ -494,7 +517,7 @@ nil)
 
 (add-to-list 'org-modules 'org-habit)
 
-
+;;(sbw/growl-message "Hello this is a message from emacs")
 
 
 
@@ -503,7 +526,16 @@ nil)
   (interactive)
   (sbw/generate-weekly-report))
 
+;; Notify appointment reminders using Growl
 
+(defun sbw/growl-message (msg)
+  "Display msg using Growl."
+  (call-process "c:\\Program Files (x86)\\Growl for Windows\\growlnotify.exe" nil 0 nil "/s:true" "/t:emacs" msg))
 
+(defun sbw/appt-disp-window (min-to-app new-time appt-msg)
+  (sbw/growl-message (concat "Reminder: " appt-msg))
+  (appt-disp-window min-to-app new-time appt-msg))
+
+(setq appt-disp-window-function 'sbw/appt-disp-window)
 
 (provide 'sbw-setup-org-mode)
