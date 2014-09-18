@@ -72,4 +72,12 @@
     (sbw/hash-table)
     l))
 
+;; TODO Test these, break tests into a separate file
+(defun sbw/join (sep list)
+  "Returns a string with the items from list joined by separator."
+  (apply 'concat (-drop 1 (-interleave (-repeat (length list) sep) list))))
+
+(defalias '-dec '1- "Return x minus one.")
+(defalias '-inc '1+ "Return x plus one.")
+
 (provide 'sbw-utils)

@@ -80,13 +80,22 @@
   (let* ( (cmd (concat "sc start \"" name "\"")) )
     (shell-command-to-string cmd)))
 
-(defun sbw/ensure-symantec-is-running ()
-  (let* ( (proc-name  "SepMasterService")
-          (proc-status (sbw/windows-process-status proc-name)) )
+(defun sbw/ensure-process-is-running (proc-name)
+  (let* ( (proc-status (sbw/windows-process-status proc-name)) )
     (when (string-equal "STOPPED" (gethash :status proc-status))
       (sbw/windows-process-start proc-name)
-      (message "Symantec service is not currently running. Starting it."))))
+      (message (concat "Service " proc-name " is not currently running. Starting it.")))))
+
+(defun sbw/ensure-symantec-is-running ()
+  (sbw/ensure-process-is-running "SepMasterService"))
+
+(defun sbw/ensure-db2-is-running ()
+  (sbw/ensure-process-is-running "DB2"))
 
 (sbw/ensure-symantec-is-running)
+(sbw/ensure-db2-is-running)
+
+
+;; TODO - Add DB2. This is ridiculous.
 
 (provide 'sbw-misc)

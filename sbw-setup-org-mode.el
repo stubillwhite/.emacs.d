@@ -15,22 +15,16 @@
   (mapcar 'sbw/org-file args))
 
 (defconst sbw/personal-files
-  (sbw/org-files "todo-personal.org" "personal/architecture.org" "personal/car.org" "personal/edinburgh.org" "personal/health.org" "personal/music.org"))
+  (sbw/org-files "personal/finance.org" "personal/clojure.org" "personal/reading.org" "personal/technology.org" "personal/architecture.org" "personal/car.org" "personal/health.org" "personal/music.org" "personal/emacs.org" "personal/theatre.org" "personal/social.org"))
 
 (defconst sbw/calendar-files
-  (sbw/org-files "google-calendar.org"))
+  (sbw/org-files "calendar/google-calendar.org"))
 
 (defconst sbw/work-files
-  (sbw/org-files "todo-work.org" "timesheet.org" "work/apollo.org" "work/aurora.org"))
-
-(defconst sbw/planning-files
-  (sbw/org-files "incoming.org" "weekly-plan.org"))
-
-(defconst sbw/habits-files
-  (sbw/org-files "habits.org"))
+  (sbw/org-files "timesheet.org" "work/ibm.org" "work/apollo.org" "work/cyclops.org" "work/daedalus.org" "work/project-x.org"))
 
 (defconst sbw/all-org-files
-  (append sbw/personal-files sbw/work-files sbw/planning-files sbw/calendar-files sbw/habits-files (list)))
+  (append sbw/personal-files sbw/work-files sbw/calendar-files (list)))
 
 (setq org-agenda-files sbw/all-org-files)
 
@@ -71,6 +65,8 @@
 (setq org-archive-save-context-info
   '(time file ltags itags todo category olpath))
 
+(setq org-archive-location "%s_archive::")
+
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
 
@@ -85,11 +81,9 @@
 
 (setq org-clock-in-switch-to-state (quote sbw/clock-in-switch-to-started))
 
-;;
 ;; Pull in org
 ;; Doing this earlier seems to result in some of the above settings being lost
 ;; TODO Investigate what's going on there
-;;
 
 (require 'org)
 
@@ -135,6 +129,13 @@
 (defun sbw/make-title-string (title)
   (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
 
+(setq org-agenda-prefix-format
+  '( (agenda . " %i %-15:c%?-15t% s")
+     (timeline . "  % s")
+     (todo . " %i %-15:c")
+     (tags . " %i %-15:c")
+     (search . " %i %-15:c")) )
+
 (setq org-agenda-remove-tags 1)
 (setq org-agenda-custom-commands
   '(
@@ -149,7 +150,6 @@
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
              (org-agenda-files sbw/work-files)
              (org-agenda-todo-ignore-scheduled t)
-             (org-agenda-prefix-format "%-10c %-10T")
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
@@ -157,7 +157,6 @@
            ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
              (org-agenda-files sbw/work-files)
              (org-agenda-todo-ignore-scheduled t)
-             (org-agenda-prefix-format "%-10c %-10T")                          
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
@@ -165,7 +164,6 @@
            ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
              (org-agenda-files sbw/work-files)
              (org-agenda-todo-ignore-scheduled t)
-             (org-agenda-prefix-format "%-10c %-10T")                          
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
          ))
@@ -180,7 +178,6 @@
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
              (org-agenda-files sbw/personal-files)
              (org-agenda-todo-ignore-scheduled t)
-             (org-agenda-prefix-format "%-10c %-10T")             
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
@@ -188,7 +185,6 @@
            ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
              (org-agenda-files sbw/personal-files)
              (org-agenda-todo-ignore-scheduled t)
-             (org-agenda-prefix-format "%-10c %-10T")
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
@@ -196,15 +192,9 @@
            ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
              (org-agenda-files sbw/personal-files)
              (org-agenda-todo-ignore-scheduled t)
-             (org-agenda-prefix-format "%-10c %-10T")
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
          ))
-
-     ("2" "Weekly review sans routines" agenda ""
-       ( (org-agenda-log-mode t)
-         (org-agenda-span 7)         
-         ))    
      ))
 
 ;; Appointments
@@ -390,14 +380,14 @@ nil)
         completed-tasks))
     "\n"))
 
-(defun sbw/generate-report-for-completed-tasks (filter-func)
+(defun sbw/generate-report-for-completed-tasks (org-files filter-func)
   "Returns a summary of the completed tasks in the specified period."
   (let* ( (extract-heading-summaries (lambda (x) (-mapcat 'sbw/org-heading-summaries x)))
           (prune-irrelevant-tasks    (lambda (x) (-filter filter-func x)))
           (group-by-category         (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x)))
           (generate-category-report  (lambda (x) (sbw/map-hash 'sbw/generate-report-for-task-category x))) )
     (apply 'concat
-      (->> sbw/all-org-files
+      (->> org-files
         (funcall extract-heading-summaries)
         (funcall prune-irrelevant-tasks)
         (funcall group-by-category)
@@ -415,13 +405,13 @@ nil)
       (time-less-p start closed)
       (time-less-p closed end))))
 
-(defun sbw/generate-report-for-period (start end)
+(defun sbw/generate-report-for-period (org-files start end)
   "Returns a report for the specified period."
   (let* ( (format-date (-partial 'format-time-string "%A %e %B %Y")) )
     (concat
       (sbw/heading-one (concat "Review for " (funcall format-date start) " to " (funcall format-date end)))
       "\n"
-      (sbw/generate-report-for-completed-tasks (-partial 'sbw/is-closed-between? start end))
+      (sbw/generate-report-for-completed-tasks org-files (-partial 'sbw/is-closed-between? start end))
       "\n")))
 
 (setq sbw/org-report-dir
@@ -442,7 +432,7 @@ nil)
   (let* ( (base   (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
           (start  (sbw/adjust-date-by base -6))
           (end    (sbw/adjust-date-by base  1))
-          (report (sbw/generate-report-for-period start end))
+          (report (sbw/generate-report-for-period sbw/all-org-files start end))
           (fnam   (sbw/report-filename start end "weekly-report")) )
     (with-temp-file fnam (insert report))
     (message (format "Created '%s'" fnam))
@@ -473,8 +463,6 @@ nil)
 
 
 
-(add-to-list 'org-modules 'org-habit)
-
 ;; Notify appointment reminders using Growl
 
 (defun sbw/growl-message (msg)
@@ -486,5 +474,96 @@ nil)
   (appt-disp-window min-to-app new-time appt-msg))
 
 (setq appt-disp-window-function 'sbw/appt-disp-window)
+
+
+;; Archiving
+
+;; http://stackoverflow.com/questions/7509463/how-to-move-a-subtree-to-another-subtree-in-org-mode-emacs
+;; C-c C-x C-s
+;; C-c C-x C-a
+
+;; Create target file
+;; Create top-level target heading in target file
+;; Refile to target
+;; Promote subtree
+;; Remove target heading
+
+;(setq org-refile-allow-creating-parent-nodes (quote confirm))
+(defun sbw/archive-file-name ()
+  (concat
+    org-directory
+    "archive/"
+    "archive-"
+    (file-name-nondirectory (buffer-file-name))))
+
+;; org-refile-use-outline-path
+;;  include filename
+
+
+
+
+  
+
+  
+;(setq org-refile-allow-creating-parent-nodes t)
+;(setq org-refile-use-outline-path 'full-file-path)
+
+;(defun sbw/test ()
+;  (interactive) 
+;  ;(org-refile nil nil '("one.org" . ("two.org" . "three.org")))
+;  (print (org-refile-get-location))
+;  )
+
+;(setq org-refile-allow-creating-parent-nodes nil)
+;(setq org-refile-use-outline-path nil)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun sbw/summary-remaining-time (end-time)
+  (format-time-string "%H:%M:%S" (time-subtract end-time (current-time))))
+
+(defun sbw/summary-update-timer ()
+  (setq sbw/summary-mode-line-string (concat " <" (sbw/summary-remaining-time sbw/summary-end-time) ">"))
+  (force-mode-line-update))
+
+(defun sbw/summary-set-mode-line (value)
+  (cond
+    ((equal value :off)
+      (setq sbw/summary-mode-line-timer nil)
+      (delq 'sbw/summary-mode-line-string global-mode-string))
+
+    ((equal value :on)
+      (setq sbw/summary-mode-line-timer nil)
+      (when (not (memq 'sbw/summary-mode-line-string global-mode-string))
+        (setq global-mode-string (append global-mode-string '(sbw/summary-mode-line-string)))))))
+
+(defun sbw/summary-set-timer (value)
+  (cond
+    ((equal value :off)
+      (when sbw/summary-timer
+        (cancel-timer sbw/summary-timer)
+        (setq sbw/summary-timer nil)))
+
+    ((equal value :on)
+      (when sbw/summary-timer
+        (cancel-timer sbw/summary-timer))
+      (setq sbw/summary-timer (run-with-timer 1 1 'sbw/summary-update-timer)))))
+
+(defun sbw/summary (value)
+  (cond
+    ((equal value :off)
+      (sbw/summary-set-mode-line :off)
+      (sbw/summary-set-timer :off)
+      (setq sbw/summary-end-time nil)
+      (message "Summary timer stopped."))
+
+    ((equal value :on)
+      (setq sbw/summary-timer nil)
+      (setq sbw/summary-end-time (time-add (seconds-to-time 30) (current-time)))
+      (sbw/summary-update-timer)
+      (sbw/summary-set-mode-line :on)
+      (sbw/summary-set-timer :on)
+      (message "Summary timer started."))))
 
 (provide 'sbw-setup-org-mode)
