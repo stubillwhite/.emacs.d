@@ -24,6 +24,10 @@
 (require 'sbw-setup-smex)
 (require 'sbw-setup-undo-tree)
 
+;; TODO For some reason org-mode clobbers these settings so we have to install it last
+;; Investigate what is going on here
+(require 'sbw-countdown)
+
 ;; TODO Remove this
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

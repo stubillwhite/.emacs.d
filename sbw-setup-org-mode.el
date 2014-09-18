@@ -65,8 +65,6 @@
 (setq org-archive-save-context-info
   '(time file ltags itags todo category olpath))
 
-(setq org-archive-location "%s_archive::")
-
 ;; Clocking
 ;; Clock into a task should switch state to started if it is still in a stalled state
 
@@ -520,50 +518,6 @@ nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun sbw/summary-remaining-time (end-time)
-  (format-time-string "%H:%M:%S" (time-subtract end-time (current-time))))
 
-(defun sbw/summary-update-timer ()
-  (setq sbw/summary-mode-line-string (concat " <" (sbw/summary-remaining-time sbw/summary-end-time) ">"))
-  (force-mode-line-update))
-
-(defun sbw/summary-set-mode-line (value)
-  (cond
-    ((equal value :off)
-      (setq sbw/summary-mode-line-timer nil)
-      (delq 'sbw/summary-mode-line-string global-mode-string))
-
-    ((equal value :on)
-      (setq sbw/summary-mode-line-timer nil)
-      (when (not (memq 'sbw/summary-mode-line-string global-mode-string))
-        (setq global-mode-string (append global-mode-string '(sbw/summary-mode-line-string)))))))
-
-(defun sbw/summary-set-timer (value)
-  (cond
-    ((equal value :off)
-      (when sbw/summary-timer
-        (cancel-timer sbw/summary-timer)
-        (setq sbw/summary-timer nil)))
-
-    ((equal value :on)
-      (when sbw/summary-timer
-        (cancel-timer sbw/summary-timer))
-      (setq sbw/summary-timer (run-with-timer 1 1 'sbw/summary-update-timer)))))
-
-(defun sbw/summary (value)
-  (cond
-    ((equal value :off)
-      (sbw/summary-set-mode-line :off)
-      (sbw/summary-set-timer :off)
-      (setq sbw/summary-end-time nil)
-      (message "Summary timer stopped."))
-
-    ((equal value :on)
-      (setq sbw/summary-timer nil)
-      (setq sbw/summary-end-time (time-add (seconds-to-time 30) (current-time)))
-      (sbw/summary-update-timer)
-      (sbw/summary-set-mode-line :on)
-      (sbw/summary-set-timer :on)
-      (message "Summary timer started."))))
 
 (provide 'sbw-setup-org-mode)
