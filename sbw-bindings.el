@@ -111,7 +111,7 @@
     (define-key map (kbd "C-j v w") #'widen)
     (define-key map (kbd "C-j c l") #'org-insert-link)
     (define-key map (kbd "C-j c c") #'org-capture)
-
+    (define-key map (kbd "<f12>")   #'sbw/pomodoro-timer-toggle)
     map) 
   "Keymap used when sbw-org-mode-minor-mode is active.")
 

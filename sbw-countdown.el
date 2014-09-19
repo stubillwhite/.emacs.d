@@ -1,11 +1,15 @@
 (defun sbw/countdown-remaining-time (end-time)
   "Returns a string representing the time remaining in the countdown timer."
   (format-time-string "%H:%M:%S" (time-subtract end-time (current-time))))
+(defun sbw/countdown-expired-inform-user ()
+  (print "Countdown expired.")
+  (beep t))
 
 (defun sbw/countdown-update-timer ()
   "Update the countdown timer."
   (if (time-less-p sbw/countdown-end-time (current-time))
     (progn
+      (sbw/countdown-expired-inform-user)
       (sbw/countdown-stop))
     (progn      
       (setq sbw/countdown-mode-line-string (concat " [" (sbw/countdown-remaining-time sbw/countdown-end-time) "]"))
@@ -54,24 +58,27 @@
   (sbw/countdown-set-timer :on)
   nil)
 
-(defun sbw/summarise (value)
-  "Control a thirty second countdown summary timer. VALUE may be :start to start the timer, or :stop to stop it."
-  (cond
-    ((equal value :start) (sbw/countdown-start 30))
-    ((equal value :stop)  (sbw/countdown-stop))))
+(defun sbw/countdown-running? ()
+  "Returns t when a countdown is running, nil otherwise."
+  (when (bound-and-true-p sbw/countdown-timer) t))
 
-(defun sbw/pomodoro (value)
-  "Control a twenty-five minute pomodoro timer. VALUE may be :start to start the timer, or :stop to stop it."
-  (cond
-    ((equal value :start) (sbw/countdown-start (* 25 60)))
-    ((equal value :stop)  (sbw/countdown-stop))))
+(defun sbw/countdown-toggle (seconds)
+  "If the coundown timer is stopped then start it with duration SECONDS, otherwise stop it."
+  (if (sbw/countdown-running?)
+    (sbw/countdown-stop)
+    (sbw/countdown-start seconds)))
 
-;(sbw/summarise :start)
-;(sbw/summarise :stop)
-;(sbw/pomodoro :start)
-;(sbw/pomodoro :stop)
+(defun sbw/summarise-timer-toggle ()
+  "Toggles a thirty second summary timer."
+  (interactive)
+  (sbw/countdown-toggle 30))
 
-;(print global-mode-string)
-;(print sbw/countdown-mode-line-string)
+(defun sbw/pomodoro-timer-toggle ()
+  "Toggles a twenty-five minute pomodoro timer."
+  (interactive)
+  (sbw/countdown-toggle (* 25 60)))
+
+(sbw/summarise-timer-toggle)
+(sbw/pomodoro-timer-toggle)
 
 (provide 'sbw-countdown)
