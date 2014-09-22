@@ -398,13 +398,14 @@ nil)
   "Return a timestamp for the specified date plus n days."
   (days-to-time (+ (time-to-number-of-days date) n)))
 
-(defun sbw/is-closed-between? (start end x)
-  "Return t if task x was closed between start and end."
+(defun sbw/is-completed-between? (start end x)
+  "Return t if task x was completed between start and end."
   (let* ( (closed (gethash :closed x)) )
     (and
       closed
       (time-less-p start closed)
-      (time-less-p closed end))))
+      (time-less-p closed end)
+      (equal (gethash :state x) "DONE"))))
 
 (defun sbw/generate-report-for-period (org-files start end)
   "Return a report for the specified period."
@@ -412,7 +413,7 @@ nil)
     (concat
       (sbw/heading-one (concat "Review for " (funcall format-date start) " to " (funcall format-date end)))
       "\n"
-      (sbw/generate-report-for-completed-tasks org-files (-partial 'sbw/is-closed-between? start end))
+      (sbw/generate-report-for-completed-tasks org-files (-partial 'sbw/is-completed-between? start end))
       "\n")))
 
 (setq sbw/org-report-dir
