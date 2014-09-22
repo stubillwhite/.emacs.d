@@ -5,6 +5,12 @@
 
 ;; Org files
 
+(setq org-directory 
+      "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
+
+(defun sbw/org-file (fnam)
+  (concat org-directory fnam))
+
 (defun sbw/org-files (&rest dirs)
   "Return a list of the org files in directories DIRS."
   (-mapcat
@@ -213,11 +219,11 @@
 (setq org-protocol-default-template-key nil)
 
 (setq org-capture-templates
- '( ("t" "Todo" entry (file+headline (sbw/org-file "incoming.org") "Tasks")
+ '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
         "* TODO %?%a\n%i")
-    ("l" "Link" entry (file+olp (sbw/org-file "incoming.org") "Links")
+    ("l" "Link" entry (file+olp org-default-notes-file "Links")
         "* TODO %?%a\n%i")
-    ("j" "Jira task" entry (file+headline (sbw/org-file "timesheet.org") "Project-X")
+    ("j" "Jira task" entry (file+headline org-default-notes-file "Tasks")
         "* TODO [#A] %?%a")
    ))
 
