@@ -5,36 +5,33 @@
 
 ;; Org files
 
-(setq org-directory 
-      "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
+(defun sbw/org-files (&rest dirs)
+  "Return a list of the org files in directories DIRS."
+  (-mapcat
+    (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
+    (apply 'list dirs)))
 
-(defun sbw/org-file (fnam)
-  (concat org-directory fnam))
+(defconst sbw/org-personal-files
+  (sbw/org-files "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/personal"))
 
-(defun sbw/org-files (&rest args)
-  (mapcar 'sbw/org-file args))
+(defconst sbw/org-non-project-files
+  (sbw/org-files "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/non-project"))
 
-(defconst sbw/personal-files
-  (sbw/org-files "personal/finance.org" "personal/clojure.org" "personal/reading.org" "personal/technology.org" "personal/architecture.org" "personal/car.org" "personal/health.org" "personal/music.org" "personal/emacs.org" "personal/theatre.org" "personal/social.org"))
+(defconst sbw/org-work-files
+  (sbw/org-files "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/work"))
 
-(defconst sbw/calendar-files
-  (sbw/org-files "calendar/google-calendar.org"))
+(defconst sbw/org-all-files
+  (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
 
-(defconst sbw/work-files
-  (sbw/org-files "timesheet.org" "work/ibm.org" "work/apollo.org" "work/cyclops.org" "work/daedalus.org" "work/project-x.org"))
-
-(defconst sbw/all-org-files
-  (append sbw/personal-files sbw/work-files sbw/calendar-files (list)))
-
-(setq org-agenda-files sbw/all-org-files)
+(setq org-agenda-files sbw/org-all-files)
 
 (defconst sbw/org-refile-targets
-  (-filter (lambda (x) (not (-contains? sbw/calendar-files x))) sbw/all-org-files))
+  (-filter (lambda (x) (not (-contains? sbw/org-non-project-files x))) sbw/org-all-files))
 
 (setq org-refile-targets
   (quote ((sbw/org-refile-targets :maxlevel . 1))))
 
-(setq org-default-notes-file (sbw/org-file "incoming.org"))
+(setq org-default-notes-file "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/non-project/incoming.org")
 
 ;; General settings
 
@@ -141,26 +138,26 @@
      ("cw" "Work agenda"
        ( (agenda ""
            ( (org-agenda-ndays 7)
-             (org-agenda-files sbw/work-files)
+             (org-agenda-files sbw/org-work-files)
              ))
                   
          (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
-             (org-agenda-files sbw/work-files)
+             (org-agenda-files sbw/org-work-files)
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
-             (org-agenda-files sbw/work-files)
+             (org-agenda-files sbw/org-work-files)
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "+PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
-             (org-agenda-files sbw/work-files)
+             (org-agenda-files sbw/org-work-files)
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
@@ -169,26 +166,26 @@
      ("cp" "Personal agenda"
        ( (agenda ""
            ( (org-agenda-ndays 7)
-             (org-agenda-files sbw/personal-files)
+             (org-agenda-files sbw/org-personal-files)
              ))
          
          (tags-todo "+PRIORITY=\"A\""
            ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
-             (org-agenda-files sbw/personal-files)
+             (org-agenda-files sbw/org-personal-files)
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
-             (org-agenda-files sbw/personal-files)
+             (org-agenda-files sbw/org-personal-files)
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
 
          (tags-todo "+PRIORITY=\"C\""
            ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
-             (org-agenda-files sbw/personal-files)
+             (org-agenda-files sbw/org-personal-files)
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
@@ -282,7 +279,7 @@ nil)
 ;; Helper functions for extracting data from org buffers
 
 (defun sbw/org-heading-points ()
-  "Returns a list of the points of all the headings in the current org-mode buffer."
+  "Return a list of the points of all the headings in the current org-mode buffer."
   (let ((points nil))
     (save-excursion
       (show-all)
@@ -308,19 +305,19 @@ nil)
     str))
 
 (defun sbw/extract-string (x)
-  "Returns a string extracted from the org property."
+  "Return a string extracted from the org property."
   (when x
     (-> x
       (substring-no-properties)
       (sbw/org-strip-urls))))
 
 (defun sbw/extract-timestamp (x)
-  "Returns a timestamp extracted from the org property."
+  "Return a timestamp extracted from the org property."
   (when x
     (date-to-time x)))
 
 (defun sbw/org-extract-heading-summary (x)
-  "Returns a summary of the org-mode heading at point x."
+  "Return a summary of the org-mode heading at point x."
   (let* ((summary (sbw/hash-table)))
     (save-excursion
       (goto-char x)
@@ -335,14 +332,14 @@ nil)
     summary))
 
 (defun sbw/org-heading-summaries (fnam)
-  "Returns summaries for all the headings in file fnam. See sbw/org-extract-heading-summary for a description of the content of a summary."
+  "Return summaries for all the headings in file fnam. See sbw/org-extract-heading-summary for a description of the content of a summary."
   (set-buffer (find-file-noselect fnam))
   (-map 'sbw/org-extract-heading-summary (sbw/org-heading-points)))
 
 ;; Sorting all subtrees
 
 (defun sbw/current-line ()
-  "Returns the text from the current line."
+  "Return the text from the current line."
   (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 
 (defun sbw/sort-all-subtrees ()
@@ -379,7 +376,7 @@ nil)
     "\n"))
 
 (defun sbw/generate-report-for-completed-tasks (org-files filter-func)
-  "Returns a summary of the completed tasks in the specified period."
+  "Return a summary of the completed tasks in the specified period."
   (let* ( (extract-heading-summaries (lambda (x) (-mapcat 'sbw/org-heading-summaries x)))
           (prune-irrelevant-tasks    (lambda (x) (-filter filter-func x)))
           (group-by-category         (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x)))
@@ -392,11 +389,11 @@ nil)
         (funcall generate-category-report)))))
 
 (defun sbw/adjust-date-by (date n)
-  "Returns a timestamp for the specified date plus n days."
+  "Return a timestamp for the specified date plus n days."
   (days-to-time (+ (time-to-number-of-days date) n)))
 
 (defun sbw/is-closed-between? (start end x)
-  "Returns t if task x was closed between start and end."
+  "Return t if task x was closed between start and end."
   (let* ( (closed (gethash :closed x)) )
     (and
       closed
@@ -404,7 +401,7 @@ nil)
       (time-less-p closed end))))
 
 (defun sbw/generate-report-for-period (org-files start end)
-  "Returns a report for the specified period."
+  "Return a report for the specified period."
   (let* ( (format-date (-partial 'format-time-string "%A %e %B %Y")) )
     (concat
       (sbw/heading-one (concat "Review for " (funcall format-date start) " to " (funcall format-date end)))
@@ -416,7 +413,7 @@ nil)
   "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/reports")
 
 (defun sbw/report-filename (start end title)
-  "Returns the filename for a report in standard form."
+  "Return the filename for a report in standard form."
   (let* ( (format-date (-partial 'format-time-string "%Y%m%d")) )
     (format "%s/%s-%s-to-%s.txt"
       sbw/org-report-dir
@@ -425,12 +422,12 @@ nil)
       (funcall format-date end))))
 
 (defun sbw/generate-weekly-report ()
-  "Returns the weekly report."
+  "Return the weekly report."
   (interactive)
   (let* ( (base   (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
           (start  (sbw/adjust-date-by base -6))
           (end    (sbw/adjust-date-by base  1))
-          (report (sbw/generate-report-for-period sbw/all-org-files start end))
+          (report (sbw/generate-report-for-period sbw/org-all-files start end))
           (fnam   (sbw/report-filename start end "weekly-report")) )
     (with-temp-file fnam (insert report))
     (message (format "Created '%s'" fnam))
