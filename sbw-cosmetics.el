@@ -1,3 +1,6 @@
+;; Add custom theme directory
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
 ;; Color theme, don't warn about executing code
 (load-theme 'sbw-dark t)
 

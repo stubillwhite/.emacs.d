@@ -1,4 +1,5 @@
 (require 'org-clock)
+(require 'dash)
 
 ;; Default to clean view with no leading asterisks for indentation
 (setq-default org-startup-indented t)
