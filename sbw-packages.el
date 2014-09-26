@@ -52,6 +52,8 @@
      ;; Interface
      sublimity        ;; SublimeText-style interface
      smart-mode-line  ;; Better mode line
+     helm             ;; Incremental narrowing framework
+     nyan-mode        ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
      
      ;; Clojure
      clojure-mode     ;; Clojure mode

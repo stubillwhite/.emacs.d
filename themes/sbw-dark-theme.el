@@ -163,6 +163,14 @@
     `(org-upcoming-deadline               ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-tag)))))
     `(org-warning                         ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-error)))))
 
+    ;; Helm
+    `(helm-match                          ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
+ ;   `(helm-source-header                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mode-line)))))
+    `(helm-grep-lineno                    ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(helm-ff-symlink                     ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(helm-buffer-process                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(helm-selection                      ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    
     ;; Flyspell
     `(flyspell-duplicate                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-warning)))))
     `(flyspell-incorrect                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-error)))))

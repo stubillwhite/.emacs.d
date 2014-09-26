@@ -78,7 +78,4 @@
   (interactive)
   (sbw/countdown-toggle (* 25 60)))
 
-(sbw/summarise-timer-toggle)
-(sbw/pomodoro-timer-toggle)
-
 (provide 'sbw-countdown)

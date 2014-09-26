@@ -4,7 +4,6 @@
 (require 'sbw-packages)
 (sbw/install-missing-packages)
 
-
 ;; Configure my settings
 (require 'sbw-bindings)
 (require 'sbw-misc)
@@ -15,6 +14,7 @@
 (require 'sbw-setup-cider)
 (require 'sbw-setup-clojure-mode)
 (require 'sbw-setup-flyspell)
+(require 'sbw-setup-helm)
 (require 'sbw-setup-ido-ubiquitous)
 (require 'sbw-setup-multiple-cursors)
 (require 'sbw-setup-org-mode)

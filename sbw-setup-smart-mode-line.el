@@ -5,6 +5,6 @@
 (sml/setup)
 
 ;; Hide minor modes that aren't of interest
-(setq rm-blacklist '(" AC" " SP" " Projectile" " Undo-Tree"))
+(setq rm-blacklist '(" AC" " SP" " Fly" " Undo-Tree"))
 
 (provide 'sbw-setup-smart-mode-line)
