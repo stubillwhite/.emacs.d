@@ -32,6 +32,8 @@
 (define-key helm-grep-mode-map (kbd "n")  'helm-grep-mode-jump-other-window-forward)
 (define-key helm-grep-mode-map (kbd "p")  'helm-grep-mode-jump-other-window-backward)
 
+(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
+
 (helm-mode 1)
 
 (provide 'sbw-setup-helm)

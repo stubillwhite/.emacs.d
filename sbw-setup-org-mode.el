@@ -9,8 +9,8 @@
 (setq org-directory 
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
 
-(defun sbw/org-file (fnam)
-  (concat org-directory fnam))
+;(defun sbw/org-file (fnam)
+;  (concat org-directory fnam))
 
 (defun sbw/org-files (&rest dirs)
   "Return a list of the org files in directories DIRS."
@@ -19,13 +19,13 @@
     (apply 'list dirs)))
 
 (defconst sbw/org-personal-files
-  (sbw/org-files "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/personal"))
+  (sbw/org-files (concat org-directory "current/personal")))
 
 (defconst sbw/org-non-project-files
-  (sbw/org-files "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/non-project"))
+  (sbw/org-files (concat org-directory "current/non-project")))
 
 (defconst sbw/org-work-files
-  (sbw/org-files "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/work"))
+  (sbw/org-files (concat org-directory "current/work")))
 
 (defconst sbw/org-all-files
   (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
@@ -38,7 +38,7 @@
 (setq org-refile-targets
   (quote ((sbw/org-refile-targets :maxlevel . 1))))
 
-(setq org-default-notes-file "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/current/non-project/incoming.org")
+(setq org-default-notes-file (concat org-directory "current/non-project/incoming.org"))
 
 ;; General settings
 

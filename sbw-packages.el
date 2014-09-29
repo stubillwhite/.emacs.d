@@ -46,7 +46,6 @@
      undo-tree        ;; Undo tree visualisation
      ido-ubiquitous   ;; Interactive completion everywhere
      auto-complete    ;; Auto-completion
-     smex             ;; M-x enhanced
      multiple-cursors ;; Multiple cursor mode
 
      ;; Interface

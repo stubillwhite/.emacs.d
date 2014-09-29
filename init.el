@@ -20,7 +20,6 @@
 (require 'sbw-setup-org-mode)
 (require 'sbw-setup-smartparens)
 (require 'sbw-setup-smart-mode-line)
-(require 'sbw-setup-smex)
 (require 'sbw-setup-undo-tree)
 
 ;; TODO For some reason org-mode clobbers these settings so we have to install it last

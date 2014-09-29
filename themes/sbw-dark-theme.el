@@ -169,6 +169,7 @@
     `(helm-grep-lineno                    ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-ff-symlink                     ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-buffer-process                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(helm-buffer-directory               ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
     `(helm-selection                      ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
     
     ;; Flyspell
