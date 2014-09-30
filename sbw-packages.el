@@ -47,6 +47,7 @@
      ido-ubiquitous   ;; Interactive completion everywhere
      auto-complete    ;; Auto-completion
      multiple-cursors ;; Multiple cursor mode
+     htmlize          ;; html org-mode reports
 
      ;; Interface
      sublimity        ;; SublimeText-style interface

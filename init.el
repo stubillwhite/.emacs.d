@@ -6,6 +6,7 @@
 
 ;; Configure my settings
 (require 'sbw-bindings)
+(require 'sbw-menu)
 (require 'sbw-misc)
 (require 'sbw-cosmetics)
 

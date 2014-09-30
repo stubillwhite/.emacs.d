@@ -139,9 +139,9 @@
      (search . " %i %-15:c")) )
 
 (setq org-agenda-remove-tags 1)
+
 (setq org-agenda-custom-commands
-  '(
-     ("c" . "Custom agenda")
+  '( ("c" . "Custom agenda")
      ("cw" "Work agenda"
        ( (agenda ""
            ( (org-agenda-ndays 7)
@@ -168,7 +168,10 @@
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
-         ))
+
+         )
+         nil
+         ("C:/Users/IBM_ADMIN/Dropbox/Private/org-mode/work-agenda.html"))
      
      ("cp" "Personal agenda"
        ( (agenda ""
@@ -196,7 +199,9 @@
              (org-agenda-todo-ignore-scheduled t)
              (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
              ))
-         ))
+         )
+         nil
+         ("C:/Users/IBM_ADMIN/Dropbox/Private/org-mode/personal-agenda.html"))
      ))
 
 ;; Appointments
@@ -503,9 +508,6 @@ nil)
 ;;  include filename
 
 
-
-
-  
 
   
 ;(setq org-refile-allow-creating-parent-nodes t)

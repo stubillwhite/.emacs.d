@@ -80,4 +80,16 @@
 (defalias '-dec '1- "Return x minus one.")
 (defalias '-inc '1+ "Return x plus one.")
 
+(defun sbw/hash-table-values (hash-table)
+  "Returns the values from HASH-TABLE."
+  (let* ( (values ()) )
+    (maphash (lambda (k v) (push v values)) hash-table)
+    values))
+
+(defun sbw/hash-table-keys (hash-table)
+  "Returns the keys from HASH-TABLE."
+  (let* ( (keys ()) )
+    (maphash (lambda (k v) (push k keys)) hash-table)
+    keys))
+
 (provide 'sbw-utils)
