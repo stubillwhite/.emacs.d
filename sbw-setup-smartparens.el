@@ -10,7 +10,7 @@
 ;; Strict mode
 (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
 (add-hook 'clojure-mode-hook    'smartparens-strict-mode)
-(add-hook 'lisp-mode-hook       'smartparens-strict-mode)
+(add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
 
 ;; Keybindings
 ;(sp-local-pair 'clojure-mode "(" nil :bind "C-(")

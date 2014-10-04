@@ -42,6 +42,7 @@
 
 ;; General settings
 
+
 (setq 
   org-clock-into-drawer         t           ;; Clock into drawers
   org-ellipsis                  "\u2026"    ;; Small ellipsis character
@@ -378,14 +379,16 @@ nil)
 ;; Weekly report
 
 (defun sbw/generate-report-for-task-category (category completed-tasks)
-  (concat
-    (sbw/heading-two category)
-    "\n"
-    (apply 'concat
-      (-map
-        (lambda (x) (concat " - " (gethash :heading x)  "\n"))
-        completed-tasks))
-    "\n"))
+  (let* ( (sorted-tasks completed-tasks) )
+    (sort sorted-tasks (lambda (x y) (string< (gethash :heading x) (gethash :heading y))))
+    (concat
+      (sbw/heading-two category)
+      "\n"
+      (apply 'concat
+        (-map
+          (lambda (x) (concat " - " (gethash :heading x)  "\n"))
+          sorted-tasks))
+      "\n")))
 
 (defun sbw/generate-report-for-completed-tasks (org-files filter-func)
   "Return a summary of the completed tasks in the specified period."
@@ -477,12 +480,11 @@ nil)
   "Display msg using Growl."
   (call-process "c:\\Program Files (x86)\\Growl for Windows\\growlnotify.exe" nil 0 nil "/s:true" "/t:emacs" msg))
 
-(defun sbw/appt-disp-window (min-to-app new-time appt-msg)
-  (sbw/growl-message (concat "Reminder: " appt-msg))
-  (appt-disp-window min-to-app new-time appt-msg))
+;(defun sbw/appt-disp-window (min-to-app new-time appt-msg)
+;  (sbw/growl-message (concat "Reminder: " appt-msg))
+;  (appt-disp-window min-to-app new-time appt-msg))
 
-(setq appt-disp-window-function 'sbw/appt-disp-window)
-
+;(setq appt-disp-window-function 'sbw/appt-disp-window)
 
 ;; Archiving
 
@@ -525,6 +527,7 @@ nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
+(setq org-clock-heading-function
+  (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30)))
 
 (provide 'sbw-setup-org-mode)

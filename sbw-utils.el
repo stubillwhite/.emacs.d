@@ -92,4 +92,10 @@
     (maphash (lambda (k v) (push k keys)) hash-table)
     keys))
 
+(defun sbw/truncate-string (s n)
+  "Returns s truncated to n characters with ellipsis if truncation occurred."
+  (if (> (length s) n)
+    (concat (substring s 0 (- n (length org-ellipsis))) org-ellipsis)
+    s))
+
 (provide 'sbw-utils)

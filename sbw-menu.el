@@ -54,7 +54,8 @@
     (insert (sbw/menu-format-menu menu))
     ;(fit-frame-to-buffer (current-buffer))
     (message "Press key for command")
-    (setq key (read-char-exclusive)))
+    (setq key (read-char-exclusive))
+    (message ""))
   key)
 
 (defun sbw/display-menu (menu)

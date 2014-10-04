@@ -44,7 +44,6 @@
      dash-functional  ;; Further functions for dash
      color-theme      ;; Color theme support
      undo-tree        ;; Undo tree visualisation
-     ido-ubiquitous   ;; Interactive completion everywhere
      auto-complete    ;; Auto-completion
      multiple-cursors ;; Multiple cursor mode
      htmlize          ;; html org-mode reports
