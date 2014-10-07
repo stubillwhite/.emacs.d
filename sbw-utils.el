@@ -40,25 +40,12 @@
     (maphash (lambda (k v) (push k keys)) hash-table)
     keys))
 
-
-
-
-
-
-
-
-
-
-
-(defun sbw/hash-table ()
-  "Returns a new hash-table with equal comparator."
-  (make-hash-table :test 'equal))
-
-(defun sbw/hash-table (&rest values)
+(defun sbw/hash-table (&rest keys-and-values)
+  "Returns a new hash-table with an equal comparator, and the initial content specified by KEYS-AND-VALUES key and value sequence."
   (-reduce-from
     (lambda (acc key-and-value) (puthash (car key-and-value) (cadr key-and-value) acc) acc)
     (make-hash-table :test 'equal)
-    (-partition 2 values)))
+    (-partition 2 keys-and-values)))
 
 (defun sbw/hash-table-equal (a b)
   "Returns t if hash-tables A and B are equal, nil otherwise."
@@ -75,32 +62,23 @@
       (not (sbw/hash-table-keys a))
       (not (sbw/hash-table-keys b)))))
 
-(ert-deftest sbw/hash-table-then-returns-new-hash-table-with-equals-comparator ()
-  (should (equal (hash-table-p (sbw/hash-table)) t))
-  (should (equal (hash-table-test (sbw/hash-table)) 'equal)))
-
 (defun sbw/heading-one (s)
+  "Returns string S formatted to be a top level heading."
   (concat s "\n" (make-string (length s) ?=) "\n"))
 
-(ert-deftest sbw/heading-one-then-returns-heading-string ()
-  (should (equal (sbw/heading-one "foo") "foo\n===\n")))
-
 (defun sbw/heading-two (s)
+  "Returns string S formatted to be a sub-heading."
   (concat s "\n" (make-string (length s) ?-) "\n"))
 
-(ert-deftest sbw/heading-two-then-returns-heading-string ()
-  (should (equal (sbw/heading-two "foo") "foo\n---\n")))
+(defun sbw/truncate-string (s n)
+  "Returns s truncated to n characters with ellipsis if truncation occurred."
+  (if (> (length s) n)
+    (concat (substring s 0 (- n (length org-ellipsis))) org-ellipsis)
+    s))
 
 (defun sbw/map-hash (f hash-table)
   "Returns a list of the result of calling f on each key value entry in the specified hash-table."
   (let ( (results (list)) )
-    (maphash (lambda (k v) (push (funcall f k v) results)) hash-table)
-    results))
-
-;; TODO Test this
-(defun sbw/map-hash (f hash-table)
-  "Returns a list of the result of calling f on each key value entry in the specified hash-table."
-  (let ( (results) )
     (maphash (lambda (k v) (push (funcall f k v) results)) hash-table)
     results))
 
@@ -124,10 +102,6 @@
 (defalias '-dec '1- "Return x minus one.")
 (defalias '-inc '1+ "Return x plus one.")
 
-(defun sbw/truncate-string (s n)
-  "Returns s truncated to n characters with ellipsis if truncation occurred."
-  (if (> (length s) n)
-    (concat (substring s 0 (- n (length org-ellipsis))) org-ellipsis)
-    s))
+
 
 (provide 'sbw-utils)
