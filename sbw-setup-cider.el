@@ -1,5 +1,5 @@
 (require 'cider)
-(require 'sbw-cosmetics)
+(require 'sbw-cosmetics) ;; TODO - Required?
 
 ;; Hide DOS EOL characters in the REPL
 (add-hook 'cider-repl-mode-hook 'sbw/hide-dos-eol)

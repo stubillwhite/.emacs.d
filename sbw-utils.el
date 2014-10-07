@@ -1,3 +1,4 @@
+;; TODO: Remove, use -filter?
 (defun sbw/filter (p l)
   "Returns the items from list l for which predicate p is true."
   (delq nil
@@ -26,9 +27,53 @@
     (should (equal (sbw/assq-ensure-is-first 'c (list a-entry b-entry c-entry)) (list c-entry a-entry b-entry)))
     (should (equal (sbw/assq-ensure-is-first 'a (list a-entry b-entry a-entry)) (list a-entry b-entry)))))
 
+
+(defun sbw/hash-table-values (hash-table)
+  "Returns the values from HASH-TABLE."
+  (let* ( (values ()) )
+    (maphash (lambda (k v) (push v values)) hash-table)
+    values))
+
+(defun sbw/hash-table-keys (hash-table)
+  "Returns the keys from HASH-TABLE."
+  (let* ( (keys ()) )
+    (maphash (lambda (k v) (push k keys)) hash-table)
+    keys))
+
+
+
+
+
+
+
+
+
+
+
 (defun sbw/hash-table ()
   "Returns a new hash-table with equal comparator."
   (make-hash-table :test 'equal))
+
+(defun sbw/hash-table (&rest values)
+  (-reduce-from
+    (lambda (acc key-and-value) (puthash (car key-and-value) (cadr key-and-value) acc) acc)
+    (make-hash-table :test 'equal)
+    (-partition 2 values)))
+
+(defun sbw/hash-table-equal (a b)
+  "Returns t if hash-tables A and B are equal, nil otherwise."
+  (let* ( (a    (copy-hash-table a))
+          (b    (copy-hash-table b))
+          (keys (sbw/hash-table-keys a)) )
+    (while keys
+      (let ( (k (car keys)) )
+        (when (equal (gethash k a) (gethash k b :sbw/key-not-found))
+          (remhash k a)
+          (remhash k b))
+        (setq keys (cdr keys))))
+    (and
+      (not (sbw/hash-table-keys a))
+      (not (sbw/hash-table-keys b)))))
 
 (ert-deftest sbw/hash-table-then-returns-new-hash-table-with-equals-comparator ()
   (should (equal (hash-table-p (sbw/hash-table)) t))
@@ -57,8 +102,7 @@
   "Returns a list of the result of calling f on each key value entry in the specified hash-table."
   (let ( (results) )
     (maphash (lambda (k v) (push (funcall f k v) results)) hash-table)
-    results
-    ))
+    results))
 
 ;; TODO Test this
 (defun sbw/collect-by (f l)
@@ -79,18 +123,6 @@
 
 (defalias '-dec '1- "Return x minus one.")
 (defalias '-inc '1+ "Return x plus one.")
-
-(defun sbw/hash-table-values (hash-table)
-  "Returns the values from HASH-TABLE."
-  (let* ( (values ()) )
-    (maphash (lambda (k v) (push v values)) hash-table)
-    values))
-
-(defun sbw/hash-table-keys (hash-table)
-  "Returns the keys from HASH-TABLE."
-  (let* ( (keys ()) )
-    (maphash (lambda (k v) (push k keys)) hash-table)
-    keys))
 
 (defun sbw/truncate-string (s n)
   "Returns s truncated to n characters with ellipsis if truncation occurred."

@@ -27,6 +27,21 @@
 ;; Investigate what is going on here
 (require 'sbw-countdown)
 
+;; Load tests
+(defun load-files-from-directory (dir)
+  "Loads all the Lisp files from DIR."
+  (let* ( (is-file?      (lambda (x) (not (cadr x))))
+          (is-elisp?     (lambda (x) (string= (substring (car x) -3) ".el")))
+          (absolute-path (lambda (x) (concat dir "/" (car x)))) )
+    (-each
+      (->> (directory-files-and-attributes dir nil nil nil)
+        (-filter is-file?)
+        (-filter is-elisp?)
+        (-map absolute-path))
+      (lambda (x) (load (file-name-sans-extension x))))))
+
+(load-files-from-directory "~/.emacs.d/test")
+
 ;; TODO Remove this
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

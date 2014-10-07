@@ -62,7 +62,7 @@
 (setq org-tag-alist nil)
 
 (setq org-todo-keywords
-  '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "|" "DONE(d!)" "CANCELLED(c)" "POSTPONED(p)"))
+  '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))
 
 (setq org-drawers
   '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
@@ -344,6 +344,10 @@ nil)
       (puthash :closed   (sbw/extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
     summary))
 
+(defun sbw/white-test ()
+  (interactive)
+  (print (sbw/org-extract-heading-summary (point))))
+
 (defun sbw/org-heading-summaries (fnam)
   "Return summaries for all the headings in file fnam. See sbw/org-extract-heading-summary for a description of the content of a summary."
   (set-buffer (find-file-noselect fnam))
@@ -451,8 +455,13 @@ nil)
     nil))
 
 
-;; Stuff to rationalise
 
+
+
+
+
+
+;; Stuff to rationalise
 
 (setq org-fontify-done-headline t)
 (custom-set-faces
@@ -470,9 +479,50 @@ nil)
 ; '(org-headling-done ((t (:background unspecified :foreground unspecified :weight normal :strike-through t :inherit (sbw-dark-normal)))))
 ; )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-hook 'org-insert-heading-hook 'sbw/org-utils-insert-created)
+
+(defconst sbw/org-utils-created-time-stamp-property "CREATED")
+
+(defun sbw/org-utils-insert-created ()
+  (interactive)
+  (when (equal "TODO" (sbw/extract-string (org-get-todo-state)))
+    (let* ( (time-stamp (format-time-string (org-time-stamp-format :long :inactive) (current-time))) )
+      (save-excursion
+        (org-entry-put (point) sbw/org-utils-created-time-stamp-property time-stamp))
+      (org-back-to-heading)
+      (org-end-of-line))))
+
+;; Could use org-after-todo-state-change-hook
+
+
+(defun sbw/org-utils-insinuate ()
+  (interactive)
+  (add-hook 'org-insert-heading-hook          'sbw/org-utils-insert-created)
+  (add-hook 'org-capture-before-finalize-hook 'sbw/org-utils-insert-created)
+  (add-hook 'org-after-todo-state-change-hook 'sbw/org-utils-insert-created))
+
+(defun sbw/org-utils-deinsinuate ()
+  (interactive)
+  (remove-hook 'org-insert-heading-hook          'sbw/org-utils-insert-created)
+  (remove-hook 'org-capture-before-finalize-hook 'sbw/org-utils-insert-created)
+  (remove-hook 'org-after-todo-state-change-hook 'sbw/org-utils-insert-created))
+
+
+;(defadvice org-insert-todo-heading (after mrb/created-timestamp-advice activate)
+;"Insert a CREATED property using org-expiry.el for TODO entries"
+;(mrb/insert-created-timestamp)
+;)
+;; Make it active
+;(ad-activate 'org-insert-todo-heading)
+
+(sbw/org-utils-insinuate)
+(sbw/org-utils-deinsinuate)
 
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Notify appointment reminders using Growl
 

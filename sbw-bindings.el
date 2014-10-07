@@ -111,12 +111,11 @@
     (define-key map (kbd "C-j v w") #'widen)
     (define-key map (kbd "C-j c l") #'org-insert-link)
     (define-key map (kbd "C-j c c") #'org-capture)
+    (define-key map (kbd "S-<f12>") #'sbw/summarise-timer-toggle)
     (define-key map (kbd "<f12>")   #'sbw/pomodoro-timer-toggle)
     (define-key map (kbd "C-j m")   #'(lambda () (interactive) (sbw/display-menu sbw/menu-standard-reports)))
     map) 
   "Keymap used when sbw-org-mode-minor-mode is active.")
-
-
 
 ;; Make windmove work in org-mode
 ;; TODO Fix this up
