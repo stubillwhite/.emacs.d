@@ -27,6 +27,7 @@
     (should (equal (sbw/assq-ensure-is-first 'c (list a-entry b-entry c-entry)) (list c-entry a-entry b-entry)))
     (should (equal (sbw/assq-ensure-is-first 'a (list a-entry b-entry a-entry)) (list a-entry b-entry)))))
 
+;; TODO - tested
 
 (defun sbw/hash-table-values (hash-table)
   "Returns the values from HASH-TABLE."
@@ -42,6 +43,9 @@
 
 (defun sbw/hash-table (&rest keys-and-values)
   "Returns a new hash-table with an equal comparator, and the initial content specified by KEYS-AND-VALUES key and value sequence."
+  (let* ( (is-even? (lambda (x) (= 0 (mod x 2)))) )
+    (when (not (funcall is-even? (length keys-and-values)))
+      (signal 'wrong-number-of-arguments keys-and-values)))
   (-reduce-from
     (lambda (acc key-and-value) (puthash (car key-and-value) (cadr key-and-value) acc) acc)
     (make-hash-table :test 'equal)
@@ -81,6 +85,23 @@
   (let ( (results (list)) )
     (maphash (lambda (k v) (push (funcall f k v) results)) hash-table)
     results))
+
+(defun sbw/decompose-time (time)
+  "Returns TIME in the form of a hash-table."
+  (apply 'sbw/hash-table
+    (apply '-concat
+      (-zip-with
+        'list
+        (list :second :minute :hour :day :month :year :weekday :daylight-saving :timezone)
+        (decode-time time)))))
+
+(defun sbw/compose-time (decomposed-time)
+  "Returns the time represented by the DECOMPOSED-TIME hash-table."
+  (apply 'encode-time
+    (-reduce-from
+      (lambda (acc x) (cons (gethash x decomposed-time) acc))
+      '()
+      (list :timezone :daylight-saving :weekday :year :month :day :hour :minute :second))))
 
 ;; TODO Test this
 (defun sbw/collect-by (f l)

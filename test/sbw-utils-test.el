@@ -30,6 +30,10 @@
     (puthash :k2 :b expected)
     (should (sbw/hash-table-equal (sbw/hash-table :k1 :a :k2 :b) expected)))
 
+(ert-deftest sbw/hash-table-given-invalid-initial-content-then-throws ()
+  (should-error (sbw/hash-table :k1 :v1 :k2)
+    :type 'wrong-number-of-arguments))
+
 ;; sbw/hash-table-equal
 
 (ert-deftest sbw/hash-table-equal-given-hash-tables-empty-then-t ()
@@ -97,5 +101,13 @@
           (expected (list ":b=y" ":a=x"))
           (f        (lambda (k v) (concat (symbol-name k) "=" v))) )
     (should (equal (sbw/map-hash f x) expected))))
+
+;; sbw/decompose-time
+
+;; TODO
+
+;; sbw/compose-time
+
+;; TODO
 
 (provide 'sbw-utils-test)

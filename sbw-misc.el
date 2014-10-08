@@ -33,6 +33,7 @@
   shift-select-mode             nil
   uniquify-buffer-name-style    'forward
   visible-bell                  t                                                       ;; No beep
+  fill-column                   80                                                      ;; 80 columns
   whitespace-line-column        80                                                      ;; 80 columns
   whitespace-style              '(face trailing lines-tail tabs)
   sentence-end-double-space     nil                                                     ;; Sentences end in a single space

@@ -9,9 +9,6 @@
 (setq org-directory 
       "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
 
-;(defun sbw/org-file (fnam)
-;  (concat org-directory fnam))
-
 (defun sbw/org-files (&rest dirs)
   "Return a list of the org files in directories DIRS."
   (-mapcat
