@@ -62,6 +62,10 @@
   "Returns a copy of HASH-TABLE with K mapped to V."
   (sbw/ht-merge hash-table (sbw/ht-create k v)))
 
+(defun sbw/ht-assoc-in (hash-table ks v)
+  "TODO"
+  nil)
+
 ;; TODO
 ;; sbw/ht-assoc-in map ks v
 ;; sbw/ht-dissoc map k
