@@ -33,11 +33,13 @@
   shift-select-mode             nil
   uniquify-buffer-name-style    'forward
   visible-bell                  t                                                       ;; No beep
-  fill-column                   80                                                      ;; 80 columns
-  whitespace-line-column        80                                                      ;; 80 columns
+  whitespace-line-column        120                                                     ;; 120 columns
   whitespace-style              '(face trailing lines-tail tabs)
   sentence-end-double-space     nil                                                     ;; Sentences end in a single space
   )
+
+;; 120 columns
+(setq-default fill-column 120)
 
 ;; Shift-cursor to move between windows
 (windmove-default-keybindings)
@@ -70,7 +72,7 @@
   (let* ( (cmd    (concat "sc query \"" name "\""))
           (str    (shell-command-to-string cmd))
           (regex  "SERVICE_NAME: \\(.+\\)\n.*\n.*STATE\\W+: \\(\\w+\\)\\W+\\(\\w+\\)")
-          (status (sbw/hash-table)) )
+          (status (sbw/ht-create)) )
     (when (string-match regex str)
       (puthash :name   (match-string 1 str) status)
       (puthash :code   (match-string 2 str) status)

@@ -29,43 +29,6 @@
 
 ;; TODO - tested
 
-(defun sbw/hash-table-values (hash-table)
-  "Returns the values from HASH-TABLE."
-  (let* ( (values ()) )
-    (maphash (lambda (k v) (push v values)) hash-table)
-    values))
-
-(defun sbw/hash-table-keys (hash-table)
-  "Returns the keys from HASH-TABLE."
-  (let* ( (keys ()) )
-    (maphash (lambda (k v) (push k keys)) hash-table)
-    keys))
-
-(defun sbw/hash-table (&rest keys-and-values)
-  "Returns a new hash-table with an equal comparator, and the initial content specified by KEYS-AND-VALUES key and value sequence."
-  (let* ( (is-even? (lambda (x) (= 0 (mod x 2)))) )
-    (when (not (funcall is-even? (length keys-and-values)))
-      (signal 'wrong-number-of-arguments keys-and-values)))
-  (-reduce-from
-    (lambda (acc key-and-value) (puthash (car key-and-value) (cadr key-and-value) acc) acc)
-    (make-hash-table :test 'equal)
-    (-partition 2 keys-and-values)))
-
-(defun sbw/hash-table-equal (a b)
-  "Returns t if hash-tables A and B are equal, nil otherwise."
-  (let* ( (a    (copy-hash-table a))
-          (b    (copy-hash-table b))
-          (keys (sbw/hash-table-keys a)) )
-    (while keys
-      (let ( (k (car keys)) )
-        (when (equal (gethash k a) (gethash k b :sbw/key-not-found))
-          (remhash k a)
-          (remhash k b))
-        (setq keys (cdr keys))))
-    (and
-      (not (sbw/hash-table-keys a))
-      (not (sbw/hash-table-keys b)))))
-
 (defun sbw/heading-one (s)
   "Returns string S formatted to be a top level heading."
   (concat s "\n" (make-string (length s) ?=) "\n"))
@@ -88,7 +51,7 @@
 
 (defun sbw/decompose-time (time)
   "Returns TIME in the form of a hash-table."
-  (apply 'sbw/hash-table
+  (apply 'sbw/ht-create
     (apply '-concat
       (-zip-with
         'list
@@ -112,7 +75,7 @@
               (curr-val (gethash category acc (list))) )
         (puthash category (cons val curr-val) acc)
         acc))
-    (sbw/hash-table)
+    (sbw/ht-create)
     l))
 
 ;; TODO Test these, break tests into a separate file
@@ -120,9 +83,8 @@
   "Returns a string with the items from list joined by separator."
   (apply 'concat (-drop 1 (-interleave (-repeat (length list) sep) list))))
 
+;; TODO Prefix these
 (defalias '-dec '1- "Return x minus one.")
 (defalias '-inc '1+ "Return x plus one.")
-
-
 
 (provide 'sbw-utils)

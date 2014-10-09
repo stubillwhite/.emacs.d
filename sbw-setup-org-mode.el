@@ -328,7 +328,7 @@ nil)
 
 (defun sbw/org-extract-heading-summary (x)
   "Return a summary of the org-mode heading at point x."
-  (let* ((summary (sbw/hash-table)))
+  (let* ((summary (sbw/ht-create)))
     (save-excursion
       (goto-char x)
       (puthash :filename (buffer-file-name) summary)
@@ -439,7 +439,7 @@ nil)
       (funcall format-date end))))
 
 (defun sbw/generate-weekly-report ()
-  "Return the weekly report."
+  "Generate the weekly report, write it out, and open it for review."
   (interactive)
   (let* ( (base   (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
           (start  (sbw/adjust-date-by base -6))
@@ -451,6 +451,15 @@ nil)
     (find-file fnam)
     nil))
 
+
+
+;(defun sbw/generate-monthly-report ()
+;  "Generate the monthly report, write it out, and open it for review."
+;  (let* ( (base  (sbw/decompose-time (current-time)))
+;          (start (sbw/ht-create-merge (sbw/ht-create :day 1 :month (dec (gethash :month base)))))
+;          (end   (sbw/ht-create-merge (sbw/ht-create :day (calendar-last-day-of-month ())))))
+;    base
+;    ))
 
 
 

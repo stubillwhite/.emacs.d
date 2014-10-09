@@ -1,9 +1,10 @@
 (require 'dash)
 (require 'sbw-utils)
+(require 'sbw-hash-table-utils)
 
 (defun sbw/menu-option (key description function)
   "Returns a menu option with the specified KEY binding, DESCRIPTION, and FUNCTION to execute."
-  (let* ( (table (sbw/hash-table)) )
+  (let* ( (table (sbw/ht-create)) )
     (puthash :key         key         table)
     (puthash :description description table)
     (puthash :function    function    table)
@@ -14,13 +15,13 @@
   menu)
 
 (defconst sbw/menu-default-options
-  (let* ( (table (sbw/hash-table)) )
+  (let* ( (table (sbw/ht-create)) )
     (sbw/menu-add-option table (sbw/menu-option ?q "Quit" (lambda () (message "Abort"))))
     table))
 
 (defun sbw/menu (title &rest menu-options)
   "Returns a menu with TITLE and the specified MENU-OPTIONS."
-  (let* ( (menu-table   (sbw/hash-table))
+  (let* ( (menu-table   (sbw/ht-create))
           (option-table (-reduce-from 'sbw/menu-add-option (copy-hash-table sbw/menu-default-options) menu-options)) )
     (puthash :title   title        menu-table)
     (puthash :options option-table menu-table)
@@ -32,7 +33,7 @@
     (concat (string key) "  " description "\n")))
 
 (defun sbw/menu-format-options (options)
-  (let* ( (keys (-sort '< (sbw/hash-table-keys options))) )
+  (let* ( (keys (-sort '< (sbw/ht-keys options))) )
     (apply
       'concat (-map (lambda (x) (sbw/menu-format-option (gethash x options))) keys))))
 
