@@ -113,7 +113,7 @@
     (define-key map (kbd "C-j c c") #'org-capture)
     (define-key map (kbd "S-<f12>") #'sbw/summarise-timer-toggle)
     (define-key map (kbd "<f12>")   #'sbw/pomodoro-timer-toggle)
-    (define-key map (kbd "C-j m")   #'(lambda () (interactive) (sbw/display-menu sbw/menu-standard-reports)))
+    (define-key map (kbd "C-j m")   #'(lambda () (interactive) (sbw/menu-display sbw/menu-common-commands)))
     map) 
   "Keymap used when sbw-org-mode-minor-mode is active.")
 

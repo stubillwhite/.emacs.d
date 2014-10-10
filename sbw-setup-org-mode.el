@@ -39,7 +39,6 @@
 
 ;; General settings
 
-
 (setq 
   org-clock-into-drawer         t           ;; Clock into drawers
   org-ellipsis                  "\u2026"    ;; Small ellipsis character
@@ -380,15 +379,15 @@ nil)
 ;; Weekly report
 
 (defun sbw/generate-report-for-task-category (category completed-tasks)
-  (let* ( (sorted-tasks completed-tasks) )
-    (sort sorted-tasks (lambda (x y) (string< (gethash :heading x) (gethash :heading y))))
+  (let* ( (to-string       (lambda (x) (sbw/ht-get x :heading)))
+          (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) )
     (concat
       (sbw/heading-two category)
       "\n"
       (apply 'concat
         (-map
-          (lambda (x) (concat " - " (gethash :heading x)  "\n"))
-          sorted-tasks))
+          (lambda (x) (concat " - " (funcall to-string x)  "\n"))
+          (-sort task-comparator completed-tasks)))
       "\n")))
 
 (defun sbw/generate-report-for-completed-tasks (org-files filter-func)
@@ -451,18 +450,21 @@ nil)
     (find-file fnam)
     nil))
 
-
-
-;(defun sbw/generate-monthly-report ()
-;  "Generate the monthly report, write it out, and open it for review."
-;  (let* ( (base  (sbw/decompose-time (current-time)))
-;          (start (sbw/ht-create-merge (sbw/ht-create :day 1 :month (dec (gethash :month base)))))
-;          (end   (sbw/ht-create-merge (sbw/ht-create :day (calendar-last-day-of-month ())))))
-;    base
-;    ))
-
-
-
+(defun sbw/generate-monthly-report ()
+  "Generate the monthly report, write it out, and open it for review."
+  (interactive)
+  (message "\n\n\nStart")
+  (let* ( (base   (sbw/decompose-time (current-time)))
+          (month  (-dec (sbw/ht-get base :month)))
+          (year   (sbw/ht-get base :year))
+          (start  (sbw/compose-time (sbw/ht-merge base (sbw/ht-create :day 1 :month month))))
+          (end    (sbw/compose-time (sbw/ht-merge base (sbw/ht-create :day (calendar-last-day-of-month month year) :month month))))
+          (report (sbw/generate-report-for-period sbw/org-all-files start end))
+          (fnam   (sbw/report-filename start end "monthly-report")))
+    (with-temp-file fnam (insert report))
+    (message (format "Created '%s'" fnam))
+    (find-file fnam)
+    nil))
 
 
 
@@ -486,45 +488,6 @@ nil)
 ; )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(add-hook 'org-insert-heading-hook 'sbw/org-utils-insert-created)
-
-(defconst sbw/org-utils-created-time-stamp-property "CREATED")
-
-(defun sbw/org-utils-insert-created ()
-  (interactive)
-  (when (equal "TODO" (sbw/extract-string (org-get-todo-state)))
-    (let* ( (time-stamp (format-time-string (org-time-stamp-format :long :inactive) (current-time))) )
-      (save-excursion
-        (org-entry-put (point) sbw/org-utils-created-time-stamp-property time-stamp))
-      (org-back-to-heading)
-      (org-end-of-line))))
-
-;; Could use org-after-todo-state-change-hook
-
-
-(defun sbw/org-utils-insinuate ()
-  (interactive)
-  (add-hook 'org-insert-heading-hook          'sbw/org-utils-insert-created)
-  (add-hook 'org-capture-before-finalize-hook 'sbw/org-utils-insert-created)
-  (add-hook 'org-after-todo-state-change-hook 'sbw/org-utils-insert-created))
-
-(defun sbw/org-utils-deinsinuate ()
-  (interactive)
-  (remove-hook 'org-insert-heading-hook          'sbw/org-utils-insert-created)
-  (remove-hook 'org-capture-before-finalize-hook 'sbw/org-utils-insert-created)
-  (remove-hook 'org-after-todo-state-change-hook 'sbw/org-utils-insert-created))
-
-
-;(defadvice org-insert-todo-heading (after mrb/created-timestamp-advice activate)
-;"Insert a CREATED property using org-expiry.el for TODO entries"
-;(mrb/insert-created-timestamp)
-;)
-;; Make it active
-;(ad-activate 'org-insert-todo-heading)
-
-(sbw/org-utils-insinuate)
-(sbw/org-utils-deinsinuate)
 
 
 

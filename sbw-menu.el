@@ -59,22 +59,23 @@
     (message ""))
   key)
 
-(defun sbw/display-menu (menu)
+(defun sbw/menu-display (menu)
   "Display MENU and allow the user to select and execute an option from it."
   (interactive)
   (sbw/menu-execute-option menu (sbw/menu-select-option menu)))
 
-(defconst sbw/menu-standard-reports-two
-  (sbw/menu "More reports"
-    (sbw/menu-option ?a "Agenda"        'org-agenda)
-    (sbw/menu-option ?w "Weekly report" 'sbw/generate-weekly-report)
-    (sbw/menu-option ?x "Export agenda" 'org-store-agenda-views)))
+(defun sbw/menu-submenu (submenu)
+  (sbw/menu-display submenu))
 
-(defconst sbw/menu-standard-reports
-  (sbw/menu "Standard reports"
+(defconst sbw/menu-reports
+  (sbw/menu "Reports"
+    (sbw/menu-option ?w "Weekly report"  'sbw/generate-weekly-report)
+    (sbw/menu-option ?m "Monthly report" 'sbw/generate-monthly-report)))
+
+(defconst sbw/menu-common-commands
+  (sbw/menu "Common Commands"
     (sbw/menu-option ?a "Agenda"        'org-agenda)
-    (sbw/menu-option ?w "Weekly report" 'sbw/generate-weekly-report)
-    (sbw/menu-option ?m "More"          (lambda () (sbw/display-menu sbw/menu-standard-reports-two)))
+    (sbw/menu-option ?r "Reports"       (lambda () (sbw/menu-display sbw/menu-reports)))
     (sbw/menu-option ?x "Export agenda" 'org-store-agenda-views)))
 
 (provide 'sbw-menu)

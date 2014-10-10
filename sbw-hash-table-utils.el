@@ -66,8 +66,21 @@
   "TODO"
   nil)
 
+;; acc (m . k)
+;; 42       ({ :z 23 } . :z)
+;; { :z 42} ({ :b nil :y _ } . :y)
+;(require 'json)
+;(defun sbw/ht-pprint (hash-table)
+;  (princ (json-encode hash-table))
+;  (terpri)
+;  nil)
+
+;(let* ( (map (sbw/ht-create :a nil :x (sbw/ht-create :b nil :y (sbw/ht-create :z 23)))) )
+;  (sbw/ht-pprint map)
+;  (sbw/ht-pprint (sbw/ht-assoc-in map (list :x :y :z) 42))
+;  nil)
+
 ;; TODO
-;; sbw/ht-assoc-in map ks v
 ;; sbw/ht-dissoc map k
 ;; sbw/select-keys map ks
 ;; sbw/ht-update map k f
