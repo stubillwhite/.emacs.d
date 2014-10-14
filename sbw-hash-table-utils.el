@@ -64,7 +64,12 @@
 
 (defun sbw/ht-assoc-in (hash-table ks v)
   "TODO"
-  nil)
+  (-reduce-from
+    (lambda (acc v) (cons v acc))
+    (list)
+    ks))
+
+;;(sbw/ht-assoc-in (sbw/ht-create :k1 (sbw/ht-create :k2 :v1)) (list :k1 :k2) :v2)
 
 ;; acc (m . k)
 ;; 42       ({ :z 23 } . :z)
@@ -74,15 +79,30 @@
 ;  (princ (json-encode hash-table))
 ;  (terpri)
 ;  nil)
-
 ;(let* ( (map (sbw/ht-create :a nil :x (sbw/ht-create :b nil :y (sbw/ht-create :z 23)))) )
 ;  (sbw/ht-pprint map)
 ;  (sbw/ht-pprint (sbw/ht-assoc-in map (list :x :y :z) 42))
 ;  nil)
 
+
+(defun sbw/ht-dissoc (hash-table k)
+  "Returns a copy of HASH-TABLE with K removed."
+  (let* ( (copy (sbw/ht-copy hash-table)) )
+    (remhash k copy)
+    copy))
+
+(defun sbw/ht-select-keys (hash-table ks)
+  "Returns a copy of HASH-TABLE with only the values associated with the specified keys."
+  (-reduce-from
+    (lambda (acc k)
+      (let* ( (v (gethash k hash-table :sbw/key-not-found)) )
+        (when (not (equal v :sbw/key-not-found))
+          (puthash k (gethash k hash-table) acc))
+        acc))
+    (sbw/ht-create)
+    ks))
+
 ;; TODO
-;; sbw/ht-dissoc map k
-;; sbw/select-keys map ks
 ;; sbw/ht-update map k f
 ;; sbw/ht-update-in map ks f
 

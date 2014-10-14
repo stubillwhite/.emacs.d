@@ -64,6 +64,20 @@
 ;; Use y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
+
+(defun sbw/unfill-paragraph ()
+  (interactive)
+  (let* ( (fill-column (point-max)) )
+    (fill-paragraph nil)))
+
+(defun sbw/unfill-region (start end)
+  (interactive "r")
+  (let* ( (fill-column (point-max)) )
+    (fill-region start end nil)))
+
+
+
+
 ;; Ridiculous Windows housekeeping
 ;; Symantec fails to start reliably. Emacs is usually running, so if we discover that Symantec is down then smack it
 ;; into life. This is utterly ridiculous and should be fixed properlys somewhere else.

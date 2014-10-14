@@ -87,7 +87,7 @@
     (remhash :k hash-table)
     (should-not (sbw/ht-equal copy hash-table))))
 
-;; sbw/merge
+;; sbw/ht-merge
 
 (ert-deftest sbw/ht-merge-then-merged-copy-of-hash-tables ()
   (let* ( (a        (sbw/ht-create :x :a1 :y :a2       ))
@@ -96,7 +96,7 @@
           (expected (sbw/ht-create :x :a1 :y :b2 :z :c3)) )
     (should (sbw/ht-equal (sbw/ht-merge a b c) expected))))
 
-;; sbw/assoc
+;; sbw/ht-assoc
 
 (ert-deftest sbw/ht-assoc-given-key-exists-then-replaces ()
   (let* ( (hash-table (sbw/ht-create :k :v1))
@@ -107,5 +107,35 @@
   (let* ( (hash-table (sbw/ht-create :x :a))
           (expected   (sbw/ht-create :x :a :y :b)) )
     (should (sbw/ht-equal (sbw/ht-assoc hash-table :y :b) expected))))
+
+;; sbw/ht-assoc-in
+
+(ert-deftest sbw/ht-assoc-in-given-key-exists-then-replaces ()
+  (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v1)))
+          (expected   (sbw/ht-create :k1 (sbw/ht-create :k2 :v2))) )
+    ;; TODO - Once sbw/ht-equal is recursive then fix this
+    (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k2) :v2)) )
+      (should (equal (sbw/ht-keys result) (sbw/ht-keys expected)))
+      (should (sbw/ht-equal (sbw/ht-get result :k1) (sbw/ht-get expected :k1))))))
+
+;; sbw/ht-dissoc
+
+(ert-deftest sbw/ht-dissoc-given-key-exists-then-removes ()
+  (let* ( (hash-table (sbw/ht-create :k1 :v1 :k2 :v2))
+          (expected   (sbw/ht-create         :k2 :v2)) )
+    (should (sbw/ht-equal (sbw/ht-dissoc hash-table :k1) expected))))
+
+(ert-deftest sbw/ht-dissoc-given-key-does-not-exist-then-unchanged ()
+  (let* ( (hash-table (sbw/ht-create :k1 :v1 :k2 :v2))
+          (expected   (sbw/ht-create :k1 :v1 :k2 :v2)) )
+    (should (sbw/ht-equal (sbw/ht-dissoc hash-table :x) expected))))
+
+;; sbw/ht-select-keys
+
+(ert-deftest sbw/ht-select-keys-then-retains-selected ()
+  (let* ( (hash-table (sbw/ht-create :k1 :v1 :k2 :v2 :k3 :v3))
+          (expected   (sbw/ht-create         :k2 :v2 :k3 :v3)) )
+    (should (sbw/ht-equal (sbw/ht-select-keys hash-table (list :k2 :k3 :k4)) expected))))
+
 
 (provide 'sbw-hash-table-utils-test)
