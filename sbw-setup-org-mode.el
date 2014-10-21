@@ -437,11 +437,9 @@ nil)
       (funcall format-date start)
       (funcall format-date end))))
 
-(defun sbw/generate-weekly-report ()
+(defun sbw/generate-weekly-report (base)
   "Generate the weekly report, write it out, and open it for review."
-  (interactive)
-  (let* ( (base   (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0))))
-          (start  (sbw/adjust-date-by base -6))
+  (let* ( (start  (sbw/adjust-date-by base -6))
           (end    (sbw/adjust-date-by base  1))
           (report (sbw/generate-report-for-period sbw/org-all-files start end))
           (fnam   (sbw/report-filename start end "weekly-report")) )
@@ -450,24 +448,42 @@ nil)
     (find-file fnam)
     nil))
 
-(defun sbw/generate-monthly-report ()
-  "Generate the monthly report, write it out, and open it for review."
+(defun sbw/generate-weekly-report-for-previous-week ()
+  "Generate the weekly report for the previous week."
   (interactive)
-  (message "\n\n\nStart")
-  (let* ( (base   (sbw/decompose-time (current-time)))
-          (month  (-dec (sbw/ht-get base :month)))
-          (year   (sbw/ht-get base :year))
-          (start  (sbw/compose-time (sbw/ht-merge base (sbw/ht-create :day 1 :month month))))
-          (end    (sbw/compose-time (sbw/ht-merge base (sbw/ht-create :day (calendar-last-day-of-month month year) :month month))))
-          (report (sbw/generate-report-for-period sbw/org-all-files start end))
-          (fnam   (sbw/report-filename start end "monthly-report")))
+  (sbw/generate-weekly-report (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0)))))
+
+(defun sbw/generate-weekly-report-for-current-week ()
+  "Generate the weekly report for the current week."
+  (interactive)
+  (sbw/generate-weekly-report (apply 'encode-time (org-read-date-analyze "+sat" nil '(0 0 0)))))
+
+(defun sbw/generate-monthly-report (base)
+  "Generate the monthly report, write it out, and open it for review."
+  (let* ( (decomp-base (sbw/decompose-time base))
+          (last-day    (calendar-last-day-of-month (sbw/ht-get decomp-base :month) (sbw/ht-get decomp-base :year)))
+          (start       (sbw/compose-time (sbw/ht-merge decomp-base (sbw/ht-create :day 1))))
+          (end         (sbw/compose-time (sbw/ht-merge decomp-base (sbw/ht-create :day last-day))))
+          (report      (sbw/generate-report-for-period sbw/org-all-files start end))
+          (fnam        (sbw/report-filename start end "monthly-report")))
     (with-temp-file fnam (insert report))
     (message (format "Created '%s'" fnam))
     (find-file fnam)
     nil))
 
+(defun sbw/generate-monthly-report-for-previous-month ()
+  "Generate the monthly report for the previous month."
+  (interactive)
+  (let* ( (decomp-curr-time (sbw/decompose-time (current-time)))
+          (prev-month       (-dec (sbw/ht-get decomp-curr-time  :month)))
+          (base             (sbw/compose-time (sbw/ht-merge decomp-curr-time (sbw/ht-create :month prev-month)))) )
+    (sbw/generate-monthly-report base)))
 
-
+(defun sbw/generate-monthly-report-for-current-month ()
+  "Generate the monthly report for the current month."
+  (interactive)
+  (let* ( (base (current-time)) )
+    (sbw/generate-monthly-report base)))
 
 ;; Stuff to rationalise
 

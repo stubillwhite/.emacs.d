@@ -25,6 +25,9 @@
 ;  (maybe-install-and-require 'cider))
 
 
+
+
+
 (defun sbw/packages-for-installation (pkg-list)
   "Returns a list of packages which need installation."
   (sbw/filter (lambda (x) (not (package-installed-p x))) pkg-list))
@@ -40,8 +43,6 @@
   '(
      ;; Standard stuff
      use-package      ;; Easy package use
-     dash             ;; Modern list library
-     dash-functional  ;; Further functions for dash
      color-theme      ;; Color theme support
      undo-tree        ;; Undo tree visualisation
      auto-complete    ;; Auto-completion
@@ -49,6 +50,12 @@
      multiple-cursors ;; Multiple cursor mode
      htmlize          ;; html org-mode reports
 
+     ;; Lisp
+     dash             ;; Modern list library
+     dash-functional  ;; Further functions for dash
+     f                ;; Modern file API
+     s                ;; Modern string API
+     
      ;; Interface
      sublimity        ;; SublimeText-style interface
      smart-mode-line  ;; Better mode line

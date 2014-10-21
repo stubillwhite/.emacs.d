@@ -1,5 +1,11 @@
 (add-to-list 'load-path "~/.emacs.d")
 
+(defmacro after (mode &rest body)
+  "`eval-after-load' MODE evaluate BODY."
+  (declare (indent defun))
+  `(eval-after-load ,mode
+     '(progn ,@body)))
+
 ;; Install any missing pre-requisites
 (require 'sbw-packages)
 (sbw/install-missing-packages)

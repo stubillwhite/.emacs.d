@@ -18,23 +18,20 @@
   default-buffer-file-coding-system 'utf-8
   x-select-request-type             '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
+;; Backups
+(setq
+  temporary-file-directory "~/.emacs.d/temp"
+  backup-directory-alist) '(("." . "~/.emacs.d/backups"))
+
 ;; General settings
 (setq
-  color-theme-is-global         t
-  diff-switches                 "-u"
-  ediff-window-setup-function   'ediff-setup-windows-plain
   inhibit-startup-message       t                                                       ;; No splash screen
   initial-scratch-message       nil                                                     ;; No scratch message
-  ispell-dictionary             "british"                                               ;; British English
-  mouse-yank-at-point           t
-  oddmuse-directory             "~/.emacs.d/oddmuse"
-  save-place-file               "~/.emacs.d/places"
-  sentence-end-double-space     nil
-  shift-select-mode             nil
-  uniquify-buffer-name-style    'forward
   visible-bell                  t                                                       ;; No beep
-  whitespace-line-column        120                                                     ;; 120 columns
-  whitespace-style              '(face trailing lines-tail tabs)
+  line-number-mode              t                                                       ;; Display line position
+  column-number-mode            t                                                       ;; Display column position
+  ispell-dictionary             "british"                                               ;; British English
+  shift-select-mode             nil                                                     ;; Shift doesn't activate mark
   sentence-end-double-space     nil                                                     ;; Sentences end in a single space
   )
 
@@ -63,7 +60,6 @@
 
 ;; Use y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
-
 
 (defun sbw/unfill-paragraph ()
   (interactive)
@@ -100,6 +96,7 @@
 (defun sbw/ensure-process-is-running (proc-name)
   (let* ( (proc-status (sbw/windows-process-status proc-name)) )
     (when (string-equal "STOPPED" (gethash :status proc-status))
+
       (sbw/windows-process-start proc-name)
       (message (concat "Service " proc-name " is not currently running. Starting it.")))))
 

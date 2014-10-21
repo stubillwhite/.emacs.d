@@ -1,4 +1,4 @@
-(require 'sbw-hash-table-utils)
+(require 'sbw-hash-tables)
 
 ;; sbw/ht-keys
 
@@ -110,8 +110,34 @@
 
 ;; sbw/ht-assoc-in
 
-(ert-deftest sbw/ht-assoc-in-given-key-exists-then-replaces ()
+(ert-deftest sbw/ht-assoc-in-given-key-exists-at-top-level-then-replaces ()
+  (let* ( (hash-table (sbw/ht-create :k1 :v1))
+          (expected   (sbw/ht-create :k1 :v2)) )
+    (should (sbw/ht-equal (sbw/ht-assoc-in hash-table (list :k1) :v2) expected))))
+
+(ert-deftest sbw/ht-assoc-in-given-key-exists-in-nested-structure-then-replaces ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v1)))
+          (expected   (sbw/ht-create :k1 (sbw/ht-create :k2 :v2))) )
+    ;; TODO - Once sbw/ht-equal is recursive then fix this
+    (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k2) :v2)) )
+      (should (equal (sbw/ht-keys result) (sbw/ht-keys expected)))
+      (should (sbw/ht-equal (sbw/ht-get result :k1) (sbw/ht-get expected :k1))))))
+
+(ert-deftest sbw/ht-assoc-in-given-new-key-at-top-level-then-adds ()
+  (let* ( (hash-table (sbw/ht-create :k1 :v1))
+          (expected   (sbw/ht-create :k1 :v1 :k2 :v2)) )
+    (should (sbw/ht-equal (sbw/ht-assoc-in hash-table (list :k2) :v2) expected))))
+
+(ert-deftest sbw/ht-assoc-in-given-new-key-in-nested-structure-then-adds ()
+  (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v2)))
+          (expected   (sbw/ht-create :k1 (sbw/ht-create :k2 :v2 :k3 :v3))) )
+    ;; TODO - Once sbw/ht-equal is recursive then fix this
+    (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k3) :v3)) )
+      (should (equal (sbw/ht-keys result) (sbw/ht-keys expected)))
+      (should (sbw/ht-equal (sbw/ht-get result :k1) (sbw/ht-get expected :k1))))))
+
+(ert-deftest sbw/ht-assoc-in-given-new-key-in-intermediate-nested-structure-then-creates-empty-hash-table ()
+  (let* ( (hash-table (sbw/ht-create))
           (expected   (sbw/ht-create :k1 (sbw/ht-create :k2 :v2))) )
     ;; TODO - Once sbw/ht-equal is recursive then fix this
     (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k2) :v2)) )
@@ -138,4 +164,4 @@
     (should (sbw/ht-equal (sbw/ht-select-keys hash-table (list :k2 :k3 :k4)) expected))))
 
 
-(provide 'sbw-hash-table-utils-test)
+(provide 'sbw-hash-tables-test)

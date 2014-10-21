@@ -62,28 +62,32 @@
   "Returns a copy of HASH-TABLE with K mapped to V."
   (sbw/ht-merge hash-table (sbw/ht-create k v)))
 
+(defun sbw/-ht-flatten-hash-tables (hash-table ks)
+  "Returns a flattened version of a nested associative structure to the point specified by ks, where ks is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
+  (let* ( (mk-acc        (lambda (ht l) (sbw/ht-create :ht ht :l l)))
+          (get-or-create (lambda (ht k) (let ((x (sbw/ht-get ht k))) (if x x (sbw/ht-create))))) )
+    (sbw/ht-get
+      (-reduce-from
+        (lambda (acc k)
+          (let* ( (ht     (sbw/ht-get acc :ht))
+                  (l      (sbw/ht-get acc :l))
+                  (new-ht (sbw/ht-get ht k)) )
+            (funcall mk-acc
+              (funcall get-or-create ht k)
+              (append l (list ht)))))
+        (funcall mk-acc hash-table (list))
+        ks)
+      :l)))
+
 (defun sbw/ht-assoc-in (hash-table ks v)
-  "TODO"
+  "Returns a nested associative structure with value v associated at the point specified by ks, where ks is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
   (-reduce-from
-    (lambda (acc v) (cons v acc))
-    (list)
-    ks))
-
-;;(sbw/ht-assoc-in (sbw/ht-create :k1 (sbw/ht-create :k2 :v1)) (list :k1 :k2) :v2)
-
-;; acc (m . k)
-;; 42       ({ :z 23 } . :z)
-;; { :z 42} ({ :b nil :y _ } . :y)
-;(require 'json)
-;(defun sbw/ht-pprint (hash-table)
-;  (princ (json-encode hash-table))
-;  (terpri)
-;  nil)
-;(let* ( (map (sbw/ht-create :a nil :x (sbw/ht-create :b nil :y (sbw/ht-create :z 23)))) )
-;  (sbw/ht-pprint map)
-;  (sbw/ht-pprint (sbw/ht-assoc-in map (list :x :y :z) 42))
-;  nil)
-
+    (lambda (acc ht-and-k)
+      (let ( (ht (car ht-and-k))
+             (k  (cadr ht-and-k)) )
+        (sbw/ht-assoc ht k acc)))
+    v
+    (reverse (-partition 2 (-interleave (sbw/-ht-flatten-hash-tables hash-table ks) ks)))))
 
 (defun sbw/ht-dissoc (hash-table k)
   "Returns a copy of HASH-TABLE with K removed."
@@ -106,4 +110,4 @@
 ;; sbw/ht-update map k f
 ;; sbw/ht-update-in map ks f
 
-(provide 'sbw-hash-table-utils)
+(provide 'sbw-hash-tables)

@@ -1,6 +1,6 @@
 (require 'dash)
 (require 'sbw-utils)
-(require 'sbw-hash-table-utils)
+(require 'sbw-hash-tables)
 
 (defun sbw/menu-option (key description function)
   "Returns a menu option with the specified KEY binding, DESCRIPTION, and FUNCTION to execute."
@@ -30,7 +30,7 @@
 (defun sbw/menu-format-option (option)
   (let* ( (key         (gethash :key option))
           (description (gethash :description option)) )
-    (concat (string key) "  " description "\n")))
+    (concat "[" (string key) "]  " description "\n")))
 
 (defun sbw/menu-format-options (options)
   (let* ( (keys (-sort '< (sbw/ht-keys options))) )
@@ -40,6 +40,7 @@
 (defun sbw/menu-format-menu (menu)
   (concat
     (sbw/heading-two (gethash :title menu))
+    "\n"
     (sbw/menu-format-options (gethash :options menu))))
 
 (defun sbw/menu-execute-option (menu key)
@@ -69,8 +70,10 @@
 
 (defconst sbw/menu-reports
   (sbw/menu "Reports"
-    (sbw/menu-option ?w "Weekly report"  'sbw/generate-weekly-report)
-    (sbw/menu-option ?m "Monthly report" 'sbw/generate-monthly-report)))
+    (sbw/menu-option ?w "Weekly report for previous week"   'sbw/generate-weekly-report-for-previous-week)
+    (sbw/menu-option ?m "Monthly report for previous month" 'sbw/generate-monthly-report-for-previous-month)
+    (sbw/menu-option ?W "Weekly report for current month" 'sbw/generate-weekly-report-for-current-week)
+    (sbw/menu-option ?M "Monthly report for current month" 'sbw/generate-monthly-report-for-current-month)))
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common Commands"

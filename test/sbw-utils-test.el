@@ -1,5 +1,5 @@
 (require 'sbw-utils)
-(require 'sbw-hash-table-utils)
+(require 'sbw-hash-tables)
 
 ;; sbw/heading-one
 
