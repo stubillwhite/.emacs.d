@@ -39,9 +39,22 @@
       (make-hash-table :test 'equal)
       (-partition 2 keyvals))))
 
-(defun sbw/ht-get (hash-table k)
-  "Returns the value associated with key K in HASH-TABLE or nil if no such key exists."
-  (gethash k hash-table))
+(defun sbw/ht-get (hash-table k &optional default)
+  "Returns the value associated with key K in HASH-TABLE, nil or DEFAULT if no such key exists."
+  (gethash k hash-table default))
+
+(defun sbw/ht-get-in (hash-table ks &optional default)
+  "Returns the value from the associative structure at the point specified by KS, where KS is a sequence of keys into the structure."
+  (let* ( (result (-reduce-from
+                    (lambda (acc k)
+                      (if (equal acc :sbw/key-not-found)
+                        acc
+                        (sbw/ht-get acc k :sbw/key-not-found)))
+                    hash-table
+                    ks)) )
+    (if (equal result :sbw/key-not-found)
+      default
+      result)))
 
 (defun sbw/ht-contains? (hash-table k)
   "Returns t if HASH-TABLE contains key K, nil otherwise."
@@ -63,7 +76,7 @@
   (sbw/ht-merge hash-table (sbw/ht-create k v)))
 
 (defun sbw/-ht-flatten-hash-tables (hash-table ks)
-  "Returns a flattened version of a nested associative structure to the point specified by ks, where ks is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
+  "Returns a flattened version of a nested associative structure to the point specified by KS, where KS is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
   (let* ( (mk-acc        (lambda (ht l) (sbw/ht-create :ht ht :l l)))
           (get-or-create (lambda (ht k) (let ((x (sbw/ht-get ht k))) (if x x (sbw/ht-create))))) )
     (sbw/ht-get
@@ -80,7 +93,7 @@
       :l)))
 
 (defun sbw/ht-assoc-in (hash-table ks v)
-  "Returns a nested associative structure with value v associated at the point specified by ks, where ks is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
+  "Returns a nested associative structure with value V associated at the point specified by KS, where KS is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
   (-reduce-from
     (lambda (acc ht-and-k)
       (let ( (ht (car ht-and-k))
@@ -88,6 +101,27 @@
         (sbw/ht-assoc ht k acc)))
     v
     (reverse (-partition 2 (-interleave (sbw/-ht-flatten-hash-tables hash-table ks) ks)))))
+
+(defun sbw/ht-update (hash-table k f)
+  "Returns a copy of HASH-TABLE with the value associated with key K updated, where f is a function that will take the old value and return the new value."
+  (let* ( (v (funcall f (sbw/ht-get hash-table k))) )
+    (sbw/ht-merge hash-table (sbw/ht-create k v))))
+
+(defun sbw/ht-update-in (hash-table ks f)
+  "Returns a nested associative structure with value associated at the point specified by KS updated, where KS is a sequence of keys to the structure, and F is function that will take the old value and return the new value. If any levels do not exist then new hash-tables will be created."
+  (let* ( (flattened (sbw/-ht-flatten-hash-tables hash-table ks)) )
+    (-reduce-from
+      (lambda (acc ht-and-k)
+        (let ( (ht (car ht-and-k))
+               (k  (cadr ht-and-k)) )
+          (sbw/ht-assoc ht k acc)))
+      (funcall f (car flattened))
+      (reverse (-partition 2 (-interleave flattened ks))))))
+
+
+
+
+
 
 (defun sbw/ht-dissoc (hash-table k)
   "Returns a copy of HASH-TABLE with K removed."
@@ -106,8 +140,6 @@
     (sbw/ht-create)
     ks))
 
-;; TODO
-;; sbw/ht-update map k f
-;; sbw/ht-update-in map ks f
+;; TODO Make ks all vectors
 
 (provide 'sbw-hash-tables)

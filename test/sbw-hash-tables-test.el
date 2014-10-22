@@ -64,9 +64,36 @@
   (let* ( (hash-table (sbw/ht-create :k :a)) )
     (should (equal (sbw/ht-get hash-table :k) :a))))
 
-(ert-deftest sbw/ht-get-given-value-does-not-exist-then-nil ()
+(ert-deftest sbw/ht-get-given-value-does-not-exist-and-no-default-then-nil ()
   (let* ( (hash-table (sbw/ht-create :k :a)) )
     (should (equal (sbw/ht-get hash-table :x) nil))))
+
+(ert-deftest sbw/ht-get-given-value-does-not-exist-and-default-then-default ()
+  (let* ( (hash-table (sbw/ht-create :k :a)) )
+    (should (equal (sbw/ht-get hash-table :x :default) :default))))
+
+;; sbw/ht-get-in
+
+(ert-deftest sbw/ht-get-in-given-value-exists-then-associated-value ()
+  (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v))) )
+    (should (equal (sbw/ht-get-in hash-table (list :k1 :k2)) :v))))
+
+(ert-deftest sbw/ht-get-in-given-exhausts-associative-structure-and-no-default-then-nil ()
+  (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create))) )
+    (should (equal (sbw/ht-get-in hash-table (list :k1 :k2)) nil))))
+
+(ert-deftest sbw/ht-get-in-given-exhausts-associative-structure-and-default-then-default ()
+  (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create)))
+          (default    (sbw/ht-create :k2 :v)) )
+    (should (equal (sbw/ht-get-in hash-table (list :k1 :k2) default) default))))
+
+(ert-deftest sbw/ht-get-in-given-value-does-not-exist-and-no-default-then-nil ()
+  (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v))) )
+    (should (equal (sbw/ht-get-in hash-table (list :k1 :k3)) nil))))
+
+(ert-deftest sbw/ht-get-in-given-value-does-not-exist-and-default-then-default ()
+  (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v))) )
+    (should (equal (sbw/ht-get-in hash-table (list :k1 :k3) :default) :default))))
 
 ;; sbw/ht-contains?
 
@@ -104,9 +131,9 @@
     (should (sbw/ht-equal (sbw/ht-assoc hash-table :k :v2) expected))))
 
 (ert-deftest sbw/ht-assoc-given-new-key-then-adds ()
-  (let* ( (hash-table (sbw/ht-create :x :a))
-          (expected   (sbw/ht-create :x :a :y :b)) )
-    (should (sbw/ht-equal (sbw/ht-assoc hash-table :y :b) expected))))
+  (let* ( (hash-table (sbw/ht-create :k1 :v1))
+          (expected   (sbw/ht-create :k1 :v1 :k2 :v2)) )
+    (should (sbw/ht-equal (sbw/ht-assoc hash-table :k2 :v2) expected))))
 
 ;; sbw/ht-assoc-in
 
@@ -143,6 +170,47 @@
     (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k2) :v2)) )
       (should (equal (sbw/ht-keys result) (sbw/ht-keys expected)))
       (should (sbw/ht-equal (sbw/ht-get result :k1) (sbw/ht-get expected :k1))))))
+
+;; sbw/ht-update
+
+(ert-deftest sbw/ht-update-given-key-exists-then-replaces ()
+  (let* ( (hash-table (sbw/ht-create :k 1))
+          (inc        (lambda (x) (+ 1 x)))
+          (expected   (sbw/ht-create :k 2)) )
+    (should (sbw/ht-equal (sbw/ht-update hash-table :k inc) expected))))
+
+(ert-deftest sbw/ht-update-given-new-key-then-adds ()
+  (let* ( (hash-table (sbw/ht-create :k1 :v1))
+          (f          (lambda (x) (when (not x) :v2)))
+          (expected   (sbw/ht-create :k1 :v1 :k2 :v2)) )
+    (should (sbw/ht-equal (sbw/ht-update hash-table :k2 f) expected))))
+
+;; sbw/ht-update-in
+
+(ert-deftest sbw/ht-update-in-given-key-exists-at-top-level-then-replaces ()
+  :expected-result :failed
+  (let* ( (hash-table (sbw/ht-create :k1 :v1))
+          (f          (lambda (x) (when (equal x :v1) :v2)))
+          (expected   (sbw/ht-create :k1 :v2)) )
+    (should (sbw/ht-equal (sbw/ht-update-in hash-table (list :k1) f) expected))))
+
+(ert-deftest sbw/ht-update-in-given-key-exists-in-nested-structure-then-replaces ()
+  :expected-result :failed
+  (should (equal 1 0)))
+
+(ert-deftest sbw/ht-update-in-given-new-key-at-top-level-then-adds ()
+  :expected-result :failed
+  (should (equal 1 0)))
+
+(ert-deftest sbw/ht-update-in-given-new-key-in-nested-structure-then-adds ()
+  :expected-result :failed  
+  (should (equal 1 0)))
+
+(ert-deftest sbw/ht-update-in-given-new-key-in-intermediate-nested-structure-then-creates-empty-hash-table ()
+  :expected-result :failed  
+  (should (equal 1 0)))
+
+
 
 ;; sbw/ht-dissoc
 
