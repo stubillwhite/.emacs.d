@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (defmacro after (mode &rest body)
   "`eval-after-load' MODE evaluate BODY."

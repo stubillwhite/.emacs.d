@@ -118,11 +118,6 @@
       (funcall f (car flattened))
       (reverse (-partition 2 (-interleave flattened ks))))))
 
-
-
-
-
-
 (defun sbw/ht-dissoc (hash-table k)
   "Returns a copy of HASH-TABLE with K removed."
   (let* ( (copy (sbw/ht-copy hash-table)) )
@@ -139,7 +134,5 @@
         acc))
     (sbw/ht-create)
     ks))
-
-;; TODO Make ks all vectors
 
 (provide 'sbw-hash-tables)

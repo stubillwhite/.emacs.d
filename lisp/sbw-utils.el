@@ -78,13 +78,14 @@
     (sbw/ht-create)
     l))
 
+;; TODO Might be replaced with s.el now?
 ;; TODO Test these, break tests into a separate file
 (defun sbw/join (sep list)
   "Returns a string with the items from list joined by separator."
   (apply 'concat (-drop 1 (-interleave (-repeat (length list) sep) list))))
 
 ;; TODO Prefix these
-(defalias '-dec '1- "Return x minus one.")
-(defalias '-inc '1+ "Return x plus one.")
+(defalias 'sbw/dec '1- "Return x minus one.")
+(defalias 'sbw/inc '1+ "Return x plus one.")
 
 (provide 'sbw-utils)
