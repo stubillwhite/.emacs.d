@@ -67,10 +67,6 @@
      cider            ;; REPL support
      smartparens      ;; Improved paredit
      ac-cider         ;; Cider REPL autocomplete and documentation
-
-     ;; Experimental
-     ;aggressive-indent ;; Aggressive indentation
-     
      )
   "List of the packages required for this Emacs configuration.")
 

@@ -1,5 +1,5 @@
 ;; Add custom theme directory
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/themes")
 
 ;; Color theme, don't warn about executing code
 (load-theme 'sbw-dark t)
