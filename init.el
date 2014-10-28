@@ -46,7 +46,7 @@
         (-map absolute-path))
       (lambda (x) (load (file-name-sans-extension x))))))
 
-(load-files-from-directory "~/.emacs.d/test")
+(load-files-from-directory "~/.emacs.d/lisp/test")
 
 ;; TODO Remove this
 (custom-set-faces

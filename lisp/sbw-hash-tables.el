@@ -1,18 +1,15 @@
 ;; Functions for hash-table manipulation, heavily stolen from Clojure's API
 
 (require 'dash)
+(require 'subr-x)
 
 (defun sbw/ht-keys (hash-table)
   "Returns the keys from HASH-TABLE."
-  (let* ( (keys ()) )
-    (maphash (lambda (k v) (push k keys)) hash-table)
-    keys))
+  (hash-table-keys hash-table))
 
 (defun sbw/ht-vals (hash-table)
   "Returns the values from HASH-TABLE."
-  (let* ( (vals ()) )
-    (maphash (lambda (k v) (push v vals)) hash-table)
-    vals))
+  (hash-table-values hash-table))
 
 (defun sbw/ht-equal (a b)
   "Returns t if hash-tables A and B are equal, nil otherwise."

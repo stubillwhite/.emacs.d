@@ -16,6 +16,9 @@
 ;; Font
 (set-default-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
 
+;; Prettify symbols everywhere
+(global-prettify-symbols-mode 1)
+
 ;; Favor horizontal splits over vertical splits
 (setq 
   split-width-threshold  nil

@@ -5,9 +5,6 @@
 ;; Trace mode when debugging
 (setq edebug-trace t)
 
-;; RET should auto-indent
-(define-key global-map (kbd "RET") 'newline-and-indent)
-
 ;; Unicode
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)

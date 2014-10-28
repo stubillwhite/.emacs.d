@@ -1,5 +1,6 @@
 (require 'sbw-hash-tables)
 (require 'dash)
+(require 's)
 
 (defun sbw/-mm-set-registry (r)
   (setq *sbw/-mm-registry* r))
@@ -52,18 +53,72 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun parity (x)
+(defun parity (x &rest args)
   (if (= 0 (mod x 2)) :even :odd))
 
-;(setq *sbw/-mm-registry* (sbw/ht-create))
+(setq *sbw/-mm-registry* (sbw/ht-create))
 
 (sbw/mm-defmulti describe-number 'parity)
-(sbw/mm-defmethod describe-number [:even] (x) (print (format "The number %d is even" x)))
-(sbw/mm-defmethod describe-number [:odd]  (x) (print (format "The number %d is odd" x)))
+(sbw/mm-defmethod describe-number [:even] (x y) (print (format "The number %d is even" x)))
+(sbw/mm-defmethod describe-number [:odd]  (x y) (print (format "The number %d is odd" x)))
 
-(describe-number 1)
-(describe-number 2)
+(describe-number 1 2)
+(describe-number 2 2)
 
 (print *sbw/-mm-registry*)
+
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Type-Predicates.html#Type-Predicates
+(defun sbw/data-type (x &rest args)
+  (cond
+    ((stringp x)      :string)
+    ((keywordp x)     :keyword)
+    ((symbolp x)      :symbol)
+    ((numberp x)      :number)
+    ((hash-table-p x) :hash-table)
+    ((listp x)        :list)
+    ((vectorp x)      :vector)
+    (t                (signal 'wrong-type-argument (list x)))))
+
+
+(defun sbw/pprint (x)
+  (sbw/-pprint-to-string x 0))
+
+(defun sbw/-pprint-indent (s depth)
+  (concat (s-repeat depth " ") s "\n"))
+
+(defun sbw/-pprint-string-to-string (x depth)
+  (sbw/-pprint-indent x depth))
+
+(defun sbw/-pprint-keyword-to-string (x depth)
+  (sbw/-pprint-indent (symbol-name x) depth))
+
+(defun sbw/-pprint-number-to-string (x depth)
+  (sbw/-pprint-indent (number-to-string x) depth))
+
+
+(defun sbw/-pprint-vector-to-string (x depth)
+  (concat
+    (sbw/-pprint-indent "[" depth)
+    (apply 'concat
+      (-map (lambda (x) (sbw/-pprint-to-string x (+ 2 depth))) x))
+    (sbw/-pprint-indent "]" depth)))
+
+(sbw/mm-defmulti sbw/-pprint-to-string 'sbw/data-type)
+(sbw/mm-defmethod sbw/-pprint-to-string [:string]     (x depth) (sbw/-pprint-string-to-string x depth))
+(sbw/mm-defmethod sbw/-pprint-to-string [:keyword]    (x depth) (sbw/-pprint-keyword-to-string x depth))
+(sbw/mm-defmethod sbw/-pprint-to-string [:number]     (x depth) (sbw/-pprint-number-to-string x depth))
+;(sbw/mm-defmethod sbw/-pprint-to-string [:hash-table] (x depth) (sbw/-pprint-number-to-string x depth))
+;(sbw/mm-defmethod sbw/-pprint-to-string [:list]       (x depth) (sbw/-pprint-number-to-string x depth))
+(sbw/mm-defmethod sbw/-pprint-to-string [:vector]     (x depth) (sbw/-pprint-vector-to-string x depth))
+
+
+
+;(sbw/pprint "foo")
+;(sbw/pprint :foo)
+;(sbw/pprint 23)
+;(sbw/pprint (sbw/ht-create :k1 :v1 :k2 (sbw/ht-create :k3 :v3)))
+;(sbw/pprint (list 1 2 (list 3 4)))
+;(sbw/pprint [1 2 [3 4]])
+
 
 (provide 'sbw-multimethods)

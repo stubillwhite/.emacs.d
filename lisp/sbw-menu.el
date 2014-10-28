@@ -72,8 +72,8 @@
   (sbw/menu "Reports"
     (sbw/menu-option ?w "Weekly report for previous week"   'sbw/generate-weekly-report-for-previous-week)
     (sbw/menu-option ?m "Monthly report for previous month" 'sbw/generate-monthly-report-for-previous-month)
-    (sbw/menu-option ?W "Weekly report for current month" 'sbw/generate-weekly-report-for-current-week)
-    (sbw/menu-option ?M "Monthly report for current month" 'sbw/generate-monthly-report-for-current-month)))
+    (sbw/menu-option ?W "Weekly report for current week"    'sbw/generate-weekly-report-for-current-week)
+    (sbw/menu-option ?M "Monthly report for current month"  'sbw/generate-monthly-report-for-current-month)))
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common Commands"

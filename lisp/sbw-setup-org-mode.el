@@ -129,11 +129,11 @@
   (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
 
 (setq org-agenda-prefix-format
-  '( (agenda . " %i %-15:c%?-15t% s")
+  '( (agenda . " %i %-20:c%?-20t% s")
      (timeline . "  % s")
-     (todo . " %i %-15:c")
-     (tags . " %i %-15:c")
-     (search . " %i %-15:c")) )
+     (todo . " %i %-20:c")
+     (tags . " %i %-20:c")
+     (search . " %i %-20:c")) )
 
 (setq org-agenda-remove-tags 1)
 
@@ -475,7 +475,7 @@ nil)
   "Generate the monthly report for the previous month."
   (interactive)
   (let* ( (decomp-curr-time (sbw/decompose-time (current-time)))
-          (prev-month       (-dec (sbw/ht-get decomp-curr-time  :month)))
+          (prev-month       (sbw/dec (sbw/ht-get decomp-curr-time  :month)))
           (base             (sbw/compose-time (sbw/ht-merge decomp-curr-time (sbw/ht-create :month prev-month)))) )
     (sbw/generate-monthly-report base)))
 

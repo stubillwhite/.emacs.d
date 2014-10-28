@@ -67,12 +67,16 @@
      cider            ;; REPL support
      smartparens      ;; Improved paredit
      ac-cider         ;; Cider REPL autocomplete and documentation
+
+     ;; Experimental
+     ;aggressive-indent ;; Aggressive indentation
+     
      )
   "List of the packages required for this Emacs configuration.")
 
 (defun sbw/install-missing-packages ()
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize)
   (sbw/ensure-packages-are-installed sbw/required-packages))
 
