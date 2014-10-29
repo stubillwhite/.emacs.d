@@ -1,6 +1,27 @@
 (require 'sbw-utils)
 (require 'sbw-hash-tables)
 
+;; sbw/filter
+
+(ert-deftest sbw/filter-given-predicate-and-list-then-retains-items-for-which-predicate-is-true ()
+  "sbw/filter given predicate and list then retains items for which predicate is true."
+  (let ((is-even? (lambda (x) (= (% x 2) 0))))
+    (should (equal (sbw/filter is-even? (list))         (list)))
+    (should (equal (sbw/filter is-even? (list 1 3 5 7)) (list)))
+    (should (equal (sbw/filter is-even? (list 1 2 3 4)) (list 2 4)))
+    (should (equal (sbw/filter is-even? (list 2 4 6 8)) (list 2 4 6 8)))))
+
+;; sbw/assq-ensure-is-first
+
+(ert-deftest sbw/assq-ensure-is-first-given-map-then-removes-duplicates-and-ensures-is-first ()
+  (let* ( (a-entry (list 'a "a-entry"))
+          (b-entry (list 'b "b-entry"))
+          (c-entry (list 'c "c-entry")) )
+    (should (equal (sbw/assq-ensure-is-first 'a (list a-entry b-entry c-entry)) (list a-entry b-entry c-entry)))
+    (should (equal (sbw/assq-ensure-is-first 'b (list a-entry b-entry c-entry)) (list b-entry a-entry c-entry)))
+    (should (equal (sbw/assq-ensure-is-first 'c (list a-entry b-entry c-entry)) (list c-entry a-entry b-entry)))
+    (should (equal (sbw/assq-ensure-is-first 'a (list a-entry b-entry a-entry)) (list a-entry b-entry)))))
+
 ;; sbw/heading-one
 
 (ert-deftest sbw/heading-one-then-returns-heading-string ()

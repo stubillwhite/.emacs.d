@@ -1,39 +1,14 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY."
-  (declare (indent defun))
-  `(eval-after-load ,mode
-     '(progn ,@body)))
-
 ;; Install any missing pre-requisites
 (require 'sbw-packages)
 (sbw/install-missing-packages)
 
-;; Configure my settings
-(require 'sbw-bindings)
-(require 'sbw-menu)
-(require 'sbw-misc)
-(require 'sbw-cosmetics)
-
-;; Configure plugins
-;(require 'sbw-setup-auto-complete)
-;(require 'sbw-setup-cider)
-;(require 'sbw-setup-clojure-mode)
-;(require 'sbw-setup-flyspell)
-;(require 'sbw-setup-helm)
-;(require 'sbw-setup-multiple-cursors)
-;(require 'sbw-setup-nyan-mode)
-;(require 'sbw-setup-org-mode)
-;(require 'sbw-setup-smartparens)
-;(require 'sbw-setup-smart-mode-line)
-;(require 'sbw-setup-undo-tree)
-
-;; TODO For some reason org-mode clobbers these settings so we have to install it last
-;; Investigate what is going on here
-(require 'sbw-countdown)
+;; Add custom theme directory
+(add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/themes")
 
 ;; TODO This needs dash so bootstrapping is now a problem
+(require 'dash)
 (defun load-files-from-directory (dir)
   "Loads all the Lisp files from DIR."
   (let* ( (is-file?      (lambda (x) (not (cadr x))))
@@ -46,8 +21,16 @@
         (-map absolute-path))
       (lambda (x) (load (file-name-sans-extension x))))))
 
+(load-files-from-directory "~/.emacs.d/lisp/package-config")
+
+;; Configure my settings
+(require 'sbw-bindings)
+(require 'sbw-menu)
+(require 'sbw-misc)
+(require 'sbw-cosmetics)
+(require 'sbw-countdown)
+
 (load-files-from-directory "~/.emacs.d/lisp/test")
-(load-files-from-directory "~/.emacs.d/lisp/packages")
 
 ;; TODO Remove this
 (custom-set-faces
