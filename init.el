@@ -1,8 +1,11 @@
+(switch-to-buffer "*Messages*")
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;; Install any missing pre-requisites
 (require 'sbw-packages)
 (sbw/install-missing-packages)
+(setq-default use-package-verbose t)
+
 
 ;; Add custom theme directory
 (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/themes")
@@ -31,6 +34,15 @@
 (require 'sbw-countdown)
 
 (load-files-from-directory "~/.emacs.d/lisp/test")
+
+(use-package ace-jump-mode
+  :commands ace-jump-mode
+  :init
+  (bind-key "C-." 'ace-jump-mode))
+
+;; Configure registers for commonly edited files
+(set-register ?e '(file . "~/.emacs.d/init.el"))
+(set-register ?n '(file . "~/.emacs.d/init-new.el"))
 
 ;; TODO Remove this
 (custom-set-faces
