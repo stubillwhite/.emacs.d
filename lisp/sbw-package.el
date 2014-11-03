@@ -1,3 +1,5 @@
+;; Package bootstrapping
+
 (require 'package)
 
 (defun sbw/pkg-configure-package-repositories ()
@@ -19,11 +21,12 @@
   "Ensure that the specified packages are installed."
   (let ( (new-packages (sbw/-pkg-packages-for-installation pkg-list)) )
     (when new-packages
-      (package-refresh-contents)
       (switch-to-buffer "*Messages*")
+      (message "\nNew packages detected. Refreshing package list...")
+      (package-refresh-contents)
       (mapc
         (lambda (x)
-          (message "Downloading and installing package %s..." x)
+          (message "\nDownloading and installing package %s..." x)
           (package-install x))
         new-packages))))
 
@@ -31,7 +34,7 @@
   "Require the specified packages."
   (mapc
     (lambda (x)
-      (message "Requiring %s" x)
+      (message "\nRequiring %s" x)
       (require x))
     pkg-list))
   
@@ -41,10 +44,21 @@
     (lambda (x)
       (let* ( (package (symbol-name x))
               (fnam    (concat dir "/sbw-configure-" package ".el")) )
-	(message "Configuring %s" package)
+	(message "\nConfiguring %s" package)
         (if (f-file? fnam)
 	  (load-file fnam)
 	  (use-package package))))
     pkg-list))
+
+(defun sbw/pkg-load (file-list)
+  "Load the specified files"
+  (-each file-list
+    (lambda (x)
+      (message "\nLoading %s" x)
+      (load-file x))))
+
+(defun sbw/pkg-all-files-in-directory (dir)
+  "Returns a list of all the Lisp files in DIR."
+  (f-files dir (lambda (x) (f-ext? x "el"))))
 
 (provide 'sbw-package)

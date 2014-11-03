@@ -20,7 +20,7 @@
 (defun sbw/truncate-string (s n)
   "Returns S truncated to N characters with ellipsis if truncation occurred."
   (if (> (length s) n)
-    (concat (substring s 0 (- n (length org-ellipsis))) org-ellipsis)
+    (concat (substring s 0 (- n 1)) "\u2026")
     s))
 
 (defun sbw/map-hash (f hash-table)

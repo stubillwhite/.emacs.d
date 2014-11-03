@@ -231,5 +231,4 @@
           (expected   (sbw/ht-create         :k2 :v2 :k3 :v3)) )
     (should (sbw/ht-equal (sbw/ht-select-keys hash-table (list :k2 :k3 :k4)) expected))))
 
-
 (provide 'sbw-hash-tables-test)
