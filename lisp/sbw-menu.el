@@ -38,7 +38,7 @@
   "A comparator for keys."
   (let* ( (cmp (lambda (a b) (s-less? (sbw/-menu-key-to-string a) (sbw/-menu-key-to-string b)))) )
     (cond
-      ((and (symbolp a) (symbolp b)) (funcall cmp a b))
+      ((and (symbolp a) (symbolp b)) (funcall cmp b a))
       ((symbolp a)                   nil)
       ((symbolp b)                   t)
       (t                             (funcall cmp a b)))))
@@ -47,7 +47,7 @@
   "Returns the string to display for ACTION."
   (let* ( (key         (gethash :key action))
           (description (gethash :description action)) )
-    (concat "[" (sbw/-menu-key-to-string key) "]  " description "\n")))
+    (format "%5s  %s\n" (format "[%s]" (sbw/-menu-key-to-string key)) description )))
 
 (defun sbw/-menu-format-actions (actions)
   "Returns the string to display for ACTIONS."
@@ -105,14 +105,12 @@
     ))
 
 (defconst sbw/menu-common-commands
-  (sbw/menu "Common Commands"
-    (sbw/menu-action  ?a "Agenda"        'org-agenda)
-    (sbw/menu-action  ?r "Reports"       (lambda () (sbw/menu-display sbw/menu-reports)))
-    (sbw/menu-submenu ?c "Timers"        sbw/menu-timers)
-    (sbw/menu-action ?t "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
-    (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
-    (sbw/menu-action ?w "Work agenda"  (lambda () (interactive) (org-agenda nil "cw")))
-    (sbw/menu-action ?p "Personal agenda"  (lambda () (interactive) (org-agenda nil "cp")))
-    (sbw/menu-action  ?x "Export agenda" 'org-store-agenda-views)))
+  (sbw/menu "Common actions"
+    (sbw/menu-submenu ?r "Reports"          sbw/menu-reports)
+    (sbw/menu-submenu ?t "Timers"           sbw/menu-timers)
+    (sbw/menu-action  ?w "Work agenda"      (lambda () (interactive) (org-agenda nil "cw")))
+    (sbw/menu-action  ?p "Personal agenda"  (lambda () (interactive) (org-agenda nil "cp")))
+    (sbw/menu-action  'f8 "Personal agenda"  (lambda () (interactive) (org-agenda nil "cp")))
+    (sbw/menu-action  ?x "Export agenda"    'org-store-agenda-views)))
 
 (provide 'sbw-menu)
