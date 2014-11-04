@@ -16,9 +16,10 @@
      color-theme      ;; Color theme support
      undo-tree        ;; Undo tree visualisation
      auto-complete    ;; Auto-completion
+
+     ;; org-mode
      org              ;; Your life in plain text
      org-ac           ;; Auto-completion for org-mode
-     multiple-cursors ;; Multiple cursor mode
      htmlize          ;; html org-mode reports
 
      ;; Interface

@@ -17,7 +17,7 @@
 (sbw/pkg-require sbw/pkg-bootstrap-packages)
 
 ;; Configure packages
-(sbw/pkg-configure "~/.emacs.d/lisp/package-config" sbw/pkg-additional-packages)
+(sbw/pkg-configure "~/.emacs.d/lisp/package-config" sbw/pkg-all-packages)
 
 ;; Require all my packages
 (sbw/pkg-require
@@ -38,5 +38,5 @@
 (set-register ?e '(file . "~/.emacs.d/init.el"))
 
 ;; Finally, log how long all this took
-(let ( (elapsed (float-time (time-subtract (current-time) sbw/emacs-start-time))) )
-  (message "\n%s" (sbw/heading-two (format "Start up completed in %.1fs" elapsed))))
+(message "\n-- %s --\n"
+  (format "Start up completed in %.1fs" (float-time (time-subtract (current-time) sbw/emacs-start-time))))

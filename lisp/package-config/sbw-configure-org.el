@@ -91,14 +91,20 @@
 
     (org-add-link-type "eclipse"
       (lambda (path)
-        (start-process "Eclipse" nil "c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe" "--launcher.openFile" path)))
+        (start-process-shell-command "Eclipse" nil (concat "c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe --launcher.openFile " path))))
 
     ;; Link type for opening a file in Vim
 
     (org-add-link-type "vim"
       (lambda (path)
-        (start-process "Vim" nil "gvim.exe" path)))
-     
+        (start-process-shell-command "Vim" nil (concat "gvim.exe " path))))
+
+    ;; Link type for opening a file in Atom
+
+    (org-add-link-type "atom"
+      (lambda (path)
+        (start-process-shell-command "Atom" nil (concat "C:\\Users\\IBM_ADMIN\\my_local_stuff\\home\\utils\\bin\\atom-windows\\Atom\\Atom.exe " path))))
+         
     ;; Tag alignment
     ;; Ensure new tags are created right-aligned based on the window size, and
     ;; provide a handy function to re-align all tags in the buffer
