@@ -1,3 +1,5 @@
+;; Functions for a simple menu of common actions
+
 (require 'dash)
 (require 'sbw-utils)
 (require 'sbw-hash-tables)
@@ -89,28 +91,21 @@
   (sbw/-menu-execute-action menu (sbw/-menu-select-action menu)))
 
 (defmacro sbw/menu-submenu (key description submenu)
+  "Returns a menu action to display a submenu, with the specified KEY binding, DESCRIPTION, and SUBMENU to display."
   `(sbw/menu-action ,key ,description (lambda () (sbw/menu-display ,submenu))))
-
-(defconst sbw/menu-reports
-  (sbw/menu "Reports"
-    (sbw/menu-action ?w "Weekly report for previous week"   'sbw/generate-weekly-report-for-previous-week)
-    (sbw/menu-action ?m "Monthly report for previous month" 'sbw/generate-monthly-report-for-previous-month)
-    (sbw/menu-action ?W "Weekly report for current week"    'sbw/generate-weekly-report-for-current-week)
-    (sbw/menu-action ?M "Monthly report for current month"  'sbw/generate-monthly-report-for-current-month)))
-
-(defconst sbw/menu-timers
-  (sbw/menu "Timers"
-    (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
-    (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
-    ))
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
-    (sbw/menu-submenu ?r "Reports"          sbw/menu-reports)
-    (sbw/menu-submenu ?t "Timers"           sbw/menu-timers)
+    (sbw/menu-submenu ?r "Reports"          (sbw/menu "Reports"
+                                              (sbw/menu-action ?w "Previous week"   'sbw/generate-weekly-report-for-previous-week)
+                                              (sbw/menu-action ?m "Previous month" 'sbw/generate-monthly-report-for-previous-month)
+                                              (sbw/menu-action ?W "Current week"    'sbw/generate-weekly-report-for-current-week)
+                                              (sbw/menu-action ?M "Current month"  'sbw/generate-monthly-report-for-current-month)))
+    (sbw/menu-submenu ?t "Timers"           (sbw/menu "Timers"
+                                              (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
+                                              (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
     (sbw/menu-action  ?w "Work agenda"      (lambda () (interactive) (org-agenda nil "cw")))
     (sbw/menu-action  ?p "Personal agenda"  (lambda () (interactive) (org-agenda nil "cp")))
-    (sbw/menu-action  'f8 "Personal agenda"  (lambda () (interactive) (org-agenda nil "cp")))
     (sbw/menu-action  ?x "Export agenda"    'org-store-agenda-views)))
 
 (provide 'sbw-menu)

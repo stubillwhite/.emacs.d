@@ -1,5 +1,6 @@
 ;; Maximum message history, record when we started
 (setq message-log-max 16384)
+(setq-default use-package-verbose t)
 (defconst sbw/emacs-start-time (current-time))
 
 ;; Add Lisp package locations
