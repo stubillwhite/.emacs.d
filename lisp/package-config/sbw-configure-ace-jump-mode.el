@@ -10,4 +10,6 @@
   (progn)
 
   :bind
-  ("M-h" . ace-jump-mode))
+  ("C-c SPC" . ace-jump-mode))
+
+(provide 'sbw-configure-ace-jump-mode)

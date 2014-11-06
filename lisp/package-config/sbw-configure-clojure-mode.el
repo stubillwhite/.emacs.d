@@ -20,4 +20,4 @@
 
     ))
 
-(provide 'sbw-setup-clojure-mode)
+(provide 'sbw-configure-clojure-mode)

@@ -5,4 +5,4 @@
   (progn
     (org-ac/config-default)))
 
-(provide 'sbw-setup-org-ac)
+(provide 'sbw-configure-org-ac)

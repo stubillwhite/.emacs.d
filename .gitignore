@@ -7,5 +7,6 @@ elpa/
 projectile-bookmarks.eld
 projectile.cache
 server/
+url/cache/
 url/cookies
 bookmarks

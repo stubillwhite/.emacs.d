@@ -42,12 +42,12 @@
   "Configure the specified packages with the configuration files in DIR."
   (mapc
     (lambda (x)
-      (let* ( (package (symbol-name x))
-              (fnam    (concat dir "/sbw-configure-" package ".el")) )
-	(message "\nConfiguring %s" package)
+      (let* ( (pkg  (symbol-name x))
+              (fnam (concat dir "/sbw-configure-" pkg ".el")) )
+	(message "\nConfiguring %s" pkg)
         (if (f-file? fnam)
 	  (load-file fnam)
-	  (use-package package))))
+	  (eval `(use-package ,pkg)))))
     pkg-list))
 
 (defun sbw/pkg-load (file-list)

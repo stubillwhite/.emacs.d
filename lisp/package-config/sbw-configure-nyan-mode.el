@@ -5,4 +5,4 @@
   (progn
     (nyan-mode 1)))
 
-(provide 'sbw-setup-nyan-mode)
+(provide 'sbw-configure-nyan-mode)

@@ -61,4 +61,4 @@
       (cider-insert-in-repl "(refresh)" t)
       (cider-insert-in-repl "(reset)" t))))
 
-(provide 'sbw-setup-cider)
+(provide 'sbw-configure-cider)

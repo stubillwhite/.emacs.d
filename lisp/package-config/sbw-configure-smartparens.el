@@ -122,4 +122,4 @@
 
 
 
-(provide 'sbw-setup-smartparens)
+(provide 'sbw-configure-smartparens)

@@ -6,4 +6,4 @@
     ;; Syntax highlighting for dash functions
     (dash-enable-font-lock)))
 
-(provide 'sbw-setup-dash)
+(provide 'sbw-configure-dash)

@@ -40,4 +40,4 @@
     (helm-mode 1)
     ))
 
-(provide 'sbw-setup-helm)
+(provide 'sbw-configure-helm)

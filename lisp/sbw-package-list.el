@@ -16,6 +16,7 @@
      color-theme      ;; Color theme support
      undo-tree        ;; Undo tree visualisation
      auto-complete    ;; Auto-completion
+     flyspell         ;; Spell checking
 
      ;; org-mode
      org              ;; Your life in plain text
@@ -26,6 +27,8 @@
      smart-mode-line  ;; Better mode line
      helm             ;; Incremental narrowing framework
      nyan-mode        ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
+     projectile       ;; Project interaction library for Emacs
+     helm-projectile  ;; Helm integration for projectile
      
      ;; Clojure
      clojure-mode     ;; Clojure mode
@@ -35,6 +38,7 @@
 
      ;; Experimental
      ace-jump-mode    ;; Faster movement
+     helm-swoop       ;; Efficiently skipping between matches
      )
   "List of the additional packages required for this Emacs configuration.")
 

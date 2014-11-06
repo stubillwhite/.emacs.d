@@ -39,5 +39,9 @@
 (set-register ?e '(file . "~/.emacs.d/init.el"))
 
 ;; Finally, log how long all this took
-(message "\n-- %s --\n"
-  (format "Start up completed in %.1fs" (float-time (time-subtract (current-time) sbw/emacs-start-time))))
+(defun sbw/init-report-time-elapsed ()
+  "Report time spent initialsing."
+  (let ( (elapsed (float-time (time-subtract (current-time) sbw/emacs-start-time))) )
+    (message "\n-- %s --\n" (format "Start up completed in %.1fs" elapsed))))
+
+(add-hook 'after-init-hook 'sbw/init-report-time-elapsed 'append)

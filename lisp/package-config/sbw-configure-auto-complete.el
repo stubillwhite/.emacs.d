@@ -39,4 +39,4 @@
     (define-key ac-completing-map (kbd "M-RET") 'ac-help)
     (define-key ac-completing-map "\r"          'nil)))
 
-(provide 'sbw-setup-auto-complete)
+(provide 'sbw-configure-auto-complete)

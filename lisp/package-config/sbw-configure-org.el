@@ -570,8 +570,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     (setq org-clock-heading-function
-      (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30)))
-    
-    ))
+      (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30)))))
 
-(provide 'sbw-setup-org-mode)
+(provide 'sbw-configure-org-mode)

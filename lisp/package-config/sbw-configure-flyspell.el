@@ -14,4 +14,4 @@
       ispell-silently-savep t ;; Don't prompt when adding to the dictionary
       )))
 
-(provide 'sbw-setup-flyspell)
+(provide 'sbw-configure-flyspell)

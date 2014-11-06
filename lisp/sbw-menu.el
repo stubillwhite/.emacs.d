@@ -67,9 +67,14 @@
 
 (defun sbw/-menu-execute-action (menu key)
   "Execute the action for KEY in MENU."
-  (-if-let (action (gethash key (gethash :actions menu)))
-    (funcall (gethash :function action))
-    (message "Invalid key %c" key)))
+  (-if-let  (action      (gethash key (gethash :actions menu)))
+    (progn
+      (let* ( (description (gethash :description action))
+              (function    (gethash :function action))) 
+        (message description)
+        (funcall function)))
+    (progn
+      (message "Invalid key %c" key))))
 
 (defun sbw/-menu-select-action (menu)
   "Prompt the user to select an action from MENU."
@@ -81,9 +86,7 @@
     (fit-window-to-buffer)
     (goto-char (point-min))
     (message "Press key for command")
-    (setq key (read-key))
-    (message ""))
-  key)
+    (read-key)))
 
 (defun sbw/menu-display (menu)
   "Display MENU and allow the user to select and execute an action from it."

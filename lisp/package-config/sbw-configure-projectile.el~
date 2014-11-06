@@ -1,0 +1,13 @@
+(require 'use-package)
+
+(use-package projectile
+
+  :init
+  (progn
+    (projectile-global-mode))
+
+  :config
+  (progn))
+
+(provide 'sbw-configure-projectile)
+p
