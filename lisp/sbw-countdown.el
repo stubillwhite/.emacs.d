@@ -2,7 +2,7 @@
   "Returns a string representing the time remaining in the countdown timer."
   (format-time-string "%H:%M:%S" (time-subtract end-time (current-time))))
 (defun sbw/countdown-expired-inform-user ()
-  (print "Countdown expired.")
+  (message "Countdown expired.")
   (beep t))
 
 (defun sbw/countdown-update-timer ()
@@ -47,6 +47,7 @@
   (sbw/countdown-set-mode-line :off)
   (sbw/countdown-set-timer :off)
   (setq sbw/countdown-end-time nil)
+  (message "Timer stopped")
   nil)
 
 (defun sbw/countdown-start (seconds)
@@ -56,6 +57,7 @@
   (sbw/countdown-update-timer)
   (sbw/countdown-set-mode-line :on)
   (sbw/countdown-set-timer :on)
+  (message "Timer started")
   nil)
 
 (defun sbw/countdown-running? ()

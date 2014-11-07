@@ -190,6 +190,14 @@
     `(show-paren-match                    ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
     `(show-paren-mismatch                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mismatch)))))
 
+    ;; eshell
+    `(eshell-prompt                       ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+
+    ;; swoop
+    `(helm-swoop-target-word-face         ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
+    `(helm-swoop-target-line-face         ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    `(helm-swoop-target-line-block-face   ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    
     ;; search
     `(isearch-fail                        ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mismatch)))))
     `(isearch                             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))

@@ -1,7 +1,18 @@
-;; Maximum message history, record when we started
+;; Maximum message history, track how long initialisation takes
 (setq message-log-max 16384)
 (setq-default use-package-verbose t)
+
+(defun sbw/init-report-status (msg)
+  (message "\n-- %s --" msg))
+
 (defconst sbw/emacs-start-time (current-time))
+
+(defun sbw/init-report-time-elapsed ()
+  "Report time spent initialsing."
+  (let ( (elapsed (float-time (time-subtract (current-time) sbw/emacs-start-time))) )
+    (message "\n-- %s --\n" (format "Start up completed in %.1fs" elapsed))))
+
+(add-hook 'after-init-hook 'sbw/init-report-time-elapsed 'append)
 
 ;; Add Lisp package locations
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -32,16 +43,9 @@
     'sbw-multimethods
     'sbw-utils))
 
-;; Require all tests
+;; Load all tests
 (sbw/pkg-load (sbw/pkg-all-files-in-directory "~/.emacs.d/lisp/test"))
 
 ;; Configure registers for commonly edited files
 (set-register ?e '(file . "~/.emacs.d/init.el"))
 
-;; Finally, log how long all this took
-(defun sbw/init-report-time-elapsed ()
-  "Report time spent initialsing."
-  (let ( (elapsed (float-time (time-subtract (current-time) sbw/emacs-start-time))) )
-    (message "\n-- %s --\n" (format "Start up completed in %.1fs" elapsed))))
-
-(add-hook 'after-init-hook 'sbw/init-report-time-elapsed 'append)
