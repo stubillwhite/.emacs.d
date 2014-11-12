@@ -5,9 +5,10 @@
   
   :init
   (progn)
-  
+
   :config
   (progn
+    
     ;; Hide DOS EOL characters in the REPL
     (add-hook 'cider-repl-mode-hook 'sbw/hide-dos-eol)
 
@@ -16,19 +17,19 @@
 
     ;; General settings
     (setq 
-      nrepl-hide-special-buffers            t ;; Hide special buffers from buffer menus
-      cider-repl-pop-to-buffer-on-connect   nil ;; Suppress auto-display of the REPL buffer on connection
-      cider-popup-stacktraces               nil ;; Suppress the error buffer pop up in buffers other than the REPL
-      cider-repl-popup-stacktraces          nil ;; Don't allow the the error buffer to pop up in the REPL
-      cider-auto-select-error-buffer        nil ;; Don't auto-select the error buffer when displayed
-      cider-repl-display-in-current-window  t   ;; C-c C-z switch to the CIDER REPL
-      cider-repl-print-length               100 ;; Limit the items of collections to print
+      nrepl-hide-special-buffers            t      ;; Hide special buffers from buffer menus
+      nrepl-port                            "4555" ;; Default port number
+      cider-repl-pop-to-buffer-on-connect   nil    ;; Suppress auto-display of the REPL buffer on connection
+      cider-popup-stacktraces               nil    ;; Suppress the error buffer pop up in buffers other than the REPL
+      cider-repl-popup-stacktraces          nil    ;; Don't allow the the error buffer to pop up in the REPL
+      cider-auto-select-error-buffer        nil    ;; Don't auto-select the error buffer when displayed
+      cider-repl-display-in-current-window  t      ;; C-c C-z switch to the CIDER REPL
+      cider-repl-print-length               100    ;; Limit the items of collections to print
       )
 
     ;; Better naming for the REPL buffer
     (setq 
       nrepl-buffer-name-separator "-"
-      nrepl-port                  "4555"
       nrepl-buffer-name-show-port t)
 
     ;; Helper functions
@@ -59,6 +60,13 @@
       (cider-find-and-clear-repl-buffer)
       (cider-insert-in-repl "(ns user)" t)
       (cider-insert-in-repl "(refresh)" t)
-      (cider-insert-in-repl "(reset)" t))))
+      (cider-insert-in-repl "(reset)" t)))
+
+  :bind
+    ("TAB" . cider-repl-indent-and-complete-symbol)
+  
+  )
+
+
 
 (provide 'sbw-configure-cider)

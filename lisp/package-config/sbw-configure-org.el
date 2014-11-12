@@ -4,8 +4,7 @@
   :init
   (progn
     (require 'org-clock)
-    (require 'dash)
-
+    
     ;; Default to clean view with no leading asterisks for indentation
     (setq-default org-startup-indented t)
 
@@ -20,19 +19,29 @@
         (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
         (apply 'list dirs)))
 
-    (defconst sbw/org-personal-files
-      (sbw/org-files (concat org-directory "current/personal")))
+    (defun sbw/org-find-org-files ()
+      "Scan org-directory for org files."
+      (interactive)
+      (setq sbw/org-personal-files    (sbw/org-files (concat org-directory "current/personal")))
+      (setq sbw/org-non-project-files (sbw/org-files (concat org-directory "current/non-project")))
+      (setq sbw/org-work-files        (sbw/org-files (concat org-directory "current/work")))
+      (setq sbw/org-all-files         (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
+      (setq org-agenda-files sbw/org-all-files))
+    (sbw/org-find-org-files)
+    
+    ;(defconst sbw/org-personal-files
+    ;  (sbw/org-files (concat org-directory "current/personal")))
 
-    (defconst sbw/org-non-project-files
-      (sbw/org-files (concat org-directory "current/non-project")))
+    ;(defconst sbw/org-non-project-files
+    ;  (sbw/org-files (concat org-directory "current/non-project")))
 
-    (defconst sbw/org-work-files
-      (sbw/org-files (concat org-directory "current/work")))
+    ;(defconst sbw/org-work-files
+    ;  (sbw/org-files (concat org-directory "current/work")))
 
-    (defconst sbw/org-all-files
-      (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
+    ;(defconst sbw/org-all-files
+    ;  (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
 
-    (setq org-agenda-files sbw/org-all-files)
+    ;(setq org-agenda-files sbw/org-all-files)
 
     (defconst sbw/org-refile-targets
       (-filter (lambda (x) (not (-contains? sbw/org-non-project-files x))) sbw/org-all-files))

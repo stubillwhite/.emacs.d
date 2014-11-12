@@ -172,6 +172,12 @@
     `(helm-ff-directory                   ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-buffer-process                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-selection                      ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+
+    ;; Company
+    `(company-tooltip-selection           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
+    `(company-tooltip                     ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    `(company-scrollbar-bg                ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    `(company-scrollbar-fg                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     
     ;; Flyspell
     `(flyspell-duplicate                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-warning)))))
