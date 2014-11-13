@@ -6,10 +6,6 @@
     (global-company-mode))
 
   :config
-  (progn)
-
-  :bind
-  ("C-TAB" . company-complete)
-  )
+  (progn))
 
 (provide 'sbw-configure-company)

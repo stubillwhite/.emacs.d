@@ -8,7 +8,6 @@
 
   :config
   (progn
-    
     ;; Hide DOS EOL characters in the REPL
     (add-hook 'cider-repl-mode-hook 'sbw/hide-dos-eol)
 
@@ -17,8 +16,8 @@
 
     ;; General settings
     (setq 
-      nrepl-hide-special-buffers            t      ;; Hide special buffers from buffer menus
       nrepl-port                            "4555" ;; Default port number
+      nrepl-log-messages                    t      ;; Log messages to aid debug of CIDER problems
       cider-repl-pop-to-buffer-on-connect   nil    ;; Suppress auto-display of the REPL buffer on connection
       cider-popup-stacktraces               nil    ;; Suppress the error buffer pop up in buffers other than the REPL
       cider-repl-popup-stacktraces          nil    ;; Don't allow the the error buffer to pop up in the REPL

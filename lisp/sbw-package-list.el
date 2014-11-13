@@ -15,14 +15,15 @@
      ;; Standard stuff
      color-theme      ;; Color theme support
      undo-tree        ;; Undo tree visualisation
-;     auto-complete    ;; Auto-completion
      flyspell         ;; Spell checking
 
      ;; org-mode
      org              ;; Your life in plain text
-;     org-ac           ;; Auto-completion for org-mode
      htmlize          ;; html org-mode reports
 
+     ;; Auto-complete
+     company          ;; Auto-completion
+     
      ;; Interface
      smart-mode-line  ;; Better mode line
      nyan-mode        ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
@@ -38,10 +39,9 @@
      clojure-mode     ;; Clojure mode
      cider            ;; REPL support
      smartparens      ;; Improved paredit
- ;    ac-cider         ;; Cider REPL autocomplete and documentation
+     ac-cider         ;; Cider REPL autocomplete and documentation
 
      ;; Experimental
-     company          ;; Auto-completion
 ;     groovy-mode      ;; Groovy mode
      )
   "List of the additional packages required for this Emacs configuration.")
