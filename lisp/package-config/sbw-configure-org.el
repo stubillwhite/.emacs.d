@@ -26,31 +26,13 @@
       (setq sbw/org-non-project-files (sbw/org-files (concat org-directory "current/non-project")))
       (setq sbw/org-work-files        (sbw/org-files (concat org-directory "current/work")))
       (setq sbw/org-all-files         (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
-      (setq org-agenda-files sbw/org-all-files))
+      (setq sbw/org-refile-targets    (-filter (lambda (x) (not (-contains? sbw/org-non-project-files x))) sbw/org-all-files))
+      (setq org-agenda-files          sbw/org-all-files)
+      (setq org-default-notes-file    (concat org-directory "current/non-project/incoming.org"))
+      (setq org-refile-targets        (quote ((sbw/org-refile-targets :maxlevel . 1)))))
+
     (sbw/org-find-org-files)
     
-    ;(defconst sbw/org-personal-files
-    ;  (sbw/org-files (concat org-directory "current/personal")))
-
-    ;(defconst sbw/org-non-project-files
-    ;  (sbw/org-files (concat org-directory "current/non-project")))
-
-    ;(defconst sbw/org-work-files
-    ;  (sbw/org-files (concat org-directory "current/work")))
-
-    ;(defconst sbw/org-all-files
-    ;  (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
-
-    ;(setq org-agenda-files sbw/org-all-files)
-
-    (defconst sbw/org-refile-targets
-      (-filter (lambda (x) (not (-contains? sbw/org-non-project-files x))) sbw/org-all-files))
-
-    (setq org-refile-targets
-      (quote ((sbw/org-refile-targets :maxlevel . 1))))
-
-    (setq org-default-notes-file (concat org-directory "current/non-project/incoming.org"))
-
     ;; General settings
 
     (setq 
