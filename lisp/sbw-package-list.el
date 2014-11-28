@@ -13,36 +13,40 @@
 (defconst sbw/pkg-additional-packages
   '(
      ;; Standard stuff
-     color-theme      ;; Color theme support
-     undo-tree        ;; Undo tree visualisation
-     flyspell         ;; Spell checking
+     color-theme            ;; Color theme support
+     undo-tree              ;; Undo tree visualisation
+     flyspell               ;; Spell checking
 
      ;; org-mode
-     org              ;; Your life in plain text
-     htmlize          ;; html org-mode reports
+     org                    ;; Your life in plain text
+     htmlize                ;; html org-mode reports
 
      ;; Auto-complete
-     company          ;; Auto-completion
+     company                ;; Auto-completion
      
      ;; Interface
-     smart-mode-line  ;; Better mode line
-     nyan-mode        ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
-     projectile       ;; Project interaction library for Emacs
-     ace-jump-mode    ;; Faster movement
+     smart-mode-line        ;; Better mode line
+     nyan-mode              ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
+     projectile             ;; Project interaction library for Emacs
+     ace-jump-mode          ;; Faster movement
 
      ;; Helm
-     helm             ;; Incremental narrowing framework
-     helm-swoop       ;; Efficiently skipping between matches
-     helm-projectile  ;; Helm integration for projectile
+     helm                   ;; Incremental narrowing framework
+     helm-swoop             ;; Efficiently skipping between matches
+     helm-projectile        ;; Helm integration for projectile
      
      ;; Clojure
-     clojure-mode     ;; Clojure mode
-     cider            ;; REPL support
-     smartparens      ;; Improved paredit
-     ac-cider         ;; Cider REPL autocomplete and documentation
+     clojure-mode           ;; Clojure mode
+     cider                  ;; REPL support
+     smartparens            ;; Improved paredit
+     ac-cider               ;; Cider REPL autocomplete and documentation
+
+     ;; Graphviz
+     graphviz-dot-mode      ;; Graphviz DOT file support and previews
 
      ;; Experimental
-;     groovy-mode      ;; Groovy mode
+     ;groovy-mode      ;; Groovy mode
+     
      )
   "List of the additional packages required for this Emacs configuration.")
 

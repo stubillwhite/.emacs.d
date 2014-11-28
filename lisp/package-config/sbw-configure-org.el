@@ -225,7 +225,7 @@
          ("l" "Link" entry (file+olp org-default-notes-file "Links")
            "* TODO %?%a\n%i")
          ("j" "Jira task" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO [#A] %?%a")
+           "* TODO %?%a")
          ))
 
     ;; org-protocol experimental, not working

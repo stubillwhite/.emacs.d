@@ -59,15 +59,18 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (defun sbw/unfill-paragraph ()
+  "Convert a multi-line paragraph into a single line."
   (interactive)
   (let* ( (fill-column (point-max)) )
     (fill-paragraph nil)))
 
 (defun sbw/unfill-region (start end)
+  "Convert a multi-line region into a single line."
   (interactive "r")
   (let* ( (fill-column (point-max)) )
     (fill-region start end nil)))
 
+;; TODO Bind keys to these
 
 
 
