@@ -57,7 +57,7 @@
       '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))
 
     (setq org-drawers
-      '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "NOTES"))
+      '("PROPERTIES" "CLOCK" "LOGBOOK" "NOTES"))
 
     (setq org-archive-save-context-info
       '(time file ltags itags todo category olpath))
@@ -209,7 +209,7 @@
       (org-agenda-to-appt))
 
     (add-hook 'org-finalize-agenda-hook 'sbw/org-refresh-appointments-from-agenda 'append)
-    (sbw/org-refresh-appointments-from-agenda)
+    ;(sbw/org-refresh-appointments-from-agenda)
 
     (appt-activate t)
 
@@ -224,7 +224,7 @@
            "* TODO %?%a\n%i")
          ("l" "Link" entry (file+olp org-default-notes-file "Links")
            "* TODO %?%a\n%i")
-         ("j" "Jira task" entry (file+headline org-default-notes-file "Tasks")
+         ("j" "RTC task" entry (file+headline org-default-notes-file "Tasks")
            "* TODO %?%a")
          ))
 

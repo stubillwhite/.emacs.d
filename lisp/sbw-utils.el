@@ -9,6 +9,12 @@
     (setq alist (assq-delete-all key alist))
     (add-to-list 'alist entry)))
 
+(defun sbw/assq-ensure-is-last (key alist)
+  "Mutates associative ALIST so that the value for KEY is last."
+  (let ((entry (assq key alist)))
+    (setq alist (assq-delete-all key alist))
+    (add-to-list 'alist entry :append)))
+
 (defun sbw/heading-one (s)
   "Returns string S formatted to be a top level heading."
   (concat s "\n" (make-string (length s) ?=) "\n"))

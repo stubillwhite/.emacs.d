@@ -2,6 +2,7 @@
 
 (require 'package)
 
+;; TODO - Move the repository list to sbw-package-list as sbw/pkg-repositories
 (defun sbw/pkg-configure-package-repositories ()
   "Configure the package to fetch packages from."
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
@@ -17,6 +18,26 @@
   "Returns a list of packages which need installation."
   (sbw/-pkg-filter (lambda (x) (not (package-installed-p x))) pkg-list))
 
+(defun sbw/-pkg-cons-cell? (x)
+  "Returns t if x is a cons cell, nil otherwise."
+  (and (listp x) (not (listp (cdr x)))))
+
+(defun sbw/-pkg-install-package (x)
+  (if (sbw/-pkg-cons-cell? x)
+    (progn
+      (let* ( (pkg  (car x))
+              (repo (cdr x)) )
+        (message "\nDownloading and installing package %s from repository %s..." pkg repo)))
+    (progn
+      (message "\nDownloading and installing package %s..." x)
+      (package-install x))))
+;    (progn
+;      (let* ( (pkg  (car x))
+;              (repo (cdr x))) 
+;	(message "\nDownloading and installing package %s from %s..." pkg repo)
+;	(setq package-pinned-packages (cons (cons pkg repo) package-pinned-packages))
+;	(package-install pkg)))))
+
 (defun sbw/pkg-ensure-packages-are-installed (pkg-list)
   "Ensure that the specified packages are installed."
   (let ( (new-packages (sbw/-pkg-packages-for-installation pkg-list)) )
@@ -24,11 +45,7 @@
       (switch-to-buffer "*Messages*")
       (message "\nNew packages detected. Refreshing package list...")
       (package-refresh-contents)
-      (mapc
-        (lambda (x)
-          (message "\nDownloading and installing package %s..." x)
-          (package-install x))
-        new-packages))))
+      (mapc 'sbw/-pkg-install-package new-packages))))
 
 (defun sbw/pkg-require (pkg-list)
   "Require the specified packages."
