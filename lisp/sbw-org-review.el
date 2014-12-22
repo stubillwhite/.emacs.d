@@ -91,8 +91,73 @@
           (-sort task-comparator sheading-summaries)))
       "\n")))
 
-                                        ;)
-;(message " ")
-;(message "%s" (sbw/org-review-generate-category-report sbw/org-all-files 'sbw/-org-review-default-formatter-func))
+
+
+(defun sbw/-org-review-write-report (report filename)
+  "Write the report to filename and open it for review."
+  (with-temp-file filename (insert report))
+  (message (format "Created '%s'" filename))
+  (find-file filename)
+  nil)
+
+(defun sbw/org-review-config (org-files start end filename formatter-func)
+  (sbw/ht-create
+    :org-files      org-files
+    :start          start
+    :end            end
+    :filename       filename
+    :formatter-func formatter-func))
+
+
+
+
+
+
+(defun sbw/-org-review-config-weekly-review (org-files base)
+  (let* ( (start    (sbw/adjust-date-by base -6))
+          (end      (sbw/adjust-date-by base  1))
+          (filename (sbw/report-filename start end "weekly-report")) )
+    (sbw/org-review-config org-files start end filename 'sbw/-org-review-default-formatter-func)))
+
+(defun sbw/org-review-config-previous-week (org-files)
+  (sbw/-org-review-config-weekly-review org-files (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0)))))
+
+(defun sbw/org-review-config-current-week (org-files)
+  (sbw/-org-review-config-weekly-review org-files (apply 'encode-time (org-read-date-analyze "+sat" nil '(0 0 0)))))
+
+
+
+
+(defun sbw/-org-review-config-monthly-review (org-files base)
+  (let* ( (decomp-base (sbw/decompose-time base))
+          (last-day    (calendar-last-day-of-month (sbw/ht-get decomp-base :month) (sbw/ht-get decomp-base :year)))
+          (start       (sbw/compose-time (sbw/ht-merge decomp-base (sbw/ht-create :day 1))))
+          (end         (sbw/compose-time (sbw/ht-merge decomp-base (sbw/ht-create :day last-day))))
+          (filename    (sbw/report-filename start end "monthly-report")))
+    (sbw/org-review-config org-files start end filename 'sbw/-org-review-default-formatter-func)))
+
+(defun sbw/org-review-config-previous-month (org-files)
+  (let* ( (decomp-curr-time (sbw/decompose-time (current-time)))
+          (prev-month       (sbw/dec (sbw/ht-get decomp-curr-time  :month)))
+          (base             (sbw/compose-time (sbw/ht-merge decomp-curr-time (sbw/ht-create :month prev-month)))) )
+    (sbw/-org-review-config-monthly-review org-files base)))
+
+(defun sbw/org-review-config-current-month (org-files)
+  (let* ( (base (current-time)) )
+    (sbw/-org-review-config-monthly-review org-files base)))
+
+(defun sbw/org-review-weekly-report-for-previous-week (org-files)
+  (sbw/-org-review-write-report org-files))
+
+
+(defun sbw/org-review (config)
+  (let* ( (filename       (sbw/ht-get config :filename))
+          (formatter-func (sbw/ht-get config :formatter-func))
+          (org-files      (sbw/ht-get config :org-files))
+          (report         (sbw/org-review-generate-category-report org-files formatter-func)))
+    (sbw/-org-review-write-report report filename)))
+
+
+(sbw/org-review (sbw/org-review-config-current-week sbw/org-all-files))
 
 (provide 'sbw-org-review)

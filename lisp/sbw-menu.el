@@ -3,6 +3,7 @@
 (require 'dash)
 (require 'sbw-utils)
 (require 'sbw-hash-tables)
+;; TODO Update to include names
 
 (defun sbw/menu-action (key description function)
   "Returns a menu action with the specified KEY binding, DESCRIPTION, and FUNCTION to execute."
@@ -97,13 +98,18 @@
   "Returns a menu action to display a submenu, with the specified KEY binding, DESCRIPTION, and SUBMENU to display."
   `(sbw/menu-action ,key ,description (lambda () (sbw/menu-display ,submenu))))
 
+(defun sbw/-menu-command-weekly-review-for-previous-week ()
+  (message "%s" "Not implemented yet"))
+
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
-    (sbw/menu-submenu ?r "Reports"          (sbw/menu "Reports"
-                                              (sbw/menu-action ?w "Previous week"   'sbw/generate-weekly-report-for-previous-week)
+    (sbw/menu-submenu ?R "Reports"          (sbw/menu "Reports"
+                                              (sbw/menu-action ?w "Previous week"  'sbw/generate-weekly-report-for-previous-week)
                                               (sbw/menu-action ?m "Previous month" 'sbw/generate-monthly-report-for-previous-month)
-                                              (sbw/menu-action ?W "Current week"    'sbw/generate-weekly-report-for-current-week)
+                                              (sbw/menu-action ?W "Current week"   'sbw/generate-weekly-report-for-current-week)
                                               (sbw/menu-action ?M "Current month"  'sbw/generate-monthly-report-for-current-month)))
+    (sbw/menu-submenu ?r "Review"           (sbw/menu "Review"
+                                              (sbw/menu-action ?w "Previous week"  'sbw/-menu-command-weekly-review-for-previous-week)))
     (sbw/menu-submenu ?t "Timers"           (sbw/menu "Timers"
                                               (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
                                               (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
