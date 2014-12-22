@@ -15,6 +15,7 @@
      dash-functional  ;; Further functions for dash
      f                ;; Modern file API
      s                ;; Modern string API
+;     names            ;; Sane namespace handling
      )
   "List of the packages required to bootstrap this Emacs configuration.")
 
@@ -58,6 +59,7 @@
      groovy-mode            ;; Groovy mode
      
      ;; Experimental
+     
      )
   "List of the additional packages required for this Emacs configuration.")
 

@@ -32,6 +32,7 @@
 (sbw/pkg-configure "~/.emacs.d/lisp/package-config" sbw/pkg-all-packages)
 
 ;; Require all my packages
+;; TODO Name more intuitively
 (sbw/pkg-require
   (list
     'sbw-bindings
@@ -41,6 +42,7 @@
     'sbw-menu
     'sbw-misc
     'sbw-multimethods
+    'sbw-org-review
     'sbw-utils))
 
 ;; Load all tests
