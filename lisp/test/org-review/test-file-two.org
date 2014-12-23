@@ -1,6 +1,0 @@
-* file-two
-:PROPERTIES:
-:CATEGORY: file-two
-:END:
-** TODO File two task one
-** TODO File two task two
