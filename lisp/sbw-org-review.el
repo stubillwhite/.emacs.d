@@ -117,20 +117,19 @@
           (to-string       (lambda (x) (sbw/ht-get x :heading)))
           (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) 
           (completed-tasks (-filter (-partial 'sbw/-org-review-is-completed-between? start end) heading-summaries)) )
-    (concat
-      "\n"
-      (apply 'concat
-        (-map
-          (lambda (x) (concat " - " (funcall to-string x) "\n"))
-          (-sort task-comparator completed-tasks)))
-      "\n")))
+    (apply 'concat
+      (-map
+        (lambda (x) (concat " - " (funcall to-string x) "\n"))
+        (-sort task-comparator completed-tasks)))))
 
 (defun sbw/-org-review-new-formatter (config category heading-summaries)
-  (concat
-    (sbw/heading-two category)
-    "\n"
-    (sbw/-org-review-report-completed-tasks config heading-summaries)
-    "\n"))
+  (let* ( (completed-report (sbw/-org-review-report-completed-tasks config heading-summaries)) )
+    (when (not (string= "" completed-report))
+      (concat
+        (sbw/heading-two category)
+        "\n"
+        completed-report
+        "\n"))))
 
 (defun sbw/-org-review-default-formatter-func (config category heading-summaries)
   (sbw/-org-review-new-formatter config category heading-summaries))

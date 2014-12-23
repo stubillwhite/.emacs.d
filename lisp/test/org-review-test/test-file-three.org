@@ -1,0 +1,5 @@
+* file-three
+:PROPERTIES:
+:CATEGORY: file-three
+:END:
+** TODO File three incomplete task one

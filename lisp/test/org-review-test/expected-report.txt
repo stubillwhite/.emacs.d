@@ -1,15 +1,11 @@
 file-one
 --------
 
-
  - File one completed task one
-
 
 file-two
 --------
 
-
  - File two completed task one
  - File two completed task two
-
 
