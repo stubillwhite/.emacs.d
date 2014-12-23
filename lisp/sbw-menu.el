@@ -103,17 +103,11 @@
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
-    (sbw/menu-submenu ?R "Reports"          (sbw/menu "Reports"
-                                              (sbw/menu-action ?w "Previous week"  'sbw/generate-weekly-report-for-previous-week)
-                                              (sbw/menu-action ?m "Previous month" 'sbw/generate-monthly-report-for-previous-month)
-                                              (sbw/menu-action ?W "Current week"   'sbw/generate-weekly-report-for-current-week)
-                                              (sbw/menu-action ?M "Current month"  'sbw/generate-monthly-report-for-current-month)))
     (sbw/menu-submenu ?r "Review"           (sbw/menu "Review"
-                                              (sbw/menu-action ?w "Previous week"  (lambda () (sbw/org-review (sbw/org-review-config-previous-week sbw/org-all-files))))
+                                              (sbw/menu-action ?w "Previous week"  (lambda () (sbw/org-review (sbw/org-review-config-previous-week  sbw/org-all-files))))
                                               (sbw/menu-action ?m "Previous month" (lambda () (sbw/org-review (sbw/org-review-config-previous-month sbw/org-all-files))))
-                                              (sbw/menu-action ?W "Current week"   (lambda () (sbw/org-review (sbw/org-review-config-current-week sbw/org-all-files))))
-                                              (sbw/menu-action ?M "Current month"  (lambda () (sbw/org-review (sbw/org-review-config-current-month sbw/org-all-files))))
-                                              ))
+                                              (sbw/menu-action ?W "Current week"   (lambda () (sbw/org-review (sbw/org-review-config-current-week   sbw/org-all-files))))
+                                              (sbw/menu-action ?M "Current month"  (lambda () (sbw/org-review (sbw/org-review-config-current-month  sbw/org-all-files))))))
     (sbw/menu-submenu ?t "Timers"           (sbw/menu "Timers"
                                               (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
                                               (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
