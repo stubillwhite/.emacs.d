@@ -111,25 +111,46 @@
 
 ;; TODO Define a macro to destructure
 
-(defun sbw/-org-review-report-completed-tasks (config heading-summaries)
+(defun sbw/-org-review-is-task? (heading-summary)
+  (and
+    (= 2 (sbw/ht-get heading-summary :level))
+    (not (null (sbw/ht-get heading-summary :state)))))
+
+(defun sbw/-org-review-report-tasks-completed (config heading-summaries)
   (let* ( (start           (sbw/ht-get config :start))
           (end             (sbw/ht-get config :end))
           (to-string       (lambda (x) (sbw/ht-get x :heading)))
           (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) 
           (completed-tasks (-filter (-partial 'sbw/-org-review-is-completed-between? start end) heading-summaries)) )
-    (apply 'concat
-      (-map
-        (lambda (x) (concat " - " (funcall to-string x) "\n"))
-        (-sort task-comparator completed-tasks)))))
+    (concat
+      "  Completed tasks\n"
+      (apply 'concat
+        (-map
+          (lambda (x) (concat "   - " (funcall to-string x) "\n"))
+          (-sort task-comparator completed-tasks))))))
+
+(defun sbw/-org-review-report-task-statistics (config heading-summaries)
+  (let* ( (tasks        (-filter 'sbw/-org-review-is-task? heading-summaries))
+          (inc-count    (lambda (x) (if (null x) 1 (sbw/inc x))))
+          (state-counts (-reduce-from (lambda (acc x) (sbw/ht-update acc (sbw/ht-get x :state) inc-count)) (sbw/ht-create) tasks)) )
+    (concat
+      "  Task counts\n"
+      (apply 'concat
+        (-map
+          (lambda (state) (format "   - %s %d\n" state (sbw/ht-get state-counts state)))
+          (-sort 'string-lessp (sbw/ht-keys state-counts)))))))
 
 (defun sbw/-org-review-new-formatter (config category heading-summaries)
-  (let* ( (completed-report (sbw/-org-review-report-completed-tasks config heading-summaries)) )
-    (when (not (string= "" completed-report))
-      (concat
-        (sbw/heading-two category)
-        "\n"
-        completed-report
-        "\n"))))
+  (let* ( (completed-report  (sbw/-org-review-report-tasks-completed config heading-summaries))
+          (statistics-report (sbw/-org-review-report-task-statistics config heading-summaries))
+          )
+    (concat
+      (sbw/heading-two category)
+      "\n"
+      completed-report
+      "\n"
+      statistics-report
+      "\n")))
 
 (defun sbw/-org-review-default-formatter-func (config category heading-summaries)
   (sbw/-org-review-new-formatter config category heading-summaries))
