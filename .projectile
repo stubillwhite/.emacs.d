@@ -1,8 +1,8 @@
--.projectile
--.smex-items
--elpa
--eshell
--projectile-bookmarks.eld
--projectile.cache
--server
--url
+-/.projectile
+-/.smex-items
+-/elpa
+-/eshell
+-/projectile-bookmarks.eld
+-/projectile.cache
+-/server
+-/url

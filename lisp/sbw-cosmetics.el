@@ -11,9 +11,11 @@
 (setq-default truncate-lines t)                  ;; Truncate lines don't wrap
 
 ;; Font
-;(set-frame-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
-(set-frame-font "Inconsolata-dz-10")
-;(set-frame-font "Lucida Console-10")
+(when (eq system-type 'windows-nt)
+  ;(set-frame-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
+  (set-frame-font "Inconsolata-dz-10")
+  ;(set-frame-font "Lucida Console-10")
+  )
 
 ;; Prettify symbols everywhere
 (global-prettify-symbols-mode 1)

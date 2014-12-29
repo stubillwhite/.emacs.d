@@ -10,9 +10,12 @@
 
     ;; Org files
 
-    (setq org-directory 
-      "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/")
+    (when (eq system-type 'gnu/linux)
+      (setq org-directory "~/Dropbox/Private/org/"))
 
+    (when (eq system-type 'windows-nt)
+      (setq org-directory "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/"))
+    
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."
       (-mapcat
@@ -424,7 +427,7 @@
           "\n")))
 
     (setq sbw/org-report-dir
-      "C:/Users/IBM_ADMIN/my_local_stuff/home/my_stuff/srcs/org/reports")
+      (concat org-directory "/reports"))
 
     (defun sbw/report-filename (start end title)
       "Return the filename for a report in standard form."

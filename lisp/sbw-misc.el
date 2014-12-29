@@ -10,7 +10,7 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(set-clipboard-coding-system 'utf-16le-dos)
+
 (setq 
   default-buffer-file-coding-system 'utf-8
   x-select-request-type             '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
@@ -78,38 +78,38 @@
 ;; Symantec fails to start reliably. Emacs is usually running, so if we discover that Symantec is down then smack it
 ;; into life. This is utterly ridiculous and should be fixed properlys somewhere else.
 
-(defun sbw/windows-process-status (name)
-  (let* ( (cmd    (concat "sc query \"" name "\""))
-          (str    (shell-command-to-string cmd))
-          (regex  "SERVICE_NAME: \\(.+\\)\n.*\n.*STATE\\W+: \\(\\w+\\)\\W+\\(\\w+\\)")
-          (status (sbw/ht-create)) )
-    (when (string-match regex str)
-      (puthash :name   (match-string 1 str) status)
-      (puthash :code   (match-string 2 str) status)
-      (puthash :status (match-string 3 str) status)
-      status)))
+(when (eq system-type 'windows-nt)
+  
+  (defun sbw/windows-process-status (name)
+    (let* ( (cmd    (concat "sc query \"" name "\""))
+            (str    (shell-command-to-string cmd))
+            (regex  "SERVICE_NAME: \\(.+\\)\n.*\n.*STATE\\W+: \\(\\w+\\)\\W+\\(\\w+\\)")
+            (status (sbw/ht-create)) )
+      (when (string-match regex str)
+        (puthash :name   (match-string 1 str) status)
+        (puthash :code   (match-string 2 str) status)
+        (puthash :status (match-string 3 str) status)
+        status)))
 
-(defun sbw/windows-process-start (name)
-  (let* ( (cmd (concat "sc start \"" name "\"")) )
-    (shell-command-to-string cmd)))
+  (defun sbw/windows-process-start (name)
+    (let* ( (cmd (concat "sc start \"" name "\"")) )
+      (shell-command-to-string cmd)))
 
-(defun sbw/ensure-process-is-running (proc-name)
-  (let* ( (proc-status (sbw/windows-process-status proc-name)) )
-    (when (string-equal "STOPPED" (gethash :status proc-status))
+  
+  (defun sbw/ensure-process-is-running (proc-name)
+    (let* ( (proc-status (sbw/windows-process-status proc-name)) )
+      (when (string-equal "STOPPED" (gethash :status proc-status))
 
-      (sbw/windows-process-start proc-name)
-      (message (concat "Service " proc-name " is not currently running. Starting it.")))))
+        (sbw/windows-process-start proc-name)
+        (message (concat "Service " proc-name " is not currently running. Starting it.")))))
 
-(defun sbw/ensure-symantec-is-running ()
-  (sbw/ensure-process-is-running "SepMasterService"))
+  (defun sbw/ensure-symantec-is-running ()
+    (sbw/ensure-process-is-running "SepMasterService"))
 
-(defun sbw/ensure-db2-is-running ()
-  (sbw/ensure-process-is-running "DB2"))
+  (defun sbw/ensure-db2-is-running ()
+    (sbw/ensure-process-is-running "DB2"))
 
-(sbw/ensure-symantec-is-running)
-(sbw/ensure-db2-is-running)
-
-
-;; TODO - Add DB2. This is ridiculous.
+  (sbw/ensure-symantec-is-running)
+  (sbw/ensure-db2-is-running))
 
 (provide 'sbw-misc)
