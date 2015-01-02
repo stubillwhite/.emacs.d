@@ -11,10 +11,10 @@
     ;; Org files
 
     (when (eq system-type 'gnu/linux)
-      (setq org-directory "~/Dropbox/Private/org/"))
+      (setq org-directory "~/Dropbox/Private/org"))
 
     (when (eq system-type 'windows-nt)
-      (setq org-directory "c:/users/ibm_admin/my_local_stuff/home/my_stuff/srcs/org/"))
+      (setq org-directory "C:/Users/IBM_ADMIN/Dropbox/Private/org"))
     
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."
@@ -25,13 +25,13 @@
     (defun sbw/org-find-org-files ()
       "Scan org-directory for org files."
       (interactive)
-      (setq sbw/org-personal-files    (sbw/org-files (concat org-directory "current/personal")))
-      (setq sbw/org-non-project-files (sbw/org-files (concat org-directory "current/non-project")))
-      (setq sbw/org-work-files        (sbw/org-files (concat org-directory "current/work")))
+      (setq sbw/org-personal-files    (sbw/org-files (concat org-directory "/current/personal")))
+      (setq sbw/org-non-project-files (sbw/org-files (concat org-directory "/current/non-project")))
+      (setq sbw/org-work-files        (sbw/org-files (concat org-directory "/current/work")))
       (setq sbw/org-all-files         (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
       (setq sbw/org-refile-targets    (-filter (lambda (x) (not (-contains? sbw/org-non-project-files x))) sbw/org-all-files))
       (setq org-agenda-files          sbw/org-all-files)
-      (setq org-default-notes-file    (concat org-directory "current/non-project/incoming.org"))
+      (setq org-default-notes-file    (concat org-directory "/current/non-project/incoming.org"))
       (setq org-refile-targets        (quote ((sbw/org-refile-targets :maxlevel . 1)))))
 
     (sbw/org-find-org-files)
@@ -538,7 +538,7 @@
     (defun sbw/archive-file-name ()
       (concat
         org-directory
-        "archive/"
+        "/archive/"
         "archive-"
         (file-name-nondirectory (buffer-file-name))))
 
