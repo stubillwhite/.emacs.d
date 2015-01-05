@@ -1,5 +1,10 @@
 ;(define-namespace sbw/org-review-
 
+(setq sbw/org-review-config
+  (sbw/ht-create
+    :org-directory   org-directory
+    :supercategories '("personal" "work" "non-project")))
+
   (defun sbw/-org-review-heading-points ()
     "Return a list of the points of all the headings in the current org buffer."
     (let ((points nil))
@@ -197,5 +202,17 @@
 
 (defun sbw/org-review-weekly-report-for-previous-week (org-files)
   (sbw/-org-review-write-report org-files))
+
+;; TODO Should prompt for input if not provided
+(defun sbw/org-review-new-org-file (supercategory category)
+  (let* ( (content (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
+          (path    (s-lex-format "${org-directory}/current/${supercategory}/${category}.org" )))
+    (f-write
+      (->> content
+        (s-replace-all `(("${category}" . ,category))))
+      'utf-8
+      path)
+    (sbw/org-find-org-files)
+    (message "Created and added %s" path)))
 
 (provide 'sbw-org-review)

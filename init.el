@@ -15,7 +15,8 @@
 (add-hook 'after-init-hook 'sbw/init-report-time-elapsed 'append)
 
 ;; Add Lisp package locations
-(add-to-list 'load-path "~/.emacs.d/lisp")
+(setq sbw/lisp-path "~/.emacs.d/lisp")
+(add-to-list 'load-path sbw/lisp-path)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/themes")
 
 ;; Download everything we need
@@ -67,7 +68,8 @@
 ;(image-type-available-p 'png)
 ;(print image-library-alist)
 
-
 (sbw/init-display-missing-dynamic-libraries)
 
 (-map (lambda (x) (print (image-type-available-p (car x)))) image-library-alist)
+
+;; TODO Warn about superfluous configs
