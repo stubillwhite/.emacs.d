@@ -54,6 +54,9 @@
      ;; Graphviz
      graphviz-dot-mode      ;; Graphviz DOT file support and previews
 
+     ;; Markdown
+     markdown-mode          ;; Markdown mode
+
      ;; Groovy
 ;;     (groovy-mode . "melpa") ;; Groovy mode
      groovy-mode            ;; Groovy mode

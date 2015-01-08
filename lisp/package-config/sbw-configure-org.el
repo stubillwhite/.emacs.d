@@ -222,13 +222,20 @@
 
     (setq org-protocol-default-template-key nil)
 
+    (defun sbw/org-capture-rtc-task ()
+      ;; The docs state that placeholders will be expanded before evaluating Elisp, but that doesn't appear to be
+      ;; happening in practice so we have to access the link via an internal variable.
+      (let* ( (url   (plist-get org-store-link-plist :url))
+              (descr (plist-get org-store-link-plist :description)) )
+        (concat descr "\n" (s-lex-format "[[${url}][Link to RTC task]]"))))
+    
     (setq org-capture-templates
       '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
            "* TODO %?%a\n%i")
          ("l" "Link" entry (file+olp org-default-notes-file "Links")
            "* TODO %?%a\n%i")
-         ("j" "RTC task" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO %?%a")
+         ("r" "RTC task" entry (file+headline org-default-notes-file "Tasks")
+           "* TODO %?%(sbw/org-capture-rtc-task)")       
          ))
 
     ;; org-protocol experimental, not working
