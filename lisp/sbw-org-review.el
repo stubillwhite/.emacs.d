@@ -1,5 +1,7 @@
 ;(define-namespace sbw/org-review-
 
+(require 'cl)
+
 (setq sbw/org-review-config
   (sbw/ht-create
     :org-directory   org-directory
@@ -68,8 +70,8 @@
     (-mapcat 'sbw/org-review-heading-summaries-for-file org-files)))
 
 (defun sbw/-org-review-completed-in-period-filter (config)
-  (let* ( (start (sbw/ht-get config start))
-          (end   (sbw/ht-get config end)) )
+  (lexical-let* ( (start (sbw/ht-get config :start))
+                  (end   (sbw/ht-get config :end)) )
     (lambda (x)
       (let* ( (closed (gethash :closed x)) )
         (and
@@ -78,180 +80,151 @@
           (time-less-p closed end)
           (equal (gethash :state x) "DONE"))))))
 
+(defun sbw/markdown-header (level s)
+  (let* ( (marker (s-repeat level "#")) )
+    (format "%s %s %s\n\n" marker s marker)))
+
 (defun sbw/-org-review-completed-tasks-report-format-category (category summaries)
   (let* ( (to-string       (lambda (x) (sbw/ht-get x :heading)))
           (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) )
     (concat
-      "=="
-      category
-      "=="
+      (sbw/markdown-header 4 category)
       (apply 'concat
         (-map
-          (lambda (x) (concat "   - " (funcall to-string x) "\n"))
-          (-sort task-comparator summaries))))))
+          (lambda (x) (concat " - " (funcall to-string x) "\n"))
+          (-sort task-comparator summaries)))
+      "\n")))
 
 (defun sbw/-org-review-completed-tasks-report (config summaries)
   (let* ( (completed   (-filter (sbw/-org-review-completed-in-period-filter config) summaries))
           (categorised (sbw/collect-by (lambda (y) (gethash :category y)) completed))
-          (categories  (-sort 'string-lessp (sbw/ht-keys state-counts))) )
-    (-map
-      (lambda (x) (sbw/-org-review-completed-tasks-report-format-category x (sbw/ht-get categorised x)))
-      categories)))
-
-
-(defun sbw/-org-review-dummy-config ()
-  (let* ( (base     (current-time))
-          (start    (sbw/adjust-date-by base -6))
-          (end      (sbw/adjust-date-by base  1)) )
-    (sbw/ht-create
-      :org-files sbw/org-all-files
-      :start     start
-      :end       end)))
-
-
-
-;(let* ( (config    (sbw/-org-review-dummy-config))
-;        (summaries (sbw/-org-review-heading-summaries config)) )
-;  (sbw/-org-review-completed-tasks-report config summaries))
-
-
-
-
-;; =========================================================================================================================================================================
-
-
-(defun sbw/-org-review-category-summaries (org-files)
-  "Returns a hash table of category to list of heading summaries for the tasks in the specified org files."
-  (let* ( (extract-heading-summaries (lambda (x) (-mapcat 'sbw/org-review-heading-summaries x)))
-          (group-by-category         (lambda (x) (sbw/collect-by (lambda (y) (gethash :category y)) x))) )
-    (->> org-files
-      (funcall extract-heading-summaries)
-      (funcall group-by-category))))
-
-(defun sbw/-org-review-generate-report (config category-summaries)
-  "Returns a report of the tasks in the specified org files. The formatter-func should accept a category and a list of heading
-   summaries of tasks for a particular category, and return a string containing the formatted report for that category."
-  (let* ( (formatter (sbw/ht-get config :formatter))
-          (sorted-keys     (-sort 'string-lessp (sbw/ht-keys category-summaries)))
-          (generate-report (lambda (x) (funcall formatter config x (sbw/ht-get category-summaries x)))) )
+          (categories  (-sort 'string-lessp (sbw/ht-keys categorised))) )
     (apply 'concat
-      (-map generate-report sorted-keys))))
+      (sbw/markdown-header 3 "Completed tasks")
+      (-map
+        (lambda (x) (sbw/-org-review-completed-tasks-report-format-category x (sbw/ht-get categorised x)))
+        categories))))
 
-(defun sbw/org-review-generate-category-report (config)
-  (let* ( (org-files (sbw/ht-get config :org-files)) )
-    (sbw/-org-review-generate-report config (sbw/-org-review-category-summaries org-files))))
-
-(defun sbw/-org-review-write-report (report filename)
+(defun sbw/-org-review-write-report (config report)
   "Write the report to filename and open it for review."
-  (with-temp-file filename (insert report))
-  (message (format "Created '%s'" filename))
-  (find-file filename)
-  nil)
+  (let* ( (filename (sbw/ht-get config :filename)) )
+    (with-temp-file filename (insert report))
+    (message (format "Created '%s'" filename))
+    (find-file filename)
+    nil))
 
-(defun sbw/org-review (config)
-  (let* ( (filename  (sbw/ht-get config :filename))
-          (formatter (sbw/ht-get config :formatter))
-          (org-files (sbw/ht-get config :org-files))
-          (report    (sbw/org-review-generate-category-report config)))
-    (sbw/-org-review-write-report report filename)))
+(defun sbw/-org-review-state-less-than (a b)
+  (let* ( (ordinal (sbw/ht-create
+                     "TODO"      1
+                     "STARTED"   2
+                     "BLOCKED"   3
+                     "POSTPONED" 4
+                     "DONE"      5
+                     "CANCELLED" 6)) )
+    (< (sbw/ht-get ordinal a) (sbw/ht-get ordinal b))))
 
-
-
-
-
-;; Review formatter
-
-
-
-
-;; TODO Define a macro to destructure
+(defun sbw/-org-review-project-report-format-category (category state-counts)
+  (let* ( (states (-sort 'sbw/-org-review-state-less-than (sbw/ht-keys state-counts)))) 
+    (concat
+      (sbw/markdown-header 3 category)
+      (if (sbw/ht-keys state-counts)
+        (apply 'concat
+          (-map
+            (lambda (state) (format " - %s %d\n" state (sbw/ht-get state-counts state)))
+            states))
+        "No tasks\n")
+      "\n")))
 
 (defun sbw/-org-review-is-task? (heading-summary)
   (and
     (= 2 (sbw/ht-get heading-summary :level))
     (not (null (sbw/ht-get heading-summary :state)))))
 
-(defun sbw/-org-review-report-tasks-completed (config heading-summaries)
-  (let* ( (start           (sbw/ht-get config :start))
-          (end             (sbw/ht-get config :end))
-          (to-string       (lambda (x) (sbw/ht-get x :heading)))
-          (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) 
-          (completed-tasks (-filter (-partial 'sbw/-org-review-is-completed-between? start end) heading-summaries)) )
+(defun sbw/-org-review-project-report-collect-state-counts (summaries)
+  (let* ( (tasks     (-filter 'sbw/-org-review-is-task? summaries))
+          (inc-count (lambda (x) (if (null x) 1 (sbw/inc x)))) )
+    (-reduce-from
+      (lambda (acc x) (sbw/ht-update acc (sbw/ht-get x :state) inc-count))
+      (sbw/ht-create)
+      tasks)))
+
+(defun sbw/-org-review-project-report-state-counts (category summaries)
+  (let* ( (state-counts (sbw/-org-review-project-report-collect-state-counts summaries)) )
+    (sbw/-org-review-project-report-format-category category state-counts)))
+
+(defun sbw/-org-review-project-report (config summaries)
+  (let* ( (categorised (sbw/collect-by (lambda (y) (gethash :category y)) summaries))
+          (categories  (-sort 'string-lessp (sbw/ht-keys categorised))) )
+    (apply 'concat
+      (-map
+        (lambda (category) (sbw/-org-review-project-report-state-counts category (sbw/ht-get categorised category)))
+        categories))))
+
+(defun sbw/-org-review-build-report (config)
+  (let* ( (summaries (sbw/-org-review-heading-summaries config))
+          (completed (sbw/-org-review-completed-tasks-report config summaries))
+          (project   (sbw/-org-review-project-report config summaries)) )
     (concat
-      "  Completed tasks\n"
-      (apply 'concat
-        (-map
-          (lambda (x) (concat "   - " (funcall to-string x) "\n"))
-          (-sort task-comparator completed-tasks))))))
+      (sbw/markdown-header 1 (sbw/ht-get config :title))
+      (sbw/markdown-header 2 "Activity report")
+      completed
+      (sbw/markdown-header 2 "Project report")
+      project)))
 
-(defun sbw/-org-review-report-task-statistics (config heading-summaries)
-  (let* ( (tasks        (-filter 'sbw/-org-review-is-task? heading-summaries))
-          (inc-count    (lambda (x) (if (null x) 1 (sbw/inc x))))
-          (state-counts (-reduce-from (lambda (acc x) (sbw/ht-update acc (sbw/ht-get x :state) inc-count)) (sbw/ht-create) tasks)) )
-    (concat
-      "  Task counts\n"
-      (apply 'concat
-        (-map
-          (lambda (state) (format "   - %s %d\n" state (sbw/ht-get state-counts state)))
-          (-sort 'string-lessp (sbw/ht-keys state-counts)))))))
+(defun sbw/org-review (config)
+  (sbw/-org-review-write-report config (sbw/-org-review-build-report config)))
 
-(defun sbw/-org-review-new-formatter (config category heading-summaries)
-  (let* ( (completed-report  (sbw/-org-review-report-tasks-completed config heading-summaries))
-          (statistics-report (sbw/-org-review-report-task-statistics config heading-summaries))
-          )
-    (concat
-      (sbw/heading-two category)
-      "\n"
-      completed-report
-      "\n"
-      statistics-report
-      "\n")))
 
-(defun sbw/-org-review-default-formatter-func (config category heading-summaries)
-  (sbw/-org-review-new-formatter config category heading-summaries))
 
-;; Review configs
 
-(defun sbw/org-review-config (org-files start end filename formatter)
+
+
+
+
+(defun sbw/org-review-config (title org-files start end filename)
   (sbw/ht-create
+    :title     title
     :org-files org-files
     :start     start
     :end       end
-    :filename  filename
-    :formatter formatter))
+    :filename  filename))
 
-(defun sbw/-org-review-config-weekly-review (org-files base)
-  (let* ( (start    (sbw/adjust-date-by base -6))
-          (end      (sbw/adjust-date-by base  1))
-          (filename (sbw/report-filename start end "weekly-report")) )
-    (sbw/org-review-config org-files start end filename 'sbw/-org-review-default-formatter-func)))
+(defun sbw/-org-review-filename (prefix start end)
+  "Return the filename for a report in standard form."
+  (let* ( (format-date (-partial 'format-time-string "%Y%m%d")) )
+    (format "%s/%s-%s-to-%s.md"
+      sbw/org-report-dir
+      prefix
+      (funcall format-date start)
+      (funcall format-date end))))
 
-(defun sbw/org-review-config-previous-week (org-files)
-  (sbw/-org-review-config-weekly-review org-files (apply 'encode-time (org-read-date-analyze "-sat" nil '(0 0 0)))))
+(defun sbw/-org-review-title (descr start end)
+  (let* ( (format-date (-partial 'format-time-string "%Y%m%d")) )
+    (format "%s for %s to %s" descr (funcall format-date start) (funcall format-date end))))
 
-(defun sbw/org-review-config-current-week (org-files)
-  (sbw/-org-review-config-weekly-review org-files (apply 'encode-time (org-read-date-analyze "+sat" nil '(0 0 0)))))
+(defun sbw/-org-review-config-weekly-report (time)
+  (let* ( (weekday (sbw/ht-get (sbw/decompose-time time) :weekday))
+          (start   (sbw/adjust-time-by-days time (- weekday)))
+          (end     (sbw/adjust-time-by-days time (- 6 weekday))) )
+    (sbw/org-review-config
+      (sbw/-org-review-title "Weekly report" start end)
+      sbw/org-all-files
+      start
+      end
+      (sbw/-org-review-filename "weekly-report" start end))))
 
-(defun sbw/-org-review-config-monthly-review (org-files base)
-  (let* ( (decomp-base (sbw/decompose-time base))
-          (last-day    (calendar-last-day-of-month (sbw/ht-get decomp-base :month) (sbw/ht-get decomp-base :year)))
-          (start       (sbw/compose-time (sbw/ht-merge decomp-base (sbw/ht-create :day 1))))
-          (end         (sbw/compose-time (sbw/ht-merge decomp-base (sbw/ht-create :day last-day))))
-          (filename    (sbw/report-filename start end "monthly-report")))
-    (sbw/org-review-config org-files start end filename 'sbw/-org-review-default-formatter-func)))
-
-(defun sbw/org-review-config-previous-month (org-files)
-  (let* ( (decomp-curr-time (sbw/decompose-time (current-time)))
-          (prev-month       (sbw/dec (sbw/ht-get decomp-curr-time  :month)))
-          (base             (sbw/compose-time (sbw/ht-merge decomp-curr-time (sbw/ht-create :month prev-month)))) )
-    (sbw/-org-review-config-monthly-review org-files base)))
-
-(defun sbw/org-review-config-current-month (org-files)
-  (let* ( (base (current-time)) )
-    (sbw/-org-review-config-monthly-review org-files base)))
-
-(defun sbw/org-review-weekly-report-for-previous-week (org-files)
-  (sbw/-org-review-write-report org-files))
+(defun sbw/-org-review-config-monthly-report (time)
+  (let* ( (day        (sbw/ht-get (sbw/decompose-time time) :day))
+          (prev-month (sbw/decompose-time (sbw/adjust-time-by-days time (- (sbw/inc day)))))
+          (last-day   (calendar-last-day-of-month (sbw/ht-get prev-month :month) (sbw/ht-get prev-month :year)))
+          (start      (sbw/compose-time (sbw/ht-merge prev-month (sbw/ht-create :day 1))))
+          (end        (sbw/compose-time (sbw/ht-merge prev-month (sbw/ht-create :day last-day)))) )
+    (sbw/org-review-config
+      (sbw/-org-review-title "Monthly report" start end)
+      sbw/org-all-files
+      start
+      end
+      (sbw/-org-review-filename "monthly-report" start end))))
 
 ;; TODO Should prompt for input if not provided
 (defun sbw/org-review-new-org-file (supercategory category)

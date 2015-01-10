@@ -98,16 +98,16 @@
   "Returns a menu action to display a submenu, with the specified KEY binding, DESCRIPTION, and SUBMENU to display."
   `(sbw/menu-action ,key ,description (lambda () (sbw/menu-display ,submenu))))
 
-(defun sbw/-menu-command-weekly-review-for-previous-week ()
-  (sbw/org-review (sbw/org-review-config-previous-week sbw/org-all-files)))
+
+
+
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
     (sbw/menu-submenu ?r "Review"           (sbw/menu "Review"
-                                              (sbw/menu-action ?w "Previous week"  (lambda () (sbw/org-review (sbw/org-review-config-previous-week  sbw/org-all-files))))
-                                              (sbw/menu-action ?m "Previous month" (lambda () (sbw/org-review (sbw/org-review-config-previous-month sbw/org-all-files))))
-                                              (sbw/menu-action ?W "Current week"   (lambda () (sbw/org-review (sbw/org-review-config-current-week   sbw/org-all-files))))
-                                              (sbw/menu-action ?M "Current month"  (lambda () (sbw/org-review (sbw/org-review-config-current-month  sbw/org-all-files))))))
+                                              (sbw/menu-action ?w "Previous week"  (lambda () (sbw/org-review (sbw/-org-review-config-weekly-report (current-time)))))
+                                              (sbw/menu-action ?m "Previous month" (lambda () (sbw/org-review (sbw/-org-review-config-monthly-report (current-time)))))
+                                              ))
     (sbw/menu-submenu ?t "Timers"           (sbw/menu "Timers"
                                               (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
                                               (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))

@@ -53,6 +53,11 @@
       (list :timezone :daylight-saving :weekday :year :month :day :hour :minute :second))))
 
 ;; TODO Test this
+(defun sbw/adjust-time-by-days (time n)
+  "Returns TIME adjusted by N days."
+  (days-to-time (+ (time-to-number-of-days time) n)))
+
+;; TODO Test this
 (defun sbw/collect-by (f l)
   "Returns a hash-table of lists of items, keyed by the result of (f item) for each item in list l."
   (-reduce-from    
