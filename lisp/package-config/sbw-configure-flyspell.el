@@ -22,6 +22,4 @@
     ("C-c s b" . flyspell-buffer) )
   )
 
-
-
 (provide 'sbw-configure-flyspell)

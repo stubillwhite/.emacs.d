@@ -228,6 +228,7 @@
       (let* ( (url   (plist-get org-store-link-plist :link))
               (descr (plist-get org-store-link-plist :description)) )
         (concat descr "\n" (s-lex-format "[[${url}][Link to RTC task]]"))))
+    
     (setq org-capture-templates
       '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
            "* TODO %?%a\n%i")

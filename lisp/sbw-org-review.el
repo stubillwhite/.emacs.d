@@ -213,6 +213,7 @@
       end
       (sbw/-org-review-filename "weekly-report" start end))))
 
+
 (defun sbw/-org-review-config-monthly-report (time)
   (let* ( (day        (sbw/ht-get (sbw/decompose-time time) :day))
           (prev-month (sbw/decompose-time (sbw/adjust-time-by-days time (- (sbw/inc day)))))

@@ -18,7 +18,8 @@
 ;; Backups
 (setq
   temporary-file-directory "~/.emacs.d/temp"
-  backup-directory-alist) '(("." . "~/.emacs.d/backups"))
+  backup-directory-alist) '(("." . "~/.emacs.d/backups")
+  auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 ;; General settings
 (setq

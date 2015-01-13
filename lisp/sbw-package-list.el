@@ -60,6 +60,10 @@
      ;; Groovy
 ;;     (groovy-mode . "melpa") ;; Groovy mode
      groovy-mode            ;; Groovy mode
+
+     ;; Yasnippets
+     yasnippet              ;; Yet another snippet extension for Emacs
+ 
      
      ;; Experimental
      )
