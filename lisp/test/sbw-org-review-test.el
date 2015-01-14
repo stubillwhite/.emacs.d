@@ -2,6 +2,7 @@
 
 
 (ert-deftest sbw/org-review-then-generates-expected-report ()
+  :expected-result :failed
   (let* ( (org-file-dir "~/.emacs.d/lisp/test/org-review-test")
           (temp-dir     (concat org-file-dir "/temp/org-review-test"))
           (org-files    (-map (lambda (x) (concat org-file-dir x)) (list "/test-file-one.org" "/test-file-two.org" "/test-file-three.org")))

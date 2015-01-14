@@ -173,13 +173,16 @@
 (defun sbw/-org-review-build-report (config)
   (let* ( (summaries (sbw/-org-review-heading-summaries config))
           (completed (sbw/-org-review-completed-tasks-report config summaries))
+          (clocked   (sbw/-org-review-clocked-time-report config summaries))
           (project   (sbw/-org-review-project-report config summaries)) )
     (concat
       (sbw/markdown-header 1 (sbw/ht-get config :title))
-      (sbw/markdown-header 2 "Activity report")
-      completed
-      (sbw/markdown-header 2 "Project report")
-      project)))
+;      (sbw/markdown-header 2 "Activity report")
+;      completed
+      clocked
+;      (sbw/markdown-header 2 "Project report")
+;      project
+      )))
 
 (defun sbw/org-review (config)
   (sbw/-org-review-write-report config (sbw/-org-review-build-report config)))
@@ -247,6 +250,8 @@
       path)
     (sbw/org-find-org-files)
     (message "Created and added %s" path)))
+
+
 
 
 

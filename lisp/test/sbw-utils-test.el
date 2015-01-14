@@ -61,12 +61,4 @@
           (f        (lambda (k v) (concat (symbol-name k) "=" v))) )
     (should (equal (sbw/map-hash f x) expected))))
 
-;; sbw/decompose-time
-
-;; TODO
-
-;; sbw/compose-time
-
-;; TODO
-
 (provide 'sbw-utils-test)

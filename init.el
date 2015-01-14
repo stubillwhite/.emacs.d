@@ -44,6 +44,7 @@
     'sbw-misc
     'sbw-multimethods
     'sbw-org-review
+    'sbw-time
     'sbw-utils))
 
 ;; Load all tests
