@@ -45,6 +45,14 @@
   (when x
     (date-to-time x)))
 
+(defun sbw/-org-review-extract-clock ()
+  "Return a list of the clock entries for the heading at point."
+  (-let* [ (is-clock?   (lambda (x) (-let [(k . v) x] (string-equal k "CLOCK"))))
+           (clock-value (lambda (x) (-let [(k . v) x] v))) ]
+    (->> (org-entry-properties)
+      (-filter is-clock?)
+      (-map clock-value))))
+
 (defun sbw/-org-review-extract-heading-summary (x)
   "Return a summary of the org heading at point x."
   (let* ((summary (sbw/ht-create)))
@@ -57,7 +65,9 @@
       (puthash :tags     (sbw/-org-review-extract-string (org-get-tags-at)) summary)
       (puthash :heading  (sbw/-org-review-extract-string (org-get-heading nil t)) summary)
       (puthash :level    (funcall outline-level) summary)
-      (puthash :closed   (sbw/-org-review-extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
+      (puthash :clock    (sbw/-org-review-extract-clock) summary)
+      (puthash :closed   (sbw/-org-review-extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary) ;; TODO Replace with something more elegant
+      )
     summary))
 
 (defun sbw/org-review-heading-summaries-for-file (fnam)
@@ -204,15 +214,14 @@
 
 (defun sbw/-org-review-config-weekly-report (time)
   (let* ( (weekday (sbw/ht-get (sbw/decompose-time time) :weekday))
-          (start   (sbw/adjust-time-by-days time (- weekday)))
-          (end     (sbw/adjust-time-by-days time (- 6 weekday))) )
+          (start   (sbw/adjust-time-by-days time (- (+ weekday 7))))
+          (end     (sbw/adjust-time-by-days time (- weekday))) )
     (sbw/org-review-config
       (sbw/-org-review-title "Weekly report" start end)
       sbw/org-all-files
       start
       end
       (sbw/-org-review-filename "weekly-report" start end))))
-
 
 (defun sbw/-org-review-config-monthly-report (time)
   (let* ( (day        (sbw/ht-get (sbw/decompose-time time) :day))
@@ -238,5 +247,15 @@
       path)
     (sbw/org-find-org-files)
     (message "Created and added %s" path)))
+
+
+
+(defun white-test ()
+  (interactive)
+  (print (org-entry-properties)))
+  
+
+
+
 
 (provide 'sbw-org-review)

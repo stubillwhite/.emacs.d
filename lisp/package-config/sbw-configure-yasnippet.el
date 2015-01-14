@@ -11,9 +11,9 @@
     (add-to-list 'yas/root-directory "~/.emacs.d/snippets")
     (yas/initialize)
 
-    (bind-key "<backtab>" 'yas/expand)
-    (unbind-key "TAB")
-    )
-  )
+    (unbind-key "TAB"))
+  
+  :bind
+  ("<backtab>" . yas/expand))
 
 (provide 'sbw-configure-yasnippet)
