@@ -158,17 +158,55 @@
       (sbw/ht-create)
       tasks)))
 
-(defun sbw/-org-review-project-report-state-counts (category summaries)
+(defun sbw/-org-review-project-report-state-counts (config category summaries)
   (let* ( (state-counts (sbw/-org-review-project-report-collect-state-counts summaries)) )
     (sbw/-org-review-project-report-format-category category state-counts)))
 
-(defun sbw/-org-review-project-report (config summaries)
-  (let* ( (categorised (sbw/collect-by (lambda (y) (gethash :category y)) summaries))
-          (categories  (-sort 'string-lessp (sbw/ht-keys categorised))) )
+(defun sbw/-org-review-faceted-report (config f-facet f-report)
+  (let* ( (faceted (sbw/collect-by f-facet summaries))
+          (facets  (-sort 'string-lessp (sbw/ht-keys faceted))) )
     (apply 'concat
       (-map
-        (lambda (category) (sbw/-org-review-project-report-state-counts category (sbw/ht-get categorised category)))
-        categories))))
+        (lambda (facet) (funcall f-report config facet (sbw/ht-get faceted facet)))
+        facets))))
+
+(defun sbw/-org-review-facet-by-category (summary)
+  (sbw/ht-get summary :category))
+
+(defun sbw/-org-review-project-report (config summaries)
+  (sbw/-org-review-faceted-report
+    config
+    'sbw/-org-review-facet-by-category
+    'sbw/-org-review-project-report-state-counts))
+
+(defun sbw/-org-review-time-clocked-in-period (start end summary)
+  (-let* ( (clocked (sbw/ht-get summary :clocked)) )
+    (-> clocked
+      (-map (lambda (x) )))CLOCK: [2014-11-13 Thu 11:55]--[2014-11-13 Thu 12:45] =>  0:50
+    ))
+
+;(let* ( (s     "CLOCK: [2014-11-13 Thu 11:55]--[2014-11-13 Thu 12:45] =>  0:50")
+;        (start (org-float-time )))
+;  
+;  )
+
+(defun sbw/-org-review-time-clocked-in-period (start end summary)
+  0)
+
+(defun sbw/-org-review-activity-report-clocked-time (config category summaries)
+  (-let* ( ((&hash :start start :end end) config) )
+    (-reduce-from
+      (lambda (t summary) (time-add t (sbw/-org-review-time-clocked-in-period start end summary)))
+      (seconds-to-time 0)
+      summaries)))
+
+(defun sbw/-org-review-clocked-time-report (config summaries)
+  (sbw/-org-review-faceted-report
+    config
+    'sbw/-org-review-facet-by-category
+    'sbw/-org-review-activity-report-clocked-time))
+
+
 
 (defun sbw/-org-review-build-report (config)
   (let* ( (summaries (sbw/-org-review-heading-summaries config))
@@ -180,8 +218,8 @@
 ;      (sbw/markdown-header 2 "Activity report")
 ;      completed
       clocked
-;      (sbw/markdown-header 2 "Project report")
-;      project
+      (sbw/markdown-header 2 "Project report")
+      project
       )))
 
 (defun sbw/org-review (config)
