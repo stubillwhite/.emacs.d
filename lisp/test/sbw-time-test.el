@@ -2,53 +2,61 @@
 (require 'sbw-hash-tables)
 (require 'dash)
 
-;; sbw/time-decompose
+(lexical-let* ( (epoch-time       (seconds-to-time 0))
+                (later-time       (seconds-to-time 10000))
+                (epoch-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 0))
+                (later-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 0)) )
 
-(ert-deftest sbw/time-decompose-then-returns-decomposed-time ()
-  "sbw/time-decompose returns decomposed time"
-  (let* ( (epoch-time (seconds-to-time 0))
-          (expected   (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600)))
-    (should (sbw/ht-equal (sbw/time-decompose epoch-time) expected))))
+  ;; sbw/time-decompose
 
-;; sbw/time-compose
+  (ert-deftest sbw/time-decompose-then-returns-decomposed-time ()
+    "sbw/time-decompose then returns decomposed time."
+    (should (sbw/ht-equal (sbw/time-decompose epoch-time) epoch-decomposed)))
 
-(ert-deftest sbw/time-compose-then-returns-composed-time ()
-  "sbw/time-compose returns composed time"
-  (let* ( (epoch-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600))
-          (expected         (seconds-to-time 0)) )
-    (should (equal (time-to-seconds (sbw/time-compose epoch-decomposed)) (time-to-seconds expected)))))
+  ;; sbw/time-compose
 
-;; sbw/time-as-date-only
+  (ert-deftest sbw/time-compose-then-returns-composed-time ()
+    "sbw/time-compose then returns composed time."
+    (should (equal (sbw/time-compose epoch-decomposed) epoch-time)))
 
-(ert-deftest sbw/time-as-date-only-needs-implementing ()
-  :expected-result :failed
-  "TODO description"
-  (should (equal t nil)))
+  ;; sbw/time-as-date-only
 
-;; sbw/time-as-time-only
+  (ert-deftest sbw/time-as-date-only-needs-implementing ()
+    :expected-result :failed
+    "TODO description"
+    (should (equal t nil)))
 
-(ert-deftest sbw/time-as-time-only-needs-implementing ()
-  :expected-result :failed
-  "TODO description"
-  (should (equal t nil)))
+  ;; sbw/time-as-time-only
 
-;; sbw/time-adjust-by
+  (ert-deftest sbw/time-as-time-only-needs-implementing ()
+    :expected-result :failed
+    "TODO description"
+    (should (equal t nil)))
 
-(ert-deftest sbw/time-adjust-by-needs-implementing ()
-  :expected-result :failed
-  "TODO description"
-  (should (equal t nil)))
+  ;; sbw/time-adjust-by
 
-;; sbw/time-max
+  (ert-deftest sbw/time-adjust-by-needs-implementing ()
+    :expected-result :failed
+    "TODO description"
+    (should (equal t nil)))
 
-(ert-deftest sbw/time-max-needs-implementing ()
-  :expected-result :failed
-  "TODO description"
-  (should (equal t nil)))
+  ;; sbw/time-max
 
-;; sbw/time-min
+  (ert-deftest sbw/time-max-then-greatest-time ()
+    "sbw/time-max then greatest time."
+    (should (equal (sbw/time-max epoch-time later-time) later-time)))
 
-(ert-deftest sbw/time-min-needs-implementing ()
-  :expected-result :failed
-  "TODO description"
-  (should (equal t nil)))
+  ;; sbw/time-min
+
+  (ert-deftest sbw/time-min-then-least-time ()
+    "sbw/time-min then least time."
+    (should (equal (sbw/time-min epoch-time later-time) epoch-time)))
+
+  ;; sbw/time-sum
+  
+  (ert-deftest sbw/time-sum-needs-implementing ()
+    :expected-result :failed
+    "TODO description"
+    (should (equal t nil)))
+
+  )

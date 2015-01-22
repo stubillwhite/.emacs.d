@@ -40,6 +40,7 @@
 
     (setq 
       org-clock-into-drawer         t        ;; Clock into drawers
+      org-src-fontify-natively      t        ;; Fontify embedded code blocks
       org-ellipsis                  "\u2026" ;; Small ellipsis character
       org-agenda-fontify-priorities nil      ;; Don't let priority change task representation
       org-indent-mode               t        ;; Use indent mode

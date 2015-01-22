@@ -208,6 +208,9 @@
     `(isearch-fail                        ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mismatch)))))
     `(isearch                             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
     `(lazy-highlight                      ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
+
+    ;; c
+    `(c-annotation-face                   ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
     ))
 
 (provide-theme 'sbw-dark)

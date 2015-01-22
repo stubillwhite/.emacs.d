@@ -46,8 +46,12 @@
     (if (time-less-p t1 t2) t2 t1))
 
   (defun min (t1 t2)
-    "Returns the minimum of T1 and T2"
+    "Returns the minimum of T1 and T2."
     (if (time-less-p t1 t2) t1 t2))
+
+  (defun sum (t1 t2)
+    "Returns the sum of T1 and T2."
+    (seconds-to-time (+ (time-to-seconds t1) (time-to-seconds t2))))
   
   )
 
