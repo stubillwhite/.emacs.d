@@ -7,6 +7,10 @@
     :org-directory   org-directory
     :supercategories '("personal" "work" "non-project")))
 
+;;
+;; Org file navigation
+;;
+
 (defun sbw/-org-review-heading-points ()
   "Return a list of the points of all the headings in the current org buffer."
   (let ((points nil))
@@ -79,6 +83,35 @@
   (let* ( (org-files (sbw/ht-get config :org-files)) )
     (-mapcat 'sbw/org-review-heading-summaries-for-file org-files)))
 
+;; General reporting utilities
+
+(defun sbw/-org-review-write-report (config report)
+  "Write the report to filename and open it for review."
+  (let* ( (filename (sbw/ht-get config :filename)) )
+    (with-temp-file filename (insert report))
+    (message (format "Created '%s'" filename))
+    (find-file filename)
+    nil))
+
+(defun sbw/markdown-header (level s)
+  (let* ( (marker (s-repeat level "#")) )
+    (format "%s %s %s\n\n" marker s marker)))
+
+(defun sbw/-org-review-faceted-report (config f-facet f-report)
+  (let* ( (faceted (sbw/collect-by f-facet summaries))
+          (facets  (-sort 'string-lessp (sbw/ht-keys faceted))) )
+    (apply 'concat
+      (-map
+        (lambda (facet) (funcall f-report config facet (sbw/ht-get faceted facet)))
+        facets))))
+
+(defun sbw/-org-review-facet-by-category (summary)
+  (sbw/ht-get summary :category))
+
+;;
+;; Report: Completed tasks
+;;
+
 (defun sbw/-org-review-completed-in-period-filter (config)
   (lexical-let* ( (start (sbw/ht-get config :start))
                   (end   (sbw/ht-get config :end)) )
@@ -89,10 +122,6 @@
           (time-less-p start closed)
           (time-less-p closed end)
           (equal (gethash :state x) "DONE"))))))
-
-(defun sbw/markdown-header (level s)
-  (let* ( (marker (s-repeat level "#")) )
-    (format "%s %s %s\n\n" marker s marker)))
 
 (defun sbw/-org-review-completed-tasks-report-format-category (category summaries)
   (let* ( (to-string       (lambda (x) (sbw/ht-get x :heading)))
@@ -115,13 +144,9 @@
         (lambda (x) (sbw/-org-review-completed-tasks-report-format-category x (sbw/ht-get categorised x)))
         categories))))
 
-(defun sbw/-org-review-write-report (config report)
-  "Write the report to filename and open it for review."
-  (let* ( (filename (sbw/ht-get config :filename)) )
-    (with-temp-file filename (insert report))
-    (message (format "Created '%s'" filename))
-    (find-file filename)
-    nil))
+;;
+;; Report: Task counts
+;; TODO RENAME
 
 (defun sbw/-org-review-state-less-than (a b)
   (let* ( (ordinal (sbw/ht-create
@@ -162,51 +187,67 @@
   (let* ( (state-counts (sbw/-org-review-project-report-collect-state-counts summaries)) )
     (sbw/-org-review-project-report-format-category category state-counts)))
 
-(defun sbw/-org-review-faceted-report (config f-facet f-report)
-  (let* ( (faceted (sbw/collect-by f-facet summaries))
-          (facets  (-sort 'string-lessp (sbw/ht-keys faceted))) )
-    (apply 'concat
-      (-map
-        (lambda (facet) (funcall f-report config facet (sbw/ht-get faceted facet)))
-        facets))))
-
-(defun sbw/-org-review-facet-by-category (summary)
-  (sbw/ht-get summary :category))
-
 (defun sbw/-org-review-project-report (config summaries)
   (sbw/-org-review-faceted-report
     config
     'sbw/-org-review-facet-by-category
     'sbw/-org-review-project-report-state-counts))
 
-(defun sbw/-org-review-time-clocked-in-period (start end summary)
-  (-let* ( (clocked (sbw/ht-get summary :clocked)) )
-    (-> clocked
-      (-map (lambda (x) )))CLOCK: [2014-11-13 Thu 11:55]--[2014-11-13 Thu 12:45] =>  0:50
-    ))
+;;
+;; Report: Clocked time
+;;
 
-;(let* ( (s     "CLOCK: [2014-11-13 Thu 11:55]--[2014-11-13 Thu 12:45] =>  0:50")
-;        (start (org-float-time )))
-;  
-;  )
 
-(defun sbw/-org-review-time-clocked-in-period (start end summary)
-  0)
+(defun sbw/-org-review-sum-times (times)
+  (-reduce-from 'time-add (seconds-to-time 0) times))
 
-(defun sbw/-org-review-activity-report-clocked-time (config category summaries)
-  (-let* ( ((&hash :start start :end end) config) )
-    (-reduce-from
-      (lambda (t summary) (time-add t (sbw/-org-review-time-clocked-in-period start end summary)))
-      (seconds-to-time 0)
-      summaries)))
+(defun sbw/-org-review-time-clocked-for-task-in-period (start end clock-line)
+  (-let* ( (re     "\\(?:\\(\\[.*?\\]\\)-+\\(\\[.*?\\]\\)\\)")
+           (match  (s-match re clock-line)) )
+    (if match
+      (-let* ( (tstart (org-time-string-to-time (nth 1 match)))
+               (tend   (org-time-string-to-time (nth 2 match))) )
+        (time-subtract
+          tend tstart
+        
+          ;(sbw/time-min end   tend)
+          ;(sbw/time-max start tstart)
+          
+          ))
+      (seconds-to-time 0))))
+
+
+(defun sbw/-org-review-clocked-time-in-period (start end summary)
+  (->> (sbw/ht-get summary :clock)
+    (-map (lambda (x) (sbw/-org-review-time-clocked-for-task-in-period start end x)) )
+    (sbw/-org-review-sum-times)))
+
+
+
+
+(defun sbw/-org-review-clocked-time-per-category (config category summaries)
+  (-let* ( ((&hash :start start :end end) config)
+           (time (->> summaries
+                   (-map (-partial 'sbw/-org-review-clocked-time-in-period start end))
+                   (sbw/-org-review-sum-times))) )
+    (if (time-less-p (seconds-to-time 0) time)
+      (concat
+        " - "
+        category
+        " "
+        (format-time-string "%R" time)
+        "\n"))))
 
 (defun sbw/-org-review-clocked-time-report (config summaries)
   (sbw/-org-review-faceted-report
     config
     'sbw/-org-review-facet-by-category
-    'sbw/-org-review-activity-report-clocked-time))
+    'sbw/-org-review-clocked-time-per-category))
 
 
+;;
+;; Master report
+;;
 
 (defun sbw/-org-review-build-report (config)
   (let* ( (summaries (sbw/-org-review-heading-summaries config))
@@ -224,13 +265,6 @@
 
 (defun sbw/org-review (config)
   (sbw/-org-review-write-report config (sbw/-org-review-build-report config)))
-
-
-
-
-
-
-
 
 (defun sbw/org-review-config (title org-files start end filename)
   (sbw/ht-create
