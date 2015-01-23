@@ -6,8 +6,12 @@
 
   :config
   (progn
+    (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
+
     (when (eq system-type 'windows-nt)
-      (setq markdown-command "%MY_HOME%/utils/bin/Markdown/Markdown.pl")))
+      (setq
+        markdown-command-needs-filename t
+        markdown-command                "%LOCALAPPDATA%\\Pandoc\\pandoc.exe --from=markdown_github --to=html")))
 
   :bind
   ("C-c m p"   . markdown-preview)
