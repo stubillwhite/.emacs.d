@@ -8,7 +8,14 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c j ...` | Ace Jump      |
 | `C-c w ...` | Switch Window |
 
-## Markdown-mode ##
+## Ace Jump ##
+
+| Key     | Function               |
+|---------+------------------------|
+| `C-c j` | Jump to head character |
+
+
+## Markdown ##
 
 | Key         | Function               |
 |-------------+------------------------|

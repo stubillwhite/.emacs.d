@@ -71,9 +71,26 @@
   (let* ( (fill-column (point-max)) )
     (fill-region start end nil)))
 
-;; TODO Bind keys to these
-
-
+(defun sbw/fix-smart-punctuation ()
+  "Replace fancy punctuation characters in the current buffer with standard characters."
+  (interactive)
+  (let* ( (chars (sbw/ht-create
+                   ?\x0091 "'"
+                   ?\x0092 "'"
+                   ?\x0093 "\""
+                   ?\x0094 "\""
+                   ?\x2014 "--"
+                   ?\x2019 "'"
+                   ?\x201C "\""
+                   ?\x201D "\""
+                   ?\x2026 "...") ))
+    (save-excursion
+      (-map
+        (lambda (x) 
+          (goto-char (point-min))
+          (while (search-forward-regexp (string x) nil t)
+            (replace-match (sbw/ht-get chars x) nil nil)))
+        (sbw/ht-keys chars)))))
 
 ;; Ridiculous Windows housekeeping
 ;; Symantec fails to start reliably. Emacs is usually running, so if we discover that Symantec is down then smack it
