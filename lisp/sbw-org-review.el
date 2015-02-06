@@ -97,7 +97,7 @@
   (let* ( (marker (s-repeat level "#")) )
     (format "%s %s %s\n\n" marker s marker)))
 
-(defun sbw/-org-review-faceted-report (config f-facet f-report)
+(defun sbw/-org-review-faceted-report (config summaries f-facet f-report)
   (let* ( (faceted (sbw/collect-by f-facet summaries))
           (facets  (-sort 'string-lessp (sbw/ht-keys faceted))) )
     (apply 'concat
@@ -190,59 +190,99 @@
 (defun sbw/-org-review-project-report (config summaries)
   (sbw/-org-review-faceted-report
     config
+    summaries
     'sbw/-org-review-facet-by-category
     'sbw/-org-review-project-report-state-counts))
 
 ;;
 ;; Report: Clocked time
+;; The amount of time clocked per task in the configured period
+;;
+
+(define-namespace sbw/org-review-clocked-time-report-
+
+  (defun -sum-times (times)
+    (-reduce-from 'time-add (seconds-to-time 0) times))
+
+  (defun -periods-overlap? (t1-start t1-end t2-start t2-end)
+    (or
+      (and (time-less-p t2-start t1-start) (time-less-p t1-start t2-end))
+      (and (time-less-p t1-start t2-start) (time-less-p t2-start t1-end))))
+  
+  (defun -intersection (t1-start t1-end t2-start t2-end)
+    (if (-periods-overlap? t1-start t1-end t2-start t2-end)
+      (-let* ( (start (sbw/time-max t1-start t2-start))
+               (end   (sbw/time-min t1-end   t2-end)) )
+        (time-subtract end start))
+      (seconds-to-time 0)))
+
+  (defun -time-clocked-in-period (config clock-line)
+    (-let* ( ((&hash :start start :end end) config)
+             (re     "\\(?:\\(\\[.*?\\]\\)-+\\(\\[.*?\\]\\)\\)")
+             (match  (s-match re clock-line)) )
+      (if match
+        (-let* ( (tstart (org-time-string-to-time (nth 1 match)))
+                 (tend   (org-time-string-to-time (nth 2 match))) )
+          (-intersection start end tstart tend))
+        (seconds-to-time 0))))
+
+  (defun -time-clocked-for-task-in-period (config summary)
+    (-let* ( ((&hash :clock clock) summary) )
+      (-sum-times
+        (-map (-partial 'sbw/org-review-clocked-time-report--time-clocked-in-period config) clock))))
+
+  (defun -clocked-tasks-in-period (config summaries)
+    (let* ( (add-total-time     (lambda (x) (sbw/ht-assoc x :clocked-time (-time-clocked-for-task-in-period config x))))
+            (clocked-in-period? (lambda (x) (time-less-p (seconds-to-time 0) (sbw/ht-get x :clocked-time)))) )
+      (->> summaries
+        (-map add-total-time)
+        (-filter clocked-in-period?))))
+
+  ;; Next step is to do a report faceted by category of the outputs of -clocked-tasks-in-period
+
+  (defun simple-format (config facet summaries)
+    (-let* ( (total-time     (-sum-times (-map (lambda (x) (sbw/ht-get x :clocked-time)) summaries)))
+             (format-summary (lambda (x)
+                               (-let* ( ((&hash :heading heading :clocked-time clocked-time) x) )
+                                 (format "   - %s [%s]\n" heading (format-time-string "%R" clocked-time :utc))))) )
+      (concat
+        (format " - %s [%s]\n" facet (format-time-string "%R" total-time :utc))
+        (apply 'concat
+          (-map format-summary summaries)))))
+
+
+  ;; TODO Break format-time-string :utc out into a function
+  
+  (defun white-test (config summaries)
+    ;;         (sbw/markdown-header 2 "Time clocked")
+    
+    (sbw/-org-review-faceted-report
+      config
+      (sbw/org-review-clocked-time-report--clocked-tasks-in-period config summaries)
+      'sbw/-org-review-facet-by-category
+      'sbw/org-review-clocked-time-report-simple-format))
+
+
+  
+  (defun -example-report (config summaries)
+    (-let* ( (format-summary (lambda (x) (-let* ( ((&hash :heading heading :clocked-time clocked-time) x) )
+                                     (format " - %s [%s]\n" heading (format-time-string "%R" clocked-time :utc))))) )
+      (apply 'concat
+        (-map format-summary summaries))))
+
+  (defun generate (config summaries)
+    (-example-report config (-clocked-tasks-in-period config summaries)))
+  
+  )
+
+;;
+;; Report: Other
 ;;
 
 
-(defun sbw/-org-review-sum-times (times)
-  (-reduce-from 'time-add (seconds-to-time 0) times))
-
-(defun sbw/-org-review-time-clocked-for-task-in-period (start end clock-line)
-  (-let* ( (re     "\\(?:\\(\\[.*?\\]\\)-+\\(\\[.*?\\]\\)\\)")
-           (match  (s-match re clock-line)) )
-    (if match
-      (-let* ( (tstart (org-time-string-to-time (nth 1 match)))
-               (tend   (org-time-string-to-time (nth 2 match))) )
-        (time-subtract
-          tend tstart
-        
-          ;(sbw/time-min end   tend)
-          ;(sbw/time-max start tstart)
-          
-          ))
-      (seconds-to-time 0))))
-
-
-(defun sbw/-org-review-clocked-time-in-period (start end summary)
-  (->> (sbw/ht-get summary :clock)
-    (-map (lambda (x) (sbw/-org-review-time-clocked-for-task-in-period start end x)) )
-    (sbw/-org-review-sum-times)))
 
 
 
-
-(defun sbw/-org-review-clocked-time-per-category (config category summaries)
-  (-let* ( ((&hash :start start :end end) config)
-           (time (->> summaries
-                   (-map (-partial 'sbw/-org-review-clocked-time-in-period start end))
-                   (sbw/-org-review-sum-times))) )
-    (if (time-less-p (seconds-to-time 0) time)
-      (concat
-        " - "
-        category
-        " "
-        (format-time-string "%R" time)
-        "\n"))))
-
-(defun sbw/-org-review-clocked-time-report (config summaries)
-  (sbw/-org-review-faceted-report
-    config
-    'sbw/-org-review-facet-by-category
-    'sbw/-org-review-clocked-time-per-category))
 
 
 ;;
@@ -252,15 +292,16 @@
 (defun sbw/-org-review-build-report (config)
   (let* ( (summaries (sbw/-org-review-heading-summaries config))
           (completed (sbw/-org-review-completed-tasks-report config summaries))
-          (clocked   (sbw/-org-review-clocked-time-report config summaries))
-          (project   (sbw/-org-review-project-report config summaries)) )
+          (clocked   (sbw/org-review-clocked-time-report-white-test config summaries))
+          ;(project   (sbw/-org-review-project-report config summaries))
+          )
     (concat
       (sbw/markdown-header 1 (sbw/ht-get config :title))
-;      (sbw/markdown-header 2 "Activity report")
-;      completed
+      (sbw/markdown-header 2 "Activity report")
+      completed
       clocked
-      (sbw/markdown-header 2 "Project report")
-      project
+;      (sbw/markdown-header 2 "Project report")
+;      project
       )))
 
 (defun sbw/org-review (config)
