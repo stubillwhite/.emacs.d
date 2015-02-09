@@ -22,6 +22,7 @@
   ("C-c m i"   . markdown-insert-italic)
   ("C-c m b"   . markdown-insert-bold)
   ("C-c m c"   . markdown-insert-code)
-  ("C-c m l"   . markdown-insert-link))
+  ("C-c m l"   . markdown-insert-link)
+  ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown)

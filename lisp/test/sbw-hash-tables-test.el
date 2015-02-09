@@ -210,8 +210,6 @@
   :expected-result :failed  
   (should (equal 1 0)))
 
-
-
 ;; sbw/ht-dissoc
 
 (ert-deftest sbw/ht-dissoc-given-key-exists-then-removes ()
@@ -230,5 +228,10 @@
   (let* ( (hash-table (sbw/ht-create :k1 :v1 :k2 :v2 :k3 :v3))
           (expected   (sbw/ht-create         :k2 :v2 :k3 :v3)) )
     (should (sbw/ht-equal (sbw/ht-select-keys hash-table (list :k2 :k3 :k4)) expected))))
+
+(ert-deftest sbw/ht-map-vals-then-updates-values ()
+  (let* ( (hash-table (sbw/ht-create :a 1 :b 2 :c 3))
+          (expected   (sbw/ht-create :a 2 :b 3 :c 4)) )
+    (should (sbw/ht-equal (sbw/ht-map-vals hash-table '(lambda (x) (+ x 1))) expected))))
 
 (provide 'sbw-hash-tables-test)

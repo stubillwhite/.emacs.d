@@ -8,6 +8,6 @@
     (sml/setup)
 
     ;; Hide minor modes that aren't of interest
-    (setq rm-blacklist '(" AC" " SP"" SP/s" " Fly" " Undo-Tree" " Helm" " Ind" " company"))))
+    (setq rm-blacklist '(" SP"" SP/s" " Fly" " Undo-Tree" " Helm" " Ind" " company" " yas" " OrgTbl"))))
 
 (provide 'sbw-configure-smart-mode-line)

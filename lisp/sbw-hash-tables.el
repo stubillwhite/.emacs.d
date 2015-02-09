@@ -132,4 +132,9 @@
     (sbw/ht-create)
     ks))
 
+(defun sbw/ht-map-vals (hash-table f)
+  "Returns a copy of HASH-TABLE with f applied to each value."
+  (-let* ( (keys (sbw/ht-keys hash-table)) )
+    (apply 'sbw/ht-create (-interleave keys (-map (lambda (x) (funcall f (sbw/ht-get hash-table x))) keys)))))
+
 (provide 'sbw-hash-tables)
