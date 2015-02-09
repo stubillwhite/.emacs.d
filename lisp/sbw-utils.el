@@ -30,7 +30,8 @@
     s))
 
 (defun sbw/map-hash (f hash-table)
-  "Returns a list of the result of calling F on each key value entry in the specified HASH-TABLE."
+  "Returns a list of the result of calling F on each key value entry in the specified HASH-TABLE,
+   where F is a function accepting key and value."
   (let ( (results (list)) )
     (maphash (lambda (k v) (push (funcall f k v) results)) hash-table)
     results))

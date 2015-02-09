@@ -232,52 +232,71 @@
         (-map (-partial 'sbw/org-review-clocked-time-report--time-clocked-in-period config) clock))))
 
   (defun -clocked-tasks-in-period (config summaries)
-    (let* ( (add-total-time     (lambda (x) (sbw/ht-assoc x :clocked-time (-time-clocked-for-task-in-period config x))))
+    (let* ( (add-clocked-time     (lambda (x) (sbw/ht-assoc x :clocked-time (-time-clocked-for-task-in-period config x))))
             (clocked-in-period? (lambda (x) (time-less-p (seconds-to-time 0) (sbw/ht-get x :clocked-time)))) )
       (->> summaries
-        (-map add-total-time)
+        (-map add-clocked-time)
         (-filter clocked-in-period?))))
 
-  ;; Next step is to do a report faceted by category of the outputs of -clocked-tasks-in-period
-
-  (defun simple-format (config facet summaries)
+  (defun -format-elapsed-time (time)
+    (-let* ( (t-min   (round (/ (time-to-seconds time) 60)))
+             (hours   (/ t-min 60))
+             (minutes (mod t-min 60)) )
+      (format "%02d:%02d" hours minutes)))
+  
+  (defun -format-clocked-time-by-task-report (config facet summaries)
     (-let* ( (total-time     (-sum-times (-map (lambda (x) (sbw/ht-get x :clocked-time)) summaries)))
              (format-summary (lambda (x)
                                (-let* ( ((&hash :heading heading :clocked-time clocked-time) x) )
-                                 (format "   - %s [%s]\n" heading (format-time-string "%R" clocked-time :utc))))) )
+                                 (format "   - %s [%s]\n" heading (-format-elapsed-time clocked-time))))) )
       (concat
-        (format " - %s [%s]\n" facet (format-time-string "%R" total-time :utc))
+        (format " - %s [%s]\n" facet (-format-elapsed-time total-time))
         (apply 'concat
           (-map format-summary summaries)))))
 
+  (defun by-task (config summaries)
+    (-let* ( (clocked-tasks (-clocked-tasks-in-period config summaries)) )
+      (concat
+        (sbw/markdown-header 3 "Time per task")
+        (if clocked-tasks
+          (sbw/-org-review-faceted-report
+            config
+            clocked-tasks
+            'sbw/-org-review-facet-by-category
+            'sbw/org-review-clocked-time-report--format-clocked-time-by-task-report)
+          "No clocked tasks")
+        "\n")))
 
-  ;; TODO Break format-time-string :utc out into a function
   
-  (defun white-test (config summaries)
-    ;;         (sbw/markdown-header 2 "Time clocked")
-    
-    (sbw/-org-review-faceted-report
-      config
-      (sbw/org-review-clocked-time-report--clocked-tasks-in-period config summaries)
-      'sbw/-org-review-facet-by-category
-      'sbw/org-review-clocked-time-report-simple-format))
 
+  (defun by-category (config summaries)
+    (concat
+      (-let* ( (sum-time        (lambda (a b) (time-add a (sbw/ht-get b :clocked-time))))
+               (category-totals (->> (sbw/org-review-clocked-time-report--clocked-tasks-in-period config summaries)
+                                  (sbw/collect-by 'sbw/-org-review-facet-by-category)
+                                  (sbw/map-hash (lambda (k v) (-reduce-from sum-time (seconds-to-time 0) v)))))
+               (total           (-reduce-from 'time-add (seconds-to-time 0) (sbw/ht-vals category-totals))) )
+        (concat
+        (sbw/markdown-header 3 "Time per category")
+        (if clocked-tasks
+          "foo"
+          "No clocked tasks")
+        "\n"))))
 
-  
-  (defun -example-report (config summaries)
-    (-let* ( (format-summary (lambda (x) (-let* ( ((&hash :heading heading :clocked-time clocked-time) x) )
-                                     (format " - %s [%s]\n" heading (format-time-string "%R" clocked-time :utc))))) )
-      (apply 'concat
-        (-map format-summary summaries))))
-
-  (defun generate (config summaries)
-    (-example-report config (-clocked-tasks-in-period config summaries)))
   
   )
+
+(defun sum-time (a b)
+  (time-add a (sbw/ht-get b :clocked-time)))
 
 ;;
 ;; Report: Other
 ;;
+
+
+
+
+
 
 
 
@@ -290,16 +309,19 @@
 ;;
 
 (defun sbw/-org-review-build-report (config)
-  (let* ( (summaries (sbw/-org-review-heading-summaries config))
-          (completed (sbw/-org-review-completed-tasks-report config summaries))
-          (clocked   (sbw/org-review-clocked-time-report-white-test config summaries))
+  (let* ( (summaries        (sbw/-org-review-heading-summaries config))
+          (completed        (sbw/-org-review-completed-tasks-report config summaries))
+          (time-by-category (sbw/org-review-clocked-time-report-by-category config summaries))
+          (time-by-task     (sbw/org-review-clocked-time-report-by-task config summaries))
+          
           ;(project   (sbw/-org-review-project-report config summaries))
           )
     (concat
       (sbw/markdown-header 1 (sbw/ht-get config :title))
       (sbw/markdown-header 2 "Activity report")
       completed
-      clocked
+      time-by-task
+      time-by-category
 ;      (sbw/markdown-header 2 "Project report")
 ;      project
       )))

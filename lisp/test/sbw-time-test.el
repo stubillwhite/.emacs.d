@@ -2,10 +2,10 @@
 (require 'sbw-hash-tables)
 (require 'dash)
 
-(lexical-let* ( (epoch-time       (seconds-to-time 0))
-                (later-time       (seconds-to-time 10000))
-                (epoch-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 0))
-                (later-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 0)) )
+(lexical-let* ( (epoch-time       (days-to-time 0))
+                (later-time       (days-to-time 7))
+                (epoch-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600))
+                (later-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 8 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600)) )
 
   ;; sbw/time-decompose
 
