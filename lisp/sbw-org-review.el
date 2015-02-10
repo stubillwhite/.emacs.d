@@ -129,10 +129,11 @@
   (let* ( (to-string       (lambda (x) (sbw/ht-get x :heading)))
           (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) )
     (concat
-      (sbw/markdown-header 4 category)
+      ;(sbw/markdown-header 4 category)
+      (format " - %s\n" category)
       (apply 'concat
         (-map
-          (lambda (x) (concat " - " (funcall to-string x) "\n"))
+          (lambda (x) (concat "   - " (funcall to-string x) "\n"))
           (-sort task-comparator summaries)))
       "\n")))
 
@@ -163,11 +164,12 @@
 (defun sbw/-org-review-project-report-format-category (category state-counts)
   (let* ( (states (-sort 'sbw/-org-review-state-less-than (sbw/ht-keys state-counts)))) 
     (concat
-      (sbw/markdown-header 3 category)
+      (format " - %s\n" category)
+      ;(sbw/markdown-header 3 category)
       (if (sbw/ht-keys state-counts)
         (apply 'concat
           (-map
-            (lambda (state) (format " - %s %d\n" state (sbw/ht-get state-counts state)))
+            (lambda (state) (format "   - %s %d\n" state (sbw/ht-get state-counts state)))
             states))
         "No tasks\n")
       "\n")))
