@@ -83,6 +83,7 @@
   (let* ( (org-files (sbw/ht-get config :org-files)) )
     (-mapcat 'sbw/org-review-heading-summaries-for-file org-files)))
 
+;;
 ;; General reporting utilities
 
 (defun sbw/-org-review-write-report (config report)
@@ -97,6 +98,7 @@
   (let* ( (marker (s-repeat level "#")) )
     (format "%s %s %s\n\n" marker s marker)))
 
+;; TODO Break reporting and generating
 (defun sbw/-org-review-faceted-report (config summaries f-facet f-report)
   (let* ( (faceted (sbw/collect-by f-facet summaries))
           (facets  (-sort 'string-lessp (sbw/ht-keys faceted))) )
@@ -232,7 +234,7 @@
         (-map (-partial 'sbw/org-review-clocked-time-report--time-clocked-in-period config) clock))))
 
   (defun -clocked-tasks-in-period (config summaries)
-    (let* ( (add-clocked-time     (lambda (x) (sbw/ht-assoc x :clocked-time (-time-clocked-for-task-in-period config x))))
+    (let* ( (add-clocked-time   (lambda (x) (sbw/ht-assoc x :clocked-time (-time-clocked-for-task-in-period config x))))
             (clocked-in-period? (lambda (x) (time-less-p (seconds-to-time 0) (sbw/ht-get x :clocked-time)))) )
       (->> summaries
         (-map add-clocked-time)
@@ -267,21 +269,27 @@
           "No clocked tasks")
         "\n")))
 
-  
-
   (defun by-category (config summaries)
     (concat
-      (-let* ( (sum-time        (lambda (a b) (time-add a (sbw/ht-get b :clocked-time))))
-               (category-totals (->> (sbw/org-review-clocked-time-report--clocked-tasks-in-period config summaries)
-                                  (sbw/collect-by 'sbw/-org-review-facet-by-category)
-                                  (sbw/map-hash (lambda (k v) (-reduce-from sum-time (seconds-to-time 0) v)))))
-               (total           (-reduce-from 'time-add (seconds-to-time 0) (sbw/ht-vals category-totals))) )
+      (-let* ( (time-zero   (seconds-to-time 0))
+               (sum-clocked (lambda (a b) (time-add a (sbw/ht-get b :clocked-time))))
+               (totals      (-> (sbw/org-review-clocked-time-report--clocked-tasks-in-period
+                                  config summaries)
+                              ((lambda (x) (sbw/collect-by 'sbw/-org-review-facet-by-category x)))
+                              (sbw/ht-map-vals (lambda (x) (-reduce-from sum-clocked time-zero x)))))
+               (total       (-reduce-from 'time-add time-zero (sbw/ht-vals totals))) )
         (concat
-        (sbw/markdown-header 3 "Time per category")
-        (if clocked-tasks
-          "foo"
-          "No clocked tasks")
-        "\n"))))
+          (sbw/markdown-header 3 "Time per category")
+          (if totals
+            (apply 'concat
+              (-map
+                (lambda (x)
+                  (format " - %s %s [%.0f%%]\n" x (-format-elapsed-time (sbw/ht-get totals x)) (* 100
+                                                                                        (/ (time-to-seconds (sbw/ht-get totals x))
+                                                                                          (time-to-seconds total)))))
+                (sbw/ht-keys totals)))
+            "No clocked tasks")
+          "\n"))))
 
   
   )
@@ -313,8 +321,7 @@
           (completed        (sbw/-org-review-completed-tasks-report config summaries))
           (time-by-category (sbw/org-review-clocked-time-report-by-category config summaries))
           (time-by-task     (sbw/org-review-clocked-time-report-by-task config summaries))
-          
-          ;(project   (sbw/-org-review-project-report config summaries))
+          (project          (sbw/-org-review-project-report config summaries))
           )
     (concat
       (sbw/markdown-header 1 (sbw/ht-get config :title))
@@ -322,8 +329,8 @@
       completed
       time-by-task
       time-by-category
-;      (sbw/markdown-header 2 "Project report")
-;      project
+      (sbw/markdown-header 2 "Project report")
+      project
       )))
 
 (defun sbw/org-review (config)
@@ -361,6 +368,7 @@
       end
       (sbw/-org-review-filename "weekly-report" start end))))
 
+
 (defun sbw/-org-review-config-monthly-report (time)
   (let* ( (day        (sbw/ht-get (sbw/decompose-time time) :day))
           (prev-month (sbw/decompose-time (sbw/adjust-time-by-days time (- (sbw/inc day)))))
@@ -386,14 +394,6 @@
     (sbw/org-find-org-files)
     (message "Created and added %s" path)))
 
-
-
-
-
-(defun white-test ()
-  (interactive)
-  (print (org-entry-properties)))
-  
 
 
 

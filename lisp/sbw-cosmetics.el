@@ -14,7 +14,15 @@
 (when (eq system-type 'windows-nt)
   ;(set-frame-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
   ;(set-frame-font "Lucida Console-10")
-  (set-frame-font "Inconsolata-dz-10"))
+  ;(set-frame-font "Inconsolata-dz-10")
+
+  ;(setq initial-frame-alist '( (font . "Input 10") ))
+  ;(setq default-frame-alist '( (font . "Input 10") ))
+
+  (set-frame-font "Inconsolata-dz 10")
+  ;(setq initial-frame-alist '( (font . "Inconsolata-dz 10") ))
+  ;(setq default-frame-alist '( (font . "Inconsolata dz 10") ))
+  )
 
 (when (eq system-type 'gnu/linux)
 
