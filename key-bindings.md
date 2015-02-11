@@ -4,8 +4,9 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 
 | Key         | Group         |
 |-------------+---------------|
-| `C-c m ...` | Markdown      |
 | `C-c j ...` | Ace Jump      |
+| `C-c m ...` | Markdown      |
+| `C-c o ...` | Org           |
 | `C-c w ...` | Switch Window |
 
 ## Ace Jump ##
@@ -28,3 +29,31 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c m b`   | Bold                   |
 | `C-c m c`   | Code                   |
 | `C-c m l`   | Link                   |
+
+## Org ##
+
+| Key         | Function             |
+|-------------+----------------------|
+| `C-c o s m` | Set tags (meta-data) |
+| `C-c o s p` | Set priority         |
+| `C-c o s e` | Set effort           |
+| `C-c o s s` | Set schedule         |
+| `C-c o s d` | Set deadline         |
+| `C-c o s t` | TODO state           |
+| `C-c o c i` | Clock in             |
+| `C-c o c o` | Clock out            |
+| `C-c o c g` | Clock goto           |
+| `C-c o r t` | Reformat tags        |
+| `C-c o r r` | Reformat all         |
+| `C-c o r s` | Reformat subtree     |
+| `C-c o v n` | View narrow          |
+| `C-c o v w` | View widen           |
+| `C-c o c l` | Capture link         |
+| `C-c o c c` | Capture custom       |
+
+## Switch Window ##
+
+| Key     | Function      |
+|---------+---------------|
+| `C-c w` | Switch window |
+
