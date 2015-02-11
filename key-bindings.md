@@ -39,7 +39,7 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c o s e` | Set effort           |
 | `C-c o s s` | Set schedule         |
 | `C-c o s d` | Set deadline         |
-| `C-c o s t` | TODO state           |
+| `C-c o s t` | Set TODO state       |
 | `C-c o c i` | Clock in             |
 | `C-c o c o` | Clock out            |
 | `C-c o c g` | Clock goto           |
