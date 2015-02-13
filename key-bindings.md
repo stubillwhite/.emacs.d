@@ -7,6 +7,7 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c j ...` | Ace Jump      |
 | `C-c m ...` | Markdown      |
 | `C-c o ...` | Org           |
+| `C-c s ...` | Flyspell      |
 | `C-c w ...` | Switch Window |
 
 ## Ace Jump ##
@@ -21,6 +22,7 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | Key         | Function               |
 |-------------+------------------------|
 | `C-c m p`   | Preview current buffer |
+| `C-c m e`   | Export current buffer  |
 | `C-c m t 1` | Title level one        |
 | `C-c m t 2` | Title level two        |
 | `C-c m t 3` | Title level three      |
@@ -50,6 +52,13 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c o v w` | View widen           |
 | `C-c o c l` | Capture link         |
 | `C-c o c c` | Capture custom       |
+
+## Flyspell ##
+
+| Key       | Function     |
+|-----------+--------------|
+| `C-c s w` | Spell word   |
+| `C-c s b` | Spell buffer |
 
 ## Switch Window ##
 
