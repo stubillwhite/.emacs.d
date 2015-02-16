@@ -15,6 +15,7 @@
 
   :bind
   ("C-c m p"   . markdown-preview)
+  ("C-c m e"   . markdown-export)
   ("C-c m t 1" . markdown-insert-header-atx-1)
   ("C-c m t 2" . markdown-insert-header-atx-2)
   ("C-c m t 3" . markdown-insert-header-atx-3)

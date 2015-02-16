@@ -572,6 +572,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     (setq org-clock-heading-function
-      (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30)))))
+      (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30))))
+
+  :bind
+  ("C-c o s m" . org-set-tags-command)
+  ("C-c o s p" . org-priority)
+  ("C-c o s e" . org-set-effort)
+  ("C-c o s s" . org-schedule)
+  ("C-c o s d" . org-deadline)
+  ("C-c o s t" . org-todo)
+  ("C-c o c i" . org-clock-in)
+  ("C-c o c o" . org-clock-out)
+  ("C-c o c g" . org-clock-goto)
+  ("C-c o r t" . sbw/right-align-tags)
+  ("C-c o r r" . sbw/org-mode-reformat)
+  ("C-c o r s" . sbw/org-sort-subtree)
+  ("C-c o v n" . org-narrow-to-subtree)
+  ("C-c o v w" . widen)
+  ("C-c o c l" . org-insert-link)
+  ("C-c o c c" . org-capture)
+
+  )
 
 (provide 'sbw-configure-org-mode)

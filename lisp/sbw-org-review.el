@@ -130,10 +130,10 @@
           (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) )
     (concat
       ;(sbw/markdown-header 4 category)
-      (format " - %s\n" category)
+      (format "- %s\n" category)
       (apply 'concat
         (-map
-          (lambda (x) (concat "   - " (funcall to-string x) "\n"))
+          (lambda (x) (concat "    - " (funcall to-string x) "\n"))
           (-sort task-comparator summaries)))
       "\n")))
 
@@ -164,12 +164,12 @@
 (defun sbw/-org-review-project-report-format-category (category state-counts)
   (let* ( (states (-sort 'sbw/-org-review-state-less-than (sbw/ht-keys state-counts)))) 
     (concat
-      (format " - %s\n" category)
+      (format "- %s\n" category)
       ;(sbw/markdown-header 3 category)
       (if (sbw/ht-keys state-counts)
         (apply 'concat
           (-map
-            (lambda (state) (format "   - %s %d\n" state (sbw/ht-get state-counts state)))
+            (lambda (state) (format "    - %s %d\n" state (sbw/ht-get state-counts state)))
             states))
         "No tasks\n")
       "\n")))
@@ -205,6 +205,9 @@
 
 (define-namespace sbw/org-review-clocked-time-report-
 
+  (defun -time-zeron ()
+    (seconds-to-time 0))
+  
   (defun -sum-times (times)
     (-reduce-from 'time-add (seconds-to-time 0) times))
 
@@ -247,14 +250,18 @@
              (hours   (/ t-min 60))
              (minutes (mod t-min 60)) )
       (format "%02d:%02d" hours minutes)))
+
+  
+
+
   
   (defun -format-clocked-time-by-task-report (config facet summaries)
     (-let* ( (total-time     (-sum-times (-map (lambda (x) (sbw/ht-get x :clocked-time)) summaries)))
              (format-summary (lambda (x)
                                (-let* ( ((&hash :heading heading :clocked-time clocked-time) x) )
-                                 (format "   - %s [%s]\n" heading (-format-elapsed-time clocked-time))))) )
+                                 (format "    - %s [%s]\n" heading (-format-elapsed-time clocked-time))))) )
       (concat
-        (format " - %s [%s]\n" facet (-format-elapsed-time total-time))
+        (format "- %s [%s]\n" facet (-format-elapsed-time total-time))
         (apply 'concat
           (-map format-summary summaries)))))
 
@@ -271,22 +278,25 @@
           "No clocked tasks")
         "\n")))
 
+  (defun -category-totals (config summaries)
+    (-let* ( (time-zero   (seconds-to-time 0))
+             (sum-clocked (lambda (a b) (time-add a (sbw/ht-get b :clocked-time)))) )
+      (-> (sbw/org-review-clocked-time-report--clocked-tasks-in-period config summaries)
+        ((lambda (x) (sbw/collect-by 'sbw/-org-review-facet-by-category x)))
+        (sbw/ht-map-vals (lambda (x) (-reduce-from sum-clocked time-zero x))))))
+  
   (defun by-category (config summaries)
     (concat
-      (-let* ( (time-zero   (seconds-to-time 0))
-               (sum-clocked (lambda (a b) (time-add a (sbw/ht-get b :clocked-time))))
-               (totals      (-> (sbw/org-review-clocked-time-report--clocked-tasks-in-period
-                                  config summaries)
-                              ((lambda (x) (sbw/collect-by 'sbw/-org-review-facet-by-category x)))
-                              (sbw/ht-map-vals (lambda (x) (-reduce-from sum-clocked time-zero x)))))
-               (total       (-reduce-from 'time-add time-zero (sbw/ht-vals totals))) )
+      (-let* ( (time-zero (seconds-to-time 0))
+               (totals    (-category-totals config summaries))
+               (total     (-reduce-from 'time-add time-zero (sbw/ht-vals totals))) )
         (concat
           (sbw/markdown-header 3 "Time per category")
           (if totals
             (apply 'concat
               (-map
                 (lambda (x)
-                  (format " - %s %s [%.0f%%]\n" x (-format-elapsed-time (sbw/ht-get totals x)) (* 100
+                  (format "- %s %s [%.0f%%]\n" x (-format-elapsed-time (sbw/ht-get totals x)) (* 100
                                                                                         (/ (time-to-seconds (sbw/ht-get totals x))
                                                                                           (time-to-seconds total)))))
                 (sbw/ht-keys totals)))
