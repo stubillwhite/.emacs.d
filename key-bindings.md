@@ -8,6 +8,7 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c m ...` | Markdown      |
 | `C-c o ...` | Org           |
 | `C-c s ...` | Flyspell      |
+| `C-c u ...` | Undo Tree     |
 | `C-c w ...` | Switch Window |
 
 ## Ace Jump ##
@@ -59,6 +60,12 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 |-----------+--------------|
 | `C-c s w` | Spell word   |
 | `C-c s b` | Spell buffer |
+
+## Undo Tree ##
+
+| Key     | Function            |
+|---------+---------------------|
+| `C-c u` | Undo tree visualise |
 
 ## Switch Window ##
 

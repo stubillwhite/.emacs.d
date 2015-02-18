@@ -12,6 +12,9 @@
       undo-tree-history-directory-alist (quote (("." . "~/.emacs-undo-tree/"))))
     
     ;; Easy alias
-    (defalias 'redo 'undo-tree-redo)))
+    (defalias 'redo 'undo-tree-redo))
+
+  :bind
+  ("C-c u" . undo-tree-visualize))
 
 (provide 'sbw-configure-undo-tree)
