@@ -114,6 +114,74 @@
 ;; Report: Completed tasks
 ;;
 
+(define-namespace sbw/org-review-completed-tasks-
+
+  (defun -completed-in-period? (config x)
+    (let* ( (start  (sbw/ht-get config :start))
+            (end    (sbw/ht-get config :end))
+            (closed (sbw/ht-get x :closed)) ) 
+      (and
+        closed
+        (time-less-p start closed)
+        (time-less-p closed end)
+        (equal (sbw/ht-get x :state) "DONE"))))
+
+  (defun -collect-by-category (summaries)
+    (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
+
+  (defun -format-tasks (summaries-map)
+    (-reduce-from
+      (lambda (acc c)
+        (sbw/ht-assoc-in acc (list c)
+          (->> (sbw/ht-get summaries-map c)
+            (-map (lambda (x) (format "    - %s\n" (sbw/ht-get x :heading)))))))
+      summaries-map
+      (sbw/ht-keys summaries-map)))
+  
+  (defun -construct-report (summaries-map)
+    (-reduce-from
+      (lambda (acc c)
+        (concat
+          acc
+          (format "- %s\n" c)
+          (apply 'concat (-sort 'string< (sbw/ht-get summaries-map c)))
+          "\n"))
+      ""
+      (-sort 'string< (sbw/ht-keys summaries-map))))
+
+  (defun generate-report (config summaries)
+    (-let* ( (-completed-in-period? 'sbw/org-review-completed-tasks--completed-in-period?)
+             (-collect-by-category  'sbw/org-review-completed-tasks--collect-by-category)
+             (-format-tasks         'sbw/org-review-completed-tasks--format-tasks)
+             (-construct-report     'sbw/org-review-completed-tasks--construct-report) )
+      (->> summaries
+        (-filter (-partial -completed-in-period? config))
+        (funcall -collect-by-category)
+        (funcall -format-tasks)
+        (funcall -construct-report))))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;
+;; Report: Completed tasks
+;;
+
 (defun sbw/-org-review-completed-in-period-filter (config)
   (lexical-let* ( (start (sbw/ht-get config :start))
                   (end   (sbw/ht-get config :end)) )
@@ -205,7 +273,8 @@
 
 (define-namespace sbw/org-review-clocked-time-report-
 
-  (defun -time-zeron ()
+  ;; TODO Chnage to a defvar
+  (defun -time-zero ()
     (seconds-to-time 0))
   
   (defun -sum-times (times)
@@ -326,11 +395,11 @@
 
 ;;
 ;; Master report
-;;
+;;(summaries (sbw/org-review-heading-summaries-for-file (funcall test-file "clocked-time-report-input.org")))
 
 (defun sbw/-org-review-build-report (config)
   (let* ( (summaries        (sbw/-org-review-heading-summaries config))
-          (completed        (sbw/-org-review-completed-tasks-report config summaries))
+          (completed        (sbw/org-review-completed-tasks-generate-report config summaries))
           (time-by-category (sbw/org-review-clocked-time-report-by-category config summaries))
           (time-by-task     (sbw/org-review-clocked-time-report-by-task config summaries))
           (project          (sbw/-org-review-project-report config summaries))

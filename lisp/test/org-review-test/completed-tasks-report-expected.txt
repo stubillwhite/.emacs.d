@@ -1,0 +1,7 @@
+- category-one
+    - A task that was completed outside the period
+    - Another task that was completed inside the period
+
+- category-two
+    - A task from another category that was completed inside the period
+

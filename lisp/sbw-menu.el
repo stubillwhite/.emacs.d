@@ -7,16 +7,14 @@
 
 (defun sbw/menu-action (key description function)
   "Returns a menu action with the specified KEY binding, DESCRIPTION, and FUNCTION to execute."
-  (let* ( (table (sbw/ht-create)) )
-    (puthash :key         key         table)
-    (puthash :description description table)
-    (puthash :function    function    table)
-    table))
+  (sbw/ht-create
+    :key         key
+    :description description
+    :function    function))
 
 (defun sbw/-menu-add-action (menu action)
   "Adds ACTION to MENU."
-  (puthash (gethash :key action) action menu)
-  menu)
+  (sbw/ht-assoc menu (sbw/ht-get action :key) action))
 
 (defconst sbw/-menu-default-actions
   (let* ( (action-table (sbw/ht-create)) )
@@ -25,11 +23,9 @@
 
 (defun sbw/menu (title &rest menu-actions)
   "Returns a menu with TITLE and the specified MENU-ACTIONS."
-  (let* ( (menu-table   (sbw/ht-create))
-          (action-table (-reduce-from 'sbw/-menu-add-action (copy-hash-table sbw/-menu-default-actions) menu-actions)) )
-    (puthash :title   title        menu-table)
-    (puthash :actions action-table menu-table)
-    menu-table))
+  (-> (sbw/ht-create
+        :title   title
+        :actions (-reduce-from 'sbw/-menu-add-action (copy-hash-table sbw/-menu-default-actions) menu-actions))))
 
 (defun sbw/-menu-key-to-string (key)
   "Returns the string representation of KEY."
@@ -48,30 +44,30 @@
 
 (defun sbw/-menu-format-action (action)
   "Returns the string to display for ACTION."
-  (let* ( (key         (gethash :key action))
-          (description (gethash :description action)) )
+  (let* ( (key         (sbw/ht-get action :key))
+          (description (sbw/ht-get action :description)) )
     (format "%5s  %s\n" (format "[%s]" (sbw/-menu-key-to-string key)) description )))
 
 (defun sbw/-menu-format-actions (actions)
   "Returns the string to display for ACTIONS."
   (let* ( (keys (-sort 'sbw/-menu-compare-keys (sbw/ht-keys actions))) )
     (apply
-      'concat (-map (lambda (x) (sbw/-menu-format-action (gethash x actions))) keys))))
+      'concat (-map (lambda (x) (sbw/-menu-format-action (sbw/ht-get actions x))) keys))))
 
 (defun sbw/-menu-format-menu (menu)
   "Returns a string to display for MENU."
   (concat
-    (sbw/heading-two (gethash :title menu))
+    (sbw/heading-two (sbw/ht-get menu :title))
     "\n"
-    (sbw/-menu-format-actions (gethash :actions menu))
+    (sbw/-menu-format-actions (sbw/ht-get menu :actions))
     "\n--\n"))
 
 (defun sbw/-menu-execute-action (menu key)
   "Execute the action for KEY in MENU."
-  (-if-let  (action      (gethash key (gethash :actions menu)))
+  (-if-let  (action      (sbw/ht-get (sbw/ht-get menu :actions) key))
     (progn
-      (let* ( (description (gethash :description action))
-              (function    (gethash :function action))) 
+      (let* ( (description (sbw/ht-get action :description))
+              (function    (sbw/ht-get action :function))) 
         (message description)
         (funcall function)))
     (progn
