@@ -2,6 +2,8 @@
 
 (require 'cl)
 
+(setq sbw/org-report-dir (concat org-directory "/reports"))
+
 (setq sbw/org-review-config
   (sbw/ht-create
     :org-directory   org-directory
@@ -161,59 +163,95 @@
         (funcall -construct-report))))
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ;;
-;; Report: Completed tasks
+;; Report: Project status
 ;;
 
-(defun sbw/-org-review-completed-in-period-filter (config)
-  (lexical-let* ( (start (sbw/ht-get config :start))
-                  (end   (sbw/ht-get config :end)) )
-    (lambda (x)
-      (let* ( (closed (gethash :closed x)) )
-        (and
-          closed
-          (time-less-p start closed)
-          (time-less-p closed end)
-          (equal (gethash :state x) "DONE"))))))
+(define-namespace sbw/org-review-project-status-
 
-(defun sbw/-org-review-completed-tasks-report-format-category (category summaries)
-  (let* ( (to-string       (lambda (x) (sbw/ht-get x :heading)))
-          (task-comparator (lambda (x y) (string< (funcall to-string x) (funcall to-string y)))) )
-    (concat
-      ;(sbw/markdown-header 4 category)
-      (format "- %s\n" category)
-      (apply 'concat
-        (-map
-          (lambda (x) (concat "    - " (funcall to-string x) "\n"))
-          (-sort task-comparator summaries)))
-      "\n")))
+  (defun -is-task? (summary)
+    (and
+      (= 2 (sbw/ht-get summary :level))
+      (not (null (sbw/ht-get summary :state)))))
 
-(defun sbw/-org-review-completed-tasks-report (config summaries)
-  (let* ( (completed   (-filter (sbw/-org-review-completed-in-period-filter config) summaries))
-          (categorised (sbw/collect-by (lambda (y) (gethash :category y)) completed))
-          (categories  (-sort 'string-lessp (sbw/ht-keys categorised))) )
-    (apply 'concat
-      (sbw/markdown-header 3 "Completed tasks")
-      (-map
-        (lambda (x) (sbw/-org-review-completed-tasks-report-format-category x (sbw/ht-get categorised x)))
-        categories))))
+  (defun -collect-by-category (summaries)
+    (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
+
+  (defun -calculate-state-counts (summaries-map)
+    (let* ( (inc-count (lambda (x) (if (null x) 1 (sbw/inc x)))) )
+      (sbw/ht-map-vals
+        summaries-map
+        (lambda (v) (-reduce-from
+                 (lambda (acc x) (sbw/ht-update acc (sbw/ht-get x :state) inc-count))
+                 (sbw/ht-create)
+                 v)))))
+
+  (defun -state< (a b)
+    (let* ( (ordinal (sbw/ht-create
+                       "TODO"      1
+                       "STARTED"   2
+                       "BLOCKED"   3
+                       "POSTPONED" 4
+                       "DONE"      5
+                       "CANCELLED" 6)) )
+      (< (sbw/ht-get ordinal a) (sbw/ht-get ordinal b))))
+
+  (defun -format-counts (summaries-map)
+    (let* ( (-state< 'sbw/org-review-project-status--state<) )
+      (sbw/ht-map-vals
+        summaries-map
+        (lambda (counts-map)
+          (-reduce-from
+            (lambda (acc c)
+              (concat
+                acc
+                (format "    - %s %d\n" c (sbw/ht-get counts-map c))))
+            ""
+            (-sort -state< (sbw/ht-keys counts-map)))))))
+
+  (defun -construct-report (summaries-map)
+    (-reduce-from
+      (lambda (acc c)
+        (concat
+          acc
+          (format "- %s\n" c)
+          (sbw/ht-get summaries-map c)
+          "\n"))
+      ""
+      (-sort 'string< (sbw/ht-keys summaries-map))))
+  
+  (defun generate-report (config summaries)
+    (-let* ( (-is-task?               'sbw/org-review-project-status--is-task?)
+             (-collect-by-category    'sbw/org-review-project-status--collect-by-category)
+             (-calculate-state-counts 'sbw/org-review-project-status--calculate-state-counts)
+             (-format-counts          'sbw/org-review-project-status--format-counts)
+             (-construct-report       'sbw/org-review-project-status--construct-report)
+             )
+      (->> summaries
+        (-filter -is-task?)
+        (funcall -collect-by-category)
+        (funcall -calculate-state-counts)
+        (funcall -format-counts)
+        (funcall -construct-report))))
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ;;
 ;; Report: Task counts
@@ -402,7 +440,7 @@
           (completed        (sbw/org-review-completed-tasks-generate-report config summaries))
           (time-by-category (sbw/org-review-clocked-time-report-by-category config summaries))
           (time-by-task     (sbw/org-review-clocked-time-report-by-task config summaries))
-          (project          (sbw/-org-review-project-report config summaries))
+          (project          (sbw/org-review-project-status-generate-report config summaries))
           )
     (concat
       (sbw/markdown-header 1 (sbw/ht-get config :title))
