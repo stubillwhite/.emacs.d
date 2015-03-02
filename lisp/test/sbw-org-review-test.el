@@ -12,6 +12,21 @@
                     (expected  (funcall file-text "completed-tasks-report-expected.txt"))
                     (actual    (sbw/org-review-completed-tasks-generate-report config summaries)) )
       (should (string= actual expected))))
+
+  (ert-deftest sbw/org-review-project-status-generate-report-then-expected-report ()
+    "sbw/org-review-project-status-generate-report then expected report"
+    (lexical-let* ( (summaries (sbw/org-review-heading-summaries-for-file (funcall test-file "pro(defun -construct-report (summaries-map)
+    (-let* ( (concat-summaries (lambda (summaries) (-reduce-from ))) )))ject-status-report-input.org")))
+                    (expected  (funcall file-text "project-status-report-expected.txt"))
+                    (actual    (sbw/org-review-project-status-generate-report config summaries)) )
+      (should (string= actual expected))))
+
+  (ert-deftest sbw/org-review-clocked-time-generate-report-then-expected-report ()
+    "sbw/org-review-clocked-time-generate-report then expected report"
+    (lexical-let* ( (summaries (sbw/org-review-heading-summaries-for-file (funcall test-file "clocked-time-report-input.org")))
+                    (expected  (funcall file-text "clocked-time-report-expected.txt"))
+                    (actual    (sbw/org-review-clocked-time-generate-report config summaries)) )
+      (should (string= actual expected))))
   )
 
 (provide 'sbw-org-reports-test)

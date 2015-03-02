@@ -13,3 +13,8 @@
 :END:
 ** CANCELLED One cancelled
 ** DONE One done
+* category-three
+:PROPERTIES:
+:CATEGORY: category-three
+:END:
+

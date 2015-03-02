@@ -132,6 +132,7 @@
     (sbw/ht-create)
     ks))
 
+;; TODO: This is the wrong way around; should be (f hash-table)
 (defun sbw/ht-map-vals (hash-table f)
   "Returns a copy of HASH-TABLE with f applied to each value."
   (-let* ( (keys (sbw/ht-keys hash-table)) )

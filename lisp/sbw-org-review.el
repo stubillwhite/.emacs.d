@@ -131,6 +131,7 @@
   (defun -collect-by-category (summaries)
     (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
 
+  ;; TODO Replace with map-categorised
   (defun -format-tasks (summaries-map)
     (-reduce-from
       (lambda (acc c)
@@ -169,7 +170,7 @@
 
 (define-namespace sbw/org-review-project-status-
 
-  (defun -is-task? (summary)
+  (defun -task? (summary)
     (and
       (= 2 (sbw/ht-get summary :level))
       (not (null (sbw/ht-get summary :state)))))
@@ -196,6 +197,7 @@
                        "CANCELLED" 6)) )
       (< (sbw/ht-get ordinal a) (sbw/ht-get ordinal b))))
 
+  ;; TODO replace with map categorised
   (defun -format-counts (summaries-map)
     (let* ( (-state< 'sbw/org-review-project-status--state<) )
       (sbw/ht-map-vals
@@ -221,114 +223,43 @@
       (-sort 'string< (sbw/ht-keys summaries-map))))
   
   (defun generate-report (config summaries)
-    (-let* ( (-is-task?               'sbw/org-review-project-status--is-task?)
+    (-let* ( (-task?                  'sbw/org-review-project-status--task?)
              (-collect-by-category    'sbw/org-review-project-status--collect-by-category)
              (-calculate-state-counts 'sbw/org-review-project-status--calculate-state-counts)
              (-format-counts          'sbw/org-review-project-status--format-counts)
              (-construct-report       'sbw/org-review-project-status--construct-report)
              )
       (->> summaries
-        (-filter -is-task?)
+        (-filter -task?)
         (funcall -collect-by-category)
         (funcall -calculate-state-counts)
         (funcall -format-counts)
         (funcall -construct-report))))
   )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;;
-;; Report: Task counts
-;; TODO RENAME
-
-(defun sbw/-org-review-state-less-than (a b)
-  (let* ( (ordinal (sbw/ht-create
-                     "TODO"      1
-                     "STARTED"   2
-                     "BLOCKED"   3
-                     "POSTPONED" 4
-                     "DONE"      5
-                     "CANCELLED" 6)) )
-    (< (sbw/ht-get ordinal a) (sbw/ht-get ordinal b))))
-
-(defun sbw/-org-review-project-report-format-category (category state-counts)
-  (let* ( (states (-sort 'sbw/-org-review-state-less-than (sbw/ht-keys state-counts)))) 
-    (concat
-      (format "- %s\n" category)
-      ;(sbw/markdown-header 3 category)
-      (if (sbw/ht-keys state-counts)
-        (apply 'concat
-          (-map
-            (lambda (state) (format "    - %s %d\n" state (sbw/ht-get state-counts state)))
-            states))
-        "No tasks\n")
-      "\n")))
-
-(defun sbw/-org-review-is-task? (heading-summary)
-  (and
-    (= 2 (sbw/ht-get heading-summary :level))
-    (not (null (sbw/ht-get heading-summary :state)))))
-
-(defun sbw/-org-review-project-report-collect-state-counts (summaries)
-  (let* ( (tasks     (-filter 'sbw/-org-review-is-task? summaries))
-          (inc-count (lambda (x) (if (null x) 1 (sbw/inc x)))) )
-    (-reduce-from
-      (lambda (acc x) (sbw/ht-update acc (sbw/ht-get x :state) inc-count))
-      (sbw/ht-create)
-      tasks)))
-
-(defun sbw/-org-review-project-report-state-counts (config category summaries)
-  (let* ( (state-counts (sbw/-org-review-project-report-collect-state-counts summaries)) )
-    (sbw/-org-review-project-report-format-category category state-counts)))
-
-(defun sbw/-org-review-project-report (config summaries)
-  (sbw/-org-review-faceted-report
-    config
-    summaries
-    'sbw/-org-review-facet-by-category
-    'sbw/-org-review-project-report-state-counts))
-
 ;;
 ;; Report: Clocked time
-;; The amount of time clocked per task in the configured period
 ;;
 
-(define-namespace sbw/org-review-clocked-time-report-
+(define-namespace sbw/org-review-clocked-time-
 
-  ;; TODO Chnage to a defvar
-  (defun -time-zero ()
-    (seconds-to-time 0))
-  
+  (defvar -time-zero (seconds-to-time 0))
+
   (defun -sum-times (times)
-    (-reduce-from 'time-add (seconds-to-time 0) times))
-
-  (defun -periods-overlap? (t1-start t1-end t2-start t2-end)
-    (or
-      (and (time-less-p t2-start t1-start) (time-less-p t1-start t2-end))
-      (and (time-less-p t1-start t2-start) (time-less-p t2-start t1-end))))
+    (-reduce-from 'time-add -time-zero times))
+  
+  (defun -intersect? (t1-start t1-end t2-start t2-end)
+    (-let* ( (lt-eq? (lambda (a b) (or (equal a b) (time-less-p a b)))) )
+      (or
+        (and (funcall lt-eq? t2-start t1-start) (funcall lt-eq? t1-start t2-end))
+        (and (funcall lt-eq? t1-start t2-start) (funcall lt-eq? t2-start t1-end)))))
   
   (defun -intersection (t1-start t1-end t2-start t2-end)
-    (if (-periods-overlap? t1-start t1-end t2-start t2-end)
+    (if (-intersect? t1-start t1-end t2-start t2-end)
       (-let* ( (start (sbw/time-max t1-start t2-start))
                (end   (sbw/time-min t1-end   t2-end)) )
         (time-subtract end start))
-      (seconds-to-time 0)))
+      -time-zero))
 
   (defun -time-clocked-in-period (config clock-line)
     (-let* ( ((&hash :start start :end end) config)
@@ -338,117 +269,120 @@
         (-let* ( (tstart (org-time-string-to-time (nth 1 match)))
                  (tend   (org-time-string-to-time (nth 2 match))) )
           (-intersection start end tstart tend))
-        (seconds-to-time 0))))
+        -time-zero)))
 
-  (defun -time-clocked-for-task-in-period (config summary)
-    (-let* ( ((&hash :clock clock) summary) )
-      (-sum-times
-        (-map (-partial 'sbw/org-review-clocked-time-report--time-clocked-in-period config) clock))))
+  (defun -total-time-clocked-in-period (config summary)
+    (-sum-times
+      (-map
+        (lambda (x) (-time-clocked-in-period config x))
+        (sbw/ht-get summary :clock))))
 
-  (defun -clocked-tasks-in-period (config summaries)
-    (let* ( (add-clocked-time   (lambda (x) (sbw/ht-assoc x :clocked-time (-time-clocked-for-task-in-period config x))))
-            (clocked-in-period? (lambda (x) (time-less-p (seconds-to-time 0) (sbw/ht-get x :clocked-time)))) )
-      (->> summaries
-        (-map add-clocked-time)
-        (-filter clocked-in-period?))))
+  (defun -add-total-time-clocked-in-period (config summaries)
+    (-map
+      (lambda (x) (sbw/ht-assoc x :clocked-in-period (-total-time-clocked-in-period config x)))
+      summaries))
+
+  (defun -some-time-clocked-in-period? (config summary)
+    (time-less-p -time-zero (sbw/ht-get summary :clocked-in-period)))
+
+  (defun -collect-by-category (summaries)
+    (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
+
+  (defun -map-over-vals (f summary-map)
+    (lexical-let* ( (f f) )
+      (sbw/ht-map-vals
+        summary-map
+        (lambda (x) (-map f x)))))
+  
+  (defun -add-category-totals (summary-map)
+    (-let* ( (get-clocked     (lambda (x) (sbw/ht-get x :clocked-in-period)))
+             (sum-category    (lambda (x) (-sum-times (-map get-clocked x))))
+             (category-totals (sbw/ht-map-vals summary-map sum-category))
+             (add-total       (lambda (x) (sbw/ht-assoc x :category-total
+                                       (sbw/ht-get category-totals (sbw/ht-get x :category))))) )
+      (sbw/ht-map-vals
+        summary-map
+        (lambda (summaries) (-map add-total summaries)))))
 
   (defun -format-elapsed-time (time)
     (-let* ( (t-min   (round (/ (time-to-seconds time) 60)))
              (hours   (/ t-min 60))
              (minutes (mod t-min 60)) )
       (format "%02d:%02d" hours minutes)))
-
   
+  (defun -format-summary (summary)
+    (-let* ( (clocked (sbw/ht-get summary :clocked-in-period))
+             (total   (sbw/ht-get summary :category-total)) )
+      (format "[% .0f%% %s/%s] %s"
+        
+        
+                (* 100 (/ (time-to-seconds clocked) (time-to-seconds total)))
+        (-format-elapsed-time clocked)        
+        (-format-elapsed-time total)
+        (sbw/ht-get summary :heading)
+        )))
 
+  (defun -concat-summaries (summary-map f-fmt &optional f-sort)
+    (-let* ( (default-sort (lambda (a b) (string< (sbw/ht-get a :heading) (sbw/ht-get b :heading))))
+             (f-sort       (or f-sort default-sort)) )
+      (sbw/ht-map-vals summary-map
+        (lambda (summaries)
+          (-reduce-from
+            (lambda (acc s)
+              (concat acc (funcall f-fmt s)))
+            ""
+            (-sort f-sort summaries))))))
 
-  
-  (defun -format-clocked-time-by-task-report (config facet summaries)
-    (-let* ( (total-time     (-sum-times (-map (lambda (x) (sbw/ht-get x :clocked-time)) summaries)))
-             (format-summary (lambda (x)
-                               (-let* ( ((&hash :heading heading :clocked-time clocked-time) x) )
-                                 (format "    - %s [%s]\n" heading (-format-elapsed-time clocked-time))))) )
+  (defun -concat-categories (summary-map f-fmt &optional f-sort)
+    (-let* ( (default-sort 'string<)
+             (f-sort       (or f-sort default-sort)) )
+      (-reduce-from
+        (lambda (acc c)
+          (concat acc (funcall f-fmt c) (sbw/ht-get summary-map c)))
+        ""
+        (-sort f-sort (sbw/ht-keys summary-map)))))
+
+  (defun -construct-report (summary-map)
+    (-let* ( (-concat-summaries  'sbw/org-review-clocked-time--concat-summaries)
+             (-concat-categories 'sbw/org-review-clocked-time--concat-categories) )
       (concat
-        (format "- %s [%s]\n" facet (-format-elapsed-time total-time))
-        (apply 'concat
-          (-map format-summary summaries)))))
-
-  (defun by-task (config summaries)
-    (-let* ( (clocked-tasks (-clocked-tasks-in-period config summaries)) )
-      (concat
-        (sbw/markdown-header 3 "Time per task")
-        (if clocked-tasks
-          (sbw/-org-review-faceted-report
-            config
-            clocked-tasks
-            'sbw/-org-review-facet-by-category
-            'sbw/org-review-clocked-time-report--format-clocked-time-by-task-report)
-          "No clocked tasks")
+        (-concat-categories
+          (-concat-summaries summary-map
+            (lambda (x) (format "    - %s\n" (-format-summary x)))
+            (lambda (x y) (not (time-less-p (sbw/ht-get x :clocked-in-period) (sbw/ht-get y :clocked-in-period)))))
+          (lambda (x) (format "- %s\n" x)))
         "\n")))
-
-  (defun -category-totals (config summaries)
-    (-let* ( (time-zero   (seconds-to-time 0))
-             (sum-clocked (lambda (a b) (time-add a (sbw/ht-get b :clocked-time)))) )
-      (-> (sbw/org-review-clocked-time-report--clocked-tasks-in-period config summaries)
-        ((lambda (x) (sbw/collect-by 'sbw/-org-review-facet-by-category x)))
-        (sbw/ht-map-vals (lambda (x) (-reduce-from sum-clocked time-zero x))))))
   
-  (defun by-category (config summaries)
-    (concat
-      (-let* ( (time-zero (seconds-to-time 0))
-               (totals    (-category-totals config summaries))
-               (total     (-reduce-from 'time-add time-zero (sbw/ht-vals totals))) )
-        (concat
-          (sbw/markdown-header 3 "Time per category")
-          (if totals
-            (apply 'concat
-              (-map
-                (lambda (x)
-                  (format "- %s %s [%.0f%%]\n" x (-format-elapsed-time (sbw/ht-get totals x)) (* 100
-                                                                                        (/ (time-to-seconds (sbw/ht-get totals x))
-                                                                                          (time-to-seconds total)))))
-                (sbw/ht-keys totals)))
-            "No clocked tasks")
-          "\n"))))
-
-  
+  (defun generate-report (config summaries)
+    (-let* ( (-add-total-time-clocked-in-period (lambda (x) (-add-total-time-clocked-in-period config x)))
+             (-some-time-clocked-in-period?     (lambda (x) (-some-time-clocked-in-period? config x)))
+             (-collect-by-category              'sbw/org-review-clocked-time--collect-by-category)
+             (-add-category-totals              'sbw/org-review-clocked-time--add-category-totals)
+             (-construct-report                 'sbw/org-review-clocked-time--construct-report) )
+      (->> summaries
+        (funcall -add-total-time-clocked-in-period)
+        (-filter -some-time-clocked-in-period?)
+        (funcall -collect-by-category)
+        (funcall -add-category-totals)
+        (funcall -construct-report))))
   )
-
-(defun sum-time (a b)
-  (time-add a (sbw/ht-get b :clocked-time)))
-
-;;
-;; Report: Other
-;;
-
-
-
-
-
-
-
-
-
-
-
 
 ;;
 ;; Master report
-;;(summaries (sbw/org-review-heading-summaries-for-file (funcall test-file "clocked-time-report-input.org")))
+;;
 
 (defun sbw/-org-review-build-report (config)
-  (let* ( (summaries        (sbw/-org-review-heading-summaries config))
-          (completed        (sbw/org-review-completed-tasks-generate-report config summaries))
-          (time-by-category (sbw/org-review-clocked-time-report-by-category config summaries))
-          (time-by-task     (sbw/org-review-clocked-time-report-by-task config summaries))
-          (project          (sbw/org-review-project-status-generate-report config summaries))
-          )
+  (let* ( (summaries (sbw/-org-review-heading-summaries config))
+          (completed (sbw/org-review-completed-tasks-generate-report config summaries))
+          (clocked   (sbw/org-review-clocked-time-generate-report config summaries))
+          (project   (sbw/org-review-project-status-generate-report config summaries)) )
     (concat
       (sbw/markdown-header 1 (sbw/ht-get config :title))
-      (sbw/markdown-header 2 "Activity report")
+      (sbw/markdown-header 2 "Completed tasks")
       completed
-      time-by-task
-      time-by-category
-      (sbw/markdown-header 2 "Project report")
+      (sbw/markdown-header 2 "Activity")
+      clocked
+      (sbw/markdown-header 2 "Project status")
       project
       )))
 
