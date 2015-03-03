@@ -30,6 +30,9 @@
      org                    ;; Your life in plain text
      htmlize                ;; html org-mode reports
 
+     ;; Git
+     magit                  ;; Control Git from Emacs
+     
      ;; Auto-complete
      company                ;; Auto-completion
      
