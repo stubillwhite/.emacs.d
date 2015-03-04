@@ -13,92 +13,85 @@
 ;; Org file navigation
 ;;
 
-(defun sbw/-org-review-heading-points ()
-  "Return a list of the points of all the headings in the current org buffer."
-  (let ((points nil))
-    (save-excursion
-      (show-all)
-      (end-of-buffer)
-      (setq points
-        (-unfold
-          (lambda (x)
-            (when (outline-previous-heading)
-              (cons (point) x)))
-          :unused-seed))
-      (org-overview))
-    points))
+(define-namespace sbw/org-utils-
+
+  (defun -heading-points-for-current-buffer ()
+    (let ((points nil))
+      (save-excursion
+        (show-all)
+        (end-of-buffer)
+        (setq points
+          (-unfold
+            (lambda (x) (when (outline-previous-heading) (cons (point) x)))
+            :unused-seed))
+        (org-overview))
+      points))
   
-(defun sbw/-org-review-strip-urls (s)
-  "Return string s with any URLs replaced with their descriptions."
-  (let* ( (str s) )
-    (while (string-match org-bracket-link-regexp str)
-      (let* ( (url   (match-string 1 str))
-              (descr (match-string 3 str))
-              (repl  (if descr descr url)) )
-        (setq str
-          (replace-regexp-in-string (regexp-quote (match-string 0 str)) repl str))))
-    str))
+  (defun -replace-urls-with-descriptions (s)
+    (let* ( (str s) )
+      (while (string-match org-bracket-link-regexp str)
+        (let* ( (url   (match-string 1 str))
+                (descr (match-string 3 str))
+                (repl  (if descr descr url)) )
+          (setq str
+            (replace-regexp-in-string (regexp-quote (match-string 0 str)) repl str))))
+      str))
 
-(defun sbw/-org-review-extract-string (x)
-  "Return a string extracted from the org property."
-  (when x
-    (-> x
-      (substring-no-properties)
-      (sbw/-org-review-strip-urls))))
+  (defun -extract-string (x)
+    (when x
+      (-replace-urls-with-descriptions (substring-no-properties x))))
 
-(defun sbw/-org-review-extract-timestamp (x)
-  "Return a timestamp extracted from the org property."
-  (when x
-    (date-to-time x)))
+  (defun -extract-timestamp (x)
+    (when x
+      (date-to-time x)))
 
-(defun sbw/-org-review-extract-clock ()
-  "Return a list of the clock entries for the heading at point."
-  (-let* [ (is-clock?   (lambda (x) (-let [(k . v) x] (string-equal k "CLOCK"))))
-           (clock-value (lambda (x) (-let [(k . v) x] v))) ]
-    (->> (org-entry-properties)
-      (-filter is-clock?)
-      (-map clock-value))))
+  (defun -extract-clock ()
+    (-let* [ (is-clock?   (lambda (x) (-let [(k . v) x] (string-equal k "CLOCK"))))
+             (clock-value (lambda (x) (-let [(k . v) x] v))) ]
+      (->> (org-entry-properties)
+        (-filter is-clock?)
+        (-map clock-value))))
 
-(defun sbw/-org-review-extract-heading-summary (x)
-  "Return a summary of the org heading at point x."
-  (let* ((summary (sbw/ht-create)))
-    (save-excursion
-      (goto-char x)
-      (puthash :filename (buffer-file-name) summary)
-      (puthash :point    x summary)
-      (puthash :category (sbw/-org-review-extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
-      (puthash :state    (sbw/-org-review-extract-string (org-get-todo-state)) summary)
-      (puthash :tags     (sbw/-org-review-extract-string (org-get-tags-at)) summary)
-      (puthash :heading  (sbw/-org-review-extract-string (org-get-heading nil t)) summary)
-      (puthash :level    (funcall outline-level) summary)
-      (puthash :clock    (sbw/-org-review-extract-clock) summary)
-      (puthash :closed   (sbw/-org-review-extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary) ;; TODO Replace with something more elegant
-      )
-    summary))
+  (defun -extract-heading-summary (x)
+    "Return a summary of the org heading at point x."
+    (let* ((summary (sbw/ht-create)))
+      (save-excursion
+        (goto-char x)
+        (puthash :filename (buffer-file-name) summary)
+        (puthash :point    x summary)
+        (puthash :category (-extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
+        (puthash :state    (-extract-string (org-get-todo-state)) summary)
+        (puthash :tags     (-extract-string (org-get-tags-at)) summary)
+        (puthash :heading  (-extract-string (org-get-heading nil t)) summary)
+        (puthash :level    (funcall outline-level) summary)
+        (puthash :clock    (-extract-clock) summary)
+        (puthash :closed   (-extract-timestamp (cdr (assoc "CLOSED" (org-entry-properties)))) summary)
+        )
+      summary))
 
-(defun sbw/org-review-heading-summaries-for-file (fnam)
-  "Return summaries for all the headings in file fnam."
-  (set-buffer (find-file-noselect fnam))
-  (-map 'sbw/-org-review-extract-heading-summary (sbw/-org-review-heading-points)))
+  (defun heading-summaries-for-file (fnam)
+    "Return summaries for all the headings in file fnam."
+    (-let* ( (extract-heading-summary 'sbw/org-utils--extract-heading-summary) )
+      (set-buffer (find-file-noselect fnam))
+      (-map extract-heading-summary (-heading-points-for-current-buffer))))
 
-(defun sbw/-org-review-heading-summaries (config)
-  (let* ( (org-files (sbw/ht-get config :org-files)) )
-    (-mapcat 'sbw/org-review-heading-summaries-for-file org-files)))
+  )
 
 ;;
 ;; General reporting utilities
 
-(defun sbw/-org-review-write-report (config report)
-  "Write the report to filename and open it for review."
-  (let* ( (filename (sbw/ht-get config :filename)) )
-    (with-temp-file filename (insert report))
-    (message (format "Created '%s'" filename))
-    (find-file filename)
-    nil))
+(define-namespace sbw/org-review-utils-
 
-(defun sbw/markdown-header (level s)
-  (let* ( (marker (s-repeat level "#")) )
-    (format "%s %s %s\n\n" marker s marker)))
+  (defun -write-report (config report)
+    (let* ( (filename (sbw/ht-get config :filename)) )
+      (with-temp-file filename (insert report))
+      (message (format "Created '%s'" filename))
+      (find-file filename)
+      nil))
+
+  (defun -markdown-header (level s)
+    (let* ( (marker (s-repeat level "#")) )
+      (format "%s %s %s\n\n" marker s marker))))
 
 ;;
 ;; Report: Completed tasks
@@ -224,6 +217,8 @@
         (funcall -format-counts)
         (funcall -construct-report))))
   )
+
+
 
 ;;
 ;; Report: Clocked time
@@ -366,23 +361,27 @@
 ;; Master report
 ;;
 
+(defun sbw/-org-review-heading-summaries (config)
+  (let* ( (org-files (sbw/ht-get config :org-files)) )
+    (-mapcat 'sbw/org-utils-heading-summaries-for-file org-files)))
+
 (defun sbw/-org-review-build-report (config)
   (let* ( (summaries (sbw/-org-review-heading-summaries config))
           (completed (sbw/org-review-completed-tasks-generate-report config summaries))
           (clocked   (sbw/org-review-clocked-time-generate-report config summaries))
           (project   (sbw/org-review-project-status-generate-report config summaries)) )
     (concat
-      (sbw/markdown-header 1 (sbw/ht-get config :title))
-      (sbw/markdown-header 2 "Completed tasks")
+      (sbw/org-review-utils--markdown-header 1 (sbw/ht-get config :title))
+      (sbw/org-review-utils--markdown-header 2 "Completed tasks")
       completed
-      (sbw/markdown-header 2 "Activity")
+      (sbw/org-review-utils--markdown-header 2 "Activity")
       clocked
-      (sbw/markdown-header 2 "Project status")
+      (sbw/org-review-utils--markdown-header 2 "Project status")
       project
       )))
 
 (defun sbw/org-review (config)
-  (sbw/-org-review-write-report config (sbw/-org-review-build-report config)))
+  (sbw/org-review-utils--write-report config (sbw/-org-review-build-report config)))
 
 (defun sbw/org-review-config (title org-files start end filename)
   (sbw/ht-create
