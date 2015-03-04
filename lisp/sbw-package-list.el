@@ -63,7 +63,10 @@
 
      ;; Yasnippets
      yasnippet              ;; Yet another snippet extension for Emacs
- 
+
+     ;; General stuff 
+     request                ;; Compatible layer for URL request in Emacs
+     json                   ;; JavaScript Object Notation parser / generator
      
      ;; Experimental
      )
