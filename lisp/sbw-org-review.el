@@ -100,18 +100,6 @@
   (let* ( (marker (s-repeat level "#")) )
     (format "%s %s %s\n\n" marker s marker)))
 
-;; TODO Break reporting and generating
-(defun sbw/-org-review-faceted-report (config summaries f-facet f-report)
-  (let* ( (faceted (sbw/collect-by f-facet summaries))
-          (facets  (-sort 'string-lessp (sbw/ht-keys faceted))) )
-    (apply 'concat
-      (-map
-        (lambda (facet) (funcall f-report config facet (sbw/ht-get faceted facet)))
-        facets))))
-
-(defun sbw/-org-review-facet-by-category (summary)
-  (sbw/ht-get summary :category))
-
 ;;
 ;; Report: Completed tasks
 ;;
@@ -285,8 +273,19 @@
   (defun -some-time-clocked-in-period? (config summary)
     (time-less-p -time-zero (sbw/ht-get summary :clocked-in-period)))
 
+  (defun -collect-by (f l)
+    (-reduce-from    
+      (lambda (acc x)
+        (let* ( (k (funcall f x))
+                (v (sbw/ht-get acc k (list))) )
+          (sbw/ht-assoc acc k (cons x v))))
+      (sbw/ht-create)
+      l))
+  
   (defun -collect-by-category (summaries)
-    (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
+    (-collect-by
+      (lambda (x) (sbw/ht-create :category (sbw/ht-get x :category)))
+      summaries))
 
   (defun -map-over-vals (f summary-map)
     (lexical-let* ( (f f) )
@@ -313,14 +312,10 @@
   (defun -format-summary (summary)
     (-let* ( (clocked (sbw/ht-get summary :clocked-in-period))
              (total   (sbw/ht-get summary :category-total)) )
-      (format "[% .0f%% %s/%s] %s"
-        
-        
-                (* 100 (/ (time-to-seconds clocked) (time-to-seconds total)))
-        (-format-elapsed-time clocked)        
-        (-format-elapsed-time total)
+      (format "%s *[%.0f%%, %s]*"
         (sbw/ht-get summary :heading)
-        )))
+        (* 100 (/ (time-to-seconds clocked) (time-to-seconds total)))
+        (-format-elapsed-time clocked))))
 
   (defun -concat-summaries (summary-map f-fmt &optional f-sort)
     (-let* ( (default-sort (lambda (a b) (string< (sbw/ht-get a :heading) (sbw/ht-get b :heading))))
@@ -334,7 +329,7 @@
             (-sort f-sort summaries))))))
 
   (defun -concat-categories (summary-map f-fmt &optional f-sort)
-    (-let* ( (default-sort 'string<)
+    (-let* ( (default-sort (lambda (a b) (string< (sbw/ht-get a :category) (sbw/ht-get b :category))))
              (f-sort       (or f-sort default-sort)) )
       (-reduce-from
         (lambda (acc c)
@@ -350,7 +345,7 @@
           (-concat-summaries summary-map
             (lambda (x) (format "    - %s\n" (-format-summary x)))
             (lambda (x y) (not (time-less-p (sbw/ht-get x :clocked-in-period) (sbw/ht-get y :clocked-in-period)))))
-          (lambda (x) (format "- %s\n" x)))
+          (lambda (x) (format "- %s\n" (sbw/ht-get x :category))))
         "\n")))
   
   (defun generate-report (config summaries)
@@ -411,9 +406,9 @@
     (format "%s for %s to %s" descr (funcall format-date start) (funcall format-date end))))
 
 (defun sbw/-org-review-config-weekly-report (time)
-  (let* ( (weekday (sbw/ht-get (sbw/decompose-time time) :weekday))
-          (start   (sbw/adjust-time-by-days time (- (+ weekday 7))))
-          (end     (sbw/adjust-time-by-days time (- weekday))) )
+  (let* ( (weekday (sbw/ht-get (sbw/time-decompose time) :weekday))
+          (start   (sbw/time-adjust-by time (- (+ weekday 7))))
+          (end     (sbw/time-adjust-by time (- weekday))) )
     (sbw/org-review-config
       (sbw/-org-review-title "Weekly report" start end)
       sbw/org-all-files
@@ -421,13 +416,12 @@
       end
       (sbw/-org-review-filename "weekly-report" start end))))
 
-
 (defun sbw/-org-review-config-monthly-report (time)
-  (let* ( (day        (sbw/ht-get (sbw/decompose-time time) :day))
-          (prev-month (sbw/decompose-time (sbw/adjust-time-by-days time (- (sbw/inc day)))))
+  (let* ( (day        (sbw/ht-get (sbw/time-decompose time) :day))
+          (prev-month (sbw/time-decompose (sbw/time-adjust-by time (- (sbw/inc day)))))
           (last-day   (calendar-last-day-of-month (sbw/ht-get prev-month :month) (sbw/ht-get prev-month :year)))
-          (start      (sbw/compose-time (sbw/ht-merge prev-month (sbw/ht-create :day 1))))
-          (end        (sbw/compose-time (sbw/ht-merge prev-month (sbw/ht-create :day last-day)))) )
+          (start      (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day 1))))
+          (end        (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day last-day)))) )
     (sbw/org-review-config
       (sbw/-org-review-title "Monthly report" start end)
       sbw/org-all-files

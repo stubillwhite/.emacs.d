@@ -53,12 +53,4 @@
   (let* ( (s "This is a test") )
     (should (equal (sbw/truncate-string s 13) (concat "This is a te" "\u2026")))))
 
-;; sbw/map-hash
-
-(ert-deftest sbw/map-hash-then-applies-function-to-values ()
-  (let* ( (x        (sbw/ht-create :a "x" :b "y"))
-          (expected (list ":b=y" ":a=x"))
-          (f        (lambda (k v) (concat (symbol-name k) "=" v))) )
-    (should (equal (sbw/map-hash f x) expected))))
-
 (provide 'sbw-utils-test)

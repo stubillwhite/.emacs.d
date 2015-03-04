@@ -1,2 +1,5 @@
- - Plan what to do in New York [04:00]
- - Book tickets for New York [02:00]
+- category-one
+    - Book tickets for New York *[0%, 02:00]*
+- category-one
+    - Plan what to do in New York *[0%, 04:00]*
+

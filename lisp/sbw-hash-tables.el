@@ -48,7 +48,7 @@
                         acc
                         (sbw/ht-get acc k :sbw/key-not-found)))
                     hash-table
-                    ks)) )
+                    (append ks nil))) )
     (if (equal result :sbw/key-not-found)
       default
       result)))
@@ -86,7 +86,7 @@
               (funcall get-or-create ht k)
               (append l (list ht)))))
         (funcall mk-acc hash-table (list))
-        ks)
+        (append ks nil))
       :l)))
 
 (defun sbw/ht-assoc-in (hash-table ks v)
@@ -97,7 +97,7 @@
              (k  (cadr ht-and-k)) )
         (sbw/ht-assoc ht k acc)))
     v
-    (reverse (-partition 2 (-interleave (sbw/-ht-flatten-hash-tables hash-table ks) ks)))))
+    (reverse (-partition 2 (-interleave (sbw/-ht-flatten-hash-tables hash-table ks) (append ks nil))))))
 
 (defun sbw/ht-update (hash-table k f)
   "Returns a copy of HASH-TABLE with the value associated with key K updated, where f is a function that will take the old value and return the new value."
@@ -113,7 +113,7 @@
                (k  (cadr ht-and-k)) )
           (sbw/ht-assoc ht k acc)))
       (funcall f (car flattened))
-      (reverse (-partition 2 (-interleave flattened ks))))))
+      (reverse (-partition 2 (-interleave flattened (append ks nil)))))))
 
 (defun sbw/ht-dissoc (hash-table k)
   "Returns a copy of HASH-TABLE with K removed."
@@ -130,7 +130,7 @@
           (puthash k (gethash k hash-table) acc))
         acc))
     (sbw/ht-create)
-    ks))
+    (append ks nil)))
 
 ;; TODO: This is the wrong way around; should be (f hash-table)
 (defun sbw/ht-map-vals (hash-table f)
