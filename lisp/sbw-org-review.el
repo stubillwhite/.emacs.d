@@ -73,14 +73,32 @@
     "Return summaries for all the headings in file fnam."
     (-let* ( (extract-heading-summary 'sbw/org-utils--extract-heading-summary) )
       (set-buffer (find-file-noselect fnam))
-      (-map extract-heading-summary (-heading-points-for-current-buffer))))
-
-  )
+      (-map extract-heading-summary (-heading-points-for-current-buffer)))))
 
 ;;
 ;; General reporting utilities
 
 (define-namespace sbw/org-review-utils-
+
+  (defun -concat-summaries (summary-map f-fmt &optional f-sort)
+    (-let* ( (default-sort (lambda (a b) (string< (sbw/ht-get a :heading) (sbw/ht-get b :heading))))
+             (f-sort       (or f-sort default-sort)) )
+      (sbw/ht-map-vals summary-map
+        (lambda (summaries)
+          (-reduce-from
+            (lambda (acc s)
+              (concat acc (funcall f-fmt s)))
+            ""
+            (-sort f-sort summaries))))))
+
+  (defun -concat-categories (summary-map f-fmt &optional f-sort)
+    (-let* ( (default-sort 'string<)
+             (f-sort       (or f-sort default-sort)) )
+      (-reduce-from
+        (lambda (acc c)
+          (concat acc (funcall f-fmt c) (sbw/ht-get summary-map c)))
+        ""
+        (-sort f-sort (sbw/ht-keys summary-map)))))
 
   (defun -write-report (config report)
     (let* ( (filename (sbw/ht-get config :filename)) )
@@ -112,38 +130,24 @@
   (defun -collect-by-category (summaries)
     (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
 
-  ;; TODO Replace with map-categorised
-  (defun -format-tasks (summaries-map)
-    (-reduce-from
-      (lambda (acc c)
-        (sbw/ht-assoc-in acc (list c)
-          (->> (sbw/ht-get summaries-map c)
-            (-map (lambda (x) (format "    - %s\n" (sbw/ht-get x :heading)))))))
-      summaries-map
-      (sbw/ht-keys summaries-map)))
+  (defun -construct-report (summary-map)
+    (-let* ( (-concat-summaries  'sbw/org-review-utils--concat-summaries)
+             (-concat-categories 'sbw/org-review-utils--concat-categories) )
+      (concat
+        (funcall -concat-categories
+          (funcall -concat-summaries summary-map
+            (lambda (x) (format "    - %s\n" (sbw/ht-get x :heading))))
+          (lambda (x) (format "- %s\n" x)))
+        "\n")))
   
-  (defun -construct-report (summaries-map)
-    (-reduce-from
-      (lambda (acc c)
-        (concat
-          acc
-          (format "- %s\n" c)
-          (apply 'concat (-sort 'string< (sbw/ht-get summaries-map c)))
-          "\n"))
-      ""
-      (-sort 'string< (sbw/ht-keys summaries-map))))
-
   (defun generate-report (config summaries)
     (-let* ( (-completed-in-period? 'sbw/org-review-completed-tasks--completed-in-period?)
              (-collect-by-category  'sbw/org-review-completed-tasks--collect-by-category)
-             (-format-tasks         'sbw/org-review-completed-tasks--format-tasks)
              (-construct-report     'sbw/org-review-completed-tasks--construct-report) )
       (->> summaries
         (-filter (-partial -completed-in-period? config))
         (funcall -collect-by-category)
-        (funcall -format-tasks)
-        (funcall -construct-report))))
-  )
+        (funcall -construct-report)))))
 
 ;;
 ;; Report: Project status
@@ -202,7 +206,8 @@
           "\n"))
       ""
       (-sort 'string< (sbw/ht-keys summaries-map))))
-  
+
+ 
   (defun generate-report (config summaries)
     (-let* ( (-task?                  'sbw/org-review-project-status--task?)
              (-collect-by-category    'sbw/org-review-project-status--collect-by-category)
@@ -215,10 +220,7 @@
         (funcall -collect-by-category)
         (funcall -calculate-state-counts)
         (funcall -format-counts)
-        (funcall -construct-report))))
-  )
-
-
+        (funcall -construct-report)))))
 
 ;;
 ;; Report: Clocked time
@@ -312,35 +314,16 @@
         (* 100 (/ (time-to-seconds clocked) (time-to-seconds total)))
         (-format-elapsed-time clocked))))
 
-  (defun -concat-summaries (summary-map f-fmt &optional f-sort)
-    (-let* ( (default-sort (lambda (a b) (string< (sbw/ht-get a :heading) (sbw/ht-get b :heading))))
-             (f-sort       (or f-sort default-sort)) )
-      (sbw/ht-map-vals summary-map
-        (lambda (summaries)
-          (-reduce-from
-            (lambda (acc s)
-              (concat acc (funcall f-fmt s)))
-            ""
-            (-sort f-sort summaries))))))
-
-  (defun -concat-categories (summary-map f-fmt &optional f-sort)
-    (-let* ( (default-sort (lambda (a b) (string< (sbw/ht-get a :category) (sbw/ht-get b :category))))
-             (f-sort       (or f-sort default-sort)) )
-      (-reduce-from
-        (lambda (acc c)
-          (concat acc (funcall f-fmt c) (sbw/ht-get summary-map c)))
-        ""
-        (-sort f-sort (sbw/ht-keys summary-map)))))
-
   (defun -construct-report (summary-map)
-    (-let* ( (-concat-summaries  'sbw/org-review-clocked-time--concat-summaries)
-             (-concat-categories 'sbw/org-review-clocked-time--concat-categories) )
+    (-let* ( (-concat-summaries  'sbw/org-review-utils--concat-summaries)
+             (-concat-categories 'sbw/org-review-utils--concat-categories) )
       (concat
-        (-concat-categories
-          (-concat-summaries summary-map
-            (lambda (x) (format "    - %s\n" (-format-summary x)))
+        (funcall -concat-categories
+          (funcall -concat-summaries summary-map
+            (lambda (x)   (format "    - %s\n" (-format-summary x)))
             (lambda (x y) (not (time-less-p (sbw/ht-get x :clocked-in-period) (sbw/ht-get y :clocked-in-period)))))
-          (lambda (x) (format "- %s\n" (sbw/ht-get x :category))))
+          (lambda (x)   (format "- %s\n" (sbw/ht-get x :category)))
+          (lambda (x y) (string< (sbw/ht-get x :category) (sbw/ht-get y :category))))
         "\n")))
   
   (defun generate-report (config summaries)
