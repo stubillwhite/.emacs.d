@@ -1,5 +1,3 @@
-;(define-namespace sbw/org-review-
-
 (require 'cl)
 
 (setq sbw/org-report-dir (concat org-directory "/reports"))
@@ -96,7 +94,7 @@
              (f-sort       (or f-sort default-sort)) )
       (-reduce-from
         (lambda (acc c)
-          (concat acc (funcall f-fmt c) (sbw/ht-get summary-map c)))
+          (concat acc (funcall f-fmt c) (sbw/ht-get summary-map c) "\n"))
         ""
         (-sort f-sort (sbw/ht-keys summary-map)))))
 
@@ -182,7 +180,6 @@
                        "CANCELLED" 6)) )
       (< (sbw/ht-get ordinal a) (sbw/ht-get ordinal b))))
 
-  ;; TODO replace with map categorised
   (defun -format-counts (summaries-map)
     (let* ( (-state< 'sbw/org-review-project-status--state<) )
       (sbw/ht-map-vals
@@ -207,7 +204,6 @@
       ""
       (-sort 'string< (sbw/ht-keys summaries-map))))
 
- 
   (defun generate-report (config summaries)
     (-let* ( (-task?                  'sbw/org-review-project-status--task?)
              (-collect-by-category    'sbw/org-review-project-status--collect-by-category)
@@ -411,6 +407,10 @@
       end
       (sbw/-org-review-filename "monthly-report" start end))))
 
+
+
+
+;; TODO Move out into project management
 ;; TODO Should prompt for input if not provided
 (defun sbw/org-review-new-org-file (supercategory category)
   (let* ( (content (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
@@ -422,9 +422,5 @@
       path)
     (sbw/org-find-org-files)
     (message "Created and added %s" path)))
-
-
-
-
 
 (provide 'sbw-org-review)
