@@ -76,24 +76,24 @@
 
 (ert-deftest sbw/ht-get-in-given-value-exists-then-associated-value ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v))) )
-    (should (equal (sbw/ht-get-in hash-table (list :k1 :k2)) :v))))
+    (should (equal (sbw/ht-get-in hash-table [:k1 :k2]) :v))))
 
 (ert-deftest sbw/ht-get-in-given-exhausts-associative-structure-and-no-default-then-nil ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create))) )
-    (should (equal (sbw/ht-get-in hash-table (list :k1 :k2)) nil))))
+    (should (equal (sbw/ht-get-in hash-table [:k1 :k2]) nil))))
 
 (ert-deftest sbw/ht-get-in-given-exhausts-associative-structure-and-default-then-default ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create)))
           (default    (sbw/ht-create :k2 :v)) )
-    (should (equal (sbw/ht-get-in hash-table (list :k1 :k2) default) default))))
+    (should (equal (sbw/ht-get-in hash-table [:k1 :k2] default) default))))
 
 (ert-deftest sbw/ht-get-in-given-value-does-not-exist-and-no-default-then-nil ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v))) )
-    (should (equal (sbw/ht-get-in hash-table (list :k1 :k3)) nil))))
+    (should (equal (sbw/ht-get-in hash-table [:k1 :k3]) nil))))
 
 (ert-deftest sbw/ht-get-in-given-value-does-not-exist-and-default-then-default ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v))) )
-    (should (equal (sbw/ht-get-in hash-table (list :k1 :k3) :default) :default))))
+    (should (equal (sbw/ht-get-in hash-table [:k1 :k3] :default) :default))))
 
 ;; sbw/ht-contains?
 
@@ -140,26 +140,26 @@
 (ert-deftest sbw/ht-assoc-in-given-key-exists-at-top-level-then-replaces ()
   (let* ( (hash-table (sbw/ht-create :k1 :v1))
           (expected   (sbw/ht-create :k1 :v2)) )
-    (should (sbw/ht-equal (sbw/ht-assoc-in hash-table (list :k1) :v2) expected))))
+    (should (sbw/ht-equal (sbw/ht-assoc-in hash-table [:k1] :v2) expected))))
 
 (ert-deftest sbw/ht-assoc-in-given-key-exists-in-nested-structure-then-replaces ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v1)))
           (expected   (sbw/ht-create :k1 (sbw/ht-create :k2 :v2))) )
     ;; TODO - Once sbw/ht-equal is recursive then fix this
-    (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k2) :v2)) )
+    (let* ( (result (sbw/ht-assoc-in hash-table [:k1 :k2] :v2)) )
       (should (equal (sbw/ht-keys result) (sbw/ht-keys expected)))
       (should (sbw/ht-equal (sbw/ht-get result :k1) (sbw/ht-get expected :k1))))))
 
 (ert-deftest sbw/ht-assoc-in-given-new-key-at-top-level-then-adds ()
   (let* ( (hash-table (sbw/ht-create :k1 :v1))
           (expected   (sbw/ht-create :k1 :v1 :k2 :v2)) )
-    (should (sbw/ht-equal (sbw/ht-assoc-in hash-table (list :k2) :v2) expected))))
+    (should (sbw/ht-equal (sbw/ht-assoc-in hash-table [:k2] :v2) expected))))
 
 (ert-deftest sbw/ht-assoc-in-given-new-key-in-nested-structure-then-adds ()
   (let* ( (hash-table (sbw/ht-create :k1 (sbw/ht-create :k2 :v2)))
           (expected   (sbw/ht-create :k1 (sbw/ht-create :k2 :v2 :k3 :v3))) )
     ;; TODO - Once sbw/ht-equal is recursive then fix this
-    (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k3) :v3)) )
+    (let* ( (result (sbw/ht-assoc-in hash-table [:k1 :k3] :v3)) )
       (should (equal (sbw/ht-keys result) (sbw/ht-keys expected)))
       (should (sbw/ht-equal (sbw/ht-get result :k1) (sbw/ht-get expected :k1))))))
 
@@ -167,7 +167,7 @@
   (let* ( (hash-table (sbw/ht-create))
           (expected   (sbw/ht-create :k1 (sbw/ht-create :k2 :v2))) )
     ;; TODO - Once sbw/ht-equal is recursive then fix this
-    (let* ( (result (sbw/ht-assoc-in hash-table (list :k1 :k2) :v2)) )
+    (let* ( (result (sbw/ht-assoc-in hash-table [:k1 :k2] :v2)) )
       (should (equal (sbw/ht-keys result) (sbw/ht-keys expected)))
       (should (sbw/ht-equal (sbw/ht-get result :k1) (sbw/ht-get expected :k1))))))
 
@@ -192,7 +192,7 @@
   (let* ( (hash-table (sbw/ht-create :k1 :v1))
           (f          (lambda (x) (when (equal x :v1) :v2)))
           (expected   (sbw/ht-create :k1 :v2)) )
-    (should (sbw/ht-equal (sbw/ht-update-in hash-table (list :k1) f) expected))))
+    (should (sbw/ht-equal (sbw/ht-update-in hash-table [:k1] f) expected))))
 
 (ert-deftest sbw/ht-update-in-given-key-exists-in-nested-structure-then-replaces ()
   :expected-result :failed
@@ -227,7 +227,9 @@
 (ert-deftest sbw/ht-select-keys-then-retains-selected ()
   (let* ( (hash-table (sbw/ht-create :k1 :v1 :k2 :v2 :k3 :v3))
           (expected   (sbw/ht-create         :k2 :v2 :k3 :v3)) )
-    (should (sbw/ht-equal (sbw/ht-select-keys hash-table (list :k2 :k3 :k4)) expected))))
+    (should (sbw/ht-equal (sbw/ht-select-keys hash-table [:k2 :k3 :k4]) expected))))
+
+;; sbw/ht-map-vals
 
 (ert-deftest sbw/ht-map-vals-then-updates-values ()
   (let* ( (hash-table (sbw/ht-create :a 1 :b 2 :c 3))

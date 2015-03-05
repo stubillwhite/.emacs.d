@@ -1,6 +1,11 @@
 (require 'use-package)
 
 (use-package magit
+  :defer t
+
+  :init
+  (progn)
+  
   :config
   (progn
     ;; Just highlight the current diff
@@ -12,25 +17,16 @@
       ediff-split-window-function 'split-window-horizontally     ;; Vertical split
       )
 
-    (defun magit-toggle-whitespace ()
+    (defun sbw/magit-toggle-whitespace ()
       (interactive)
-      (if (member "-w" magit-diff-options)
-        (magit-dont-ignore-whitespace)
-        (magit-ignore-whitespace)))
+      (setq magit-diff-options
+        (if (-contains? magit-diff-options "-w")
+          (cons "-w" magit-diff-options)
+          (-filter (lambda (x) (string= "-w" x)))))
+      (magit-refresh)))
 
-    (defun magit-ignore-whitespace ()
-      (interactive)
-      (add-to-list 'magit-diff-options "-w")
-      (magit-refresh))
-
-    (defun magit-dont-ignore-whitespace ()
-      (interactive)
-      (setq magit-diff-options (remove "-w" magit-diff-options))
-      (magit-refresh))
-
-    (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-
-
-    ))
+  :bind
+  ("C-c g w" . sbw/magit-toggle-whitespace)
+  ("C-c g s" . magit-status))
 
 (provide 'sbw-configure-magit)

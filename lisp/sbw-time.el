@@ -39,7 +39,7 @@
 
   (defun adjust-by (time days)
     "Returns TIME adjusted by DAYS."
-    (days-to-time (+ (time-to-number-of-days date) n)))
+    (days-to-time (+ (time-to-number-of-days time) days)))
 
   (defun max (t1 t2)
     "Returns the maximum of T1 and T2."
