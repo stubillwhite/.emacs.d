@@ -286,6 +286,7 @@
         clocked)))
 
   (defun generate (config)
+    "Generates the report from the configuration."
     (-write-report config (-build-report config)))
     
   (defun -format-date (time)
@@ -302,6 +303,7 @@
     (format "%s for %s to %s" descr (-format-date start) (-format-date end)))
 
   (defun config (title org-files start end filename)
+    "Returns the configuration to generate a report wth the specified attributes."
     (sbw/ht-create
       :title     title
       :org-files org-files
@@ -310,6 +312,7 @@
       :filename  filename))
 
   (defun config-for-weekly-report (time)
+    "Returns the configuration to generate a weekly report."
     (let* ( (weekday (sbw/ht-get (sbw/time-decompose time) :weekday))
             (start   (sbw/time-adjust-by time (- (+ weekday 7))))
             (end     (sbw/time-adjust-by time (- weekday))) )
@@ -321,6 +324,7 @@
         (-build-filename "weekly-report" start end))))
 
   (defun config-for-monthly-report (time)
+    "Returns the configuration to generate a monthly report."
     (let* ( (day        (sbw/ht-get (sbw/time-decompose time) :day))
             (prev-month (sbw/time-decompose (sbw/time-adjust-by time (- (sbw/inc day)))))
             (last-day   (calendar-last-day-of-month (sbw/ht-get prev-month :month) (sbw/ht-get prev-month :year)))
