@@ -96,18 +96,7 @@
         (lambda (acc c)
           (concat acc (funcall f-fmt c) (sbw/ht-get summary-map c) "\n"))
         ""
-        (-sort f-sort (sbw/ht-keys summary-map)))))
-
-  (defun -write-report (config report)
-    (let* ( (filename (sbw/ht-get config :filename)) )
-      (with-temp-file filename (insert report))
-      (message (format "Created '%s'" filename))
-      (find-file filename)
-      nil))
-
-  (defun -markdown-header (level s)
-    (let* ( (marker (s-repeat level "#")) )
-      (format "%s %s %s\n\n" marker s marker))))
+        (-sort f-sort (sbw/ht-keys summary-map))))))
 
 ;;
 ;; Report: Completed tasks
@@ -145,77 +134,6 @@
       (->> summaries
         (-filter (-partial -completed-in-period? config))
         (funcall -collect-by-category)
-        (funcall -construct-report)))))
-
-;;
-;; Report: Project status
-;;
-
-(define-namespace sbw/org-review-project-status-
-
-  (defun -task? (summary)
-    (and
-      (= 2 (sbw/ht-get summary :level))
-      (not (null (sbw/ht-get summary :state)))))
-
-  (defun -collect-by-category (summaries)
-    (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
-
-  (defun -calculate-state-counts (summaries-map)
-    (let* ( (inc-count (lambda (x) (if (null x) 1 (sbw/inc x)))) )
-      (sbw/ht-map-vals
-        summaries-map
-        (lambda (v) (-reduce-from
-                 (lambda (acc x) (sbw/ht-update acc (sbw/ht-get x :state) inc-count))
-                 (sbw/ht-create)
-                 v)))))
-
-  (defun -state< (a b)
-    (let* ( (ordinal (sbw/ht-create
-                       "TODO"      1
-                       "STARTED"   2
-                       "BLOCKED"   3
-                       "POSTPONED" 4
-                       "DONE"      5
-                       "CANCELLED" 6)) )
-      (< (sbw/ht-get ordinal a) (sbw/ht-get ordinal b))))
-
-  (defun -format-counts (summaries-map)
-    (let* ( (-state< 'sbw/org-review-project-status--state<) )
-      (sbw/ht-map-vals
-        summaries-map
-        (lambda (counts-map)
-          (-reduce-from
-            (lambda (acc c)
-              (concat
-                acc
-                (format "    - %s %d\n" c (sbw/ht-get counts-map c))))
-            ""
-            (-sort -state< (sbw/ht-keys counts-map)))))))
-
-  (defun -construct-report (summaries-map)
-    (-reduce-from
-      (lambda (acc c)
-        (concat
-          acc
-          (format "- %s\n" c)
-          (sbw/ht-get summaries-map c)
-          "\n"))
-      ""
-      (-sort 'string< (sbw/ht-keys summaries-map))))
-
-  (defun generate-report (config summaries)
-    (-let* ( (-task?                  'sbw/org-review-project-status--task?)
-             (-collect-by-category    'sbw/org-review-project-status--collect-by-category)
-             (-calculate-state-counts 'sbw/org-review-project-status--calculate-state-counts)
-             (-format-counts          'sbw/org-review-project-status--format-counts)
-             (-construct-report       'sbw/org-review-project-status--construct-report)
-             )
-      (->> summaries
-        (-filter -task?)
-        (funcall -collect-by-category)
-        (funcall -calculate-state-counts)
-        (funcall -format-counts)
         (funcall -construct-report)))))
 
 ;;
@@ -277,7 +195,7 @@
   
   (defun -collect-by-category (summaries)
     (-collect-by
-      (lambda (x) (sbw/ht-create :category (sbw/ht-get x :category)))
+      (lambda (x) (sbw/ht-get x :category))
       summaries))
 
   (defun -map-over-vals (f summary-map)
@@ -318,8 +236,7 @@
           (funcall -concat-summaries summary-map
             (lambda (x)   (format "    - %s\n" (-format-summary x)))
             (lambda (x y) (not (time-less-p (sbw/ht-get x :clocked-in-period) (sbw/ht-get y :clocked-in-period)))))
-          (lambda (x)   (format "- %s\n" (sbw/ht-get x :category)))
-          (lambda (x y) (string< (sbw/ht-get x :category) (sbw/ht-get y :category))))
+          (lambda (x)   (format "- %s\n" x)))
         "\n")))
   
   (defun generate-report (config summaries)
@@ -340,72 +257,97 @@
 ;; Master report
 ;;
 
-(defun sbw/-org-review-heading-summaries (config)
-  (let* ( (org-files (sbw/ht-get config :org-files)) )
-    (-mapcat 'sbw/org-utils-heading-summaries-for-file org-files)))
+(define-namespace sbw/org-review-
+  
+  (defun -heading-summaries (config)
+    (let* ( (org-files (sbw/ht-get config :org-files)) )
+      (-mapcat 'sbw/org-utils-heading-summaries-for-file org-files)))  
 
-(defun sbw/-org-review-build-report (config)
-  (let* ( (summaries (sbw/-org-review-heading-summaries config))
-          (completed (sbw/org-review-completed-tasks-generate-report config summaries))
-          (clocked   (sbw/org-review-clocked-time-generate-report config summaries))
-          (project   (sbw/org-review-project-status-generate-report config summaries)) )
-    (concat
-      (sbw/org-review-utils--markdown-header 1 (sbw/ht-get config :title))
-      (sbw/org-review-utils--markdown-header 2 "Completed tasks")
-      completed
-      (sbw/org-review-utils--markdown-header 2 "Activity")
-      clocked
-      (sbw/org-review-utils--markdown-header 2 "Project status")
-      project
-      )))
+  (defun -write-report (config report)
+    (let* ( (filename (sbw/ht-get config :filename)) )
+      (with-temp-file filename (insert report))
+      (message (format "Created '%s'" filename))
+      (find-file filename)
+      nil))
 
-(defun sbw/org-review (config)
-  (sbw/org-review-utils--write-report config (sbw/-org-review-build-report config)))
+  (defun -markdown-header (level s)
+    (let* ( (marker (s-repeat level "#")) )
+      (format "%s %s %s\n\n" marker s marker)))
+  
+  (defun -build-report (config)
+    (let* ( (summaries (-heading-summaries config))
+            (completed (sbw/org-review-completed-tasks-generate-report config summaries))
+            (clocked   (sbw/org-review-clocked-time-generate-report config summaries)) )
+      (concat
+        (-markdown-header 1 (sbw/ht-get config :title))
+        (-markdown-header 2 "Completed tasks")
+        completed
+        (-markdown-header 2 "Activity")
+        clocked)))
 
-(defun sbw/org-review-config (title org-files start end filename)
-  (sbw/ht-create
-    :title     title
-    :org-files org-files
-    :start     start
-    :end       end
-    :filename  filename))
-
-(defun sbw/-org-review-filename (prefix start end)
-  "Return the filename for a report in standard form."
-  (let* ( (format-date (-partial 'format-time-string "%Y%m%d")) )
+  (defun generate (config)
+    "Generates the report from the configuration."
+    (-write-report config (-build-report config)))
+    
+  (defun -format-date (time)
+    (format-time-string "%Y%m%d"))
+  
+  (defun -build-filename (prefix start end)
     (format "%s/%s-%s-to-%s.md"
       sbw/org-report-dir
       prefix
-      (funcall format-date start)
-      (funcall format-date end))))
+      (-format-date start)
+      (-format-date end)))
 
-(defun sbw/-org-review-title (descr start end)
-  (let* ( (format-date (-partial 'format-time-string "%Y%m%d")) )
-    (format "%s for %s to %s" descr (funcall format-date start) (funcall format-date end))))
+  (defun -build-title (descr start end)
+    (format "%s for %s to %s" descr (-format-date start) (-format-date end)))
 
-(defun sbw/-org-review-config-weekly-report (time)
-  (let* ( (weekday (sbw/ht-get (sbw/time-decompose time) :weekday))
-          (start   (sbw/time-adjust-by time (- (+ weekday 7))))
-          (end     (sbw/time-adjust-by time (- weekday))) )
-    (sbw/org-review-config
-      (sbw/-org-review-title "Weekly report" start end)
-      sbw/org-all-files
-      start
-      end
-      (sbw/-org-review-filename "weekly-report" start end))))
+  (defun config (title org-files start end filename)
+    "Returns the configuration to generate a report wth the specified attributes."
+    (sbw/ht-create
+      :title     title
+      :org-files org-files
+      :start     start
+      :end       end
+      :filename  filename))
 
-(defun sbw/-org-review-config-monthly-report (time)
-  (let* ( (day        (sbw/ht-get (sbw/time-decompose time) :day))
-          (prev-month (sbw/time-decompose (sbw/time-adjust-by time (- (sbw/inc day)))))
-          (last-day   (calendar-last-day-of-month (sbw/ht-get prev-month :month) (sbw/ht-get prev-month :year)))
-          (start      (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day 1))))
-          (end        (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day last-day)))) )
-    (sbw/org-review-config
-      (sbw/-org-review-title "Monthly report" start end)
-      sbw/org-all-files
-      start
-      end
-      (sbw/-org-review-filename "monthly-report" start end))))
+  (defun config-for-weekly-report (time)
+    "Returns the configuration to generate a weekly report."
+    (let* ( (weekday (sbw/ht-get (sbw/time-decompose time) :weekday))
+            (start   (sbw/time-adjust-by time (- (+ weekday 7))))
+            (end     (sbw/time-adjust-by time (- weekday))) )
+      (config
+        (-build-title "Weekly report" start end)
+        sbw/org-all-files
+        start
+        end
+        (-build-filename "weekly-report" start end))))
+
+  (defun config-for-monthly-report (time)
+    "Returns the configuration to generate a monthly report."
+    (let* ( (day        (sbw/ht-get (sbw/time-decompose time) :day))
+            (prev-month (sbw/time-decompose (sbw/time-adjust-by time (- (sbw/inc day)))))
+            (last-day   (calendar-last-day-of-month (sbw/ht-get prev-month :month) (sbw/ht-get prev-month :year)))
+            (start      (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day 1))))
+            (end        (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day last-day)))) )
+      (config
+        (-build-title "Monthly report" start end)
+        sbw/org-all-files
+        start
+        end
+        (-build-filename "monthly-report" start end)))))
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
