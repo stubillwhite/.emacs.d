@@ -31,11 +31,14 @@
                                         ;(set-frame-font "Ubuntu Mono-12")
                                         ;(set-frame-font "Droid Sans Mono-10")
                                         ;(set-frame-font "Free Mono-10")
-  (set-frame-font "Liberation Mono-10")
+  ;(set-frame-font "Liberation Mono-10")
+  (set-frame-font "Monaco-10")
   ;(set-frame-font "Nimbus Mono L-10")
-  
-  
   )
+
+;; Horizontal non-blinking cursor
+(setq-default cursor-type 'hbar)
+(blink-cursor-mode 0)
 
 ;; Prettify symbols everywhere
 (global-prettify-symbols-mode 1)
