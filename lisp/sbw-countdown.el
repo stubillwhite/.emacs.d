@@ -1,6 +1,7 @@
 (defun sbw/countdown-remaining-time (end-time)
   "Returns a string representing the time remaining in the countdown timer."
   (format-time-string "%H:%M:%S" (time-subtract end-time (current-time))))
+
 (defun sbw/countdown-expired-inform-user ()
   (message "Countdown expired.")
   (beep t))

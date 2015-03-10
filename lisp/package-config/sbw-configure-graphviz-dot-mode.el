@@ -10,6 +10,9 @@
   (progn
     (setq
       graphviz-dot-dot-program  "dot.exe"
-      graphviz-dot-view-command "dotty.exe %s")))
+      graphviz-dot-view-command "dotty.exe %s"))
+
+  :bind
+  ( ("C-c d v" . graphviz-dot-view) ))
 
 (provide 'sbw-configure-graphviz-dot-mode)

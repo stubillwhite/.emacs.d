@@ -14,12 +14,12 @@
     (add-to-list 'ispell-extra-args "--sug-mode=ultra")
     
     (setq
-      ispell-silently-savep t ;; Don't prompt when adding to the dictionary
+      ispell-silently-savep      t ;; Don't prompt when adding to the dictionary
+      ispell-personal-dictionary "~/.emacs.d/.ispell"
       ))
 
   :bind
   ( ("C-c s w" . ispell-word)
-    ("C-c s b" . flyspell-buffer) )
-  )
+    ("C-c s b" . flyspell-buffer) ))
 
 (provide 'sbw-configure-flyspell)

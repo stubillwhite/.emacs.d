@@ -4,6 +4,7 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 
 | Key         | Group         |
 |-------------+---------------|
+| `C-c d ...` | Dot           |
 | `C-c g ...` | Magit         |
 | `C-c j ...` | Ace Jump      |
 | `C-c m ...` | Markdown      |
@@ -11,6 +12,12 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c s ...` | Flyspell      |
 | `C-c u ...` | Undo Tree     |
 | `C-c w ...` | Switch Window |
+
+## Dot ##
+
+| Key       | Function                     |
+|-----------+------------------------------|
+| `C-c d v` | View Dot output              |
 
 ## Magit ##
 
