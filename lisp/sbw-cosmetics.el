@@ -5,7 +5,9 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(setq frame-title-format "emacs [%b]")
+(setq
+  org-frame-title-format-backup "emacs [%b]"
+  frame-title-format            "emacs [%b]")
 
 ;; Indentation
 (setq lisp-indent-offset 2)                      ;; Default indent for Lisps

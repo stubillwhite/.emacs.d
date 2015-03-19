@@ -50,9 +50,6 @@
 ;; Load all tests
 (sbw/pkg-load (sbw/pkg-all-files-in-directory "~/.emacs.d/lisp/test"))
 
-;; Configure registers for commonly edited files
-(set-register ?e '(file . "~/.emacs.d/init.el"))
-
 ;; Warn if we're missing any dynamic libraries
 (defun sbw/init-display-missing-dynamic-libraries ()
   (let* ( (dll-dir  (concat "C:/Users/IBM_ADMIN/my_local_stuff/home/utils/bin/emacs-24.4-bin-i686-pc-mingw32/bin/"))
