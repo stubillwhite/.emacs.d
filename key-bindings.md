@@ -67,6 +67,8 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | `C-c o v w` | View widen           |
 | `C-c o c l` | Capture link         |
 | `C-c o c c` | Capture custom       |
+| `C-c o f`   | Fill paragraph       |
+| `C-c o F`   | Unfill paragraph     |
 
 ## Flyspell ##
 

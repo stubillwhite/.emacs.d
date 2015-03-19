@@ -1,9 +1,11 @@
 ;; Color theme, don't warn about executing code
 (load-theme 'sbw-dark t)
 
-;; Maximise the screen area by stripping off menu and toolbars
+;; Maximise the screen area by stripping off menu, toolbars, and scrollbars
 (tool-bar-mode -1)
-(menu-bar-mode -1) 
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(setq frame-title-format "emacs [%b]")
 
 ;; Indentation
 (setq lisp-indent-offset 2)                      ;; Default indent for Lisps
@@ -39,9 +41,6 @@
 (setq 
   split-width-threshold  nil
   split-height-threshold 0)
-
-;; No scrollbars
-(scroll-bar-mode -1)
 
 ;; Smooth scrolling
 (setq scroll-conservatively 10000)

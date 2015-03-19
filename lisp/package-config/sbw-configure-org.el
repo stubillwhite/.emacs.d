@@ -86,7 +86,7 @@
 
     (org-add-link-type "eclipse"
       (lambda (path)
-        (start-process-shell-command "Eclipse" nil (concat "c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe --launcher.openFile " path))))
+        (start-process-shell-command "Eclipse" nil (concat "\"c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe\" --launcher.openFile " path))))
 
     ;; Link type for opening a file in Vim
 
@@ -170,7 +170,7 @@
 
              )
            nil
-           ("C:/Users/IBM_ADMIN/Dropbox/Private/org-mode/work-agenda.html"))
+           ("C:/Users/IBM_ADMIN/Dropbox/Private/org/work-agenda.html"))
      
          ("cp" "Personal agenda"
            ( (agenda ""
@@ -200,7 +200,7 @@
                  ))
              )
            nil
-           ("C:/Users/IBM_ADMIN/Dropbox/Private/org-mode/personal-agenda.html"))
+           ("C:/Users/IBM_ADMIN/Dropbox/Private/org/personal-agenda.html"))
          ))
 
     ;; Appointments
@@ -240,16 +240,6 @@
          ))
 
     ;; org-protocol experimental, not working
-
-    (defun sbw/eclipse-link (data)
-      "Link to open a file in Eclipse."
-      (message data)
-      nil)
-
-    (add-to-list 'org-protocol-protocol-alist
-      '("eclipse-link"
-         :protocol "eclipse-link"
-         :function sbw/eclipse-link))
 
     (add-to-list 'org-protocol-protocol-alist
       '("white-test"
@@ -482,7 +472,22 @@
   ("C-c o v w" . widen)
   ("C-c o c l" . org-insert-link)
   ("C-c o c c" . org-capture)
+  ("C-c o f" . fill-paragraph)
+  ("C-c o F" . sbw/unfill-paragraph)
 
   )
+
+(defun sbw/unfill-paragraph ()
+  "Convert a multi-line paragraph into a single line."
+  (interactive)
+  (let* ( (fill-column (point-max)) )
+    (fill-paragraph nil)))
+
+(defun sbw/unfill-region (start end)
+  "Convert a multi-line region into a single line."
+  (interactive "r")
+  (let* ( (fill-column (point-max)) )
+    (fill-region start end nil)))
+
 
 (provide 'sbw-configure-org-mode)

@@ -8,8 +8,11 @@
   
   :config
   (progn
-    ;; Just highlight the current diff
-    (setq-default ediff-highlight-all-diffs 'nil)
+    
+    (setq-default
+      ediff-highlight-all-diffs 'nil                                        ;; Just highlight the current diff
+      ediff-temp-file-prefix    (expand-file-name temporary-file-directory) ;; Temporary file location
+      )
 
     (setq
       ediff-diff-options          "-w"                           ;; Not whitespace sensitive by default
