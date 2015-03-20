@@ -20,6 +20,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/themes")
 
 ;; Download everything we need
+(require 'sbw-common-config)
 (require 'sbw-package)
 (require 'sbw-package-list)
 

@@ -39,24 +39,23 @@
     ;; General settings
 
     (setq 
-      org-clock-into-drawer         t        ;; Clock into drawers
-      org-src-fontify-natively      t        ;; Fontify embedded code blocks
-      org-ellipsis                  "\u2026" ;; Small ellipsis character
-      org-agenda-fontify-priorities nil      ;; Don't let priority change task representation
-      org-indent-mode               t        ;; Use indent mode
-      org-log-into-drawer           t        ;; Log into drawers
-      org-log-done                  'time    ;; Timestamp task completion so it can be used in reports
-      org-M-RET-may-split-line      nil      ;; Don't split lines
-      org-return-follows-link       t        ;; Easy link navigation
-      org-use-property-inheritance  t        ;; Child items should inherit all from parents
-      org-default-priority          ?B       ;; Default priority for unprioritised items
-      appt-display-interval         5        ;; Reminder for an appointment every five minutes...
-      appt-message-warning-time     15       ;; ...starting fifteeen minutes before it is due
+      org-clock-into-drawer         t                      ;; Clock into drawers
+      org-src-fontify-natively      t                      ;; Fontify embedded code blocks
+      org-ellipsis                  "\u2026"               ;; Small ellipsis character
+      org-agenda-fontify-priorities nil                    ;; Don't let priority change task representation
+      org-indent-mode               t                      ;; Use indent mode
+      org-log-into-drawer           t                      ;; Log into drawers
+      org-log-done                  'time                  ;; Timestamp task completion so it can be used in reports
+      org-M-RET-may-split-line      nil                    ;; Don't split lines
+      org-return-follows-link       t                      ;; Easy link navigation
+      org-use-property-inheritance  t                      ;; Child items should inherit all from parents
+      org-default-priority          ?B                     ;; Default priority for unprioritised items
+      appt-display-interval         5                      ;; Reminder for an appointment every five minutes...
+      appt-message-warning-time     15                     ;; ...starting fifteeen minutes before it is due
+      org-frame-title-format-backup sbw/frame-title-format ;; Override title frame title format
+      org-tag-alist                 nil                    ;; No tags
       )
-
-    ;; Don't use any tags yet. This needs some attention
-    (setq org-tag-alist nil)
-
+    
     (setq org-todo-keywords
       '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))
 
