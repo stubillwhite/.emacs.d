@@ -290,7 +290,7 @@
     (-write-report config (-build-report config)))
     
   (defun -format-date (time)
-    (format-time-string "%Y%m%d"))
+    (format-time-string "%Y%m%d" time))
   
   (defun -build-filename (prefix start end)
     (format "%s/%s-%s-to-%s.md"
