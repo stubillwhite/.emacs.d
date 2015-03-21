@@ -335,22 +335,21 @@
         sbw/org-all-files
         start
         end
-        (-build-filename "monthly-report" start end)))))
+        (-build-filename "monthly-report" start end))))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  (defun config-for-period ()
+    "Returns the configuration for a period specified interactively by the user."
+    (interactive)
+    (let* ( (prompt-for-date (lambda (prompt) (org-read-date nil :to-time nil prompt)))
+            (start           (funcall prompt-for-date "Enter start"))
+            (end             (funcall prompt-for-date "Enter end")) )
+      (config
+        (-build-title "Daily report" start end)
+        sbw/org-all-files
+        start
+        end
+        (-build-filename "daily-report" start end)))
+    ))
 
 ;; TODO Move out into project management
 ;; TODO Should prompt for input if not provided

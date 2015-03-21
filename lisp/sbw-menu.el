@@ -103,7 +103,7 @@
     (sbw/menu-submenu ?r "Review"           (sbw/menu "Review"
                                               (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
                                               (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                              (sbw/menu-action ?s "Scrum report"   (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
+                                              (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
                                               ))
     (sbw/menu-submenu ?t "Timers"           (sbw/menu "Timers"
                                               (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
