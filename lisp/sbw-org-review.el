@@ -344,11 +344,11 @@
             (start           (funcall prompt-for-date "Enter start"))
             (end             (funcall prompt-for-date "Enter end")) )
       (config
-        (-build-title "Daily report" start end)
+        (-build-title "Report" start end)
         sbw/org-all-files
         start
         end
-        (-build-filename "daily-report" start end)))
+        (-build-filename "report" start end)))
     ))
 
 ;; TODO Move out into project management
