@@ -1,6 +1,19 @@
 (require 'sbw-bootstrap)
 
-(ert-deftest sbw/bootstrap-install-packages-then-ensures-specified-packages-installed ()
+(ert-deftest sbw/bootstrap-install-packages-given-all-packages-installed-then-no-action ()
+  ;; Given
+  (let* ( (installed-packages  '(pkg-one pkg-two pkg-three))
+          (packages-to-install '(pkg-one pkg-two pkg-three)) )
+
+    (cl-letf* ( ((symbol-function 'package-install)          (lambda (x) (error "Unexpected call to package-install")))
+                ((symbol-function 'package-installed-p)      (lambda (x) (member x installed-packages)))
+                ((symbol-function 'package-refresh-contents) (lambda ()  (error "Unexpected call to package-refresh-contents"))) )
+
+      ;; When
+      ;; Then
+      (sbw/bootstrap-install-packages packages-to-install))))
+
+(ert-deftest sbw/bootstrap-install-packages-given-packages-to-install-then-installs-packages ()
   ;; Given
   (let* ( (installed-packages      '(pkg-one pkg-six))
           (packages-to-install     '(pkg-one pkg-two pkg-three (pkg-four . "repo-four") (pkg-five . "repo-five") (pkg-six . "repo-six")))

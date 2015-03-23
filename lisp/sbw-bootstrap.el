@@ -29,7 +29,7 @@
     'sbw/bootstrap--pin-package
     (sbw/bootstrap--filter 'sbw/bootstrap--cons-cell? pkg-list)))
 
-(defun sbw/bootstrap--new-packages? (pkg-list)
+(defun sbw/bootstrap--packages-to-install (pkg-list)
   (sbw/bootstrap--filter
     (lambda (x) (not (package-installed-p x)))
     (sbw/bootstrap--package-names pkg-list)))
@@ -51,12 +51,13 @@
 installed. The list PKG-LIST should be a list consisting of
 either package name or a cons cell of the package name and the
 repository to install from for pinned packages."
-  (when (sbw/bootstrap--new-packages? pkg-list)
-    (switch-to-buffer "*Messages*")
-    (message "\nNew packages detected. Refreshing package list...")
-    (package-refresh-contents)
-    (sbw/bootstrap--pin-packages pkg-list)
-    (sbw/bootstrap--install-packages pkg-list)))
+  (let* ( (pkgs-to-install (sbw/bootstrap--packages-to-install pkg-list)) )
+    (when pkgs-to-install
+      (switch-to-buffer "*Messages*")
+      (message "\nNew packages detected. Refreshing package list...")
+      (package-refresh-contents)
+      (sbw/bootstrap--pin-packages pkg-list)
+      (sbw/bootstrap--install-packages pkgs-to-install))))
 
 (provide 'sbw-bootstrap)
 
