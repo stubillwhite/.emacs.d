@@ -53,25 +53,3 @@
 
 ;; Load all tests
 (sbw/pkg-load (sbw/pkg-all-files-in-directory "~/.emacs.d/lisp/test"))
-
-;; Warn if we're missing any dynamic libraries
-(defun sbw/init-display-missing-dynamic-libraries ()
-  (let* ( (dll-dir  (concat "C:/Users/IBM_ADMIN/my_local_stuff/home/utils/bin/emacs-24.4-bin-i686-pc-mingw32/bin/"))
-          (missing? (lambda (x) (-not (f-exists? (concat dll-dir x))))) )
-    (message "\nChecking for missing dynamic libraries in %s" dll-dir)
-    (-each
-      dynamic-library-alist
-      (lambda (x)
-        (let ( (aspect       (car x))
-               (missing-dlls (-filter missing? (cdr x))) )
-          (if missing-dlls
-            (message "%s not supported due to missing DLLs %s" (symbol-name (car x)) missing-dlls)))))))
-
-;(image-type-available-p 'png)
-;(print image-library-alist)
-
-(sbw/init-display-missing-dynamic-libraries)
-
-(-map (lambda (x) (print (image-type-available-p (car x)))) image-library-alist)
-
-;; TODO Warn about superfluous configs
