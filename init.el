@@ -21,11 +21,14 @@
 
 ;; Download everything we need
 (require 'sbw-common-config)
+(require 'sbw-bootstrap)
 (require 'sbw-package)
 (require 'sbw-package-list)
 
-(sbw/pkg-configure-package-repositories)
-(sbw/pkg-ensure-packages-are-installed sbw/pkg-all-packages)
+(sbw/bootstrap-configure-repositories)
+(sbw/bootstrap-install-packages sbw/pkg-all-packages)
+;(sbw/pkg-configure-package-repositories)
+;(sbw/pkg-ensure-packages-are-installed sbw/pkg-all-packages)
 
 ;; Require all the core packages
 (sbw/pkg-require sbw/pkg-bootstrap-packages)

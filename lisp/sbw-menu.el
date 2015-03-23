@@ -94,10 +94,6 @@
   "Returns a menu action to display a submenu, with the specified KEY binding, DESCRIPTION, and SUBMENU to display."
   `(sbw/menu-action ,key ,description (lambda () (sbw/menu-display ,submenu))))
 
-
-
-
-
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
     (sbw/menu-submenu ?r "Review"           (sbw/menu "Review"
