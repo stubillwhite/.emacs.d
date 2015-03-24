@@ -1,23 +1,22 @@
 ;; Packages required for the configuration
 
-;; TODO Put all these in
-;(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-;                           ("gnu" . "http://elpa.gnu.org/packages/")
-;                           ("melpa" . "http://melpa.org/packages/")
-;                           ("melpa-stable" . "http://stable.melpa.org/packages/")
-;                           ("marmalade" . "http://marmalade-repo.org/packages/")
-;                           ))
+(defconst sbw/pkg-repositories
+  '( ("ELPA"         . "http://tromey.com/elpa/")
+     ("gnu"          . "http://elpa.gnu.org/packages/")
+     ("melpa"        . "http://melpa.org/packages/")
+     ("melpa-stable" . "http://stable.melpa.org/packages/")
+     ("marmalade"    . "http://marmalade-repo.org/packages/") )
+  "List of cons cells of the repositories to fetch packages from.")
 
-(defconst sbw/pkg-bootstrap-packages
-  '(
-     use-package      ;; Easy package use
+(defconst sbw/pkg-core-packages
+  '( use-package      ;; Easy package use
      dash             ;; Modern list library
      dash-functional  ;; Further functions for dash
      f                ;; Modern file API
      s                ;; Modern string API
      names            ;; Sane namespace handling
      )
-  "List of the packages required to bootstrap this Emacs configuration.")
+  "List of the core packages required by everything else, which have no dependencies.")
 
 (defconst sbw/pkg-additional-packages
   '(
@@ -34,50 +33,59 @@
      magit                  ;; Control Git from Emacs
      
      ;; Auto-complete
-     company                ;; Auto-completion
+     company                 ;; Auto-completion
      
      ;; Interface
-     smart-mode-line        ;; Better mode line
-     nyan-mode              ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
-     projectile             ;; Project interaction library for Emacs
-     ace-jump-mode          ;; Faster movement
-     switch-window          ;; Faster switching between windows
+     smart-mode-line         ;; Better mode line
+     nyan-mode               ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
+     projectile              ;; Project interaction library for Emacs
+     ace-jump-mode           ;; Faster movement
+     switch-window           ;; Faster switching between windows
 
      ;; Helm
-     helm                   ;; Incremental narrowing framework
-     helm-swoop             ;; Efficiently skipping between matches
-     helm-projectile        ;; Helm integration for projectile
+     helm                    ;; Incremental narrowing framework
+     helm-swoop              ;; Efficiently skipping between matches
+     helm-projectile         ;; Helm integration for projectile
      
      ;; Clojure
-     clojure-mode           ;; Clojure mode
-     cider                  ;; REPL support
-     smartparens            ;; Improved paredit
-     ac-cider               ;; Cider REPL autocomplete and documentation
+     clojure-mode            ;; Clojure mode
+     cider                   ;; REPL support
+     smartparens             ;; Improved paredit
+     ac-cider                ;; Cider REPL autocomplete and documentation
 
      ;; Graphviz
-     graphviz-dot-mode      ;; Graphviz DOT file support and previews
+     graphviz-dot-mode       ;; Graphviz DOT file support and previews
 
      ;; Markdown
-     markdown-mode          ;; Markdown mode
+     markdown-mode           ;; Markdown mode
 
      ;; Groovy
-;;     (groovy-mode . "melpa") ;; Groovy mode
-     groovy-mode            ;; Groovy mode
-
+     (groovy-mode . "melpa") ;; Groovy mode
+     
      ;; Yasnippets
-     yasnippet              ;; Yet another snippet extension for Emacs
+     yasnippet               ;; Yet another snippet extension for Emacs
 
      ;; General stuff 
-     json                   ;; JavaScript Object Notation parser / generator
-     
-     ;; Experimental
+     json                    ;; JavaScript Object Notation parser / generator
+         
      )
   "List of the additional packages required for this Emacs configuration.")
 
 (defconst sbw/pkg-all-packages
-  (append sbw/pkg-bootstrap-packages sbw/pkg-additional-packages)
+  (append sbw/pkg-core-packages sbw/pkg-additional-packages)
   "List of all the packages required for this Emacs configuration.")
 
-(setq package-pinned-packages  '((groovy-mode . "melpa")))
+(defconst sbw/pkg-personal-packages
+  '( sbw-bindings
+     sbw-cosmetics
+     sbw-countdown
+     sbw-hash-tables
+     sbw-menu
+     sbw-misc
+     sbw-multimethods
+     sbw-org-review
+     sbw-time
+     sbw-utils )
+  "List of my packages.")
 
 (provide 'sbw-package-list)

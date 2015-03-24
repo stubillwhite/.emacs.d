@@ -41,9 +41,12 @@
       (package-install x))
     pkg-list))
 
-(defun sbw/bootstrap-configure-repositories ()
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(defun sbw/bootstrap-configure-repositories (repos)
+  (mapcar
+    (lambda (x) (add-to-list 'package-archives x t))
+    repos)
+;  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize)  )
 
 (defun sbw/bootstrap-install-packages (pkg-list)
@@ -58,6 +61,29 @@ repository to install from for pinned packages."
       (package-refresh-contents)
       (sbw/bootstrap--pin-packages pkg-list)
       (sbw/bootstrap--install-packages pkgs-to-install))))
+
+(defun sbw/bootstrap-require-packages (pkg-list)
+  "Require the specified packages."
+  (mapc
+    (lambda (x) (require x))
+    (sbw/bootstrap--package-names pkg-list)))
+  
+(defun sbw/bootstrap-configure-packages (dir pkg-list)
+  "Configure the specified packages with the configuration files in DIR."
+  (mapc
+    (lambda (x)
+      (let* ( (pkg  (symbol-name x))
+              (fnam (concat dir "/sbw-configure-" pkg ".el")) )
+        (if (f-file? fnam)
+          (load-file fnam)
+          (eval `(use-package ,pkg)))))
+    (sbw/bootstrap--package-names pkg-list)))
+
+(defun sbw/bootstrap-load-elisp-files (dir)
+  "Load the Elisp files in DIR."
+  (mapc
+    (lambda (x) (load-file x))
+    (directory-files dir :full-name ".*\.el")))
 
 (provide 'sbw-bootstrap)
 
