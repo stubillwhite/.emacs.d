@@ -9,9 +9,6 @@
     (eval-after-load "auto-complete"
       '(add-to-list 'ac-modes 'cider-mode))
 
-    
-    
-
     (defun set-auto-complete-as-completion-at-point-function ()
       (setq completion-at-point-functions '(auto-complete)))
 

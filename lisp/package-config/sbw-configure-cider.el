@@ -62,10 +62,6 @@
       (cider-insert-in-repl "(reset)" t)))
 
   :bind
-    ("TAB" . cider-repl-indent-and-complete-symbol)
-  
-  )
-
-
+  ("TAB" . cider-repl-indent-and-complete-symbol))
 
 (provide 'sbw-configure-cider)
