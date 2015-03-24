@@ -1,11 +1,10 @@
-# Key bindings #
+# Mode key bindings #
 
-Key bindings are grouped with a common prefix for the major mode to which the binding applies.
+Mode key bindings are grouped with a common prefix for the mode to which the binding applies.
 
 | Key         | Group         |
 |-------------+---------------|
 | `C-c d ...` | Dot           |
-| `C-c e ...` | Expand Region |
 | `C-c g ...` | Magit         |
 | `C-c j ...` | Ace Jump      |
 | `C-c m ...` | Markdown      |
@@ -95,4 +94,13 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | Key     | Function      |
 |---------+---------------|
 | `C-c w` | Switch window |
+
+# Other key bindings #
+
+Bindings for frequently used actions are bound to keys that are easier to access.
+
+| Key   | Function        |
+|-------+-----------------|
+| `C-=` | Expand region   |
+| `C--` | Contract region |
 
