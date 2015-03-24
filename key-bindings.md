@@ -5,6 +5,7 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | Key         | Group         |
 |-------------+---------------|
 | `C-c d ...` | Dot           |
+| `C-c e ...` | Expand Region |
 | `C-c g ...` | Magit         |
 | `C-c j ...` | Ace Jump      |
 | `C-c m ...` | Markdown      |
@@ -18,6 +19,12 @@ Key bindings are grouped with a common prefix for the major mode to which the bi
 | Key       | Function                     |
 |-----------+------------------------------|
 | `C-c d v` | View Dot output              |
+
+## Expand Region ##
+
+| Key     | Function        |
+|---------+-----------------|
+| `C-c e` | Expand Region   |
 
 ## Magit ##
 

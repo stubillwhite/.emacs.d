@@ -41,6 +41,7 @@
      projectile              ;; Project interaction library for Emacs
      ace-jump-mode           ;; Faster movement
      switch-window           ;; Faster switching between windows
+     expand-region           ;; Expand region by semantic units
 
      ;; Helm
      helm                    ;; Incremental narrowing framework
@@ -65,8 +66,10 @@
      ;; Yasnippets
      yasnippet               ;; Yet another snippet extension for Emacs
 
-     ;; General stuff 
+     ;; Elisp
      json                    ;; JavaScript Object Notation parser / generator
+     async                   ;; Asynchronous processing in Emacs
+     
          
      )
   "List of the additional packages required for this Emacs configuration.")
