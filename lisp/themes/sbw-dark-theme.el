@@ -211,6 +211,11 @@
 
     ;; c
     `(c-annotation-face                   ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
+
+    `(sp-show-pair-match-face ((t (:background ,*selection-bg* )))) ;; TODO Define a theme for this
+    `(helm-source-header ((t (:background unspecified :foreground unspecified :height 1.0 :weight normal :inherit (sbw-dark-match)))))
+
+    
     ))
 
 (provide-theme 'sbw-dark)

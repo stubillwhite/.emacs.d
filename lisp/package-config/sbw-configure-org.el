@@ -471,10 +471,8 @@
   ("C-c o v w" . widen)
   ("C-c o c l" . org-insert-link)
   ("C-c o c c" . org-capture)
-  ("C-c o f" . fill-paragraph)
-  ("C-c o F" . sbw/unfill-paragraph)
-
-  )
+  ("C-c o f"   . fill-paragraph)
+  ("C-c o F"   . sbw/unfill-paragraph))
 
 (defun sbw/unfill-paragraph ()
   "Convert a multi-line paragraph into a single line."
