@@ -4,7 +4,7 @@
   '( ("ELPA"         . "http://tromey.com/elpa/")
      ("gnu"          . "http://elpa.gnu.org/packages/")
      ("melpa"        . "http://melpa.org/packages/")
-     ("melpa-stable" . "http://stable.melpa.org/packages/")
+;     ("melpa-stable" . "http://stable.melpa.org/packages/")
      ("marmalade"    . "http://marmalade-repo.org/packages/") )
   "List of cons cells of the repositories to fetch packages from.")
 
@@ -69,8 +69,9 @@
      ;; Elisp
      json                    ;; JavaScript Object Notation parser / generator
      async                   ;; Asynchronous processing in Emacs
-     
-         
+
+     ;; XML
+     nxml-mode               ;; Major mode for editing XML
      )
   "List of the additional packages required for this Emacs configuration.")
 
