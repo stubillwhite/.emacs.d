@@ -53,6 +53,7 @@
      cider                   ;; REPL support
      smartparens             ;; Improved paredit
      ac-cider                ;; Cider REPL autocomplete and documentation
+     expectations-mode       ;; Clojure expectations minor mode
 
      ;; Graphviz
      graphviz-dot-mode       ;; Graphviz DOT file support and previews
