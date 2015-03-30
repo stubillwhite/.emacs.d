@@ -21,58 +21,58 @@
 (defconst sbw/pkg-additional-packages
   '(
      ;; Standard stuff
-     color-theme            ;; Color theme support
-     undo-tree              ;; Undo tree visualisation
-     flyspell               ;; Spell checking
+     color-theme ;; Color theme support
+     undo-tree   ;; Undo tree visualisation
+     flyspell    ;; Spell checking
 
      ;; org-mode
-     org                    ;; Your life in plain text
-     htmlize                ;; html org-mode reports
+     org     ;; Your life in plain text
+     htmlize ;; html org-mode reports
 
      ;; Git
-     magit                  ;; Control Git from Emacs
-     
+     magit ;; Control Git from Emacs
+
      ;; Auto-complete
-     company                 ;; Auto-completion
-     
+     company ;; Auto-completion
+
      ;; Interface
-     smart-mode-line         ;; Better mode line
-     nyan-mode               ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
-     projectile              ;; Project interaction library for Emacs
-     ace-jump-mode           ;; Faster movement
-     switch-window           ;; Faster switching between windows
-     expand-region           ;; Expand region by semantic units
+     smart-mode-line ;; Better mode line
+     nyan-mode       ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
+     projectile      ;; Project interaction library for Emacs
+     ace-jump-mode   ;; Faster movement
+     switch-window   ;; Faster switching between windows
+     expand-region   ;; Expand region by semantic units
 
      ;; Helm
-     helm                    ;; Incremental narrowing framework
-     helm-swoop              ;; Efficiently skipping between matches
-     helm-projectile         ;; Helm integration for projectile
+     helm            ;; Incremental narrowing framework
+     helm-swoop      ;; Efficiently skipping between matches
+     helm-projectile ;; Helm integration for projectile
      
      ;; Clojure
-     clojure-mode            ;; Clojure mode
-     cider                   ;; REPL support
-     smartparens             ;; Improved paredit
-     ac-cider                ;; Cider REPL autocomplete and documentation
-     expectations-mode       ;; Clojure expectations minor mode
+     clojure-mode                      ;; Clojure mode
+     cider                             ;; REPL support
+     smartparens                       ;; Improved paredit
+     ac-cider                          ;; Cider REPL autocomplete and documentation
+     (expectations-mode . "marmalade") ;; Clojure expectations minor mode
 
      ;; Graphviz
-     graphviz-dot-mode       ;; Graphviz DOT file support and previews
+     graphviz-dot-mode ;; Graphviz DOT file support and previews
 
      ;; Markdown
-     markdown-mode           ;; Markdown mode
+     markdown-mode ;; Markdown mode
 
      ;; Groovy
      (groovy-mode . "melpa") ;; Groovy mode
-     
+
      ;; Yasnippets
-     yasnippet               ;; Yet another snippet extension for Emacs
+     yasnippet ;; Yet another snippet extension for Emacs
 
      ;; Elisp
-     json                    ;; JavaScript Object Notation parser / generator
-     async                   ;; Asynchronous processing in Emacs
+     json  ;; JavaScript Object Notation parser / generator
+     async ;; Asynchronous processing in Emacs
 
      ;; XML
-     nxml-mode               ;; Major mode for editing XML
+     nxml-mode ;; Major mode for editing XML
      )
   "List of the additional packages required for this Emacs configuration.")
 

@@ -13,11 +13,6 @@
     (lambda (x) (if (sbw/bootstrap--cons-cell? x) (car x) x))
     pkg-list))
 
-(defun sbw/bootstrap--packages-for-installation (pkg-list)
-  (sbw/bootstrap--filter
-    (lambda (x) (not (package-installed-p x)))
-    (sbw/bootstrap--package-names pkg-list)))
-
 (defun sbw/bootstrap--pin-package (cell)
   (let* ( (pkg  (car cell))
           (repo (cdr cell)) )
@@ -45,9 +40,7 @@
   (mapcar
     (lambda (x) (add-to-list 'package-archives x t))
     repos)
-;  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-  (package-initialize)  )
+  (package-initialize))
 
 (defun sbw/bootstrap-install-packages (pkg-list)
   "Install the packages from PKG-LIST if they are not already

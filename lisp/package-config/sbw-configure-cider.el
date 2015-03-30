@@ -16,14 +16,19 @@
 
     ;; General settings
     (setq 
-      nrepl-port                            "4555" ;; Default port number
-      nrepl-log-messages                    t      ;; Log messages to aid debug of CIDER problems
-      cider-repl-pop-to-buffer-on-connect   nil    ;; Suppress auto-display of the REPL buffer on connection
-      cider-popup-stacktraces               nil    ;; Suppress the error buffer pop up in buffers other than the REPL
-      cider-repl-popup-stacktraces          nil    ;; Don't allow the the error buffer to pop up in the REPL
-      cider-auto-select-error-buffer        nil    ;; Don't auto-select the error buffer when displayed
-      cider-repl-display-in-current-window  t      ;; C-c C-z switch to the CIDER REPL
-      cider-repl-print-length               100    ;; Limit the items of collections to print
+      cider-auto-select-error-buffer        nil      ;; Don't auto-select the error buffer when displayed
+      cider-popup-stacktraces               nil      ;; Suppress the error buffer pop up in buffers other than the REPL
+      cider-repl-display-in-current-window  t        ;; C-c C-z switch to the REPL
+      cider-repl-history-size               3000     ;; Longer history
+      cider-repl-pop-to-buffer-on-connect   nil      ;; Suppress auto-display of the REPL buffer on connection
+      cider-repl-popup-stacktraces          nil      ;; Don't allow the the error buffer to pop up in the REPL
+      cider-repl-print-length               100      ;; Limit the items of collections to print
+      cider-repl-result-prefix              ";; => " ;; Comment prefix for results in the REPL
+      cider-repl-use-clojure-font-lock      t        ;; Prettier fonts in the REPL
+      cider-repl-use-pretty-printing        t        ;; Pretty print results in the REPL
+      cider-repl-wrap-history               t        ;; Wrap history
+      nrepl-log-messages                    t        ;; Log messages to aid debug of CIDER problems
+      nrepl-port                            "4555"   ;; Default port number
       )
 
     ;; Better naming for the REPL buffer
