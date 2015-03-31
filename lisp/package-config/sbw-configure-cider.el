@@ -14,6 +14,9 @@
     ;; Enable eldoc in Clojure buffers
     (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
+    ;; Enable expectations-mode in Clojure buffers
+    (add-hook 'cider-mode-hook 'expectations-mode)
+
     ;; General settings
     (setq 
       cider-auto-select-error-buffer        nil      ;; Don't auto-select the error buffer when displayed
@@ -25,7 +28,7 @@
       cider-repl-print-length               100      ;; Limit the items of collections to print
       cider-repl-result-prefix              ";; => " ;; Comment prefix for results in the REPL
       cider-repl-use-clojure-font-lock      t        ;; Prettier fonts in the REPL
-      cider-repl-use-pretty-printing        t        ;; Pretty print results in the REPL
+      cider-repl-use-pretty-printing        nil      ;; Pretty print results in the REPL
       cider-repl-wrap-history               t        ;; Wrap history
       nrepl-log-messages                    t        ;; Log messages to aid debug of CIDER problems
       nrepl-port                            "4555"   ;; Default port number

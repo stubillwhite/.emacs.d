@@ -1,11 +1,12 @@
 ;; Packages required for the configuration
 
 (defconst sbw/pkg-repositories
-  '( ("ELPA"         . "http://tromey.com/elpa/")
-     ("gnu"          . "http://elpa.gnu.org/packages/")
+  '( ("gnu"          . "http://elpa.gnu.org/packages/")
+     ("org"          . "http://orgmode.org/elpa/")
+     ("melpa-stable" . "http://stable.melpa.org/packages/")
      ("melpa"        . "http://melpa.org/packages/")
-;     ("melpa-stable" . "http://stable.melpa.org/packages/")
-     ("marmalade"    . "http://marmalade-repo.org/packages/") )
+     ("marmalade"    . "http://marmalade-repo.org/packages/")
+     )
   "List of cons cells of the repositories to fetch packages from.")
 
 (defconst sbw/pkg-core-packages
@@ -49,11 +50,11 @@
      helm-projectile ;; Helm integration for projectile
      
      ;; Clojure
-     clojure-mode                      ;; Clojure mode
-     cider                             ;; REPL support
-     smartparens                       ;; Improved paredit
-     ac-cider                          ;; Cider REPL autocomplete and documentation
-     (expectations-mode . "marmalade") ;; Clojure expectations minor mode
+     clojure-mode      ;; Clojure mode
+     cider             ;; REPL support
+     smartparens       ;; Improved paredit
+     ac-cider          ;; Cider REPL autocomplete and documentation
+     expectations-mode ;; Clojure expectations minor mode
 
      ;; Graphviz
      graphviz-dot-mode ;; Graphviz DOT file support and previews
@@ -62,7 +63,7 @@
      markdown-mode ;; Markdown mode
 
      ;; Groovy
-     (groovy-mode . "melpa") ;; Groovy mode
+     (groovy-mode . "melpa-stable") ;; Groovy mode
 
      ;; Yasnippets
      yasnippet ;; Yet another snippet extension for Emacs
@@ -72,7 +73,7 @@
      async ;; Asynchronous processing in Emacs
 
      ;; XML
-     nxml-mode ;; Major mode for editing XML
+     ;nxml-mode ;; Major mode for editing XML
      )
   "List of the additional packages required for this Emacs configuration.")
 
