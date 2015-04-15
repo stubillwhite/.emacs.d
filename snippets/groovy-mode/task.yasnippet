@@ -1,0 +1,11 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: task
+# key: task
+# --
+task ${1:task-name}(${2:type: ${3:task-type}}${4:, dependsOn: [${5:dependencies}]}) {
+    ${6:description '${7:task-description}'}
+    ${8:group       '${9:task-group}'}
+    doLast {
+        $0
+    }
+}

@@ -213,15 +213,17 @@
     `(c-annotation-face                   ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
 
     ;; nXML
-    `(nxml-name-face                      ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
-    `(nxml-element-local-name-face        ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
-    `(nxml-element-colon-face             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
-    `(nxml-element-prefix-face            ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
-    `(nxml-delimiter-face                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
-    `(nxml-attribute-value-face           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
-    `(nxml-attribute-value-delimiter-face ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
-    `(nxml-comment-content-face           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-comment)))))
-    `(nxml-comment-delimiter-face         ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-comment)))))
+    `(nxml-attribute-colon                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
+    `(nxml-attribute-local-name           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
+    `(nxml-attribute-prefix               ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
+    `(nxml-element-local-name             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(nxml-element-colon                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(nxml-element-prefix                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(nxml-delimiter                      ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
+    `(nxml-attribute-value                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
+    `(nxml-attribute-value-delimiter      ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-constant)))))
+    `(nxml-comment-content                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-comment)))))
+    `(nxml-comment-delimiter              ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-comment)))))
     
     
        

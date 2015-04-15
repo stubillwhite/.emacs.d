@@ -8,12 +8,22 @@
 
   :config
   (progn
-    (add-to-list 'yas/root-directory "~/.emacs.d/snippets")
-    (yas/initialize)
+    (setq yas-snippet-dirs "~/.emacs.d/snippets")
+    ;;(add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets")
 
-    (unbind-key "TAB"))
+    (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+    
+    (yas-reload-all)
+
+
+    
+    ;;(yas-initialize)
+    ;;(unbind-key "TAB")
+    )
   
-  :bind
-  ("<backtab>" . yas/expand))
+;  :bind
+;  ("<backtab>" . yas-expand)
+  )
 
 (provide 'sbw-configure-yasnippet)
+
