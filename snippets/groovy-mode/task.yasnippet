@@ -2,9 +2,9 @@
 # name: New Gradle task
 # key: task
 # --
-task ${1:task-name}(${2:type: ${3:task-type}}${4:, dependsOn: [${5:dependencies}]}) {
-    ${6:description '${7:task-description}'}
-    ${8:group       '${9:task-group}'}
+task ${1:taskName}(${2:type: ${3:TaskType}}${4:, dependsOn: [${5:AnotherTaskName}]}) {
+    ${6:description '${7:TODO Add task description}'}
+    ${8:group       '${9:TODO Add task group}'}
     doLast {
         $0
     }

@@ -43,6 +43,7 @@
      ace-jump-mode   ;; Faster movement
      switch-window   ;; Faster switching between windows
      expand-region   ;; Expand region by semantic units
+     hydra           ;; Make Emacs bindings that stick around
 
      ;; Helm
      helm            ;; Incremental narrowing framework
@@ -73,7 +74,8 @@
      async ;; Asynchronous processing in Emacs
 
      ;; XML
-     ;nxml-mode ;; Major mode for editing XML
+     ;;nxml-mode ;; Major mode for editing XML
+     el-get
      )
   "List of the additional packages required for this Emacs configuration.")
 
