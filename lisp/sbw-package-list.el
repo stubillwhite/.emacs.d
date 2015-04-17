@@ -38,13 +38,17 @@
 
      ;; Interface
      smart-mode-line ;; Better mode line
-     nyan-mode       ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
      projectile      ;; Project interaction library for Emacs
      ace-jump-mode   ;; Faster movement
      switch-window   ;; Faster switching between windows
      expand-region   ;; Expand region by semantic units
      hydra           ;; Make Emacs bindings that stick around
+     worf            ;; Vi-like bindings for org-mode
 
+     ;;nyan-mode       ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
+     powerline
+     diminish
+     
      ;; Helm
      helm            ;; Incremental narrowing framework
      helm-swoop      ;; Efficiently skipping between matches
