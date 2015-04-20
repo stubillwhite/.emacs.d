@@ -90,6 +90,7 @@
 (defconst sbw/pkg-personal-packages
   '( sbw-bindings
      sbw-cosmetics
+     sbw-cosmetics-code-style
      sbw-countdown
      sbw-hash-tables
      sbw-menu
