@@ -1,6 +1,8 @@
 (require 'use-package)
 
 (use-package flyspell
+  :diminish flyspell-mode
+  
   :init
   (progn
 
