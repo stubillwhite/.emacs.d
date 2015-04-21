@@ -37,7 +37,8 @@
      company ;; Auto-completion
 
      ;; Interface
-     smart-mode-line ;; Better mode line
+     ;;smart-mode-line ;; Better mode line
+     ;;smart-mode-line-powerline-theme ;; Powerline theme for smart-mode-line
      projectile      ;; Project interaction library for Emacs
      ace-jump-mode   ;; Faster movement
      switch-window   ;; Faster switching between windows

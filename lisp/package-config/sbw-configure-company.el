@@ -1,6 +1,8 @@
 (require 'use-package)
 
 (use-package company
+  :diminish company-mode
+  
   :init
   (progn
     (global-company-mode))

@@ -7,6 +7,10 @@
   (progn)
 
   :config
-  (progn))
+  (progn
+    ;; TODO This needs removing when expectations mode is updated
+    (defun cider-load-current-buffer ()
+      (interactive)
+      (cider-load-buffer))))
 
 (provide 'sbw-configure-expectations-mode)

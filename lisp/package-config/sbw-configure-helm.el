@@ -1,6 +1,8 @@
 (require 'use-package)
 
 (use-package helm
+  :diminish helm-mode
+  
   :init
   (progn
     (require 'helm-config)

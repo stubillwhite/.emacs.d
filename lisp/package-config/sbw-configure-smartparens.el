@@ -1,6 +1,8 @@
 (require 'use-package)
 
 (use-package smartparens
+  :diminish smartparens-mode
+  
   :init
   (progn
     ;; Global mode

@@ -177,6 +177,9 @@
     ;; Powerline
     ;;`(powerline-active-1                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     ;;`(powerline-active-2                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
+    ;;`(powerline-inactive-1                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    ;;`(powerline-inactive-2                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
+    
 
     ;; Company
     `(company-tooltip-selection           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))

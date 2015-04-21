@@ -1,6 +1,8 @@
 (require 'use-package)
 
 (use-package undo-tree
+  :diminish undo-tree-mode
+  
   :init
   (progn
     ;; Enable everywhere
