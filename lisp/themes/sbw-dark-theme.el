@@ -150,6 +150,7 @@
     `(org-level-8                         ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
     `(org-level-9                         ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
     `(org-link                            ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword) :underline t))))
+    `(org-mode-line-clock                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mode-line-inactive)))))
     `(org-mode-line-clock-overrun         ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-tag)))))
     `(org-priority                        ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))
     `(org-scheduled-previously            ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-error)))))
@@ -172,6 +173,10 @@
     `(helm-ff-directory                   ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-buffer-process                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-selection                      ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+
+    ;; Powerline
+    ;;`(powerline-active-1                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    ;;`(powerline-active-2                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
 
     ;; Company
     `(company-tooltip-selection           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
@@ -225,8 +230,7 @@
     `(nxml-comment-content                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-comment)))))
     `(nxml-comment-delimiter              ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-comment)))))
     
-    
-       
+
     `(sp-show-pair-match-face ((t (:background ,*selection-bg* )))) ;; TODO Define a theme for this
     `(helm-source-header ((t (:background unspecified :foreground unspecified :height 1.0 :weight normal :inherit (sbw-dark-match)))))
 
