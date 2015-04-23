@@ -16,6 +16,7 @@
      f                ;; Modern file API
      s                ;; Modern string API
      names            ;; Sane namespace handling
+     seq              ;; Unified sequence handling
      )
   "List of the core packages required by everything else, which have no dependencies.")
 
