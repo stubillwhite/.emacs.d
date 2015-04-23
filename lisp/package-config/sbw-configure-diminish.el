@@ -2,9 +2,6 @@
 
 (use-package diminish
   :config
-  (progn
-    (eval-after-load "Org-Indent" '(diminish 'org-indent-mode))
-    (eval-after-load "Magit"      '(diminish 'magit-auto-revert-mode))
-    ))
+  (progn))
 
 (provide 'sbw-configure-diminish)
