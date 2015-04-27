@@ -5,8 +5,7 @@
 ;; Look into el-get-sources
 
 (defconst sbw/new-pkg-base-packages
-  '( (:name el-get          :type :package) ;; Manage external elisp dependencies
-     (:name use-package     :type :package) ;; Easy package use
+  '( (:name use-package     :type :package) ;; Easy package use
      (:name dash            :type :package) ;; Modern list library
      (:name dash-functional :type :package) ;; Further functions for dash
      (:name f               :type :package) ;; Modern file API
@@ -69,6 +68,7 @@
 
      ;; XML
      ;;nxml-mode ;; Major mode for editing XML
+     (:name color-theme-solarized :type package)
      )
   "The additional packages required.")
 
@@ -77,54 +77,52 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defmacro sbw/new-bootstrap--with-package-config (pkg &rest body)
-  `(let* ( (name (plist-get ,pkg :name))
-           (type (plist-get ,pkg :type))
-           (repo (plist-get ,pkg :repo)) )
+  `(lexical-let* ( (name (plist-get ,pkg :name))
+		   (type (plist-get ,pkg :type))
+		   (repo (plist-get ,pkg :repo)) )
      ,@body))
 
 (defun sbw/new-bootstrap--filter (p l)
   (delq nil (mapcar (lambda (x) (and (funcall p x) x)) l)))
 
-(defun sbw/new-bootstrap--pin-package (pkg)
-  (sbw/new-bootstrap--with-package-config pkg
-    (when (and (eq type :package) (not (eq repo nil)))
-      (message "Pinning package '%s' to repository '%s'" name repo)
-      (setq package-pinned-packages (cons (cons name repo) package-pinned-packages)))))
+(defun sbw/new-bootstrap--install-el-get ()
+  (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+  (unless (require 'el-get nil 'noerror)
+    (message "Installing el-get")
+    (with-current-buffer
+      (url-retrieve-synchronously "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+      (goto-char (point-max))
+      (eval-print-last-sexp))
+    (el-get 'sync)))
 
-(defun sbw/new-bootstrap--install-using-package (pkg)
-  (sbw/new-bootstrap--with-package-config pkg
-    (when (and (eq type :package) (not (eq repo nil)))
-      (message "Pinning package '%s' to repository '%s'" name repo)
-      (setq package-pinned-packages (cons (cons name repo) package-pinned-packages)))
-    (message "Installing '%s' using package" name)
-    (package-install name)))
+(defun sbw/new-bootstrap--configure-recipes ()
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/lisp/recipes"))
 
-(defun sbw/new-bootstrap--install-using-el-get (pkg)
-  (sbw/new-bootstrap--with-package-config pkg
-    (message "Installing '%s' using el-get" name)
-    (el-get-bundle name :type type)))
-
-(defun sbw/new-bootstrap--install-package (pkg)
-  (sbw/new-bootstrap--with-package-config pkg
-    (cond
-      ((eq type :package) (sbw/new-bootstrap--install-using-package pkg))
-      ((eq type :git)     (sbw/new-bootstrap--install-using-el-get pkg))
-      (:else              (error "Unknown package type '%s'" type)))))
-
-(defun sbw/new-bootstrap--should-install? (pkg)
-  (sbw/new-bootstrap--with-package-config pkg
-    (not (package-installed-p name))))
+(defun sbw/new-bootstrap-initialize ()
+  (sbw/new-bootstrap--install-el-get)
+  (sbw/new-bootstrap--configure-recipes))
 
 (defun sbw/new-bootstrap-install (pkg-list)
-  (mapc
-    'sbw/new-bootstrap--install-package
-    (sbw/new-bootstrap--filter 'sbw/new-bootstrap--should-install? pkg-list)))
+  (el-get 'sync 
+    (mapcar
+      (lambda (x) (sbw/new-bootstrap--with-package-config x name))
+      (sbw/new-bootstrap--filter 'sbw/new-bootstrap--should-install? pkg-list))))
 
-(sbw/new-bootstrap-install sbw/new-pkg-base-packages)
-(sbw/new-bootstrap-install sbw/new-pkg-additional-packages)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(add-to-list 'el-get-recipe-path "~/.emacs.d/lisp/recipes")
-(el-get 'sync)
+(defconst sbw/new-bootstrap-test-packages
+  '( color-theme-zenburn )
+  "Test")
 
-(el-get-bundle marmalade)
+
+
+(sbw/new-bootstrap-initialize)
+(el-get-bundle 'color-theme-zenburn)
+(el-get-bundle 'zenburn-theme)
+;;(load-theme 'zenburn t)
+;;(load-theme 'sbw-dark)
+
+
+
+
+;(sbw/new-bootstrap-install sbw/new-bootstrap-test-packages)
+;;(sbw/new-bootstrap-install sbw/new-pkg-additional-packages)
