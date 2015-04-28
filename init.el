@@ -13,6 +13,9 @@
 
 (add-hook 'after-init-hook 'sbw/init-report-time-elapsed 'append)
 
+(defun sbw/init-message (s)
+  (message (concat "\n" s)))
+
 ;; Add Lisp package locations
 (setq sbw/lisp-path "~/.emacs.d/lisp")
 (add-to-list 'load-path sbw/lisp-path)
@@ -22,11 +25,28 @@
 
 (if sbw/use-new-configuration
   (progn
-    ;; Require the core scripts and bootstrap the system
+    ;; Bootstrap the system and install all packages
     (require 'sbw-common-config)
-    (require 'sbw-new-bootstrap)
+    (require 'new-bootstrap)
 
-    )
+    (sbw/init-message "Initializing bootstrap")
+    (sbw/new-bootstrap-initialize)
+
+    (sbw/init-message "Installing packages")
+    (sbw/new-bootstrap-install sbw/new-bootstrap-all-packages)
+
+    (sbw/init-message "Requiring core packages")
+    (sbw/new-bootstrap-require sbw/new-bootstrap-core-packages)
+    
+    (sbw/init-message "Loading package configuration")
+    (sbw/new-bootstrap-configure "~/.emacs.d/lisp/package-config" sbw/new-bootstrap-all-packages)
+
+    (sbw/init-message "Loading personal packages")
+    (sbw/new-bootstrap-require sbw/new-bootstrap-personal-packages)
+
+    (sbw/init-message "Loading tests")
+    (sbw/new-bootstrap-load-elisp-files "~/.emacs.d/lisp/test"))
+  
   (progn
     ;; Require the core scripts and bootstrap the system
     (require 'sbw-common-config)
@@ -46,3 +66,4 @@
 
     ;; Finally, load all tests
     (sbw/bootstrap-load-elisp-files "~/.emacs.d/lisp/test")))
+
