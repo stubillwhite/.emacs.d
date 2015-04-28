@@ -172,6 +172,7 @@
     `(helm-ff-invalid-symlink             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-ff-directory                   ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-buffer-process                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
+    `(helm-candidate-number               ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-selection                      ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
 
     ;; Powerline

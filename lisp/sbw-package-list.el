@@ -81,7 +81,7 @@
 
      ;; XML
      ;;nxml-mode ;; Major mode for editing XML
-     el-get
+     ;;el-get
      )
   "List of the additional packages required for this Emacs configuration.")
 
