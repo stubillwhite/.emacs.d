@@ -7,101 +7,116 @@
   "Faces used by sbw-dark theme."
   :group 'faces)
 
-(let (
-      (*background*            "gray10")
-      (*comments*              "DarkSeaGreen3")
-      (*constants*             "burlywood1")
-      (*highlight-bg*          "darkslategray")
-      (*highlight-fg*          "gray100")
-      (*keywords*              "CadetBlue2")
-      (*normal*                "gray80")
-      (*strings*               "burlywood1")
-      (*warnings*              "burlywood1")
-      (*errors*                "IndianRed3")
-      (*match-fg*              "gray100")
-      (*match-bg*              "darkslategray")
-      (*mismatch-fg*           "gray100")
-      (*mismatch-bg*           "IndianRed3")
-      (*mode-line-bg*          "PaleTurquoise4")
-      (*mode-line-inactive-bg* "gray30")
-      (*mode-line-fg*          "gray100")
-      (*selection-bg*          "gray30")
-      )
+(let ( (*background*            "gray10")
+       (*comments*              "DarkSeaGreen3")
+       (*constants*             "burlywood1")
+       (*highlight-bg*          "darkslategray")
+       (*highlight-fg*          "gray100")
+       (*keywords*              "CadetBlue2")
+       (*normal*                "gray80")
+       (*strings*               "burlywood1")
+       (*warnings*              "burlywood1")
+       (*errors*                "IndianRed3")
+       (*match-fg*              "gray100")
+       (*match-bg*              "darkslategray")
+       (*mismatch-fg*           "gray100")
+       (*mismatch-bg*           "IndianRed3")
+       (*mode-line-bg*          "PaleTurquoise4")
+       (*mode-line-inactive-bg* "gray30")
+       (*mode-line-fg*          "gray100")
+       (*selection-bg*          "gray30")
+       )
 
-  (defface powerline-inactive3
-    '((t (:background "IndianRed3" :inherit mode-line-inactive)))
-    "Powerline face 1."
-    :group 'powerline)
+  ;; TODO - This should be eval-after-load for powerline
+  (defface sbw-dark-powerline-one-active
+    `((t (:foreground ,*mode-line-fg* :background ,*mode-line-bg*)))
+    "Face for powerline level one if active."
+    :group 'sbw-dark-faces)
+
+  (defface sbw-dark-powerline-one-inactive
+    `((t (:foreground ,*mode-line-fg* :background ,*mode-line-inactive-bg*)))
+    "Face for powerline level one if inactive."
+    :group 'sbw-dark-faces)
+
+  (defface sbw-dark-powerline-two
+    `((t (:foreground ,*match-fg* :background ,*match-bg*)))
+    "Face for powerline level two."
+    :group 'sbw-dark-faces)
+
+  (defface sbw-dark-powerline-three
+    `((t (:foreground ,*normal* :background ,*selection-bg*)))
+    "Face for powerline level three."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-comment
-           `((t (:background ,*background* :foreground ,*comments*)))
-           "Face for comments."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*comments*)))
+    "Face for comments."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-constant
-           `((t (:background ,*background* :foreground ,*constants*)))
-           "Face for constants."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*constants*)))
+    "Face for constants."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-invisible
-           `((t (:background ,*background* :foreground ,*background*)))
-           "Face for invisible text."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*background*)))
+    "Face for invisible text."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-keyword
-           `((t (:background ,*background* :foreground ,*keywords*)))
-           "Face for keywords."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*keywords*)))
+    "Face for keywords."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-normal
-           `((t (:background ,*background* :foreground ,*normal*)))
-           "Face for normal text."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*normal*)))
+    "Face for normal text."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-match
-           `((t (:background ,*match-bg* :foreground ,*match-fg*)))
-           "Face for matches."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*match-bg* :foreground ,*match-fg*)))
+    "Face for matches."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-mismatch
-           `((t (:background ,*mismatch-bg* :foreground ,*mismatch-fg*)))
-           "Face for mismatches."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*mismatch-bg* :foreground ,*mismatch-fg*)))
+    "Face for mismatches."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-string
-           `((t (:background ,*background* :foreground ,*strings*)))
-           "Face for strings."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*strings*)))
+    "Face for strings."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-tag
-           `((t (:background ,*background* :foreground ,*highlight-fg* :weight normal)))
-           "Face for tags."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*highlight-fg* :weight normal)))
+    "Face for tags."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-success
-           `((t (:background ,*background* :foreground ,*comments*)))
-           "Face for success."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*comments*)))
+    "Face for success."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-error
-           `((t (:background ,*background* :foreground ,*errors*)))
-           "Face for errors."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*errors*)))
+    "Face for errors."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-warning
-           `((t (:background ,*background* :foreground ,*warnings*)))
-           "Face for warnings."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*background* :foreground ,*warnings*)))
+    "Face for warnings."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-mode-line-inactive
-           `((t (:background ,*mode-line-inactive-bg* :foreground ,*mode-line-fg*)))
-           "Face for active mode line."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*mode-line-inactive-bg* :foreground ,*mode-line-fg*)))
+    "Face for active mode line."
+    :group 'sbw-dark-faces)
 
   (defface sbw-dark-mode-line
-           `((t (:background ,*mode-line-bg* :foreground ,*mode-line-fg*)))
-           "Face for inactive mode line."
-           :group 'sbw-dark-faces)
+    `((t (:background ,*mode-line-bg* :foreground ,*mode-line-fg*)))
+    "Face for inactive mode line."
+    :group 'sbw-dark-faces)
 
   (custom-theme-set-faces
     'sbw-dark
@@ -171,14 +186,14 @@
 
     ;; Helm
     `(helm-match                          ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
- ;   `(helm-source-header                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mode-line)))))
+                                        ;   `(helm-source-header                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mode-line)))))
     `(helm-grep-lineno                    ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-ff-symlink                     ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-ff-invalid-symlink             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-ff-directory                   ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-buffer-process                 ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     `(helm-candidate-number               ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
-    `(helm-selection                      ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    `(helm-selection                      ((t (:background ,*selection-bg* )))) ;; TODO Define a theme for this
 
     ;; Powerline
     ;;`(powerline-active-1                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
@@ -190,8 +205,8 @@
 
        ;; Company
        `(company-tooltip-selection           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match))))))
-    `(company-tooltip                     ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
-    `(company-scrollbar-bg                ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    `(company-tooltip                     ((t (:background ,*selection-bg* )))) ;; TODO Define a theme for this
+    `(company-scrollbar-bg                ((t (:background ,*selection-bg* )))) ;; TODO Define a theme for this
     `(company-scrollbar-fg                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     
     ;; Flyspell
@@ -216,8 +231,8 @@
 
     ;; swoop
     `(helm-swoop-target-word-face         ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
-    `(helm-swoop-target-line-face         ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
-    `(helm-swoop-target-line-block-face   ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
+    `(helm-swoop-target-line-face         ((t (:background ,*selection-bg* )))) ;; TODO Define a theme for this
+    `(helm-swoop-target-line-block-face   ((t (:background ,*selection-bg* )))) ;; TODO Define a theme for this
     
     ;; search
     `(isearch-fail                        ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-mismatch)))))
