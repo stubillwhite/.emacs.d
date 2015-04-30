@@ -28,6 +28,11 @@
       (*selection-bg*          "gray30")
       )
 
+  (defface powerline-inactive3
+    '((t (:background "IndianRed3" :inherit mode-line-inactive)))
+    "Powerline face 1."
+    :group 'powerline)
+
   (defface sbw-dark-comment
            `((t (:background ,*background* :foreground ,*comments*)))
            "Face for comments."
@@ -180,10 +185,11 @@
     ;;`(powerline-active-2                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
     ;;`(powerline-inactive-1                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     ;;`(powerline-inactive-2                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
-    
+    `(sbw-powerline-active-3                ((t (:background ,*mismatch-bg* )))
+       
 
-    ;; Company
-    `(company-tooltip-selection           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match)))))
+       ;; Company
+       `(company-tooltip-selection           ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-match))))))
     `(company-tooltip                     ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
     `(company-scrollbar-bg                ((t (:background ,*selection-bg* ))))    ;; TODO Define a theme for this
     `(company-scrollbar-fg                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
