@@ -1,75 +1,78 @@
-(defun sbw/countdown-remaining-time (end-time)
-  "Returns a string representing the time remaining in the countdown timer."
-  (format-time-string "%H:%M:%S" (time-subtract end-time (current-time))))
+(require 'names)
 
-(defun sbw/countdown-expired-inform-user ()
-  (message "Countdown expired.")
-  (beep t))
+(define-namespace sbw/countdown-
+  
+  (defun -remaining-time (end-time)
+    "Returns a string representing the time remaining in the countdown timer."
+    (format-time-string "%H:%M:%S" (time-subtract end-time (current-time)) :utc))
 
-(defun sbw/countdown-update-timer ()
-  "Update the countdown timer."
-  (if (time-less-p sbw/countdown-end-time (current-time))
-    (progn
-      (sbw/countdown-expired-inform-user)
-      (sbw/countdown-stop))
-    (progn      
-      (setq sbw/countdown-mode-line-string (concat " [" (sbw/countdown-remaining-time sbw/countdown-end-time) "]"))
-      (force-mode-line-update))))
+  (defun -expired-inform-user ()
+    (message "Countdown expired.")
+    (beep t))
 
-(defun sbw/countdown-set-mode-line (value)
-  "Control the display of the countdown timer in the mode line. VALUE may be :on to display it, or :off to hide it."
-  (cond
-    ((equal value :off)
-      (setq sbw/countdown-mode-line-timer nil)
-      (delq 'sbw/countdown-mode-line-string global-mode-string))
+  (defun -update-timer ()
+    (if (time-less-p end-time (current-time))
+      (progn
+        (-expired-inform-user)
+        (-stop))
+      (progn      
+        (setq mode-line-string (concat " [" (-remaining-time end-time) "]"))
+        (force-mode-line-update))))
 
-    ((equal value :on)
-      (setq sbw/countdown-mode-line-timer nil)
-      (when (not (memq 'sbw/countdown-mode-line-string global-mode-string))
-        (setq global-mode-string (append global-mode-string '(sbw/countdown-mode-line-string))))))
+  (defun -set-mode-line (value)
+    "Control the display of the countdown timer in the mode line. VALUE may be :on to display it, or :off to hide it."
+    (cond
+      ((equal value :off)
+        (setq mode-line-timer nil)
+        (delq 'mode-line-string global-mode-string))
 
-  (force-mode-line-update))
+      ((equal value :on)
+        (setq mode-line-timer nil)
+        (when (not (memq 'mode-line-string global-mode-string))
+          (setq global-mode-string (append global-mode-string '(mode-line-string))))))
 
-(defun sbw/countdown-set-timer (value)
-  "Control the countdown timer. VALUE may be :on to start the timer, or :off to stop it."
-  (cond
-    ((equal value :off)
-      (when sbw/countdown-timer
-        (cancel-timer sbw/countdown-timer)
-        (setq sbw/countdown-timer nil)))
+    (force-mode-line-update))
 
-    ((equal value :on)
-      (when sbw/countdown-timer
-        (cancel-timer sbw/countdown-timer))
-      (setq sbw/countdown-timer (run-with-timer 1 1 'sbw/countdown-update-timer)))))
+  (defun -set-timer (value)
+    "Control the countdown timer. VALUE may be :on to start the timer, or :off to stop it."
+    (cond
+      ((equal value :off)
+        (when timer
+          (cancel-timer timer)
+          (setq timer nil)))
 
-(defun sbw/countdown-stop ()
-  "Stops the countdown timer."
-  (sbw/countdown-set-mode-line :off)
-  (sbw/countdown-set-timer :off)
-  (setq sbw/countdown-end-time nil)
-  (message "Timer stopped")
-  nil)
+      ((equal value :on)
+        (when timer
+          (cancel-timer timer))
+        (setq timer (run-with-timer 1 1 'sbw/countdown--update-timer)))))
 
-(defun sbw/countdown-start (seconds)
-  "Starts the countdown timer with starting value SECONDS."
-  (setq sbw/countdown-timer nil)
-  (setq sbw/countdown-end-time (time-add (seconds-to-time seconds) (current-time)))
-  (sbw/countdown-update-timer)
-  (sbw/countdown-set-mode-line :on)
-  (sbw/countdown-set-timer :on)
-  (message "Timer started")
-  nil)
+  (defun -stop ()
+    "Stops the countdown timer."
+    (-set-mode-line :off)
+    (-set-timer :off)
+    (setq end-time nil)
+    (message "Timer stopped")
+    nil)
 
-(defun sbw/countdown-running? ()
-  "Returns t when a countdown is running, nil otherwise."
-  (when (bound-and-true-p sbw/countdown-timer) t))
+  (defun -start (seconds)
+    "Starts the countdown timer with starting value SECONDS."
+    (setq timer nil)
+    (setq end-time (time-add (seconds-to-time seconds) (current-time)))
+    (-update-timer)
+    (-set-mode-line :on)
+    (-set-timer :on)
+    (message "Timer started")
+    nil)
 
-(defun sbw/countdown-toggle (seconds)
-  "If the coundown timer is stopped then start it with duration SECONDS, otherwise stop it."
-  (if (sbw/countdown-running?)
-    (sbw/countdown-stop)
-    (sbw/countdown-start seconds)))
+  (defun running? ()
+    "Returns t when a countdown is running, nil otherwise."
+    (when (bound-and-true-p timer) t))
+
+  (defun toggle (seconds)
+    "If the coundown timer is stopped then start it with duration SECONDS, otherwise stop it."
+    (if (running?)
+      (-stop)
+      (-start seconds))))
 
 (defun sbw/summarise-timer-toggle ()
   "Toggles a thirty second summary timer."
