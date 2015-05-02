@@ -39,12 +39,12 @@
     :group 'sbw-dark-faces)
 
   (defface sbw-dark-powerline-two
-    `((t (:foreground ,*match-fg* :background ,*match-bg*)))
+    `((t (:foreground ,*mode-line-fg* :background "gray20")))
     "Face for powerline level two."
     :group 'sbw-dark-faces)
 
   (defface sbw-dark-powerline-three
-    `((t (:foreground ,*normal* :background ,*selection-bg*)))
+    `((t (:foreground ,*mode-line-fg* :background "gray15")))
     "Face for powerline level three."
     :group 'sbw-dark-faces)
 
