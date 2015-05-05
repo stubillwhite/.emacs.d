@@ -26,6 +26,7 @@
      color-theme ;; Color theme support
      undo-tree   ;; Undo tree visualisation
      flyspell    ;; Spell checking
+     flycheck    ;; Syntax checking
 
      ;; org-mode
      org     ;; Your life in plain text
