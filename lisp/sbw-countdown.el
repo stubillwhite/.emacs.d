@@ -38,7 +38,7 @@
         (progn
           (sbw/countdown--expire))
         (progn      
-          (setq sbw/countdown--mode-line-string (sbw/countdown-remaining-as-string))
+          (setq sbw/countdown--mode-line-string (format " [%s]" (sbw/countdown-remaining-as-string)))
           (force-mode-line-update)))))
 
   (defun -expire ()
