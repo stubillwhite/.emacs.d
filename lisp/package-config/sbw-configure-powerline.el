@@ -19,18 +19,26 @@
          ,@body))
 
     (defmacro sbw/powerline--with-filtered-global-mode-string (&rest body)
-      `(lexical-let* ( (special-modes               (list 'sbw/countdown--mode-line-string))
-                       (countdown                   (symbol-value (car (memq 'sbw/countdown--mode-line-string global-mode-string))))
+      `(lexical-let* ( (special-modes               (list 'sbw/countdown--mode-line-string 'org-mode-line-string))
+                       (countdown-string            (symbol-value (car (memq 'sbw/countdown--mode-line-string global-mode-string))))
+                       (org-string                  (symbol-value (car (memq 'org-mode-line-string global-mode-string))))
                        (filtered-global-mode-string (-filter (lambda (x) (not (-contains? special-modes x))) global-mode-string)) )
          ,@body))
 
     (defun sbw/powerline--global-mode-string (face pad)
       (sbw/powerline--with-filtered-global-mode-string
         (powerline-raw filtered-global-mode-string face pad)))
+
+    (defun sbw/powerline--raw (s face pad)
+      (powerline-raw (when s (s-trim (substring-no-properties s))) face pad))
     
     (defun sbw/powerline--countdown-timer (face pad)
       (sbw/powerline--with-filtered-global-mode-string
-        (powerline-raw (when countdown (s-trim countdown)) face pad)))
+        (sbw/powerline--raw countdown-string face pad)))
+
+    (defun sbw/powerline--org-mode-line-string (face pad)
+      (sbw/powerline--with-filtered-global-mode-string
+        (sbw/powerline--raw org-string face pad)))
     
     (defun sbw/powerline-personal-theme ()
       (setq-default mode-line-format
@@ -63,6 +71,7 @@
                               (sbw/powerline--global-mode-string face3 'r)
                               ;; Level 2
                               (funcall separator-right face3 face2)
+                              (sbw/powerline--org-mode-line-string face2 'r)
                               (sbw/powerline--countdown-timer face2 'r)
                               ;; Level 1
                               (funcall separator-right face2 face1)
