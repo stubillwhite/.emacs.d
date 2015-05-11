@@ -91,7 +91,7 @@
   (interactive)
   (if (sbw/countdown-running?)
     (sbw/countdown-stop)
-    (sbw/countdown-start 5)))
+    (sbw/countdown-start 30)))
 
 (defun sbw/pomodoro-timer-toggle ()
   "Toggles a twenty-five minute pomodoro timer."

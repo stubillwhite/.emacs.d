@@ -8,6 +8,9 @@
     (global-company-mode))
 
   :config
-  (progn))
+  (progn
+    (setq
+      company-dabbrev-ignore-case nil
+      company-dabbrev-downcase    nil)))
 
 (provide 'sbw-configure-company)
