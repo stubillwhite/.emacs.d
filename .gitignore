@@ -4,6 +4,7 @@
 ac-comphist.dat
 backups/
 elpa/
+el-get/
 projectile-bookmarks.eld
 projectile.cache
 recentf
@@ -12,3 +13,4 @@ url/cache/
 url/cookies
 bookmarks
 eshell
+tramp
