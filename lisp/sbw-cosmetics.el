@@ -13,7 +13,7 @@
 (setq-default truncate-lines t)                  ;; Truncate lines don't wrap
 
 ;; Font
-(when (eq system-type 'windows-nt)
+(when (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
   ;; (set-frame-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
   ;; (set-frame-font "Lucida Console-10")
   ;; (set-frame-font "Inconsolata-dz-10")

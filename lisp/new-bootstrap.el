@@ -70,7 +70,6 @@
 
      ;; XML
      ;;nxml-mode ;; Major mode for editing XML
-     ;;el-get
      )
   "List of the additional packages required for this Emacs configuration.")
 
@@ -153,7 +152,7 @@
             (eval `(use-package ,pkg))))))
     pkg-list))
 
-(defun sbw/bootstrap-load-elisp-files (dir)
+(defun sbw/new-bootstrap-load-elisp-files (dir)
   "Load the Elisp files in DIR."
   (mapc
     (lambda (x) (load-file x))

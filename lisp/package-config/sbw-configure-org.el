@@ -10,12 +10,12 @@
 
     ;; Org files
 
-    (when (eq system-type 'gnu/linux)
-      (setq org-directory "~/Dropbox/Private/org"))
-
-    (when (eq system-type 'windows-nt)
-      (setq org-directory "C:/Users/IBM_ADMIN/Dropbox/Private/org"))
-    
+    (setq org-directory 
+      (cond
+        ((eq system-type 'gnu/linux)  "~/Dropbox/Private/org")
+        ((eq system-type 'windows-nt) "C:/Users/IBM_ADMIN/Dropbox/Private/org")
+        ((eq system-type 'cygwin)     "/cygdrive/c/Users/IBM_ADMIN/Dropbox/Private/org")))
+           
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."
       (-mapcat

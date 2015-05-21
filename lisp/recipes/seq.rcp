@@ -1,0 +1,3 @@
+( :name        helm
+  :description "Sequence manipulation library for Emacs."
+  :type        elpa )

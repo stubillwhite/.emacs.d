@@ -1,0 +1,3 @@
+( :name        helm-projectile
+  ;;:description "Emacs incremental and narrowing framework"
+  :type        elpa )

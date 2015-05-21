@@ -2,19 +2,19 @@
 (setq message-log-max 16384)
 (setq-default use-package-verbose t)
 
-(message "-- Starting Emacs --")
+(defun sbw/init-message (s)
+  (message (format "\n-- %s --\n" s)))
+(sbw/init-message "Starting Emacs")
 
 (defconst sbw/emacs-start-time (current-time))
 
 (defun sbw/init-report-time-elapsed ()
   "Report time spent initialsing."
   (let ( (elapsed (float-time (time-subtract (current-time) sbw/emacs-start-time))) )
-    (message "\n-- %s --\n" (format "Start up completed in %.1fs" elapsed))))
+    (sbw/init-message (format "Start up completed in %.1fs" elapsed))))
 
 (add-hook 'after-init-hook 'sbw/init-report-time-elapsed 'append)
 
-(defun sbw/init-message (s)
-  (message (concat "\n" s)))
 
 ;; Add Lisp package locations
 (setq sbw/lisp-path "~/.emacs.d/lisp")
@@ -35,6 +35,9 @@
     (sbw/init-message "Installing packages")
     (sbw/new-bootstrap-install sbw/new-bootstrap-all-packages)
 
+    (add-to-list 'load-path "~/.emacs.d/elpa")
+    (package-initialize)
+    
     (sbw/init-message "Requiring core packages")
     (sbw/new-bootstrap-require sbw/new-bootstrap-core-packages)
     
