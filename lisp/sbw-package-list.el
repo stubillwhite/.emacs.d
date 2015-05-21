@@ -1,88 +1,72 @@
 ;; Packages required for the configuration
 
-(defconst sbw/pkg-repositories
-  '( ("gnu"          . "http://elpa.gnu.org/packages/")
-     ("org"          . "http://orgmode.org/elpa/")
-     ("melpa-stable" . "http://stable.melpa.org/packages/")
-     ("melpa"        . "http://melpa.org/packages/")
-     ("marmalade"    . "http://marmalade-repo.org/packages/")
-     )
-  "List of cons cells of the repositories to fetch packages from.")
-
 (defconst sbw/pkg-core-packages
-  '( use-package      ;; Easy package use
-     dash             ;; Modern list library
-     dash-functional  ;; Further functions for dash
-     f                ;; Modern file API
-     s                ;; Modern string API
-     names            ;; Sane namespace handling
-     seq              ;; Unified sequence handling
+  '( (:name use-package)     ;; Easy package use
+     (:name dash)            ;; Modern list library
+     (:name dash-functional) ;; Further functions for dash
+     (:name f)               ;; Modern file API
+     (:name s)               ;; Modern string API
+     (:name names)           ;; Sane namespace handling
+     (:name seq)             ;; Unified sequence handling
      )
   "List of the core packages required by everything else, which have no dependencies.")
 
 (defconst sbw/pkg-additional-packages
-  '(
-     ;; Standard stuff
-     color-theme ;; Color theme support
-     undo-tree   ;; Undo tree visualisation
-     flyspell    ;; Spell checking
-     flycheck    ;; Syntax checking
+  '( (:name color-theme) ;; Color theme support
+     (:name undo-tree)   ;; Undo tree visualisation
+     (:name flyspell)    ;; Spell checking
+     (:name flycheck)    ;; Syntax checking
 
      ;; org-mode
-     org     ;; Your life in plain text
-     htmlize ;; html org-mode reports
+     (:name org)     ;; Your life in plain text
+     (:name htmlize) ;; html org-mode reports
 
      ;; Git
-     magit ;; Control Git from Emacs
+     (:name magit) ;; Control Git from Emacs
 
      ;; Auto-complete
-     company ;; Auto-completion
+     (:name company) ;; Auto-completion
 
      ;; Interface
-     ;;smart-mode-line ;; Better mode line
-     ;;smart-mode-line-powerline-theme ;; Powerline theme for smart-mode-line
-     projectile      ;; Project interaction library for Emacs
-     ace-jump-mode   ;; Faster movement
-     switch-window   ;; Faster switching between windows
-     expand-region   ;; Expand region by semantic units
-     hydra           ;; Make Emacs bindings that stick around
-     worf            ;; Vi-like bindings for org-mode
+     (:name powerline)     ;; Emacs version of the Vim powerline
+     (:name diminish)      ;; Abbreviate minor mode indicators
+     (:name projectile)    ;; Project interaction library for Emacs
+     (:name ace-jump-mode) ;; Faster movement
+     (:name switch-window) ;; Faster switching between windows
+     (:name expand-region) ;; Expand region by semantic units
+     (:name hydra)         ;; Make Emacs bindings that stick around
+     ;;(:name worf)        ;; Vi-like bindings for org-mode
 
-     ;;nyan-mode       ;; Nyan-nyan-nyan-nyan-nyan nyan nyan nyan
-     powerline
-     diminish
-     
      ;; Helm
-     helm            ;; Incremental narrowing framework
-     helm-swoop      ;; Efficiently skipping between matches
-     helm-projectile ;; Helm integration for projectile
+     (:name helm)            ;; Incremental narrowing framework
+     (:name helm-swoop)      ;; Efficiently skipping between matches
+     (:name helm-projectile) ;; Helm integration for projectile
      
      ;; Clojure
-     clojure-mode      ;; Clojure mode
-     cider             ;; REPL support
-     smartparens       ;; Improved paredit
-     ac-cider          ;; Cider REPL autocomplete and documentation
-     expectations-mode ;; Clojure expectations minor mode
+     (:name clojure-mode)      ;; Clojure mode
+     (:name cider)             ;; REPL support
+     (:name smartparens)       ;; Improved paredit
+     (:name ac-cider)          ;; Cider REPL autocomplete and documentation
+     (:name expectations-mode) ;; Clojure expectations minor mode
 
      ;; Graphviz
-     graphviz-dot-mode ;; Graphviz DOT file support and previews
+     (:name graphviz-dot-mode) ;; Graphviz DOT file support and previews
 
      ;; Markdown
-     markdown-mode ;; Markdown mode
+     (:name markdown-mode) ;; Markdown mode
 
      ;; Groovy
-     (groovy-mode . "melpa-stable") ;; Groovy mode
+     (:name groovy-mode) ;; Groovy mode
 
      ;; Yasnippets
-     yasnippet ;; Yet another snippet extension for Emacs
+     (:name yasnippet) ;; Yet another snippet extension for Emacs
 
      ;; Elisp
-     json  ;; JavaScript Object Notation parser / generator
-     async ;; Asynchronous processing in Emacs
+     (:name json)  ;; JavaScript Object Notation parser / generator
+     (:name async) ;; Asynchronous processing in Emacs
 
      ;; XML
      ;;nxml-mode ;; Major mode for editing XML
-     ;;el-get
      )
   "List of the additional packages required for this Emacs configuration.")
 
@@ -91,17 +75,17 @@
   "List of all the packages required for this Emacs configuration.")
 
 (defconst sbw/pkg-personal-packages
-  '( sbw-bindings
-     sbw-cosmetics
-     sbw-cosmetics-code-style
-     sbw-countdown
-     sbw-hash-tables
-     sbw-menu
-     sbw-misc
-     sbw-multimethods
-     sbw-org-review
-     sbw-time
-     sbw-utils )
+  '( (:name sbw-bindings)
+     (:name sbw-cosmetics)
+     (:name sbw-cosmetics-code-style)
+     (:name sbw-countdown)
+     (:name sbw-hash-tables)
+     (:name sbw-menu)
+     (:name sbw-misc)
+     (:name sbw-multimethods)
+     (:name sbw-org-review)
+     (:name sbw-time)
+     (:name sbw-utils) )
   "List of my packages.")
 
 (provide 'sbw-package-list)

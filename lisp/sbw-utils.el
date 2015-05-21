@@ -30,6 +30,7 @@
     s))
 
 ;; TODO Test this
+;; TODO Might be replaced with s.el now?
 (defun sbw/collect-by (f l)
   "Returns a hash-table of lists of items, keyed by the result of (f item) for each item in list l."
   (-reduce-from    
@@ -50,5 +51,11 @@
 ;; TODO Prefix these
 (defalias 'sbw/dec '1- "Return x minus one.")
 (defalias 'sbw/inc '1+ "Return x plus one.")
+
+;; TODO Test these, break tests into a separate file
+(defun sbw/pprint (x)
+  "Return X as a pretty-printed string."
+  (let ( (json-encoding-pretty-print t) )
+    (s-replace "\"" "" (json-encode x))))
 
 (provide 'sbw-utils)

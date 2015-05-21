@@ -5,6 +5,9 @@
   
   :init
   (progn
+    (require 'helm-projectile)
+    (helm-projectile-on)
+
     (require 'helm-config)
     (require 'helm-grep)
 

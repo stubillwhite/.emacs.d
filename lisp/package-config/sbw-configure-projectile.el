@@ -7,10 +7,7 @@
   
   :init
   (progn
-    (projectile-global-mode)
-
-    (require 'helm-projectile)
-    (helm-projectile-on))
+    (projectile-global-mode))
 
   :config
   (progn))
