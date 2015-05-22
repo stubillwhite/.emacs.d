@@ -1,0 +1,3 @@
+( :name        flycheck
+  :description "On-the-fly syntax checking extension"
+  :type        elpa )
