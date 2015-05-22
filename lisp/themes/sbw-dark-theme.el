@@ -38,6 +38,16 @@
     "Face for powerline level one if inactive."
     :group 'sbw-dark-faces)
 
+  (defface sbw-dark-powerline-one-evil-insert
+    `((t (:foreground ,*mode-line-fg* :background "coral3")))
+    "Face for powerline level one if Evil insert mode active."
+    :group 'sbw-dark-faces)
+
+  (defface sbw-dark-powerline-one-evil-normal
+    `((t (:foreground ,*mode-line-fg* :background "coral4")))
+    "Face for powerline level one if Evil normal mode active."
+    :group 'sbw-dark-faces)
+    
   (defface sbw-dark-powerline-two
     `((t (:foreground ,*mode-line-fg* :background "gray20")))
     "Face for powerline level two."

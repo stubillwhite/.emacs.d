@@ -6,8 +6,11 @@
 
     (defmacro sbw/powerline--with-powerline-faces (&rest body)
       `(lexical-let* ( (active          (powerline-selected-window-active))
-                       (mode-line       (if active 'mode-line 'mode-line-inactive))
-                       (face1           (if active 'sbw-dark-powerline-one-active 'sbw-dark-powerline-one-inactive))
+                       (face1           (cond
+                                          ((evil-insert-state-p) 'sbw-dark-powerline-one-evil-insert)
+                                          ((evil-normal-state-p) 'sbw-dark-powerline-one-evil-normal)
+                                          (active                'sbw-dark-powerline-one-active)
+                                          (t                     'sbw-dark-powerline-one-inactive)))
                        (face2           'sbw-dark-powerline-two)
                        (face3           'sbw-dark-powerline-three)
                        (separator-left  (intern (format "powerline-%s-%s"
