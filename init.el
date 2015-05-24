@@ -47,4 +47,5 @@
 (sbw/init-message "Loading tests")
 (sbw/bootstrap-load-elisp-files "~/.emacs.d/lisp/test")
 
-
+(sbw/init-message "Unused configurations")
+(sbw/bootstrap-display-unused-configurations "~/.emacs.d/lisp/package-config" sbw/pkg-all-packages)

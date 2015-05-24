@@ -67,4 +67,23 @@
     (lambda (x) (load-file x))
     (directory-files dir :full-name ".*\.el")))
 
+(defun sbw/bootstrap--used-configurations (dir pkg-list)
+  (mapcar
+    (lambda (x) (sbw/bootstrap--with-package-config x
+             (concat "sbw-configure-" (symbol-name name) ".el")))
+    pkg-list))
+
+(defun sbw/bootstrap--unused-configurations (dir pkg-list)
+  (let* ( (used-configs (sbw/bootstrap--used-configurations dir pkg-list))
+          (is-not-used? (lambda (x) (not (member x used-configs))))
+          (get-filename (lambda (x) (file-name-nondirectory x))) )
+    (sbw/bootstrap--filter
+      is-not-used?
+      (mapcar get-filename (directory-files dir :full-name "\.*\.el")))))
+
+(defun sbw/bootstrap-display-unused-configurations (dir pkg-list)
+  (mapc
+    (lambda (x) (message " - %s" x))
+    (sbw/bootstrap--unused-configurations dir pkg-list)))
+
 (provide 'sbw-bootstrap)
