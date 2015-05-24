@@ -4,13 +4,19 @@
   :init
   (progn
 
+    (defun sbw/powerline--level-one-face ()
+      (let* ( (active (powerline-selected-window-active))
+              (evil   (bound-and-true-p evil-local-mode))
+              (evil-insert (and evil (evil-insert-state-p)))
+              (evil-normal (and evil (evil-normal-state-p))) )
+        (cond
+          (evil-insert 'sbw-dark-powerline-one-evil-insert)
+          (evil-normal 'sbw-dark-powerline-one-evil-normal)
+          (active      'sbw-dark-powerline-one-active)
+          (t           'sbw-dark-powerline-one-inactive))))
+    
     (defmacro sbw/powerline--with-powerline-faces (&rest body)
-      `(lexical-let* ( (active          (powerline-selected-window-active))
-                       (face1           (cond
-                                          ((evil-insert-state-p) 'sbw-dark-powerline-one-evil-insert)
-                                          ((evil-normal-state-p) 'sbw-dark-powerline-one-evil-normal)
-                                          (active                'sbw-dark-powerline-one-active)
-                                          (t                     'sbw-dark-powerline-one-inactive)))
+      `(lexical-let* ( (face1           (sbw/powerline--level-one-face))
                        (face2           'sbw-dark-powerline-two)
                        (face3           'sbw-dark-powerline-three)
                        (separator-left  (intern (format "powerline-%s-%s"
