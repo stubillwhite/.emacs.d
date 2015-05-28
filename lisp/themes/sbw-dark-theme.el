@@ -220,8 +220,8 @@
     `(company-scrollbar-fg                ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-keyword)))))
     
     ;; Flyspell
-    `(flyspell-duplicate                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-warning)))))
-    `(flyspell-incorrect                  ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-error)))))
+    `(flyspell-duplicate-face             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-warning)))))
+    `(flyspell-incorrect-face             ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-error)))))
 
     ;; GUI
     `(cursor                              ((t (:background unspecified :foreground unspecified :weight normal :inherit (sbw-dark-normal)))))

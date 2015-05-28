@@ -21,6 +21,9 @@
           (turn-on-evil-mode)))))
 
   :bind
-  ("C-c v" . sbw/evil-toggle-evil-mode))
+  ("C-c v" . sbw/evil-toggle-evil-mode)
+  ("M-["   . sbw/evil-toggle-evil-mode)
+  ("M-q"   . evil-visual-block)
+  )
 
 (provide 'sbw-configure-evil)
