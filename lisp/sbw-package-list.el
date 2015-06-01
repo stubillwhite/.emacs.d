@@ -18,8 +18,9 @@
      (:name flycheck)    ;; Syntax checking
 
      ;; org-mode
-     (:name org)     ;; Your life in plain text
-     (:name htmlize) ;; html org-mode reports
+     (:name org)      ;; Your life in plain text
+     (:name htmlize)  ;; html org-mode reports
+     (:name org-gcal) ;; Org sync with Google Calendar
 
      ;; Git
      (:name magit) ;; Control Git from Emacs
@@ -70,6 +71,9 @@
 
      ;; XML
      ;;nxml-mode ;; Major mode for editing XML
+
+     ;; HTML
+     (:name web-mode) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
      )
   "List of the additional packages required for this Emacs configuration.")
 
