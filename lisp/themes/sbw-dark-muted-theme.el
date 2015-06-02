@@ -38,13 +38,14 @@
 
        (sbw-dark-muted-normal              `((t (:inherit default               :foreground ,*normal-fg*   :background ,*normal-bg*))))
        (sbw-dark-muted-selection           `((t (:inherit sbw-dark-muted-normal                            :background ,*selection-bg*))))
-       (sbw-dark-muted-comment             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-1*      :background ,*normal-bg*))))
-       (sbw-dark-muted-string              `((t (:inherit sbw-dark-muted-normal :foreground ,*item-4*      :background ,*normal-bg*))))
+       (sbw-dark-muted-comment             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-1*))))
+       (sbw-dark-muted-string              `((t (:inherit sbw-dark-muted-normal :foreground ,*item-4*))))
+       (sbw-dark-muted-error               `((t (:inherit sbw-dark-muted-normal :foreground ,*error-fg*))))    
        (sbw-dark-muted-emphasis            `((t (:inherit sbw-dark-muted-normal :foreground ,*emphasis-fg* :background ,*emphasis-bg*))))    
        (sbw-dark-muted-match               `((t (:inherit sbw-dark-muted-normal :foreground ,*match-fg*    :background ,*match-bg*))))
-       (sbw-dark-muted-constant            `((t (:inherit sbw-dark-muted-normal :foreground ,*item-2*      :background ,*normal-bg*))))
+       (sbw-dark-muted-constant            `((t (:inherit sbw-dark-muted-normal :foreground ,*item-2*))))
        (sbw-dark-muted-mismatch            `((t (:inherit sbw-dark-muted-normal :foreground ,*mismatch-fg* :background ,*mismatch-bg*))))
-       (sbw-dark-muted-keyword             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-3*      :background ,*normal-bg*))))
+       (sbw-dark-muted-keyword             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-3*))))
        ))
   
   (custom-theme-set-faces 'sbw-dark-muted
@@ -64,6 +65,10 @@
     ;; eshell
     '(eshell-prompt          ((t (:inherit sbw-dark-muted-keyword))))
 
+    ;; flyspell
+    `(flyspell-duplicate-face ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
+    `(flyspell-incorrect-face ((t (:inherit sbw-dark-muted-normal :underline (:color ,*error-fg*   :style wave)))))
+    
     ;; font-lock
     '(font-lock-builtin-face              ((t (:inherit sbw-dark-muted-normal))))
     '(font-lock-comment-delimiter-face    ((t (:inherit sbw-dark-muted-comment))))
@@ -100,10 +105,15 @@
     '(helm-swoop-target-line-block-face   ((t (:inherit sbw-dark-muted-selection))))
 
     ;; org
-    '(org-agenda-clocking                 ((t (:inherit sbw-dark-muted-normal))))
+    '(org-agenda-clocking                 ((t (:inherit sbw-dark-muted-emphasis))))
+    '(org-agenda-current-time             ((t (:inherit sbw-dark-muted-normal))))
+    '(org-agenda-date                     ((t (:inherit sbw-dark-muted-keyword))))
     '(org-agenda-done                     ((t (:inherit sbw-dark-muted-normal))))
+    '(org-agenda-structure                ((t (:inherit sbw-dark-muted-keyword))))
     '(org-checkbox                        ((t (:inherit sbw-dark-muted-emphasis))))
+    '(org-date                            ((t (:inherit sbw-dark-muted-normal))))
     '(org-done                            ((t (:inherit sbw-dark-muted-emphasis))))
+    '(org-drawer                          ((t (:inherit sbw-dark-muted-normal))))
     '(org-level-1                         ((t (:inherit sbw-dark-muted-normal))))
     '(org-level-2                         ((t (:inherit sbw-dark-muted-normal))))
     '(org-level-3                         ((t (:inherit sbw-dark-muted-normal))))
@@ -112,9 +122,14 @@
     '(org-level-6                         ((t (:inherit sbw-dark-muted-normal))))
     '(org-level-7                         ((t (:inherit sbw-dark-muted-normal))))
     '(org-level-8                         ((t (:inherit sbw-dark-muted-normal))))
-    '(org-priority                        ((t (:inherit sbw-dark-muted-normal))))
+    '(org-link                            ((t (:inherit sbw-dark-muted-normal :underline t))))
+    '(org-priority                        ((t (:inherit sbw-dark-muted-emphasis))))
+    '(org-scheduled                       ((t (:inherit sbw-dark-muted-normal))))
+    '(org-scheduled-previously            ((t (:inherit sbw-dark-muted-error))))
+    '(org-scheduled-today                 ((t (:inherit sbw-dark-muted-normal))))
+    '(org-special-keyword                 ((t (:inherit sbw-dark-muted-emphasis))))
+    '(org-time-grid                       ((t (:inherit sbw-dark-muted-keyword))))
     '(org-todo                            ((t (:inherit sbw-dark-muted-emphasis))))
-    '(org-link                            ((t (:inherit sbw-dark-muted-emphasis :underline t))))
     ))
 
 (provide-theme 'sbw-dark-muted)

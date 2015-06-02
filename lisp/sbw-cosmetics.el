@@ -1,5 +1,5 @@
 ;; Color theme, don't warn about executing code
-(load-theme 'sbw-dark t)
+(load-theme 'sbw-dark-muted t)
 
 ;; Maximise the screen area by stripping off menu, toolbars, and scrollbars
 (tool-bar-mode -1)
