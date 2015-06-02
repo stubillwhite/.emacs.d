@@ -24,7 +24,7 @@
         (*item-1*        "DarkSeaGreen3")
         (*item-2*        "burlywood1")
         (*item-3*        "CadetBlue2")
-        (*item-4*        "burlywood1")
+        (*item-4*        "burlywood2")
         )
 
   (mapc
@@ -49,20 +49,29 @@
   
   (custom-theme-set-faces 'sbw-dark-muted
 
-    `(default                ((t (:background ,*normal-bg* :foreground ,*normal-fg*))))
+    `(default                             ((t (:background ,*normal-bg* :foreground ,*normal-fg*))))
     
-    '(bold                   ((t (:inherit sbw-dark-muted-normal :bold t))))
-    '(highlight              ((t (:inherit sbw-dark-muted-match))))
-    '(isearch                ((t (:inherit sbw-dark-muted-match))))
-    '(isearch-fail           ((t (:inherit sbw-dark-muted-mismatch))))
-    '(lazy-highlight         ((t (:inherit sbw-dark-muted-match))))
-    '(region                 ((t (:inherit sbw-dark-muted-selection))))
-    '(show-paren-match       ((t (:inherit sbw-dark-muted-match))))
-    '(show-paren-mismatch    ((t (:inherit sbw-dark-muted-mismatch))))
-    '(underline              ((t (:inherit sbw-dark-muted-normal :underline t))))
+    '(bold                                ((t (:inherit sbw-dark-muted-normal :bold t))))
+    '(highlight                           ((t (:inherit sbw-dark-muted-match))))
+    '(isearch                             ((t (:inherit sbw-dark-muted-match))))
+    '(isearch-fail                        ((t (:inherit sbw-dark-muted-mismatch))))
+    '(lazy-highlight                      ((t (:inherit sbw-dark-muted-match))))
+    '(region                              ((t (:inherit sbw-dark-muted-selection))))
+    '(show-paren-match                    ((t (:inherit sbw-dark-muted-match))))
+    '(show-paren-mismatch                 ((t (:inherit sbw-dark-muted-mismatch))))
+    '(underline                           ((t (:inherit sbw-dark-muted-normal :underline t))))
+
+    ;; GUI
+    '(cursor                              ((t (:inherit sbw-dark-muted-normal))))
+    '(fringe                              ((t (:inherit sbw-dark-muted-normal))))
+    '(minibuffer-prompt                   ((t (:inherit sbw-dark-muted-normal))))
+    '(mode-line-inactive                  ((t (:inherit sbw-dark-muted-mode-line-inactive))))
+    '(mode-line                           ((t (:inherit sbw-dark-muted-mode-line))))
+    '(text-cursor                         ((t (:inherit sbw-dark-muted-normal))))
+    '(vertical-border                     ((t (:inherit sbw-dark-muted-normal))))
 
     ;; eshell
-    '(eshell-prompt          ((t (:inherit sbw-dark-muted-keyword))))
+    '(eshell-prompt                       ((t (:inherit sbw-dark-muted-keyword))))
 
     ;; font-lock
     '(font-lock-builtin-face              ((t (:inherit sbw-dark-muted-normal))))
@@ -98,6 +107,19 @@
     '(helm-swoop-target-word-face         ((t (:inherit sbw-dark-muted-match))))
     '(helm-swoop-target-line-face         ((t (:inherit sbw-dark-muted-selection))))
     '(helm-swoop-target-line-block-face   ((t (:inherit sbw-dark-muted-selection))))
+
+    ;; nXML
+    '(nxml-attribute-colon                ((t (:inherit sbw-dark-muted-normal))))
+    '(nxml-attribute-local-name           ((t (:inherit sbw-dark-muted-normal))))
+    '(nxml-attribute-prefix               ((t (:inherit sbw-dark-muted-normal))))
+    '(nxml-element-local-name             ((t (:inherit sbw-dark-muted-keyword))))
+    '(nxml-element-colon                  ((t (:inherit sbw-dark-muted-keyword))))
+    '(nxml-element-prefix                 ((t (:inherit sbw-dark-muted-keyword))))
+    '(nxml-delimiter                      ((t (:inherit sbw-dark-muted-normal))))
+    '(nxml-attribute-value                ((t (:inherit sbw-dark-muted-constant))))
+    '(nxml-attribute-value-delimiter      ((t (:inherit sbw-dark-muted-constant))))
+    '(nxml-comment-content                ((t (:inherit sbw-dark-muted-comment))))
+    '(nxml-comment-delimiter              ((t (:inherit sbw-dark-muted-comment))))
 
     ;; org
     '(org-agenda-clocking                 ((t (:inherit sbw-dark-muted-normal))))
