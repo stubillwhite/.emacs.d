@@ -13,12 +13,12 @@
         (*emphasis-fg*   "gray100")
 
         (*selection-bg*  "gray30")
-        (*warning-fg*    "burlywood1")
+        (*warning-fg*    "burlywood2")
         (*error-fg*      "IndianRed3")
 
         (*match-bg*      "darkslategray")
         (*match-fg*      "gray100")
-        (*mismatch-bg*   "IndianRed1")
+        (*mismatch-bg*   "IndianRed3")
         (*mismatch-fg*   "gray100")
        
         (*item-1*        "DarkSeaGreen3")

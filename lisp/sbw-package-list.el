@@ -12,7 +12,8 @@
   "List of the core packages required by everything else, which have no dependencies.")
 
 (defconst sbw/pkg-additional-packages
-  '( (:name color-theme) ;; Color theme support
+  '( ;; General usability
+     (:name color-theme) ;; Color theme support
      (:name undo-tree)   ;; Undo tree visualisation
      (:name flyspell)    ;; Spell checking
      (:name flycheck)    ;; Syntax checking
@@ -33,6 +34,8 @@
      (:name diminish)      ;; Abbreviate minor mode indicators
      (:name projectile)    ;; Project interaction library for Emacs
      (:name ace-jump-mode) ;; Faster movement
+     ;;(:name ace-window)    ;; Quickly switch windows
+     (:name golden-ratio)  ;; Automatic resizing of Emacs windows to the golden ratio
      (:name switch-window) ;; Faster switching between windows
      (:name expand-region) ;; Expand region by semantic units
      (:name hydra)         ;; Make Emacs bindings that stick around
@@ -70,7 +73,7 @@
      (:name evil) ;; Welcome home
 
      ;; XML
-     ;;nxml-mode ;; Major mode for editing XML
+     ;;(:name nxml-mode) ;; Major mode for editing XML
 
      ;; HTML
      (:name web-mode) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
@@ -92,7 +95,8 @@
      (:name sbw-multimethods)
      (:name sbw-org-review)
      (:name sbw-time)
-     (:name sbw-utils) )
+     (:name sbw-utils)
+     (:name sbw-value-eq))
   "List of my packages.")
 
 (provide 'sbw-package-list)

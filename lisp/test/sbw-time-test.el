@@ -2,10 +2,10 @@
 (require 'sbw-hash-tables)
 (require 'dash)
 
-(lexical-let* ( (epoch-time       (days-to-time 0))
-                (later-time       (days-to-time 7))
-                (epoch-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600))
-                (later-decomposed (sbw/ht-create :second 0 :minute 0 :hour 1 :day 8 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600)) )
+(lexical-let* ( (epoch-time        (days-to-time 0))
+                (later-time        (days-to-time 7))
+                (epoch-decomposed  (sbw/ht-create :second 0 :minute 0 :hour 1 :day 1 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600))
+                (later-decomposed  (sbw/ht-create :second 0 :minute 0 :hour 1 :day 8 :month 1 :year 1970 :weekday 4 :daylight-saving nil :timezone 3600)) )
 
   ;; sbw/time-decompose
 
@@ -54,9 +54,9 @@
 
   ;; sbw/time-sum
   
-  (ert-deftest sbw/time-sum-needs-implementing ()
-    :expected-result :failed
-    "TODO description"
-    (should (equal t nil)))
+  (ert-deftest sbw/time-sum-then-sum-of-times ()
+    "sbw/time-sum then sum of times."
+    (let* ( (expected (mapcar (lambda (x) (* 2 x)) (append later-time (list 0 0)))) )
+      (should (equal (sbw/time-sum later-time later-time) expected))))
 
   )
