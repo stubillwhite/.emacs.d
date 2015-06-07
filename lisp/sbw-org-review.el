@@ -351,17 +351,4 @@
         (-build-filename "report" start end)))
     ))
 
-;; TODO Move out into project management
-;; TODO Should prompt for input if not provided
-(defun sbw/org-review-new-org-file (supercategory category)
-  (let* ( (content (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
-          (path    (s-lex-format "${org-directory}/current/${supercategory}/${category}.org" )))
-    (f-write
-      (->> content
-        (s-replace-all `(("${category}" . ,category))))
-      'utf-8
-      path)
-    (sbw/org-find-org-files)
-    (message "Created and added %s" path)))
-
 (provide 'sbw-org-review)

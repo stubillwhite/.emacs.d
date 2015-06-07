@@ -374,6 +374,20 @@
       (sbw/sort-all-subtrees)
       nil)
 
+    ;; Creating a new org file
+
+    (defun sbw/org-new-org-file (project category)
+      (interactive "sProject: \nsCategory: ")
+      (let* ( (content (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
+              (path    (s-lex-format "${org-directory}/current/${project}/${category}.org" )))
+        (f-write
+          (->> content
+            (s-replace-all `(("${category}" . ,category))))
+          'utf-8
+          path)
+        (sbw/org-find-org-files)
+        (message "Created and added %s" path)))
+
     ;; Stuff to rationalise
 
     (setq org-fontify-done-headline t)
@@ -387,69 +401,6 @@
               :strike-through t))))
       )
 
-                                        ;(custom-set-faces
-                                        ; '(org-done          ((t (:background unspecified :foreground unspecified :weight normal :strike-through t :inherit (sbw-dark-tag)))))
-                                        ; '(org-headling-done ((t (:background unspecified :foreground unspecified :weight normal :strike-through t :inherit (sbw-dark-normal)))))
-                                        ; )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    ;; Notify appointment reminders using Growl
-
-    (defun sbw/growl-message (msg)
-      "Display msg using Growl."
-      (call-process "c:\\Program Files (x86)\\Growl for Windows\\growlnotify.exe" nil 0 nil "/s:true" "/t:emacs" msg))
-
-                                        ;(defun sbw/appt-disp-window (min-to-app new-time appt-msg)
-                                        ;  (sbw/growl-message (concat "Reminder: " appt-msg))
-                                        ;  (appt-disp-window min-to-app new-time appt-msg))
-
-                                        ;(setq appt-disp-window-function 'sbw/appt-disp-window)
-
-    ;; Archiving
-
-    ;; http://stackoverflow.com/questions/7509463/how-to-move-a-subtree-to-another-subtree-in-org-mode-emacs
-    ;; C-c C-x C-s
-    ;; C-c C-x C-a
-
-    ;; Create target file
-    ;; Create top-level target heading in target file
-    ;; Refile to target
-    ;; Promote subtree
-    ;; Remove target heading
-
-                                        ;(setq org-refile-allow-creating-parent-nodes (quote confirm))
-    (defun sbw/archive-file-name ()
-      (concat
-        org-directory
-        "/archive/"
-        "archive-"
-        (file-name-nondirectory (buffer-file-name))))
-
-    ;; org-refile-use-outline-path
-    ;;  include filename
-
-
-
-  
-                                        ;(setq org-refile-allow-creating-parent-nodes t)
-                                        ;(setq org-refile-use-outline-path 'full-file-path)
-
-                                        ;(defun sbw/test ()
-                                        ;  (interactive) 
-                                        ;  ;(org-refile nil nil '("one.org" . ("two.org" . "three.org")))
-                                        ;  (print (org-refile-get-location))
-                                        ;  )
-
-                                        ;(setq org-refile-allow-creating-parent-nodes nil)
-                                        ;(setq org-refile-use-outline-path nil)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     (setq org-clock-heading-function
       (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30))))
@@ -474,6 +425,7 @@
   ("C-c o f"   . fill-paragraph)
   ("C-c o F"   . sbw/unfill-paragraph))
 
+;; TODO Move somewhere more sensible
 (defun sbw/unfill-paragraph ()
   "Convert a multi-line paragraph into a single line."
   (interactive)
@@ -485,6 +437,5 @@
   (interactive "r")
   (let* ( (fill-column (point-max)) )
     (fill-region start end nil)))
-
 
 (provide 'sbw-configure-org-mode)
