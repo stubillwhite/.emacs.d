@@ -3,9 +3,9 @@
 # key: task
 # --
 task ${1:taskName}(${2:type: ${3:TaskType}}${4:, dependsOn: [${5:AnotherTaskName}]}) {
-    ${6:description '${7:TODO Add task description}'}
-    ${8:group       '${9:TODO Add task group}'}
-    doLast {
+    ${6:description '${7:TODO Add task description}'
+    }${8:group       '${9:TODO Add task group}'
+    }doLast {
         $0
     }
 }
