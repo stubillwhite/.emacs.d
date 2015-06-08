@@ -1,17 +1,18 @@
 (require 'use-package)
 
 (use-package yasnippet
-  :defer t
+  :diminish yas-minor-mode
 
   :init
-  (progn)
+  (progn
+    (setq yas-snippet-dirs "~/.emacs.d/snippets")
+    (yas-global-mode)
+    (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand))
 
   :config
   (progn
-    (setq yas-snippet-dirs "~/.emacs.d/snippets")
-    (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
-    (yas-reload-all)
-    (yas-global-mode)))
+    (yas-reload-all)    
+    ))
 
 (provide 'sbw-configure-yasnippet)
 

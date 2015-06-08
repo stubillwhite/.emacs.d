@@ -39,7 +39,7 @@
      (:name switch-window) ;; Faster switching between windows
      (:name expand-region) ;; Expand region by semantic units
      (:name hydra)         ;; Make Emacs bindings that stick around
-     (:name worf)          ;; Vi-like bindings for org-mode
+     ;; (:name worf)          ;; Vi-like bindings for org-mode
 
      ;; Helm
      (:name helm)            ;; Incremental narrowing framework
