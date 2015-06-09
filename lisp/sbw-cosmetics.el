@@ -2,6 +2,7 @@
 (load-theme 'sbw-dark-muted t)
 
 ;; Maximise the screen area by stripping off menu, toolbars, and scrollbars
+(tooltip-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
