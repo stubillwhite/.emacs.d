@@ -23,11 +23,11 @@
     (lambda (acc v)
       (-let* ( (key-a (car v))
                (key-b (cdr v))
-               (item-a (sbw/ht-get a key-a))
-               (item-b (sbw/ht-get b key-b))) 
+               (item-a (gethash key-a a))
+               (item-b (gethash key-b b))) 
         (and acc (sbw/value-eq key-a key-b) (sbw/value-eq item-a item-b))))
     t
-    (-zip-fill :sbw/value-eq--padding (sbw/ht-keys a) (sbw/ht-keys b))))
+    (-zip-fill :sbw/value-eq--padding (hash-table-keys a) (hash-table-keys b))))
 
 (defun sbw/value-eq--lists-equal (a b)
   (-reduce-from
