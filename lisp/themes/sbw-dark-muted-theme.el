@@ -13,6 +13,7 @@
         (*emphasis-fg*   "gray100")
 
         (*selection-bg*  "gray30")
+        (*success-fg*    "DarkSeaGreen3")
         (*warning-fg*    "burlywood2")
         (*error-fg*      "IndianRed3")
 
@@ -40,6 +41,8 @@
        (sbw-dark-muted-selection           `((t (:inherit sbw-dark-muted-normal                            :background ,*selection-bg*))))
        (sbw-dark-muted-comment             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-1*))))
        (sbw-dark-muted-string              `((t (:inherit sbw-dark-muted-normal :foreground ,*item-4*))))
+       (sbw-dark-muted-success             `((t (:inherit sbw-dark-muted-normal :foreground ,*success-fg*))))
+       (sbw-dark-muted-warning             `((t (:inherit sbw-dark-muted-normal :foreground ,*warning-fg*))))
        (sbw-dark-muted-error               `((t (:inherit sbw-dark-muted-normal :foreground ,*error-fg*))))    
        (sbw-dark-muted-emphasis            `((t (:inherit sbw-dark-muted-normal :foreground ,*emphasis-fg* :background ,*emphasis-bg*))))    
        (sbw-dark-muted-match               `((t (:inherit sbw-dark-muted-normal :foreground ,*match-fg*    :background ,*match-bg*))))
@@ -71,8 +74,17 @@
     '(text-cursor                         ((t (:inherit sbw-dark-muted-normal))))
     '(vertical-border                     ((t (:inherit sbw-dark-muted-normal))))
 
+    ;; ert
+    '(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))
+    '(ert-test-result-unexpected          ((t (:inherit sbw-dark-muted-error))))
+            
     ;; eshell
     '(eshell-prompt                       ((t (:inherit sbw-dark-muted-keyword))))
+
+    ;; expectations
+    '(expectations-failure-face           ((t (:inherit sbw-dark-muted-error))))
+    '(expectations-success-face           ((t (:inherit sbw-dark-muted-success))))
+    '(expectations-error-face             ((t (:inherit sbw-dark-muted-warning))))
 
     ;; flyspell
     `(flyspell-duplicate-face ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
@@ -112,7 +124,8 @@
     '(helm-swoop-target-word-face         ((t (:inherit sbw-dark-muted-match))))
     '(helm-swoop-target-line-face         ((t (:inherit sbw-dark-muted-selection))))
     '(helm-swoop-target-line-block-face   ((t (:inherit sbw-dark-muted-selection))))
-
+    '(helm-source-header                  ((t (:inherit sbw-dark-muted-emphasis))))
+        
     ;; nXML
     '(nxml-attribute-colon                ((t (:inherit sbw-dark-muted-normal))))
     '(nxml-attribute-local-name           ((t (:inherit sbw-dark-muted-normal))))

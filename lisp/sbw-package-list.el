@@ -12,7 +12,7 @@
   "List of the core packages required by everything else, which have no dependencies.")
 
 (defconst sbw/pkg-additional-packages
-  '( ;; General usability
+  '(                     ;; General usability
      (:name color-theme) ;; Color theme support
      (:name undo-tree)   ;; Undo tree visualisation
      (:name flyspell)    ;; Spell checking
@@ -30,16 +30,17 @@
      (:name company) ;; Auto-completion
 
      ;; Interface
-     (:name powerline)     ;; Emacs version of the Vim powerline
-     (:name diminish)      ;; Abbreviate minor mode indicators
-     (:name projectile)    ;; Project interaction library for Emacs
-     (:name ace-jump-mode) ;; Faster movement
-     ;;(:name ace-window)    ;; Quickly switch windows
-     (:name golden-ratio)  ;; Automatic resizing of Emacs windows to the golden ratio
-     (:name switch-window) ;; Faster switching between windows
-     (:name expand-region) ;; Expand region by semantic units
-     (:name hydra)         ;; Make Emacs bindings that stick around
+     (:name powerline)        ;; Emacs version of the Vim powerline
+     (:name diminish)         ;; Abbreviate minor mode indicators
+     (:name projectile)       ;; Project interaction library for Emacs
+     (:name ace-jump-mode)    ;; Faster movement
+     ;;(:name ace-window)     ;; Quickly switch windows
+     (:name golden-ratio)     ;; Automatic resizing of Emacs windows to the golden ratio
+     (:name switch-window)    ;; Faster switching between windows
+     (:name expand-region)    ;; Expand region by semantic units
+     (:name hydra)            ;; Make Emacs bindings that stick around
      ;; (:name worf)          ;; Vi-like bindings for org-mode
+     (:name multiple-cursors) ;; An experiment in adding multiple cursors to emacs
 
      ;; Helm
      (:name helm)            ;; Incremental narrowing framework
