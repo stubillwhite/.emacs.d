@@ -16,6 +16,11 @@
     (sbw/ht-assoc f (sbw/ht-create))
     (sbw/mm--set-registry)))
 
+(defun sbw/mm--unregister-multimethod (f)
+  (-> (sbw/mm--get-registry)
+    (sbw/ht-dissoc f)
+    (sbw/mm--set-registry)))
+
 (defun sbw/mm--get-handler (f-symbol dispatch-func args)
   (let* ( (dispatch-val (apply dispatch-func args)) )
     (-> (sbw/mm--get-registry)
@@ -38,21 +43,10 @@
   (let ( (f-symbol (intern (symbol-name name))) )
     `(sbw/mm--register-dispatch-handler (quote ,f-symbol) ,dispatch-val (lambda ,sig ,body))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
-;; (defun parity (x &rest args)
-;;   (if (= 0 (mod x 2)) :even :odd))
-;; 
-;; (setq *sbw/mm--registry* (sbw/ht-create))
-;; 
-;; (sbw/mm-defmulti describe-number 'parity)
-;; (sbw/mm-defmethod describe-number [:even] (x y) (print (format "The number %d is even" x)))
-;; (sbw/mm-defmethod describe-number [:odd]  (x y) (print (format "The number %d is odd" x)))
-;; 
-;; (describe-number 1 2)
-;; (describe-number 2 2)
-;; 
-;; (print *sbw/mm--registry*)
-;; 
+(defmacro sbw/mm-undefmulti (name)
+  "Undefine NAME as a multimethod."
+  (let ( (f-symbol (intern (symbol-name name))) )
+    `(progn
+       (sbw/mm--unregister-multimethod (quote ,f-symbol)))))
 
 (provide 'sbw-multimethods)
