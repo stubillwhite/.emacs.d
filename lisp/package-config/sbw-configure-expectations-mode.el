@@ -4,7 +4,9 @@
   :defer t
 
   :init
-  (progn)
+  (progn
+    ;; Don't colorize the output if we're reading it in Emacs
+    (setenv "EXPECTATIONS_COLORIZE" "false"))
 
   :config
   (progn

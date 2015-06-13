@@ -11,8 +11,7 @@
 
   :config
   (progn
-    (yas-reload-all)    
-    ))
+    (yas-reload-all)))
 
 (provide 'sbw-configure-yasnippet)
 

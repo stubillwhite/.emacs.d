@@ -6,5 +6,5 @@
     (sbw/mm-defmethod describe-number [:even] (x) :number-is-even)
     (sbw/mm-defmethod describe-number [:odd]  (x) :number-is-odd)
     (should (eq :number-is-even (describe-number 22)))
-    (should (eq :number-is-odd (describe-number 23)))
+    (should (eq :number-is-odd  (describe-number 23)))
     (sbw/mm-undefmulti describe-number)))
