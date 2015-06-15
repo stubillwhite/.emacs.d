@@ -12,7 +12,7 @@ Mode key bindings are grouped with a common prefix for the mode to which the bin
 | `C-c s ...` | Flyspell      |
 | `C-c u ...` | Undo Tree     |
 | `C-c v ...` | Evil          |
-| `C-c w ...` | Switch Window |
+| `C-c w ...` | Window hydra  |
 
 ## Dot ##
 
@@ -95,12 +95,6 @@ Mode key bindings are grouped with a common prefix for the mode to which the bin
 | Key     | Function  |
 |---------+-----------|
 | `C-c v` | Evil mode |
-
-## Switch Window ##
-
-| Key     | Function      |
-|---------+---------------|
-| `C-c w` | Switch window |
 
 # Other key bindings #
 

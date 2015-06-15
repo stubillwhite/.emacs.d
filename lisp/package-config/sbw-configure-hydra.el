@@ -31,6 +31,6 @@ _q_: Exit
       ("q" (lambda () (interactive) nil) :color blue)))
   
   :bind
-  ("<f2>" . sbw/hydra-window/body))
+  ("C-c w" . sbw/hydra-window/body))
       
 (provide 'sbw-configure-hydra)
