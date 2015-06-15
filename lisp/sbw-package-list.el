@@ -34,13 +34,14 @@
      (:name diminish)         ;; Abbreviate minor mode indicators
      (:name projectile)       ;; Project interaction library for Emacs
      (:name ace-jump-mode)    ;; Faster movement
-     ;;(:name ace-window)     ;; Quickly switch windows
+     (:name ace-window)       ;; Quickly switch windows
      (:name golden-ratio)     ;; Automatic resizing of Emacs windows to the golden ratio
-     (:name switch-window)    ;; Faster switching between windows
+     ;;(:name switch-window)    ;; Faster switching between windows
      (:name expand-region)    ;; Expand region by semantic units
      (:name hydra)            ;; Make Emacs bindings that stick around
      ;; (:name worf)          ;; Vi-like bindings for org-mode
      (:name multiple-cursors) ;; An experiment in adding multiple cursors to emacs
+     (:name key-chord)        ;; Map pairs of simultaneously pressed keys to commands
 
      ;; Helm
      (:name helm)            ;; Incremental narrowing framework

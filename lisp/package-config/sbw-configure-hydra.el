@@ -3,30 +3,34 @@
 (use-package hydra
   :defer t
 
-  :init
+  :config
   (progn)
 
-  :config
+  :init
   (progn
-    (defun hydra-vi/pre ()
-      (set-cursor-color "#e52b50"))
-
-    (defun hydra-vi/post ()
-      (set-cursor-color "#ffffff"))
-
-    (global-set-key
-      (kbd "<f2>")
-      (defhydra hydra-vi (:pre hydra-vi/pre :post hydra-vi/post :color amaranth)
-        "vi"
-        ("l" forward-char)
-        ("h" backward-char)
-        ("j" next-line)
-        ("k" previous-line)
-        ("m" set-mark-command "mark")
-        ("a" move-beginning-of-line "beg")
-        ("e" move-end-of-line "end")
-        ("d" delete-region "del" :color blue)
-        ("y" kill-ring-save "yank" :color blue)
-        ("q" nil "quit")))))
-
+    (defhydra sbw/hydra-window (:color amaranth :hint nil)
+      "
+^Navigate^       ^Modify^
+^-------------------------------------
+_h_: Left        _V_: Vertical split
+_j_: Down        _H_: Horizontal split
+_k_: Up          _s_: Swap
+_l_: Right       _d_: Delete
+_a_: Ace-Window
+_q_: Exit
+"
+      ("h" windmove-left)
+      ("j" windmove-down)
+      ("k" windmove-up)
+      ("l" windmove-right)
+      ("a" ace-window)
+      ("V" split-window-horizontally)
+      ("H" split-window-vertically)
+      ("s" (lambda () (interactive) (ace-window 4)))
+      ("d" (lambda () (interactive) (ace-window 16)))
+      ("q" (lambda () (interactive) nil) :color blue)))
+  
+  :bind
+  ("<f2>" . sbw/hydra-window/body))
+      
 (provide 'sbw-configure-hydra)
