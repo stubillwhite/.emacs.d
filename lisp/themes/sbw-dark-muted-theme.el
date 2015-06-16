@@ -49,12 +49,16 @@
        (sbw-dark-muted-constant            `((t (:inherit sbw-dark-muted-normal :foreground ,*item-2*))))
        (sbw-dark-muted-mismatch            `((t (:inherit sbw-dark-muted-normal :foreground ,*mismatch-fg* :background ,*mismatch-bg*))))
        (sbw-dark-muted-keyword             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-3*))))
+
+       (sbw-dark-muted-menu                `((t (:inherit sbw-dark-muted-normal                            :background "gray30"))))
+       (sbw-dark-muted-menu-selection      `((t (:inherit sbw-dark-muted-normal                            :background "SkyBlue4"))))
        ))
-  
+
   (custom-theme-set-faces 'sbw-dark-muted
 
     `(default                             ((t (:background ,*normal-bg* :foreground ,*normal-fg*))))
-    
+
+    ;; Basics
     '(bold                                ((t (:inherit sbw-dark-muted-normal :bold t))))
     '(highlight                           ((t (:inherit sbw-dark-muted-match))))
     '(isearch                             ((t (:inherit sbw-dark-muted-match))))
@@ -79,6 +83,10 @@
     '(company-tooltip-common              ((t (:inherit sbw-dark-muted-normal :background "gray30" :foreground "gray100"))))
     '(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-normal :background "SkyBlue4" :foreground "gray100"))))
     '(company-tooltip-selection           ((t (:inherit sbw-dark-muted-normal :background "SkyBlue4"))))
+    ;'(company-tooltip                     ((t (:inherit sbw-dark-muted-menu))))
+    ;'(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground "gray100"))))
+    ;'(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-menu-selection :foreground "gray100"))))
+    ;'(company-tooltip-selection           ((t (:inherit sbw-dark-muted-menu-selection))))
     
     ;; ert
     '(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))
