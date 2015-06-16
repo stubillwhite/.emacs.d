@@ -16,7 +16,7 @@ _h_: Left          _V_: Vertical split      _g_: Golden ratio
 _j_: Down          _H_: Horizontal split    _=_: Equal
 _k_: Up            _s_: Swap
 _l_: Right         _d_: Delete
-_a_: Ace-Window
+_a_: Ace-Window    _b_: Buffer
 
 _q_: Quit
 "
@@ -29,6 +29,7 @@ _q_: Quit
       ("H" split-window-vertically)
       ("s" (lambda () (interactive) (ace-window 4)))
       ("d" delete-window)
+      ("b" helm-mini)
       ("g" golden-ratio-mode)
       ("=" (lambda () (interactive) (progn (golden-ratio-mode 0) (balance-windows))))
       ("q" nil :color blue)))

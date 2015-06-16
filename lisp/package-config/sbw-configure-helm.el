@@ -42,6 +42,10 @@
 
     (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
 
+    ;; C-backspace should kill word instead of toggling autoexpansion
+    (define-key helm-find-files-map           (kbd "<C-backspace>") 'backward-kill-word)
+    (define-key helm-projectile-find-file-map (kbd "<C-backspace>") 'backward-kill-word)
+    
     (helm-mode 1)
     ))
 

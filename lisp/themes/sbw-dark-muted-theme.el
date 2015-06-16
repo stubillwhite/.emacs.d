@@ -74,6 +74,12 @@
     '(text-cursor                         ((t (:inherit sbw-dark-muted-normal))))
     '(vertical-border                     ((t (:inherit sbw-dark-muted-normal))))
 
+    ;; company
+    '(company-tooltip                     ((t (:inherit sbw-dark-muted-normal :background "gray30"))))
+    '(company-tooltip-common              ((t (:inherit sbw-dark-muted-normal :background "gray30" :foreground "gray100"))))
+    '(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-normal :background "SkyBlue4" :foreground "gray100"))))
+    '(company-tooltip-selection           ((t (:inherit sbw-dark-muted-normal :background "SkyBlue4"))))
+    
     ;; ert
     '(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))
     '(ert-test-result-unexpected          ((t (:inherit sbw-dark-muted-error))))
