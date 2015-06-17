@@ -79,14 +79,10 @@
     '(vertical-border                     ((t (:inherit sbw-dark-muted-normal))))
 
     ;; company
-    '(company-tooltip                     ((t (:inherit sbw-dark-muted-normal :background "gray30"))))
-    '(company-tooltip-common              ((t (:inherit sbw-dark-muted-normal :background "gray30" :foreground "gray100"))))
-    '(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-normal :background "SkyBlue4" :foreground "gray100"))))
-    '(company-tooltip-selection           ((t (:inherit sbw-dark-muted-normal :background "SkyBlue4"))))
-    ;'(company-tooltip                     ((t (:inherit sbw-dark-muted-menu))))
-    ;'(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground "gray100"))))
-    ;'(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-menu-selection :foreground "gray100"))))
-    ;'(company-tooltip-selection           ((t (:inherit sbw-dark-muted-menu-selection))))
+    '(company-tooltip                     ((t (:inherit sbw-dark-muted-menu))))
+    '(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground "gray100"))))
+    '(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-menu-selection :foreground "gray100"))))
+    '(company-tooltip-selection           ((t (:inherit sbw-dark-muted-menu-selection))))
     
     ;; ert
     '(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))
@@ -125,17 +121,19 @@
     '(font-lock-warning-face              ((t (:inherit sbw-dark-muted-error))))
 
     ;; helm
-    '(helm-match                          ((t (:inherit sbw-dark-muted-match))))
-    '(helm-grep-lineno                    ((t (:inherit sbw-dark-muted-keyword))))
+    '(helm-match                          ((t (:inherit sbw-dark-muted-emphasis))))
+    '(helm-grep-file                      ((t (:inherit sbw-dark-muted-normal))))
+    '(helm-grep-lineno                    ((t (:inherit sbw-dark-muted-normal))))
+    '(helm-grep-match                     ((t (:inherit sbw-dark-muted-emphasis))))    
     '(helm-ff-symlink                     ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-ff-invalid-symlink             ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-ff-directory                   ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-buffer-process                 ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-candidate-number               ((t (:inherit sbw-dark-muted-keyword))))
-    '(helm-selection                      ((t (:inherit sbw-dark-muted-selection))))
+    '(helm-selection                      ((t (:inherit sbw-dark-muted-menu-selection))))
 
     ;; helm-swoop
-    '(helm-swoop-target-word-face         ((t (:inherit sbw-dark-muted-match))))
+    '(helm-swoop-target-word-face         ((t (:inherit sbw-dark-muted-emphasis))))
     '(helm-swoop-target-line-face         ((t (:inherit sbw-dark-muted-selection))))
     '(helm-swoop-target-line-block-face   ((t (:inherit sbw-dark-muted-selection))))
     '(helm-source-header                  ((t (:inherit sbw-dark-muted-emphasis))))
