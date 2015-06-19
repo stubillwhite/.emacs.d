@@ -5,8 +5,8 @@
   (progn
 
     (defun sbw/powerline--level-one-face ()
-      (let* ( (active (powerline-selected-window-active))
-              (evil   (bound-and-true-p evil-local-mode))
+      (let* ( (active      (powerline-selected-window-active))
+              (evil        (bound-and-true-p evil-local-mode))
               (evil-insert (and evil (evil-insert-state-p)))
               (evil-normal (and evil (evil-normal-state-p))) )
         (cond
@@ -14,6 +14,12 @@
           (evil-normal 'sbw-dark-powerline-one-evil-normal)
           (active      'sbw-dark-powerline-one-active)
           (t           'sbw-dark-powerline-one-inactive))))
+
+    (defun sbw/powerline--buffer-id (parent-face)
+      (powerline-raw (propertize "%12b" 'face
+                       (if (and (not (buffer-modified-p)) (verify-visited-file-modtime (current-buffer))) 
+                         `(:inherit ,parent-face :weight bold) 
+                         `(:inherit ,parent-face :weight normal)))))
     
     (defmacro sbw/powerline--with-powerline-faces (&rest body)
       `(lexical-let* ( (face1           (sbw/powerline--level-one-face))
@@ -62,7 +68,7 @@
                               (powerline-raw " " face1)
                               (powerline-raw mode-line-mule-info face1)
                               (powerline-raw " " face1)
-                              (powerline-buffer-id face1)
+                              (sbw/powerline--buffer-id face1)
                               (powerline-raw " " face1)
                               ;; Level 2
                               (funcall separator-left face1 face2)

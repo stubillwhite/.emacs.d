@@ -30,6 +30,7 @@
 
   (mapc
     (lambda (x) (apply 'sbw/theme--create-face x))
+    ;; TODO sbw-dark-powerline should be sbw-dark-muted-powerline
     `( (sbw-dark-powerline-one-active      `((t (:foreground "gray100" :background "SkyBlue4"))))
        (sbw-dark-powerline-one-inactive    `((t (:foreground "gray100" :background "gray30"))))
        (sbw-dark-powerline-one-evil-insert `((t (:foreground "gray100" :background "coral3"))))
