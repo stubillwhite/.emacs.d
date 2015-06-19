@@ -10,10 +10,10 @@
               (evil-insert (and evil (evil-insert-state-p)))
               (evil-normal (and evil (evil-normal-state-p))) )
         (cond
-          (evil-insert 'sbw-dark-powerline-one-evil-insert)
-          (evil-normal 'sbw-dark-powerline-one-evil-normal)
-          (active      'sbw-dark-powerline-one-active)
-          (t           'sbw-dark-powerline-one-inactive))))
+          (evil-insert 'sbw-dark-muted-powerline-one-evil-insert)
+          (evil-normal 'sbw-dark-muted-powerline-one-evil-normal)
+          (active      'sbw-dark-muted-powerline-one-active)
+          (t           'sbw-dark-muted-powerline-one-inactive))))
 
     (defun sbw/powerline--buffer-id (parent-face)
       (powerline-raw (propertize "%12b" 'face
@@ -23,8 +23,8 @@
     
     (defmacro sbw/powerline--with-powerline-faces (&rest body)
       `(lexical-let* ( (face1           (sbw/powerline--level-one-face))
-                       (face2           'sbw-dark-powerline-two)
-                       (face3           'sbw-dark-powerline-three)
+                       (face2           'sbw-dark-muted-powerline-two)
+                       (face3           'sbw-dark-muted-powerline-three)
                        (separator-left  (intern (format "powerline-%s-%s"
                                                   (powerline-current-separator)
                                                   (car powerline-default-separator-dir))))

@@ -30,13 +30,12 @@
 
   (mapc
     (lambda (x) (apply 'sbw/theme--create-face x))
-    ;; TODO sbw-dark-powerline should be sbw-dark-muted-powerline
-    `( (sbw-dark-powerline-one-active      `((t (:foreground "gray100" :background "SkyBlue4"))))
-       (sbw-dark-powerline-one-inactive    `((t (:foreground "gray100" :background "gray30"))))
-       (sbw-dark-powerline-one-evil-insert `((t (:foreground "gray100" :background "coral3"))))
-       (sbw-dark-powerline-one-evil-normal `((t (:foreground "gray100" :background "coral4"))))
-       (sbw-dark-powerline-two             `((t (:foreground "gray100" :background "gray20"))))
-       (sbw-dark-powerline-three           `((t (:foreground "gray100" :background "gray15"))))
+    `( (sbw-dark-muted-powerline-one-active      `((t (:foreground "gray100" :background "SkyBlue4"))))
+       (sbw-dark-muted-powerline-one-inactive    `((t (:foreground "gray100" :background "gray30"))))
+       (sbw-dark-muted-powerline-one-evil-insert `((t (:foreground "gray100" :background "coral3"))))
+       (sbw-dark-muted-powerline-one-evil-normal `((t (:foreground "gray100" :background "coral4"))))
+       (sbw-dark-muted-powerline-two             `((t (:foreground "gray100" :background "gray20"))))
+       (sbw-dark-muted-powerline-three           `((t (:foreground "gray100" :background "gray15"))))
 
        (sbw-dark-muted-normal              `((t (:inherit default               :foreground ,*normal-fg*   :background ,*normal-bg*))))
        (sbw-dark-muted-selection           `((t (:inherit sbw-dark-muted-normal                            :background ,*selection-bg*))))
