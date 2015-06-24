@@ -22,11 +22,10 @@
       ediff-split-window-function 'split-window-horizontally     ;; Vertical split
       )
 
-    ;; (if (eq system-type 'cygwin)
-    ;;   (progn
-    ;;     (setq exec-path (add-to-list 'exec-path "/usr/bin"))
-    ;;     (setenv "PATH" (concat "C:\\cygwin32\\bin;" (getenv "PATH")))))
-    (setq magit-git-executable "/usr/bin/git.exe")
+    ;; Point to git.exe in Windows systems for a more responsive Magit
+    (if (eq system-type 'cygin)
+      (setq magit-git-executable "/usr/bin/git.exe"))
+    
     )
 
   :bind
