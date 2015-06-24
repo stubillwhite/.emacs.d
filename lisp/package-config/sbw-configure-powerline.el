@@ -62,11 +62,6 @@
              (sbw/powerline--with-powerline-faces
                (let* ( (lhs (list
                               ;; Level one
-                              (powerline-raw "%*" face1)
-                              (powerline-raw " " face1)
-                              (powerline-buffer-size face1)
-                              (powerline-raw " " face1)
-                              (powerline-raw mode-line-mule-info face1)
                               (powerline-raw " " face1)
                               (sbw/powerline--buffer-id face1)
                               (powerline-raw " " face1)
@@ -78,7 +73,7 @@
                               (powerline-narrow face2 'l)
                               (powerline-raw " " face2)
                               ;; Level 3
-                              (funcall separator-left face2 face3)                            
+                              (funcall separator-left face2 face3)
                               (powerline-vc face3 'r)
                               ))
                        (rhs (list

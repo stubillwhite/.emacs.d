@@ -2,7 +2,8 @@
 
 (use-package magit
   :defer t
-
+  :diminish magit-auto-revert-mode
+  
   :init
   (progn
     (setq magit-last-seen-setup-instructions "1.4.0"))
@@ -21,16 +22,15 @@
       ediff-split-window-function 'split-window-horizontally     ;; Vertical split
       )
 
-    (defun sbw/magit-toggle-whitespace ()
-      (interactive)
-      (setq magit-diff-options
-        (if (-contains? magit-diff-options "-w")
-          (cons "-w" magit-diff-options)
-          (-filter (lambda (x) (string= "-w" x)))))
-      (magit-refresh)))
+    ;; (if (eq system-type 'cygwin)
+    ;;   (progn
+    ;;     (setq exec-path (add-to-list 'exec-path "/usr/bin"))
+    ;;     (setenv "PATH" (concat "C:\\cygwin32\\bin;" (getenv "PATH")))))
+    (setq magit-git-executable "/usr/bin/git.exe")
+    )
 
   :bind
-  ("C-c g w" . sbw/magit-toggle-whitespace)
   ("C-c g s" . magit-status))
 
 (provide 'sbw-configure-magit)
+

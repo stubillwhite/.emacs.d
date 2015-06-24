@@ -24,7 +24,7 @@
        
         (*item-1*        "DarkSeaGreen3")
         (*item-2*        "burlywood1")
-        (*item-3*        "CadetBlue2")
+        (*item-3*        "CadetBlue3")
         (*item-4*        "burlywood2")
         )
 
@@ -109,7 +109,7 @@
     '(font-lock-doc-string-face           ((t (:inherit sbw-dark-muted-string))))
     '(font-lock-function-name-face        ((t (:inherit sbw-dark-muted-keyword))))
     '(font-lock-keyword-face              ((t (:inherit sbw-dark-muted-keyword))))
-    '(font-lock-negation-char-face        ((t (:inherit sbw-dark-muted-error))))
+    '(font-lock-negation-char-face        ((t (:inherit sbw-dark-muted-normal))))
     '(font-lock-number-face               ((t (:inherit sbw-dark-muted-constant))))
     '(font-lock-preprocessor-face         ((t (:inherit sbw-dark-muted-keyword))))
     '(font-lock-reference-face            ((t (:inherit sbw-dark-muted-constant))))
@@ -128,6 +128,7 @@
     '(helm-ff-symlink                     ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-ff-invalid-symlink             ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-ff-directory                   ((t (:inherit sbw-dark-muted-keyword))))
+    '(helm-ff-executable                  ((t (:inherit sbw-dark-muted-normal))))
     '(helm-buffer-process                 ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-candidate-number               ((t (:inherit sbw-dark-muted-keyword))))
     '(helm-selection                      ((t (:inherit sbw-dark-muted-menu-selection))))

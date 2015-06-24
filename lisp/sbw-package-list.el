@@ -36,7 +36,6 @@
      (:name ace-jump-mode)    ;; Faster movement
      (:name ace-window)       ;; Quickly switch windows
      (:name golden-ratio)     ;; Automatic resizing of Emacs windows to the golden ratio
-     ;;(:name switch-window)    ;; Faster switching between windows
      (:name expand-region)    ;; Expand region by semantic units
      (:name hydra)            ;; Make Emacs bindings that stick around
      ;; (:name worf)          ;; Vi-like bindings for org-mode
@@ -54,7 +53,7 @@
      (:name smartparens)       ;; Improved paredit
      (:name ac-cider)          ;; Cider REPL autocomplete and documentation
      (:name expectations-mode) ;; Clojure expectations minor mode
-
+     
      ;; Graphviz
      (:name graphviz-dot-mode) ;; Graphviz DOT file support and previews
 

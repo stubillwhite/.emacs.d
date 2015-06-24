@@ -59,6 +59,9 @@
 ;; Use y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Other file types
+(add-to-list 'auto-mode-alist '("\\.db2\\'" . sql-mode))
+
 (defun sbw/unfill-paragraph ()
   "Convert a multi-line paragraph into a single line."
   (interactive)
