@@ -16,10 +16,12 @@
           (t           'sbw-dark-muted-powerline-one-inactive))))
 
     (defun sbw/powerline--buffer-id (parent-face)
-      (powerline-raw (propertize "%12b" 'face
-                       (if (and (not (buffer-modified-p)) (verify-visited-file-modtime (current-buffer))) 
-                         `(:inherit ,parent-face :weight bold) 
-                         `(:inherit ,parent-face :weight normal)))))
+      (let* ( (in-sync? (and (not (buffer-modified-p)) (verify-visited-file-modtime (current-buffer)))) )
+        (concat
+          (powerline-raw (propertize "%b" 'face (if in-sync? 
+                                                    `(:inherit ,parent-face :weight bold) 
+                                                    `(:inherit ,parent-face :weight normal))))
+          (powerline-raw (if in-sync? " " "*") parent-face))))
     
     (defmacro sbw/powerline--with-powerline-faces (&rest body)
       `(lexical-let* ( (face1           (sbw/powerline--level-one-face))
