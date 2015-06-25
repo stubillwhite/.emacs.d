@@ -53,19 +53,19 @@
 (defun sbw/value-eq--hashcode-hash-table (a)
   (-reduce-from 
     (lambda (acc v)
-      (+ acc (sbw/value-eq-hashcode v) (sbw/value-eq-hashcode (sbw/ht-get a v))))
-    (sxhash (sbw/ht-create))
+      (+ acc (sbw/value-eq-hashcode v) (sbw/value-eq-hashcode (gethash v a))))
+    (sxhash :hash-table)
     (hash-table-keys a)))
 
 (defun sbw/value-eq--hashcode-list (a)
   (-reduce-from
     (lambda (acc v) (+ acc (sbw/value-eq-hashcode v)))
-    (sxhash (list))
+    (sxhash :list)
     a))
 
 (defun sbw/value-eq--hashcode-vector (a)
   (let* ( (idx      0)
-          (hashcode (sxhash (vector))) )
+          (hashcode (sxhash :vector)) )
     (while (< idx (length a))
       (setq hashcode (+ hashcode (elt a idx)))
       (setq idx (sbw/inc idx)))
