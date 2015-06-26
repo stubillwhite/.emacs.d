@@ -1,6 +1,6 @@
 (require 'sbw-multimethods)
 
-(defun sbw/data-type (x &rest args)
+(defun sbw/value-eq--data-type (x &rest args)
   (cond
     ((eq nil x)       :nil)
     ((stringp x)      :string)
@@ -15,7 +15,7 @@
 (defmacro sbw/value-eq--defmethod (type args equality-test)
   `(sbw/mm-defmethod sbw/value-eq ,type ,args
      (and
-       (eq (sbw/data-type (car args)) (sbw/data-type (cadr args)))
+       (eq (sbw/value-eq--data-type (car args)) (sbw/value-eq--data-type (cadr args)))
        ,equality-test)))
 
 (defun sbw/value-eq--hash-tables-equal (a b)
@@ -41,7 +41,7 @@
     t
     (-zip-fill :sbw/value-eq--padding a b)))
 
-(sbw/mm-defmulti sbw/value-eq 'sbw/data-type)
+(sbw/mm-defmulti sbw/value-eq 'sbw/value-eq--data-type)
 (sbw/value-eq--defmethod [:nil]        (a b) (eq a b))
 (sbw/value-eq--defmethod [:string]     (a b) (string-equal a b))
 (sbw/value-eq--defmethod [:keyword]    (a b) (eq a b))
@@ -53,25 +53,27 @@
 (defun sbw/value-eq--hashcode-hash-table (a)
   (-reduce-from 
     (lambda (acc v)
-      (+ acc (sbw/value-eq-hashcode v) (sbw/value-eq-hashcode (gethash v a))))
-    (sxhash :hash-table)
+      (+ acc
+        (* 31 (sbw/value-eq-hashcode v))
+        (* 31 (sbw/value-eq-hashcode (gethash v a)))))
+    (+ 23 (* 31 (sxhash :hash-table)))
     (hash-table-keys a)))
 
 (defun sbw/value-eq--hashcode-list (a)
   (-reduce-from
-    (lambda (acc v) (+ acc (sbw/value-eq-hashcode v)))
-    (sxhash :list)
+    (lambda (acc v) (+ acc (* 31 (sbw/value-eq-hashcode v))))
+    (+ 23 (* 31 (sxhash :list)))
     a))
 
 (defun sbw/value-eq--hashcode-vector (a)
   (let* ( (idx      0)
-          (hashcode (sxhash :vector)) )
+          (hashcode (+ 23 (* 31 (sxhash :vector)))) )
     (while (< idx (length a))
-      (setq hashcode (+ hashcode (elt a idx)))
+      (setq hashcode (+ hashcode (* 31 (sbw/value-eq-hashcode (elt a idx)))))
       (setq idx (sbw/inc idx)))
     hashcode))
 
-(sbw/mm-defmulti sbw/value-eq-hashcode 'sbw/data-type)
+(sbw/mm-defmulti sbw/value-eq-hashcode 'sbw/value-eq--data-type)
 (sbw/mm-defmethod sbw/value-eq-hashcode [:nil]        (a) (sxhash a))
 (sbw/mm-defmethod sbw/value-eq-hashcode [:string]     (a) (sxhash a))
 (sbw/mm-defmethod sbw/value-eq-hashcode [:keyword]    (a) (sxhash a))
