@@ -54,6 +54,7 @@
       appt-message-warning-time     15                     ;; ...starting fifteeen minutes before it is due
       org-frame-title-format-backup sbw/frame-title-format ;; Override title frame title format
       org-tag-alist                 nil                    ;; No tags
+      org-startup-folded            'content               ;; Display content when first opening org files
       )
     
     (setq org-todo-keywords
