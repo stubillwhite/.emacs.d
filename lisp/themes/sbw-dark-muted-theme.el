@@ -83,6 +83,8 @@
     '(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground "gray100"))))
     '(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-menu-selection :foreground "gray100"))))
     '(company-tooltip-selection           ((t (:inherit sbw-dark-muted-menu-selection))))
+    '(company-scrollbar-bg                ((t (:inherit sbw-dark-muted-menu))))
+    '(company-scrollbar-fg                ((t (:inherit sbw-dark-muted-menu-selection))))
     
     ;; ert
     '(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))
