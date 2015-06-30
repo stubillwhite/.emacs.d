@@ -104,6 +104,9 @@
   (let* ( (v (funcall f (sbw/ht-get hash-table k))) )
     (sbw/ht-merge hash-table (sbw/ht-create k v))))
 
+
+;; TODO Create drill-into function that reduces a hash-map into the values retrieved from the map
+;;      update-in then does zipmap on the keys and that stream
 (defun sbw/ht-update-in (hash-table ks f)
   "Returns a nested associative structure with value associated at the point specified by KS updated, where KS is a sequence of keys to the structure, and F is function that will take the old value and return the new value. If any levels do not exist then new hash-tables will be created."
   (let* ( (flattened (sbw/-ht-flatten-hash-tables hash-table ks)) )
@@ -137,5 +140,12 @@
   "Returns a copy of HASH-TABLE with f applied to each value."
   (-let* ( (keys (sbw/ht-keys hash-table)) )
     (apply 'sbw/ht-create (-interleave keys (-map (lambda (x) (funcall f (sbw/ht-get hash-table x))) keys)))))
+
+(defun sbw/ht-zipmap (ks vals)
+  "Returns a new HASH-TABLE with keys KS mapped to VALS."
+  (-reduce-from
+    (lambda (acc v) (sbw/ht-assoc acc (car v) (cadr v)))
+    (sbw/ht-create)
+    (-partition 2 (-interleave ks vals))))
 
 (provide 'sbw-hash-tables)

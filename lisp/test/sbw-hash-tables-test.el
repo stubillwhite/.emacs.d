@@ -236,4 +236,13 @@
           (expected   (sbw/ht-create :a 2 :b 3 :c 4)) )
     (should (sbw/ht-equal (sbw/ht-map-vals hash-table '(lambda (x) (+ x 1))) expected))))
 
+;; sbw/ht-zipmap
+
+(ert-deftest sbw/ht-zipmap-given-empty-keys-and-vaulues-then-new-empty-hash-table ()
+  (should (sbw/ht-equal (sbw/ht-zipmap) (sbw/ht-create))))
+
+(ert-deftest sbw/ht-zipmap-given-keys-and-values-then-then-new-hash-table-with-content ()
+  (let* ( (expected   (sbw/ht-create :a 1 :b 2 :c 3)) )
+    (should (sbw/ht-equal (sbw/ht-zipmap '(:a :b :c) '(1 2 3)) expected))))
+
 (provide 'sbw-hash-tables-test)
