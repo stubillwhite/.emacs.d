@@ -239,7 +239,7 @@
 ;; sbw/ht-zipmap
 
 (ert-deftest sbw/ht-zipmap-given-empty-keys-and-vaulues-then-new-empty-hash-table ()
-  (should (sbw/ht-equal (sbw/ht-zipmap) (sbw/ht-create))))
+  (should (sbw/ht-equal (sbw/ht-zipmap '() '()) (sbw/ht-create))))
 
 (ert-deftest sbw/ht-zipmap-given-keys-and-values-then-then-new-hash-table-with-content ()
   (let* ( (expected   (sbw/ht-create :a 1 :b 2 :c 3)) )
