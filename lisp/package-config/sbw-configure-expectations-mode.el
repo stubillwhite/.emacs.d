@@ -1,6 +1,7 @@
 (require 'use-package)
 
 (use-package expectations-mode
+  :diminish expectations-mode
   :defer t
 
   :init
