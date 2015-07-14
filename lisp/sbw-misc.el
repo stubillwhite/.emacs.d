@@ -1,7 +1,7 @@
 ;; Turn off beginner modes
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
-
+aasdfasdfasdfasdfasdfasdfasfd
 ;; Trace mode when debugging
 (setq edebug-trace t)
 
@@ -52,8 +52,7 @@
   backup-directory-alist            '(("." . ,(expand-file-name user-temporary-file-directory)))
   backup-by-copying                 t
   backup-directory-alist            `(("." . ,user-temporary-file-directory) (,tramp-file-name-regexp nil))
-  auto-save-list-file-prefix        "auto-save-"
-  auto-save-file-name-transforms    `((".*" ,(concat user-temporary-file-directory "/") t)))
+  auto-save-list-file-prefix        (concat user-temporary-file-directory "/auto-save-"))
 
 ;; Use y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
