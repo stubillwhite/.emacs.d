@@ -8,7 +8,7 @@
   (progn
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
-    (when (eq system-type 'windows-nt)
+    (when (eq system-type 'cygwin)
       (setq
         markdown-command-needs-filename t
         markdown-command                "%LOCALAPPDATA%\\Pandoc\\pandoc.exe --from=markdown_github --to=html")))

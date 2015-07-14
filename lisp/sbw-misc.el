@@ -28,7 +28,6 @@
   visible-bell                  t         ;; No beep
   line-number-mode              t         ;; Display line position
   column-number-mode            t         ;; Display column position
-  ispell-dictionary             "british" ;; British English
   shift-select-mode             nil       ;; Shift doesn't activate mark
   sentence-end-double-space     nil       ;; Sentences end in a single space
   )
@@ -53,8 +52,8 @@
   backup-directory-alist            '(("." . ,(expand-file-name user-temporary-file-directory)))
   backup-by-copying                 t
   backup-directory-alist            `(("." . ,user-temporary-file-directory) (,tramp-file-name-regexp nil))
-  auto-save-list-file-prefix        (concat user-temporary-file-directory ".auto-saves-")
-  auto-save-file-name-transforms    `((".*" ,user-temporary-file-directory t)))
+  auto-save-list-file-prefix        "auto-save-"
+  auto-save-file-name-transforms    `((".*" ,(concat user-temporary-file-directory "/") t)))
 
 ;; Use y/n instead of yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -94,5 +93,11 @@
           (while (search-forward-regexp (string x) nil t)
             (replace-match (sbw/ht-get chars x) nil nil)))
         (sbw/ht-keys chars)))))
+
+;; Save all buffers when switching away
+(defun sbw/save-all-buffers ()
+  (interactive)
+  (save-some-buffers t))
+(add-hook 'focus-out-hook 'sbw/save-all-buffers)
 
 (provide 'sbw-misc)

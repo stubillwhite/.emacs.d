@@ -16,8 +16,9 @@
     (add-to-list 'ispell-extra-args "--sug-mode=ultra")
     
     (setq
-      ispell-silently-savep      t ;; Don't prompt when adding to the dictionary
-      ispell-personal-dictionary "~/.emacs.d/.ispell"
+      ispell-silently-savep      t                     ;; Don't prompt when adding to the dictionary
+      ispell-personal-dictionary "~/.ispell"  ;; Personal dictionary location
+      ispell-dictionary          "british"             ;; British English
       ))
 
   :bind

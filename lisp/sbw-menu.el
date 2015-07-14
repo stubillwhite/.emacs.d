@@ -103,7 +103,8 @@
                                               ))
     (sbw/menu-submenu ?t "Timers"           (sbw/menu "Timers"
                                               (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
-                                              (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
+                                              (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
+                                              (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
     (sbw/menu-action  ?w "Work agenda"      (lambda () (interactive) (org-agenda nil "cw")))
     (sbw/menu-action  ?p "Personal agenda"  (lambda () (interactive) (org-agenda nil "cp")))
     (sbw/menu-action  ?x "Export agenda"    'org-store-agenda-views)))

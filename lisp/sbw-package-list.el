@@ -26,6 +26,9 @@
      ;; Git
      (:name magit) ;; Control Git from Emacs
 
+     ;; Emacs
+     (:name ert-expectations) ;; Better unit testing
+     
      ;; Auto-complete
      (:name company) ;; Auto-completion
 
@@ -94,6 +97,7 @@
      (:name sbw-menu)
      (:name sbw-misc)
      (:name sbw-multimethods)
+     (:name sbw-message)
      (:name sbw-org-review)
      (:name sbw-time)
      (:name sbw-utils)
