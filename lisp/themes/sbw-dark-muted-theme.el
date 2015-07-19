@@ -7,25 +7,28 @@
 (defun sbw/theme--create-face (name spec)
   (eval `(defface ,name ,spec "Face ,name." :group 'sbw-dark-muted-faces)))
 
-(let* ( (*normal-bg*     "gray10")
-        (*normal-fg*     "gray80")
-        (*emphasis-bg*   "gray10")
-        (*emphasis-fg*   "gray100")
+(let* ( (*normal-bg*         "gray10")
+        (*normal-fg*         "gray80")
+        (*emphasis-bg*       "gray10")
+        (*emphasis-fg*       "gray100")
 
-        (*selection-bg*  "gray30")
-        (*success-fg*    "DarkSeaGreen3")
-        (*warning-fg*    "burlywood2")
-        (*error-fg*      "IndianRed3")
+        (*selection-bg*      "gray30")
+        (*success-fg*        "DarkSeaGreen3")
+        (*warning-fg*        "burlywood2")
+        (*error-fg*          "IndianRed3")
 
-        (*match-bg*      "darkslategray")
-        (*match-fg*      "gray100")
-        (*mismatch-bg*   "IndianRed3")
-        (*mismatch-fg*   "gray100")
+        (*match-bg*          "darkslategray")
+        (*match-fg*          "gray100")
+        (*mismatch-bg*       "IndianRed3")
+        (*mismatch-fg*       "gray100")
        
-        (*item-1*        "DarkSeaGreen3")
-        (*item-2*        "burlywood1")
-        (*item-3*        "CadetBlue3")
-        (*item-4*        "burlywood2")
+        (*item-1*            "DarkSeaGreen3")
+        (*item-2*            "burlywood1")
+        (*item-3*            "CadetBlue3")
+        (*item-4*            "burlywood2")
+
+        (*menu-bg*           "gray30")
+        (*menu-selection-bg* "SkyBlue4")
         )
 
   (mapc
@@ -80,8 +83,8 @@
 
     ;; company
     '(company-tooltip                     ((t (:inherit sbw-dark-muted-menu))))
-    '(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground "gray100"))))
-    '(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-menu-selection :foreground "gray100"))))
+    `(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground ,*emphasis-fg*))))
+    `(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-menu-selection :foreground ,*emphasis-fg*))))
     '(company-tooltip-selection           ((t (:inherit sbw-dark-muted-menu-selection))))
     '(company-scrollbar-bg                ((t (:inherit sbw-dark-muted-menu))))
     '(company-scrollbar-fg                ((t (:inherit sbw-dark-muted-menu-selection))))
