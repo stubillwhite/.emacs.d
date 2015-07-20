@@ -13,7 +13,6 @@
 
 (defconst sbw/pkg-additional-packages
   '(                     ;; General usability
-     (:name color-theme) ;; Color theme support
      (:name undo-tree)   ;; Undo tree visualisation
      (:name flyspell)    ;; Spell checking
      (:name flycheck)    ;; Syntax checking
@@ -65,6 +64,9 @@
 
      ;; Groovy
      (:name groovy-mode) ;; Groovy mode
+
+     ;; Yaml
+     (:name yaml-mode) ;; YAML mode
 
      ;; Yasnippets
      (:name yasnippet) ;; Yet another snippet extension for Emacs
