@@ -23,13 +23,14 @@
 
 ;; General settings
 (setq
-  inhibit-startup-message       t         ;; No splash screen
-  initial-scratch-message       nil       ;; No scratch message
-  visible-bell                  t         ;; No beep
-  line-number-mode              t         ;; Display line position
-  column-number-mode            t         ;; Display column position
-  shift-select-mode             nil       ;; Shift doesn't activate mark
-  sentence-end-double-space     nil       ;; Sentences end in a single space
+  inhibit-startup-message             t   ;; No splash screen
+  initial-scratch-message             nil ;; No scratch message
+  visible-bell                        t   ;; No beep
+  line-number-mode                    t   ;; Display line position
+  column-number-mode                  t   ;; Display column position
+  shift-select-mode                   nil ;; Shift doesn't activate mark
+  sentence-end-double-space           nil ;; Sentences end in a single space
+  save-interprogram-paste-before-kill t   ;; Save clipboard to kill ring when killing
   )
 
 ;; 120 columns

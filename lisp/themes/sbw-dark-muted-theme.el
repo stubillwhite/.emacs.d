@@ -183,6 +183,10 @@
     '(org-special-keyword                 ((t (:inherit sbw-dark-muted-emphasis))))
     '(org-time-grid                       ((t (:inherit sbw-dark-muted-keyword))))
     '(org-todo                            ((t (:inherit sbw-dark-muted-emphasis))))
+
+    ;; Smartparens
+    '(sp-show-pair-match-face             ((t (:inherit sbw-dark-muted-match))))
+    '(sp-show-pair-mismatch-face          ((t (:inherit sbw-dark-muted-mismatch))))
     ))
 
 (provide-theme 'sbw-dark-muted)
