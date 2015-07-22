@@ -34,6 +34,8 @@
       nrepl-port                            "4555"   ;; Default port number
       )
 
+    (setq cider-lein-command "~/tools/bin/lein")
+
     ;; Better naming for the REPL buffer
     (setq 
       nrepl-buffer-name-separator "-"
@@ -44,11 +46,13 @@
     (defun sbw/cider-switch-to-repl-buffer ()
       "Open the REPL window if it not currently open and switch focus to it."
       (let* ( (repl-buffer (cider-current-repl-buffer)) )
-        (if (not (get-buffer-window repl-buffer))
-          (progn
-            (split-window-below 15)
-            (switch-to-buffer repl-buffer))
-          (switch-to-buffer-other-window repl-buffer))))
+        (when (not (string= (buffer-name (current-buffer)) repl-buffer))
+          (if (get-buffer-window repl-buffer)
+            (progn
+              (switch-to-buffer-other-window repl-buffer))
+            (progn
+              (split-window-below 15)
+              (switch-to-buffer repl-buffer))))))
 
     (defun sbw/cider-reset-repl ()
       "Open the REPL window if it not currently open, switch focus to it, and reset."
