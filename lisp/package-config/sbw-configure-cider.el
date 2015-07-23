@@ -8,6 +8,10 @@
 
   :config
   (progn
+    ;; Autocomplete using company-mode
+    (add-hook 'cider-repl-mode-hook #'company-mode)
+    (add-hook 'cider-mode-hook #'company-mode)
+    
     ;; Hide DOS EOL characters in the REPL
     (add-hook 'cider-repl-mode-hook 'sbw/hide-dos-eol)
 
@@ -34,7 +38,7 @@
       nrepl-port                            "4555"   ;; Default port number
       )
 
-    (setq cider-lein-command "~/tools/bin/lein")
+    (setq cider-lein-command "~/bin/lein")
 
     ;; Better naming for the REPL buffer
     (setq 

@@ -81,6 +81,12 @@
     '(text-cursor                         ((t (:inherit sbw-dark-muted-normal))))
     '(vertical-border                     ((t (:inherit sbw-dark-muted-normal))))
 
+    ;; avy
+    '(avy-lead-face                       ((t (:inherit sbw-dark-muted-emphasis))))
+    '(avy-lead-face-0                     ((t (:inherit sbw-dark-muted-emphasis))))
+    '(avy-lead-face-1                     ((t (:inherit sbw-dark-muted-emphasis))))
+    '(avy-lead-face-2                     ((t (:inherit sbw-dark-muted-emphasis))))
+        
     ;; company
     '(company-tooltip                     ((t (:inherit sbw-dark-muted-menu))))
     `(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground ,*emphasis-fg*))))
