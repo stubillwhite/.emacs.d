@@ -35,8 +35,7 @@
      (:name powerline)        ;; Emacs version of the Vim powerline
      (:name diminish)         ;; Abbreviate minor mode indicators
      (:name projectile)       ;; Project interaction library for Emacs
-     (:name avy)
-     ;;(:name ace-jump-mode)    ;; Faster movement
+     (:name avy)              ;; Jump to things in Emacs tree-style
      (:name ace-window)       ;; Quickly switch windows
      (:name golden-ratio)     ;; Automatic resizing of Emacs windows to the golden ratio
      (:name expand-region)    ;; Expand region by semantic units
@@ -54,7 +53,6 @@
      (:name clojure-mode)      ;; Clojure mode
      (:name cider)             ;; REPL support
      (:name smartparens)       ;; Improved paredit
-     ;;(:name ac-cider)          ;; Cider REPL autocomplete and documentation
      (:name expectations-mode) ;; Clojure expectations minor mode
      
      ;; Graphviz
