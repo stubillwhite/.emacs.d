@@ -38,7 +38,7 @@
       nrepl-port                            "4555"   ;; Default port number
       )
 
-    (setq cider-lein-command "~/bin/lein")
+    (setq cider-lein-command "~/tools/bin/lein")
 
     ;; Better naming for the REPL buffer
     (setq 
