@@ -100,6 +100,7 @@
      (:name sbw-multimethods)
      (:name sbw-message)
      (:name sbw-org-review)
+     (:name sbw-org-utils)
      (:name sbw-time)
      (:name sbw-utils)
      (:name sbw-value-eq))

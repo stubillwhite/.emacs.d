@@ -4,6 +4,7 @@
   :init
   (progn
     (require 'org-clock)
+    (require 'sbw-org-utils)
     
     ;; Default to clean view with no leading asterisks for indentation
     (setq-default org-startup-indented t)
@@ -115,7 +116,7 @@
       (org-align-all-tags)
       (redisplay t))
 
-                                        ; TODO Sort this out
+    ;; TODO Sort this out
     (defun org-sort-list-by-checkbox-type-1 ()
       (if (looking-at org-list-full-item-re)
         (cdr (assoc (match-string 3)
@@ -204,7 +205,7 @@
          ))
 
     ;; Appointments
-    ;; Refresh at startup and when the agenda is displayed
+    ;; Refresh when the agenda is displayed
 
     (defun sbw/org-refresh-appointments-from-agenda ()
       "Update the appointment list from the agenda."
@@ -213,8 +214,6 @@
       (org-agenda-to-appt))
 
     (add-hook 'org-finalize-agenda-hook 'sbw/org-refresh-appointments-from-agenda 'append)
-    ;(sbw/org-refresh-appointments-from-agenda)
-
     (appt-activate t)
 
     ;; org-protocol
@@ -245,33 +244,6 @@
            "* TODO %?%(sbw/org-capture-rtc-task)")       
          ))
 
-    ;; org-protocol experimental, not working
-
-    (add-to-list 'org-protocol-protocol-alist
-      '("white-test"
-         :protocol "white-test"
-         :function sbw/white-test))
-
-    (defun sbw/white-test (data)
-      (let* ( (parts    (org-protocol-split-data data))
-              (path     (car parts))
-              (filename (cadr parts)) )
-        ;;    (interactive)
-        (message (concat "path=" path ", filename=" filename))
-        ;;    (insert (org-make-link path filename))
-        )
-      nil)
-
-    (defun hello-world (data)
-      "Say hello to the world."
-      (message data)
-      nil)
-
-    (add-to-list 'org-protocol-protocol-alist
-      '("Hello World"
-         :protocol "hello-world"
-         :function hello-world))
-
     ;; Sorting subtrees
 
     (defun sbw/org-multisort (&rest criteria)
@@ -290,85 +262,15 @@
           (hide-subtree)
           (org-cycle))))
 
-    ;; Helper functions for extracting data from org buffers
-
-    (defun sbw/org-heading-points ()
-      "Return a list of the points of all the headings in the current org-mode buffer."
-      (let ((points nil))
-        (save-excursion
-          (show-all)
-          (end-of-buffer)
-          (setq points
-            (-unfold
-              (lambda (x)
-                (when (outline-previous-heading)
-                  (cons (point) x)))
-              :unused-seed))
-          (org-overview))
-        points))
-
-    (defun sbw/org-strip-urls (s)
-      "Return string s with any URLs replaced with their descriptions."
-      (let* ( (str s) )
-        (while (string-match org-bracket-link-regexp str)
-          (let* ( (url   (match-string 1 str))
-                  (descr (match-string 3 str))
-                  (repl  (if descr descr url)) )
-            (setq str
-              (replace-regexp-in-string (regexp-quote (match-string 0 str)) repl str))))
-        str))
-
-    (defun sbw/extract-string (x)
-      "Return a string extracted from the org property."
-      (when x
-        (-> x
-          (substring-no-properties)
-          (sbw/org-strip-urls))))
-
-    (defun sbw/extract-timestamp (x)
-      "Return a timestamp extracted from the org property."
-      (when x
-        (date-to-time x)))
-
-    (defun sbw/org-extract-heading-summary (x)
-      "Return a summary of the org-mode heading at point x."
-      (let* ((summary (sbw/ht-create)))
-        (save-excursion
-          (goto-char x)
-          (puthash :filename (buffer-file-name) summary)
-          (puthash :point    x summary)
-          (puthash :category (sbw/extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
-          (puthash :state    (sbw/extract-string (org-get-todo-state)) summary)
-          (puthash :tags     (sbw/extract-string (org-get-tags-at)) summary)
-          (puthash :heading  (sbw/extract-string (org-get-heading nil t)) summary)
-          (puthash :level    (funcall outline-level) summary)
-          (puthash :closed   (sbw/extract-timestamp  (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
-        summary))
-
-    (defun sbw/white-test ()
-      (interactive)
-      (print (sbw/org-extract-heading-summary (point))))
-
-    (defun sbw/org-heading-summaries (fnam)
-      "Return summaries for all the headings in file fnam. See sbw/org-extract-heading-summary for a description of the content of a summary."
-      (set-buffer (find-file-noselect fnam))
-      (-map 'sbw/org-extract-heading-summary (sbw/org-heading-points)))
-
-    ;; Sorting all subtrees
-
-    (defun sbw/current-line ()
-      "Return the text from the current line."
-      (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
-
-    (defun sbw/sort-all-subtrees ()
+    (defun sbw/sort-all-subtrees-in-buffer ()
       "Sorts all the subtrees in the current org-mode buffer."
       (interactive)
       (-each
-        (->> (sbw/org-heading-summaries (buffer-file-name))
+        (->> (sbw/org-utils-heading-summaries-for-file (buffer-file-name))
           (-filter (lambda (x) (equal 1 (gethash :level x)))))
         (lambda (x)
           (goto-char (gethash :point x))
-          (message (format "Sorting subtree under [%s]" (sbw/current-line)))
+          (message (format "Sorting subtree under [%s]" (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
           (ignore-errors (sbw/org-sort-subtree)))))
 
     ;; Reformat the current org-mode buffer
@@ -378,7 +280,7 @@
       (interactive)
       (org-update-all-dblocks)
       (sbw/right-align-tags)
-      (sbw/sort-all-subtrees)
+      (sbw/sort-all-subtrees-in-buffer)
       nil)
 
     ;; Creating a new org file
