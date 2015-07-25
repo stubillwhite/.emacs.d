@@ -84,45 +84,26 @@
   :config
   (progn
     ;; Link type for opening a file in a running Eclipse instance
-
     (org-add-link-type "eclipse"
       (lambda (path)
         (start-process-shell-command "Eclipse" nil (concat "\"c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe\" --launcher.openFile " path))))
 
     ;; Link type for opening a file in Vim
-
     (org-add-link-type "vim"
       (lambda (path)
         (start-process-shell-command "Vim" nil (concat "gvim.exe " path))))
 
     ;; Link type for opening a file in Atom
-
     (org-add-link-type "atom"
       (lambda (path)
         (start-process-shell-command "Atom" nil (concat "C:\\Users\\IBM_ADMIN\\my_local_stuff\\home\\utils\\bin\\atom-windows\\Atom\\Atom.exe " path))))
          
-    ;; Tag alignment
-    ;; Ensure new tags are created right-aligned based on the window size, and
-    ;; provide a handy function to re-align all tags in the buffer
-
-    (defun sbw/set-org-tags-column-based-on-window-size ()
-      "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
-      (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
-
-    (defun sbw/right-align-tags ()
-      "Right-align the all tags in the buffer."
-      (interactive)
-      (sbw/set-org-tags-column-based-on-window-size)
-      (org-align-all-tags)
-      (redisplay t))
-
     ;; TODO Sort this out
     (defun org-sort-list-by-checkbox-type-1 ()
       (if (looking-at org-list-full-item-re)
         (cdr (assoc (match-string 3)
                '(("[X]" . 1) ("[-]" . 2) ("[ ]" . 3) (nil . 4))))
         4))
-
 
     ;; Custom agendas
     ;; TODO Remove boilerplate
@@ -276,10 +257,9 @@
     ;; Reformat the current org-mode buffer
 
     (defun sbw/org-mode-reformat ()
-      "Reformat the current org-mode buffer, updating dynamic blocks, aligning tags, sorting subtrees."
+      "Reformat the current org-mode buffer, updating dynamic blocks, sorting subtrees."
       (interactive)
       (org-update-all-dblocks)
-      (sbw/right-align-tags)
       (sbw/sort-all-subtrees-in-buffer)
       nil)
 
@@ -315,7 +295,6 @@
       (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30))))
 
   :bind
-  ("C-c o s m" . org-set-tags-command)
   ("C-c o s p" . org-priority)
   ("C-c o s e" . org-set-effort)
   ("C-c o s s" . org-schedule)
@@ -324,7 +303,6 @@
   ("C-c o c i" . org-clock-in)
   ("C-c o c o" . org-clock-out)
   ("C-c o c g" . org-clock-goto)
-  ("C-c o r t" . sbw/right-align-tags)
   ("C-c o r r" . sbw/org-mode-reformat)
   ("C-c o r s" . sbw/org-sort-subtree)
   ("C-c o v n" . org-narrow-to-subtree)

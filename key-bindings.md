@@ -58,7 +58,6 @@ Mode key bindings are grouped with a common prefix for the mode to which the bin
 
 | Key         | Function             |
 |-------------+----------------------|
-| `C-c o s m` | Set tags (meta-data) |
 | `C-c o s p` | Set priority         |
 | `C-c o s e` | Set effort           |
 | `C-c o s s` | Set schedule         |
@@ -67,7 +66,6 @@ Mode key bindings are grouped with a common prefix for the mode to which the bin
 | `C-c o c i` | Clock in             |
 | `C-c o c o` | Clock out            |
 | `C-c o c g` | Clock goto           |
-| `C-c o r t` | Reformat tags        |
 | `C-c o r r` | Reformat all         |
 | `C-c o r s` | Reformat subtree     |
 | `C-c o v n` | View narrow          |
