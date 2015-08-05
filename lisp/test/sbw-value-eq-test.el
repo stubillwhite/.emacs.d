@@ -74,11 +74,6 @@
           (should-not (sbw/value-eq--test--hashcode-equal a b))))))
   t)
 
-
-
-
-
-
 (ert-deftest sbw/value-eq-given-mixed-type-structures-then-true-if-equal ()
   (let* ( (equal-one (sbw/ht-create (sbw/ht-create :foo 23) (list 1 2 3 "4")))
           (equal-two (sbw/ht-create (sbw/ht-create :foo 23) (list 1 2 3 "4")))

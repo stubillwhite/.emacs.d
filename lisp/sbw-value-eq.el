@@ -50,39 +50,45 @@
 (sbw/value-eq--defmethod [:list]       (a b) (sbw/value-eq--lists-equal a b))
 (sbw/value-eq--defmethod [:vector]     (a b) (sbw/value-eq--vectors-equal a b))
 
-(defun sbw/value-eq--hashcode-hash-table (a)
-  (-reduce-from 
-    (lambda (acc v)
-      (+ acc
-        (* 31 (sbw/value-eq-hashcode v))
-        (* 31 (sbw/value-eq-hashcode (gethash v a)))))
-    (+ 23 (* 31 (sxhash :hash-table)))
-    (hash-table-keys a)))
+(defun sbw/value-eq--stringify-hash-table (a)
+  (concat
+    "{" 
+    (-reduce-from 
+      (lambda (acc v) (concat acc (sbw/value-eq--stringify v) (sbw/value-eq--stringify (gethash v a))))
+      ""
+      (hash-table-keys a))
+    "}"))
 
-(defun sbw/value-eq--hashcode-list (a)
-  (-reduce-from
-    (lambda (acc v) (+ acc (* 31 (sbw/value-eq-hashcode v))))
-    (+ 23 (* 31 (sxhash :list)))
-    a))
+(defun sbw/value-eq--stringify-list (a)
+  (concat
+    "("
+    (-reduce-from
+      (lambda (acc v) (concat acc (sbw/value-eq--stringify v)))
+      ""
+      a)
+    ")"))
 
-(defun sbw/value-eq--hashcode-vector (a)
-  (let* ( (idx      0)
-          (hashcode (+ 23 (* 31 (sxhash :vector)))) )
+(defun sbw/value-eq--stringify-vector (a)
+  (let* ( (idx 0)
+          (s   "[") )
     (while (< idx (length a))
-      (setq hashcode (+ hashcode (* 31 (sbw/value-eq-hashcode (elt a idx)))))
+      (setq s (concat s (sbw/value-eq--stringify (elt a idx))))
       (setq idx (sbw/inc idx)))
-    hashcode))
+    (concat s "]")))
 
-(sbw/mm-defmulti sbw/value-eq-hashcode 'sbw/value-eq--data-type)
-(sbw/mm-defmethod sbw/value-eq-hashcode [:nil]        (a) (sxhash a))
-(sbw/mm-defmethod sbw/value-eq-hashcode [:string]     (a) (sxhash a))
-(sbw/mm-defmethod sbw/value-eq-hashcode [:keyword]    (a) (sxhash a))
-(sbw/mm-defmethod sbw/value-eq-hashcode [:number]     (a) (sxhash a))
-(sbw/mm-defmethod sbw/value-eq-hashcode [:nil]        (a) (sxhash a))
-(sbw/mm-defmethod sbw/value-eq-hashcode [:hash-table] (a) nil)
-(sbw/mm-defmethod sbw/value-eq-hashcode [:list]       (a) (sbw/value-eq--hashcode-list a))
-(sbw/mm-defmethod sbw/value-eq-hashcode [:vector]     (a) (sbw/value-eq--hashcode-vector a))
+(sbw/mm-defmulti sbw/value-eq--stringify 'sbw/value-eq--data-type)
+(sbw/mm-defmethod sbw/value-eq--stringify [:nil]        (a) (format "%s" a))
+(sbw/mm-defmethod sbw/value-eq--stringify [:string]     (a) (format "%s" a))
+(sbw/mm-defmethod sbw/value-eq--stringify [:keyword]    (a) (format "%s" a))
+(sbw/mm-defmethod sbw/value-eq--stringify [:number]     (a) (format "%s" a))
+(sbw/mm-defmethod sbw/value-eq--stringify [:hash-table] (a) (sbw/value-eq--stringify-hash-table a))
+(sbw/mm-defmethod sbw/value-eq--stringify [:list]       (a) (sbw/value-eq--stringify-list a))
+(sbw/mm-defmethod sbw/value-eq--stringify [:vector]     (a) (sbw/value-eq--stringify-vector a))
+
+(defun sbw/value-eq-hashcode (x)
+  (sxhash (sbw/value-eq--stringify x)))
 
 (define-hash-table-test 'sbw/value-eq-test 'sbw/value-eq 'sbw/value-eq-hashcode)
 
 (provide 'sbw-value-eq)
+
