@@ -67,6 +67,7 @@
     `(isearch                             ((t (:inherit sbw-dark-muted-match))))
     `(isearch-fail                        ((t (:inherit sbw-dark-muted-mismatch))))
     `(lazy-highlight                      ((t (:inherit sbw-dark-muted-match))))
+    `(match                               ((t (:inherit sbw-dark-muted-match))))
     `(region                              ((t (:inherit sbw-dark-muted-selection))))
     `(show-paren-match                    ((t (:inherit sbw-dark-muted-match))))
     `(show-paren-mismatch                 ((t (:inherit sbw-dark-muted-mismatch))))
@@ -94,6 +95,9 @@
     `(company-tooltip-selection           ((t (:inherit sbw-dark-muted-menu-selection))))
     `(company-scrollbar-bg                ((t (:inherit sbw-dark-muted-menu))))
     `(company-scrollbar-fg                ((t (:inherit sbw-dark-muted-menu-selection))))
+
+    ;; compile
+    `(compilation-info                    ((t (:inherit sbw-dark-muted-emphasisq))))
     
     ;; ert
     `(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))
