@@ -1,3 +1,21 @@
+(setq sbw/value-eq--test--ht
+  (let* ( (ht (make-hash-table)) )
+    (puthash :foo 23 ht)
+    (puthash :bar 42 ht)
+    ht))
+
+(setq sbw/value-eq--test--ht-equal-two
+  (let* ( (ht (make-hash-table)) )
+    (puthash :foo 23 ht)
+    (puthash :bar 42 ht)
+    ht))
+
+(setq sbw/value-eq--test--ht-equal-three
+  (let* ( (ht (make-hash-table)) )
+    (puthash :bar 42 ht)
+    (puthash :foo 23 ht)   
+    ht))
+
 (setq sbw/value-eq--test--test-data
   ;; Test data of the form [value-one value-two are-equal?]
   (list
@@ -22,12 +40,14 @@
     `(23 ,(sbw/ht-create) nil)
 
     ;; Hash table
-    `(,(sbw/ht-create)                 ,(sbw/ht-create)                         t)
-    `(,(sbw/ht-create :foo 23 :bar 42) ,(sbw/ht-create :foo 23 :bar 42)         t)
-    `(,(sbw/ht-create :foo 23 :bar 42) ,(sbw/ht-create :foo 42 :bar 23)         nil)
-    `(,(sbw/ht-create :foo 23 :bar 42) ,(sbw/ht-create :foo 23 :bar 42 :baz 13) nil)
-    `(,(sbw/ht-create)                 nil                                      nil)
-    `(,(sbw/ht-create)                 ,(list)                                  nil)
+    `(,(make-hash-table)      ,(make-hash-table)                       t)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht                  t)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-equal-two        t)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-equal-three      t)
+    `(,sbw/value-eq--test--ht ,(sbw/ht-create :foo 42 :bar 23)         nil)
+    `(,sbw/value-eq--test--ht ,(sbw/ht-create :foo 23 :bar 42 :baz 13) nil)
+    `(,(make-hash-table)      nil                                      nil)
+    `(,(make-hash-table)      ,(list)                                  nil)
 
     ;; List
     `(,(list)    ,(list)       t)
@@ -74,13 +94,34 @@
           (should-not (sbw/value-eq--test--hashcode-equal a b))))))
   t)
 
+;; { { :foo 23 } (1 2 3 "4") }
+(setq sbw/value-eq--test--mixed-struct
+  (let* ( (ht-outer (make-hash-table))
+          (ht-inner (make-hash-table)) )
+    (puthash :foo 23 ht-inner)
+    (puthash ht-inner (list 1 2 3 "4") ht-outer)
+    ht-outer))
+
+;; { { :foo 23 } (1 2 3 "4") }
+(setq sbw/value-eq--test--mixed-struct-same
+  (let* ( (ht-outer (make-hash-table))
+          (ht-inner (make-hash-table)) )
+    (puthash :foo 23 ht-inner)
+    (puthash ht-inner (list 1 2 3 "4") ht-outer)
+    ht-outer))
+
+;; { { :bar 23 } (1 2 3 "4") }
+(setq sbw/value-eq--test--mixed-struct-different
+  (let* ( (ht-outer (make-hash-table))
+          (ht-inner (make-hash-table)) )
+    (puthash :bar 23 ht-inner)
+    (puthash ht-inner (list 1 2 3 "4") ht-outer)
+    ht-outer))
+
 (ert-deftest sbw/value-eq-given-mixed-type-structures-then-true-if-equal ()
-  (let* ( (equal-one (sbw/ht-create (sbw/ht-create :foo 23) (list 1 2 3 "4")))
-          (equal-two (sbw/ht-create (sbw/ht-create :foo 23) (list 1 2 3 "4")))
-          (different (sbw/ht-create (sbw/ht-create :bar 23) (list 1 2 3 "4"))) )
-    (should (eq (sbw/value-eq equal-one equal-two) t))
-    (should (eq (sbw/value-eq equal-one different) nil))
-    (should (eq (sbw/value-eq equal-two different) nil))))
-
-
-
+  (let* ( (struct    sbw/value-eq--test--mixed-struct)
+          (same      sbw/value-eq--test--mixed-struct-same)
+          (different sbw/value-eq--test--mixed-struct-different))
+    (should (eq (sbw/value-eq struct struct)    t))
+    (should (eq (sbw/value-eq struct same)      t))
+    (should (eq (sbw/value-eq struct different) nil))))

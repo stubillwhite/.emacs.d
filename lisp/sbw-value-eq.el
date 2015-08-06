@@ -19,15 +19,11 @@
        ,equality-test)))
 
 (defun sbw/value-eq--hash-tables-equal (a b)
-  (-reduce-from 
-    (lambda (acc v)
-      (-let* ( (key-a (car v))
-               (key-b (cdr v))
-               (item-a (gethash key-a a))
-               (item-b (gethash key-b b))) 
-        (and acc (sbw/value-eq key-a key-b) (sbw/value-eq item-a item-b))))
-    t
-    (-zip-fill :sbw/value-eq--padding (hash-table-keys a) (hash-table-keys b))))
+  (if (sbw/value-eq (sbw/ht-keys a) (sbw/ht-keys b))
+    (-reduce-from
+      (lambda (acc k) (and acc (sbw/value-eq (sbw/ht2-get a k) (sbw/ht2-get b k))))
+      t
+      (sbw/ht-keys a))))
 
 (defun sbw/value-eq--lists-equal (a b)
   (-reduce-from
@@ -51,13 +47,15 @@
 (sbw/value-eq--defmethod [:vector]     (a b) (sbw/value-eq--vectors-equal a b))
 
 (defun sbw/value-eq--stringify-hash-table (a)
-  (concat
-    "{" 
-    (-reduce-from 
-      (lambda (acc v) (concat acc (sbw/value-eq--stringify v) (sbw/value-eq--stringify (gethash v a))))
-      ""
-      (hash-table-keys a))
-    "}"))
+  (let* ( (stringify-k-and-v (lambda (acc v) (cons (concat (sbw/value-eq--stringify v) (sbw/value-eq--stringify (gethash v a))) acc)))
+          (key-value-pairs   (-reduce-from stringify-k-and-v '() (hash-table-keys a))) )
+    (concat
+      "{" 
+      (-reduce-from 
+        (lambda (acc v) (concat acc v))
+        ""
+        (sort key-value-pairs 'string<))
+      "}")))
 
 (defun sbw/value-eq--stringify-list (a)
   (concat
