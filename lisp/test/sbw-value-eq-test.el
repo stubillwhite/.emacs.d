@@ -1,19 +1,32 @@
 (setq sbw/value-eq--test--ht
-  (let* ( (ht (make-hash-table)) )
+  (let* ( (ht (make-hash-table :test 'sbw/value-eq-test)) )
     (puthash :foo 23 ht)
     (puthash :bar 42 ht)
     ht))
 
-(setq sbw/value-eq--test--ht-equal-two
-  (let* ( (ht (make-hash-table)) )
+(setq sbw/value-eq--test--ht-same-one
+  (let* ( (ht (make-hash-table :test 'sbw/value-eq-test)) )
     (puthash :foo 23 ht)
     (puthash :bar 42 ht)
     ht))
 
-(setq sbw/value-eq--test--ht-equal-three
-  (let* ( (ht (make-hash-table)) )
+(setq sbw/value-eq--test--ht-same-two
+  (let* ( (ht (make-hash-table :test 'sbw/value-eq-test)) )
     (puthash :bar 42 ht)
     (puthash :foo 23 ht)   
+    ht))
+
+(setq sbw/value-eq--test--ht-different-one
+  (let* ( (ht (make-hash-table :test 'sbw/value-eq-test)) )
+    (puthash :foo 42 ht)
+    (puthash :bar 23 ht)   
+    ht))
+
+(setq sbw/value-eq--test--ht-different-two
+  (let* ( (ht (make-hash-table :test 'sbw/value-eq-test)) )
+    (puthash :foo 23 ht)
+    (puthash :bar 42 ht)
+    (puthash :baz 50 ht)
     ht))
 
 (setq sbw/value-eq--test--test-data
@@ -40,14 +53,14 @@
     `(23 ,(sbw/ht-create) nil)
 
     ;; Hash table
-    `(,(make-hash-table)      ,(make-hash-table)                       t)
-    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht                  t)
-    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-equal-two        t)
-    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-equal-three      t)
-    `(,sbw/value-eq--test--ht ,(sbw/ht-create :foo 42 :bar 23)         nil)
-    `(,sbw/value-eq--test--ht ,(sbw/ht-create :foo 23 :bar 42 :baz 13) nil)
-    `(,(make-hash-table)      nil                                      nil)
-    `(,(make-hash-table)      ,(list)                                  nil)
+    `(,(make-hash-table)      ,(make-hash-table)                    t)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht               t)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-same-one      t)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-same-two      t)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-different-one nil)
+    `(,sbw/value-eq--test--ht ,sbw/value-eq--test--ht-different-two nil)
+    `(,(make-hash-table)      nil                                   nil)
+    `(,(make-hash-table)      ,(list)                               nil)
 
     ;; List
     `(,(list)    ,(list)       t)
@@ -63,10 +76,7 @@
     `(,(vector 23) ,(vector 42)    nil)
     `(,(vector 23) ,(vector 23 42) nil)
     `(,(vector 23) nil             nil)
-    `(,(vector 23) "23"            nil)
-    
-    ;; Mixed
-    
+    `(,(vector 23) "23"            nil)    
     ))
 
 (ert-deftest sbw/value-eq-data-driven-test ()
@@ -96,24 +106,24 @@
 
 ;; { { :foo 23 } (1 2 3 "4") }
 (setq sbw/value-eq--test--mixed-struct
-  (let* ( (ht-outer (make-hash-table))
-          (ht-inner (make-hash-table)) )
+  (let* ( (ht-outer (make-hash-table :test 'sbw/value-eq-test))
+          (ht-inner (make-hash-table :test 'sbw/value-eq-test)) )
     (puthash :foo 23 ht-inner)
     (puthash ht-inner (list 1 2 3 "4") ht-outer)
     ht-outer))
 
 ;; { { :foo 23 } (1 2 3 "4") }
 (setq sbw/value-eq--test--mixed-struct-same
-  (let* ( (ht-outer (make-hash-table))
-          (ht-inner (make-hash-table)) )
+  (let* ( (ht-outer (make-hash-table :test 'sbw/value-eq-test))
+          (ht-inner (make-hash-table :test 'sbw/value-eq-test)) )
     (puthash :foo 23 ht-inner)
     (puthash ht-inner (list 1 2 3 "4") ht-outer)
     ht-outer))
 
 ;; { { :bar 23 } (1 2 3 "4") }
 (setq sbw/value-eq--test--mixed-struct-different
-  (let* ( (ht-outer (make-hash-table))
-          (ht-inner (make-hash-table)) )
+  (let* ( (ht-outer (make-hash-table :test 'sbw/value-eq-test))
+          (ht-inner (make-hash-table :test 'sbw/value-eq-test)) )
     (puthash :bar 23 ht-inner)
     (puthash ht-inner (list 1 2 3 "4") ht-outer)
     ht-outer))
@@ -125,3 +135,4 @@
     (should (eq (sbw/value-eq struct struct)    t))
     (should (eq (sbw/value-eq struct same)      t))
     (should (eq (sbw/value-eq struct different) nil))))
+

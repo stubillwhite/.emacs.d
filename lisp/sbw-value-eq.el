@@ -19,7 +19,7 @@
        ,equality-test)))
 
 (defun sbw/value-eq--hash-tables-equal (a b)
-  (if (sbw/value-eq (sbw/ht-keys a) (sbw/ht-keys b))
+  (if (sbw/value-eq (sbw/ht2-keys a) (sbw/ht2-keys b))
     (-reduce-from
       (lambda (acc k) (and acc (sbw/value-eq (sbw/ht2-get a k) (sbw/ht2-get b k))))
       t
