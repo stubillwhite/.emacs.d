@@ -18,8 +18,17 @@
        (eq (sbw/value-eq--data-type (car args)) (sbw/value-eq--data-type (cadr args)))
        ,equality-test)))
 
+(defun sbw/value-eq--lists-equal-ignoring-order (a b)
+  (and
+    (eq (length a) (length b))
+    (not
+      (-reduce-from
+        (lambda (acc v) (-filter (lambda (x) (not (sbw/value-eq x v))) acc))
+        a
+        b))))
+
 (defun sbw/value-eq--hash-tables-equal (a b)
-  (if (sbw/value-eq (sbw/ht2-keys a) (sbw/ht2-keys b))
+  (if (sbw/value-eq--lists-equal-ignoring-order (sbw/ht2-keys a) (sbw/ht2-keys b))
     (-reduce-from
       (lambda (acc k) (and acc (sbw/value-eq (sbw/ht2-get a k) (sbw/ht2-get b k))))
       t
