@@ -99,58 +99,59 @@
   (-let* ( (keys (sbw/ht2-keys hash-table)) )
     (apply 'sbw/ht2-create (-interleave keys (-map (lambda (x) (funcall f (sbw/ht2-get hash-table x))) keys)))))
 
+(defun sbw/ht2-update (hash-table k f)
+  "Returns a copy of HASH-TABLE with the value associated with
+   key K updated, where f is a function that will take the old
+   value and return the new value."
+  (let* ( (v (funcall f (sbw/ht2-get hash-table k))) )
+    (sbw/ht2-merge hash-table (sbw/ht2-create k v))))
 
+(defun sbw/ht2--flatten-hash-tables (hash-table ks)
+  "Returns a flattened version of a nested associative structure
+   to the point specified by KS, where KS is a sequence of keys
+   to the structure. If any levels do not exist then new
+   hash-tables will be created."
+  (let* ( (mk-acc        (lambda (ht l) (sbw/ht2-create :ht ht :l l)))
+          (get-or-create (lambda (ht k) (let ((x (sbw/ht2-get ht k))) (if x x (sbw/ht2-create))))) )
+    (sbw/ht2-get
+      (-reduce-from
+        (lambda (acc k)
+          (let* ( (ht     (sbw/ht2-get acc :ht))
+                  (l      (sbw/ht2-get acc :l))
+                  (new-ht (sbw/ht2-get ht k)) )
+            (funcall mk-acc
+              (funcall get-or-create ht k)
+              (append l (list ht)))))
+        (funcall mk-acc hash-table (list))
+        (append ks nil))
+      :l)))
+
+(defun sbw/ht2-assoc-in (hash-table ks v)
+  "Returns a nested associative structure with value V associated
+   at the point specified by KS, where KS is a sequence of keys
+   to the structure. If any levels do not exist then new
+   hash-tables will be created."
+  (-reduce-from
+    (lambda (acc ht-and-k)
+      (let ( (ht (car ht-and-k))
+             (k  (cadr ht-and-k)) )
+        (sbw/ht2-assoc ht k acc)))
+    v
+    (reverse (-partition 2 (-interleave (sbw/ht2--flatten-hash-tables hash-table ks) (append ks nil))))))
+
+(defun sbw/ht2-update-in (hash-table ks f)
+  "Returns a nested associative structure with value associated
+   at the point specified by KS updated, where KS is a sequence
+   of keys to the structure, and F is function that will take the
+   old value and return the new value. If any levels do not exist
+   then new hash-tables will be created."
+  (let* ( (flattened (sbw/ht2--flatten-hash-tables hash-table ks)) )
+    (-reduce-from
+      (lambda (acc ht-and-k)
+        (let ( (ht (car ht-and-k))
+               (k  (cadr ht-and-k)) )
+          (sbw/ht2-assoc ht k acc)))
+      (funcall f (car flattened))
+      (reverse (-partition 2 (-interleave flattened (append ks nil)))))))
 
 (provide 'sbw-hash-tables-two)
-
-;;;; (defun sbw/-ht-flatten-hash-tables (hash-table ks)
-;;;;   "Returns a flattened version of a nested associative structure to the point specified by KS, where KS is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
-;;;;   (let* ( (mk-acc        (lambda (ht l) (sbw/ht2-create :ht ht :l l)))
-;;;;           (get-or-create (lambda (ht k) (let ((x (sbw/ht2-get ht k))) (if x x (sbw/ht2-create))))) )
-;;;;     (sbw/ht2-get
-;;;;       (-reduce-from
-;;;;         (lambda (acc k)
-;;;;           (let* ( (ht     (sbw/ht2-get acc :ht))
-;;;;                   (l      (sbw/ht2-get acc :l))
-;;;;                   (new-ht (sbw/ht2-get ht k)) )
-;;;;             (funcall mk-acc
-;;;;               (funcall get-or-create ht k)
-;;;;               (append l (list ht)))))
-;;;;         (funcall mk-acc hash-table (list))
-;;;;         (append ks nil))
-;;;;       :l)))
-;;;; 
-;;;; (defun sbw/ht2-assoc-in (hash-table ks v)
-;;;;   "Returns a nested associative structure with value V associated at the point specified by KS, where KS is a sequence of keys to the structure. If any levels do not exist then new hash-tables will be created."
-;;;;   (-reduce-from
-;;;;     (lambda (acc ht-and-k)
-;;;;       (let ( (ht (car ht-and-k))
-;;;;              (k  (cadr ht-and-k)) )
-;;;;         (sbw/ht2-assoc ht k acc)))
-;;;;     v
-;;;;     (reverse (-partition 2 (-interleave (sbw/-ht-flatten-hash-tables hash-table ks) (append ks nil))))))
-;;;; 
-;;;; (defun sbw/ht2-update (hash-table k f)
-;;;;   "Returns a copy of HASH-TABLE with the value associated with key K updated, where f is a function that will take the old value and return the new value."
-;;;;   (let* ( (v (funcall f (sbw/ht2-get hash-table k))) )
-;;;;     (sbw/ht2-merge hash-table (sbw/ht2-create k v))))
-;;;; 
-;;;; 
-;;;; ;; TODO Create drill-into function that reduces a hash-map into the values retrieved from the map
-;;;; ;;      update-in then does zipmap on the keys and that stream
-;;;; (defun sbw/ht2-update-in (hash-table ks f)
-;;;;   "Returns a nested associative structure with value associated at the point specified by KS updated, where KS is a sequence of keys to the structure, and F is function that will take the old value and return the new value. If any levels do not exist then new hash-tables will be created."
-;;;;   (let* ( (flattened (sbw/-ht-flatten-hash-tables hash-table ks)) )
-;;;;     (-reduce-from
-;;;;       (lambda (acc ht-and-k)
-;;;;         (let ( (ht (car ht-and-k))
-;;;;                (k  (cadr ht-and-k)) )
-;;;;           (sbw/ht2-assoc ht k acc)))
-;;;;       (funcall f (car flattened))
-;;;;       (reverse (-partition 2 (-interleave flattened (append ks nil)))))))
-;;;; 
-;;;; 
-;;;; ;; TODO: This is the wrong way around; should be (f hash-table)
-;;;; 
-;;;; (provide 'sbw-hash-tables)
-;;;; 

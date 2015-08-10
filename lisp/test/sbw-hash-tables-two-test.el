@@ -162,83 +162,82 @@
           (expected   (sbw/ht2-create :a 2 :b 3 :c 4)) )
     (should (sbw/value-eq (sbw/ht2-map-vals inc-val hash-table) expected))))
 
+;; sbw/ht2-update
 
+(ert-deftest sbw/ht2-update-given-key-exists-then-replaces ()
+  (let* ( (hash-table (sbw/ht2-create :k 1))
+          (inc        (lambda (x) (+ 1 x)))
+          (expected   (sbw/ht2-create :k 2)) )
+    (should (sbw/value-eq (sbw/ht2-update hash-table :k inc) expected))))
 
+(ert-deftest sbw/ht2-update-given-new-key-then-adds ()
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1))
+          (f          (lambda (x) (when (not x) :v2)))
+          (expected   (sbw/ht2-create :k1 :v1 :k2 :v2)) )
+    (should (sbw/value-eq (sbw/ht2-update hash-table :k2 f) expected))))
+
+;; sbw/ht2-assoc-in
+
+(ert-deftest sbw/ht2-assoc-in-given-root-key-exists-then-replaces ()
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1))
+          (expected   (sbw/ht2-create :k1 :v2)) )
+    (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k1] :v2) expected))))
+
+(ert-deftest sbw/ht2-assoc-in-given-root-key-does-not-exist-then-adds ()
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1))
+          (expected   (sbw/ht2-create :k1 :v1 :k2 :v2)) )
+    (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k2] :v2) expected))))
+
+(ert-deftest sbw/ht2-assoc-in-given-nested-key-exists-then-replaces ()
+  (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1)))
+          (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v2))) )
+    (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k1 :k2] :v2) expected))))
+
+(ert-deftest sbw/ht2-assoc-in-given-nested-key-does-not-exist-then-adds ()
+  (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1)))
+          (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1 :k3 :v2))) )
+    (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k1 :k3] :v2) expected))))
+
+(ert-deftest sbw/ht2-assoc-in-given-path-through-non-existent-key-then-adds-empty-hash-table ()
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1))
+          (expected   (sbw/ht2-create :k1 :v1 :k2 (sbw/ht-create :k3 (sbw/ht-create :k4 :v2)))) )
+    (should (sbw/value-eq (sbw/ht-assoc-in hash-table [:k2 :k3 :k4] :v2) expected))))
+
+;; sbw/ht2-update-in
+
+(ert-deftest sbw/ht2-update-in-given-root-key-exists-then-replaces ()
+  :expected-result :failed
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1))
+          (f          (lambda (x) (when (equal x :v1) :v2)))
+          (expected   (sbw/ht2-create :k1 :v2)) )
+    (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k1] f) expected))))
+
+(ert-deftest sbw/ht2-update-in-given-root-key-does-not-exist-then-adds ()
+  :expected-result :failed
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1))
+          (f          (lambda (x) (when (not x) :v2)))
+          (expected   (sbw/ht2-create :k1 :v1 :k2 :v2)) )
+    (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k2] f) expected))))
+
+(ert-deftest sbw/ht2-update-in-given-nested-key-exists-then-replaces ()
+  :expected-result :failed
+  (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1)))
+          (f          (lambda (x) (when (equal x :v2) :v3)))
+          (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v3))) )
+    (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k1 :k2] f) expected))))
+
+(ert-deftest sbw/ht2-update-in-given-nested-key-does-not-exist-then-adds ()
+  :expected-result :failed
+  (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1)))
+          (f          (lambda (x) (when (not x) :v2)))
+          (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1 :k3 :v2))) )
+    (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k1 :k3] f) expected))))
+
+(ert-deftest sbw/ht2-update-in-given-path-through-non-existent-key-then-adds-empty-hash-table ()
+  :expected-result :failed
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1))
+          (f          (lambda (x) (when (not x) :v2)))
+          (expected   (sbw/ht2-create :k1 :v1 :k2 (sbw/ht-create :k3 (sbw/ht-create :k4 :v2)))) )
+    (should (sbw/value-eq (sbw/ht-update-in hash-table [:k2 :k3 :k4] f) expected))))
 
 (provide 'sbw-hash-tables-two-test)
-
-;;;; ;; sbw/ht2-assoc-in
-;;;; 
-;;;; (ert-deftest sbw/ht2-assoc-in-given-key-exists-at-top-level-then-replaces ()
-;;;;   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
-;;;;           (expected   (sbw/ht2-create :k1 :v2)) )
-;;;;     (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k1] :v2) expected))))
-;;;; 
-;;;; (ert-deftest sbw/ht2-assoc-in-given-key-exists-in-nested-structure-then-replaces ()
-;;;;   (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1)))
-;;;;           (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v2))) )
-;;;;     ;; TODO - Once sbw/value-eq is recursive then fix this
-;;;;     (let* ( (result (sbw/ht2-assoc-in hash-table [:k1 :k2] :v2)) )
-;;;;       (should (equal (sbw/ht2-keys result) (sbw/ht2-keys expected)))
-;;;;       (should (sbw/value-eq (sbw/ht2-get result :k1) (sbw/ht2-get expected :k1))))))
-;;;; 
-;;;; (ert-deftest sbw/ht2-assoc-in-given-new-key-at-top-level-then-adds ()
-;;;;   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
-;;;;           (expected   (sbw/ht2-create :k1 :v1 :k2 :v2)) )
-;;;;     (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k2] :v2) expected))))
-;;;; 
-;;;; (ert-deftest sbw/ht2-assoc-in-given-new-key-in-nested-structure-then-adds ()
-;;;;   (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v2)))
-;;;;           (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v2 :k3 :v3))) )
-;;;;     ;; TODO - Once sbw/value-eq is recursive then fix this
-;;;;     (let* ( (result (sbw/ht2-assoc-in hash-table [:k1 :k3] :v3)) )
-;;;;       (should (equal (sbw/ht2-keys result) (sbw/ht2-keys expected)))
-;;;;       (should (sbw/value-eq (sbw/ht2-get result :k1) (sbw/ht2-get expected :k1))))))
-;;;; 
-;;;; (ert-deftest sbw/ht2-assoc-in-given-new-key-in-intermediate-nested-structure-then-creates-empty-hash-table ()
-;;;;   (let* ( (hash-table (sbw/ht2-create))
-;;;;           (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v2))) )
-;;;;     ;; TODO - Once sbw/value-eq is recursive then fix this
-;;;;     (let* ( (result (sbw/ht2-assoc-in hash-table [:k1 :k2] :v2)) )
-;;;;       (should (equal (sbw/ht2-keys result) (sbw/ht2-keys expected)))
-;;;;       (should (sbw/value-eq (sbw/ht2-get result :k1) (sbw/ht2-get expected :k1))))))
-;;;; 
-;;;; ;; sbw/ht2-update
-;;;; 
-;;;; (ert-deftest sbw/ht2-update-given-key-exists-then-replaces ()
-;;;;   (let* ( (hash-table (sbw/ht2-create :k 1))
-;;;;           (inc        (lambda (x) (+ 1 x)))
-;;;;           (expected   (sbw/ht2-create :k 2)) )
-;;;;     (should (sbw/value-eq (sbw/ht2-update hash-table :k inc) expected))))
-;;;; 
-;;;; (ert-deftest sbw/ht2-update-given-new-key-then-adds ()
-;;;;   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
-;;;;           (f          (lambda (x) (when (not x) :v2)))
-;;;;           (expected   (sbw/ht2-create :k1 :v1 :k2 :v2)) )
-;;;;     (should (sbw/value-eq (sbw/ht2-update hash-table :k2 f) expected))))
-;;;; 
-;;;; ;; sbw/ht2-update-in
-;;;; 
-;;;; (ert-deftest sbw/ht2-update-in-given-key-exists-at-top-level-then-replaces ()
-;;;;   :expected-result :failed
-;;;;   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
-;;;;           (f          (lambda (x) (when (equal x :v1) :v2)))
-;;;;           (expected   (sbw/ht2-create :k1 :v2)) )
-;;;;     (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k1] f) expected))))
-;;;; 
-;;;; (ert-deftest sbw/ht2-update-in-given-key-exists-in-nested-structure-then-replaces ()
-;;;;   :expected-result :failed
-;;;;   (should (equal 1 0)))
-;;;; 
-;;;; (ert-deftest sbw/ht2-update-in-given-new-key-at-top-level-then-adds ()
-;;;;   :expected-result :failed
-;;;;   (should (equal 1 0)))
-;;;; 
-;;;; (ert-deftest sbw/ht2-update-in-given-new-key-in-nested-structure-then-adds ()
-;;;;   :expected-result :failed  
-;;;;   (should (equal 1 0)))
-;;;; 
-;;;; (ert-deftest sbw/ht2-update-in-given-new-key-in-intermediate-nested-structure-then-creates-empty-hash-table ()
-;;;;   :expected-result :failed  
-;;;;   (should (equal 1 0)))
-;;;; 
