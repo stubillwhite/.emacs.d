@@ -1,6 +1,8 @@
 (require 'sbw-hash-tables-two)
 (require 'sbw-value-eq)
 
+;; sbw/ht2-create
+
 (ert-deftest sbw/ht2-create-given-empty-initial-content-then-new-empty-hash-table ()
   (should (equal (hash-table-p    (sbw/ht2-create)) t))
   (should (equal (hash-table-test (sbw/ht2-create)) 'sbw/value-eq-test)))
@@ -54,13 +56,9 @@
   (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v))) )
     (should (equal (sbw/ht2-get-in hash-table [:k1 :k3]) nil))))
 
-(ert-deftest sbw/ht2-get-in-given-path-through-non-nested-structure-then-nil ()
+(ert-deftest sbw/ht2-get-in-given-path-through-non-nested-structure-then-error ()
   (let* ( (hash-table (sbw/ht2-create :k1 :k2)) )
-    (should (equal (sbw/ht2-get-in hash-table [:k1 :k2]) nil))))
-
-(ert-deftest sbw/ht2-get-in-given-path-exhausts-nested-structure-then-nil ()
-  (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create))) )
-    (should (equal (sbw/ht2-get-in hash-table [:k1 :k2 :k3]) nil))))
+    (should-error (sbw/ht2-get-in hash-table [:k1 :k2]) :type 'wrong-type-argument)))
 
 (ert-deftest sbw/ht2-get-in-given-root-key-exists-then-value ()
   (let* ( (hash-table (sbw/ht2-create :k1 :v)) )
@@ -77,14 +75,6 @@
 (ert-deftest sbw/ht2-get-in-given-nested-key-does-not-exist-key-and-default-then-default ()
   (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v))) )
     (should (equal (sbw/ht2-get-in hash-table [:k1 :k3] :d) :d))))
-
-(ert-deftest sbw/ht2-get-in-given-path-through-non-nested-structure-and-default-then-default ()
-  (let* ( (hash-table (sbw/ht2-create :k1 :k2)) )
-    (should (equal (sbw/ht2-get-in hash-table [:k1 :k2] :d) :d))))
-
-(ert-deftest sbw/ht2-get-in-given-path-exhausts-nested-structure-and-default-then-default ()
-  (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create))) )
-    (should (equal (sbw/ht2-get-in hash-table [:k1 :k2 :k3] :d) :d))))
 
 ;; sbw/ht2-contains?
 
@@ -198,6 +188,10 @@
           (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1 :k3 :v2))) )
     (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k1 :k3] :v2) expected))))
 
+(ert-deftest sbw/ht2-assoc-in-given-path-through-existing-non-nested-structure-then-throws ()
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1)) )
+    (should-error (sbw/ht2-assoc-in hash-table [:k1 :k2] :v1) :type 'wrong-type-argument)))
+
 (ert-deftest sbw/ht2-assoc-in-given-path-through-non-existent-key-then-adds-empty-hash-table ()
   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
           (expected   (sbw/ht2-create :k1 :v1 :k2 (sbw/ht-create :k3 (sbw/ht-create :k4 :v2)))) )
@@ -232,6 +226,10 @@
           (f          (lambda (x) (when (not x) :v2)))
           (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1 :k3 :v2))) )
     (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k1 :k3] f) expected))))
+
+(ert-deftest sbw/ht2-update-in-given-path-through-existing-non-nested-structure-then-throws ()
+  (let* ( (hash-table (sbw/ht2-create :k1 :v1)) )
+    (should-error (sbw/ht2-update-in hash-table [:k1 :k2] :v1) :type 'wrong-type-argument)))
 
 (ert-deftest sbw/ht2-update-in-given-path-through-non-existent-key-then-adds-empty-hash-table ()
   :expected-result :failed

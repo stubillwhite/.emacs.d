@@ -58,4 +58,16 @@
   (let ( (json-encoding-pretty-print t) )
     (s-replace "\"" "" (json-encode x))))
 
+;; TODO Test me
+(defun sbw/range (x &optional y step)
+  "Returns a sequence of integers. If X is specified, return
+integers in range 0 to X; if both X and Y are specified return
+integers in range X to 8. If STEP is not specified then assume
+1."
+  (if (not y)
+    (number-sequence 0 (- x 1) step)
+    (number-sequence x (- y 1) step)))
+
+
+
 (provide 'sbw-utils)
