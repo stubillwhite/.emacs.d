@@ -1,8 +1,11 @@
+(defun sbw/mm--create-hash-table ()
+  (make-hash-table :test 'equal)  )
+
 (defun sbw/mm--set-registry (r)
   (setq *sbw/mm--registry* r))
 
 (defun sbw/mm--get-registry ()
-  (defvar *sbw/mm--registry* (sbw/ht-create))
+  (defvar *sbw/mm--registry* (sbw/mm--create-hash-table))
   *sbw/mm--registry*)
 
 (defun sbw/mm--register-dispatch-handler (f-symbol dispatch-val handler-f)
@@ -13,7 +16,7 @@
 
 (defun sbw/mm--register-multimethod (f)
   (-> (sbw/mm--get-registry)
-    (sbw/ht-assoc f (sbw/ht-create))
+    (sbw/ht-assoc f (sbw/mm--create-hash-table))
     (sbw/mm--set-registry)))
 
 (defun sbw/mm--unregister-multimethod (f)
@@ -22,9 +25,11 @@
     (sbw/mm--set-registry)))
 
 (defun sbw/mm--get-handler (f-symbol dispatch-func args)
-  (let* ( (dispatch-val (apply dispatch-func args)) )
-    (-> (sbw/mm--get-registry)
-      (sbw/ht-get-in (list f-symbol (vector dispatch-val))))))
+  (let* ( (dispatch-val (apply dispatch-func args))
+          (handler      (sbw/ht-get-in (sbw/mm--get-registry) (list f-symbol (vector dispatch-val)))))
+    (if handler
+      handler
+      (signal 'wrong-type-argument dispatch-val))))
 
 (defmacro sbw/mm--create-multimethod-function (f-symbol dispatch-func)
   `(defun ,f-symbol (&rest args)
@@ -39,9 +44,10 @@
        (sbw/mm--create-multimethod-function ,f-symbol ,dispatch-func))))
 
 (defmacro sbw/mm-defmethod (name dispatch-val sig body)
-  "Define NAME as a multimethod for DISPATCH-VAL with the parameter signature SIG and body BODY."
+  "Define NAME as a multimethod for DISPATCH-VAL with the
+parameter signature SIG and body BODY."
   (let ( (f-symbol (intern (symbol-name name))) )
-    `(sbw/mm--register-dispatch-handler (quote ,f-symbol) ,dispatch-val (lambda ,sig ,body))))
+      `(sbw/mm--register-dispatch-handler (quote ,f-symbol) ,dispatch-val (lambda ,sig ,body))))
 
 (defmacro sbw/mm-undefmulti (name)
   "Undefine NAME as a multimethod."
