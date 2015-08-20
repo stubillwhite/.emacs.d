@@ -200,28 +200,24 @@
 ;; sbw/ht2-update-in
 
 (ert-deftest sbw/ht2-update-in-given-root-key-exists-then-replaces ()
-  :expected-result :failed
   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
           (f          (lambda (x) (when (equal x :v1) :v2)))
           (expected   (sbw/ht2-create :k1 :v2)) )
     (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k1] f) expected))))
 
 (ert-deftest sbw/ht2-update-in-given-root-key-does-not-exist-then-adds ()
-  :expected-result :failed
   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
           (f          (lambda (x) (when (not x) :v2)))
           (expected   (sbw/ht2-create :k1 :v1 :k2 :v2)) )
     (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k2] f) expected))))
 
 (ert-deftest sbw/ht2-update-in-given-nested-key-exists-then-replaces ()
-  :expected-result :failed
   (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1)))
-          (f          (lambda (x) (when (equal x :v2) :v3)))
-          (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v3))) )
+          (f          (lambda (x) (when (equal x :v1) :v2)))
+          (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v2))) )
     (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k1 :k2] f) expected))))
 
 (ert-deftest sbw/ht2-update-in-given-nested-key-does-not-exist-then-adds ()
-  :expected-result :failed
   (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1)))
           (f          (lambda (x) (when (not x) :v2)))
           (expected   (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1 :k3 :v2))) )

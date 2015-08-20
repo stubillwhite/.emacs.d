@@ -103,100 +103,24 @@ and return the new value."
   (let* ( (v (funcall f (sbw/ht2-get hash-table k))) )
     (sbw/ht2-merge hash-table (sbw/ht2-create k v))))
 
-(defun sbw/ht2--flatten-hash-tables (hash-table ks)
-  "Returns a flattened version of a nested associative structure
-to the point specified by KS, where KS is a sequence of keys to
-the structure. If any levels do not exist then new hash-tables
-will be created."
-  (let* ( (mk-acc        (lambda (ht l) (sbw/ht2-create :ht ht :l l)))
-          (get-or-create (lambda (ht k) (let ((x (sbw/ht2-get ht k))) (if x x (sbw/ht2-create))))) )
-    (sbw/ht2-get
-      (-reduce-from
-        (lambda (acc k)
-          (let* ( (ht     (sbw/ht2-get acc :ht))
-                  (l      (sbw/ht2-get acc :l))
-                  (new-ht (sbw/ht2-get ht k)) )
-            (funcall mk-acc
-              (funcall get-or-create ht k)
-              (append l (list ht)))))
-        (funcall mk-acc hash-table (list))
-        (append ks nil))
-      :l)))
-
-(defun sbw/ht2-assoc-in (hash-table ks v)
-  "Returns a nested associative structure with value V associated
-at the point specified by KS, where KS is a sequence of keys to
-the structure. If any levels do not exist then new hash-tables
-will be created."
-  (-reduce-from
-    (lambda (acc ht-and-k)
-      (let ( (ht (car ht-and-k))
-             (k  (cadr ht-and-k)) )
-        (sbw/ht2-assoc ht k acc)))
-    v
-    (reverse (-partition 2 (-interleave (sbw/ht2--flatten-hash-tables hash-table ks) (append ks nil))))))
-
 (defun sbw/ht2-update-in (hash-table ks f)
   "Returns a nested associative structure with value associated
 at the point specified by KS updated, where KS is a sequence of
 keys to the structure, and F is function that will take the old
 value and return the new value. If any levels do not exist then
 new hash-tables will be created."
-  (let* ( (flattened (sbw/ht2--flatten-hash-tables hash-table ks)) )
-    (-reduce-from
-      (lambda (acc ht-and-k)
-        (let ( (ht (car ht-and-k))
-               (k  (cadr ht-and-k)) )
-          (sbw/ht2-assoc ht k acc)))
-      (funcall f (car flattened))
-      (reverse (-partition 2 (-interleave flattened (append ks nil)))))))
+  (let* ( (k-seq (seq-into ks 'list))
+          (k     (car k-seq))
+          (ks    (cdr k-seq)) )
+    (if (seq-empty-p ks)
+      (sbw/ht2-assoc hash-table k (funcall f (sbw/ht2-get hash-table k)))
+      (sbw/ht2-assoc hash-table k (sbw/ht2-update-in (sbw/ht2-get hash-table k) ks f)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun sbw/ht2--slice (hash-table ks)
-  (let* ( (paths  (seq-map (lambda (x) (seq-take ks (sbw/inc x))) (sbw/range (length ks))))
-          (points (seq-map (lambda (x) (sbw/ht2-get-in hash-table x)) paths)) )
-    (cons hash-table (-interleave (seq-into ks 'list) points))))
-
-(defun sbw/ht2--expand-path-iter (acc ht ks)
-  (if (seq-empty-p ks)
-    acc
-    (let* ( (k (car ks))
-            (v (sbw/ht2-get ht k)) )
-      (cons
-        (list ht k v)
-        (sbw/ht2--expand-path-iter acc v (cdr ks))))))
-
-(defun sbw/ht2--expand-path (hash-table ks)
-  (sbw/ht2--expand-path-iter (list) hash-table (seq-into ks 'list)))
-
-(defun sbw/ht2--compact-path-iter (acc path)
-  (if (seq-empty-p path)
-    acc
-    (let* ( (x  (car path))
-            (ht (car x))
-            (k  (cadr x))
-            (v  (caddr x)) ) 
-      (sbw/ht2-assoc ht k acc))))
-
-;; (assoc a b c)
-;;
-;; {a {b 1}} [a b] 23
-;; {b 1}     b 23
-;; {a {b 1}} a {b 23}
-;;
-;; {a {b {c 1}}} [a b c] 23
-;; {c 1}         c 23
-;; {b {c 1}}     b {c 23}
-;; {a {b {c 1}}} a {b {c 23}}
-;;
-;; reverse slice, reverse ks, acc
-
-;; (let* ( (hash-table (sbw/ht2-create :k1 (sbw/ht2-create :k2 :v1 :k3 :v2)))
-;;         (path       (sbw/ht2--expand-path hash-table [:k1 :k2]))
-;;         )
-;;   (print path)
-;; 
-;;   )
+(defun sbw/ht2-assoc-in (hash-table ks v)
+  "Returns a nested associative structure with value V associated
+at the point specified by KS, where KS is a sequence of keys to
+the structure. If any levels do not exist then new hash-tables
+will be created."
+  (sbw/ht2-update-in hash-table ks (lambda (x) v)))
 
 (provide 'sbw-hash-tables-two)
