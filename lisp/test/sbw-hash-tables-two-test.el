@@ -194,8 +194,8 @@
 
 (ert-deftest sbw/ht2-assoc-in-given-path-through-non-existent-key-then-adds-empty-hash-table ()
   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
-          (expected   (sbw/ht2-create :k1 :v1 :k2 (sbw/ht-create :k3 (sbw/ht-create :k4 :v2)))) )
-    (should (sbw/value-eq (sbw/ht-assoc-in hash-table [:k2 :k3 :k4] :v2) expected))))
+          (expected   (sbw/ht2-create :k1 :v1 :k2 (sbw/ht2-create :k3 (sbw/ht2-create :k4 :v2)))) )
+    (should (sbw/value-eq (sbw/ht2-assoc-in hash-table [:k2 :k3 :k4] :v2) expected))))
 
 ;; sbw/ht2-update-in
 
@@ -228,10 +228,9 @@
     (should-error (sbw/ht2-update-in hash-table [:k1 :k2] :v1) :type 'wrong-type-argument)))
 
 (ert-deftest sbw/ht2-update-in-given-path-through-non-existent-key-then-adds-empty-hash-table ()
-  :expected-result :failed
   (let* ( (hash-table (sbw/ht2-create :k1 :v1))
           (f          (lambda (x) (when (not x) :v2)))
-          (expected   (sbw/ht2-create :k1 :v1 :k2 (sbw/ht-create :k3 (sbw/ht-create :k4 :v2)))) )
-    (should (sbw/value-eq (sbw/ht-update-in hash-table [:k2 :k3 :k4] f) expected))))
+          (expected   (sbw/ht2-create :k1 :v1 :k2 (sbw/ht2-create :k3 (sbw/ht2-create :k4 :v2)))) )
+    (should (sbw/value-eq (sbw/ht2-update-in hash-table [:k2 :k3 :k4] f) expected))))
 
 (provide 'sbw-hash-tables-two-test)

@@ -1,5 +1,3 @@
-(require 'sbw-multimethods)
-
 (defun sbw/value-eq--data-type (x &rest args)
   (cond
     ((eq nil x)       :nil)
@@ -11,12 +9,6 @@
     ((listp x)        :list)
     ((vectorp x)      :vector)
     (t                (signal 'wrong-type-argument (list x)))))
-
-(defmacro sbw/value-eq--defmethod (type args equality-test)
-  `(sbw/mm-defmethod sbw/value-eq ,type ,args
-     (and
-       (eq (sbw/value-eq--data-type (car args)) (sbw/value-eq--data-type (cadr args)))
-       ,equality-test)))
 
 (defun sbw/value-eq--lists-equal-ignoring-order (a b)
   (and
@@ -46,14 +38,19 @@
     t
     (-zip-fill :sbw/value-eq--padding a b)))
 
-(sbw/mm-defmulti sbw/value-eq 'sbw/value-eq--data-type)
-(sbw/value-eq--defmethod [:nil]        (a b) (eq a b))
-(sbw/value-eq--defmethod [:string]     (a b) (string-equal a b))
-(sbw/value-eq--defmethod [:keyword]    (a b) (eq a b))
-(sbw/value-eq--defmethod [:number]     (a b) (= a b))
-(sbw/value-eq--defmethod [:hash-table] (a b) (sbw/value-eq--hash-tables-equal a b))
-(sbw/value-eq--defmethod [:list]       (a b) (sbw/value-eq--lists-equal a b))
-(sbw/value-eq--defmethod [:vector]     (a b) (sbw/value-eq--vectors-equal a b))
+(defun sbw/value-eq (a b)
+  "Return t if A and B are equal, nil otherwise."
+  (let* ( (dt-a (sbw/value-eq--data-type a))
+          (dt-b (sbw/value-eq--data-type b)) )
+    (when (eq dt-a dt-b)
+      (cond
+        ((eq dt-a :nil)        (eq a b))
+        ((eq dt-a :string)     (string-equal a b))
+        ((eq dt-a :keyword)    (eq a b))
+        ((eq dt-a :number)     (= a b))
+        ((eq dt-a :hash-table) (sbw/value-eq--hash-tables-equal a b))
+        ((eq dt-a :list)       (sbw/value-eq--lists-equal a b))
+        ((eq dt-a :vector)     (sbw/value-eq--vectors-equal a b))))))
 
 (defun sbw/value-eq--stringify-hash-table (a)
   (let* ( (stringify-k-and-v (lambda (acc v) (cons (concat (sbw/value-eq--stringify v) (sbw/value-eq--stringify (gethash v a))) acc)))
@@ -83,14 +80,16 @@
       (setq idx (sbw/inc idx)))
     (concat s "]")))
 
-(sbw/mm-defmulti sbw/value-eq--stringify 'sbw/value-eq--data-type)
-(sbw/mm-defmethod sbw/value-eq--stringify [:nil]        (a) (format "%s" a))
-(sbw/mm-defmethod sbw/value-eq--stringify [:string]     (a) (format "%s" a))
-(sbw/mm-defmethod sbw/value-eq--stringify [:keyword]    (a) (format "%s" a))
-(sbw/mm-defmethod sbw/value-eq--stringify [:number]     (a) (format "%s" a))
-(sbw/mm-defmethod sbw/value-eq--stringify [:hash-table] (a) (sbw/value-eq--stringify-hash-table a))
-(sbw/mm-defmethod sbw/value-eq--stringify [:list]       (a) (sbw/value-eq--stringify-list a))
-(sbw/mm-defmethod sbw/value-eq--stringify [:vector]     (a) (sbw/value-eq--stringify-vector a))
+(defun sbw/value-eq--stringify (x)
+  (let* ( (dt-x (sbw/value-eq--data-type x)) )
+    (cond
+      ((eq dt-x  :nil)        (format "%s" x))
+      ((eq dt-x  :string)     (format "%s" x))
+      ((eq dt-x  :keyword)    (format "%s" x))
+      ((eq dt-x  :number)     (format "%s" x))
+      ((eq dt-x  :hash-table) (sbw/value-eq--stringify-hash-table x))
+      ((eq dt-x  :list)       (sbw/value-eq--stringify-list x))
+      ((eq dt-x  :vector)     (sbw/value-eq--stringify-vector x)))))
 
 (defun sbw/value-eq-hashcode (x)
   (sxhash (sbw/value-eq--stringify x)))

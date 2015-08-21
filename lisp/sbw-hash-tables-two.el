@@ -114,7 +114,7 @@ new hash-tables will be created."
           (ks    (cdr k-seq)) )
     (if (seq-empty-p ks)
       (sbw/ht2-assoc hash-table k (funcall f (sbw/ht2-get hash-table k)))
-      (sbw/ht2-assoc hash-table k (sbw/ht2-update-in (sbw/ht2-get hash-table k) ks f)))))
+      (sbw/ht2-assoc hash-table k (sbw/ht2-update-in (sbw/ht2-get hash-table k (sbw/ht2-create)) ks f)))))
 
 (defun sbw/ht2-assoc-in (hash-table ks v)
   "Returns a nested associative structure with value V associated
