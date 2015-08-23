@@ -15,13 +15,14 @@
   (defun -concat-summaries (summary-map f-fmt &optional f-sort)
     (-let* ( (default-sort (lambda (a b) (string< (sbw/ht-get a :heading) (sbw/ht-get b :heading))))
              (f-sort       (or f-sort default-sort)) )
-      (sbw/ht-map-vals summary-map
+      (sbw/ht-map-vals 
         (lambda (summaries)
           (-reduce-from
             (lambda (acc s)
               (concat acc (funcall f-fmt s)))
             ""
-            (-sort f-sort summaries))))))
+            (-sort f-sort summaries)))
+        summary-map)))
 
   (defun -concat-categories (summary-map f-fmt &optional f-sort)
     (-let* ( (default-sort 'string<)
@@ -135,18 +136,18 @@
   (defun -map-over-vals (f summary-map)
     (lexical-let* ( (f f) )
       (sbw/ht-map-vals
-        summary-map
-        (lambda (x) (-map f x)))))
+        (lambda (x) (-map f x))
+        summary-map)))
   
   (defun -add-category-totals (summary-map)
     (-let* ( (get-clocked     (lambda (x) (sbw/ht-get x :clocked-in-period)))
              (sum-category    (lambda (x) (-sum-times (-map get-clocked x))))
-             (category-totals (sbw/ht-map-vals summary-map sum-category))
+             (category-totals (sbw/ht-map-vals sum-category summary-map))
              (add-total       (lambda (x) (sbw/ht-assoc x :category-total
                                        (sbw/ht-get category-totals (sbw/ht-get x :category))))) )
       (sbw/ht-map-vals
-        summary-map
-        (lambda (summaries) (-map add-total summaries)))))
+        (lambda (summaries) (-map add-total summaries))
+        summary-map)))
 
   (defun -format-elapsed-time (time)
     (-let* ( (t-min   (round (/ (time-to-seconds time) 60)))

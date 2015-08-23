@@ -1,5 +1,6 @@
 (require 'sbw-time)
 (require 'sbw-hash-tables)
+(require 'sbw-value-eq)
 (require 'dash)
 
 (lexical-let* ( (epoch-time        (days-to-time 0))
@@ -11,7 +12,7 @@
 
   (ert-deftest sbw/time-decompose-then-returns-decomposed-time ()
     "sbw/time-decompose then returns decomposed time."
-    (should (sbw/ht-equal (sbw/time-decompose epoch-time) epoch-decomposed)))
+    (should (sbw/value-eq (sbw/time-decompose epoch-time) epoch-decomposed)))
 
   ;; sbw/time-compose
 
