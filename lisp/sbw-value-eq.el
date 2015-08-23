@@ -20,11 +20,11 @@
         b))))
 
 (defun sbw/value-eq--hash-tables-equal (a b)
-  (if (sbw/value-eq--lists-equal-ignoring-order (sbw/ht2-keys a) (sbw/ht2-keys b))
+  (if (sbw/value-eq--lists-equal-ignoring-order (hash-table-keys a) (hash-table-keys b))
     (-reduce-from
-      (lambda (acc k) (and acc (sbw/value-eq (sbw/ht2-get a k) (sbw/ht2-get b k))))
+      (lambda (acc k) (and acc (sbw/value-eq (gethash k a) (gethash k b))))
       t
-      (sbw/ht-keys a))))
+      (hash-table-keys a))))
 
 (defun sbw/value-eq--lists-equal (a b)
   (-reduce-from
