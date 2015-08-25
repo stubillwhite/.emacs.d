@@ -1,7 +1,7 @@
 (require 'use-package)
 
 (use-package cider
-  :defer t
+  :defer nil ;; Deferring interferes with jacking in
   
   :init
   (progn)
@@ -55,7 +55,7 @@
             (progn
               (switch-to-buffer-other-window repl-buffer))
             (progn
-              (split-window-below 15)
+              (split-window-below 10)
               (switch-to-buffer repl-buffer))))))
 
     (defun sbw/cider-reset-repl ()
