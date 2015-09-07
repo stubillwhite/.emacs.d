@@ -1,87 +1,87 @@
 ;; Packages required for the configuration
 
 (defconst sbw/pkg-core-packages
-  '( (:name use-package)     ;; Easy package use
-     (:name dash)            ;; Modern list library
-     (:name dash-functional) ;; Further functions for dash
-     (:name f)               ;; Modern file API
-     (:name s)               ;; Modern string API
-     (:name names)           ;; Sane namespace handling
-     (:name seq)             ;; Unified sequence handling
+  '( (:name use-package     :load :immediate) ;; Easy package use
+     (:name dash            :load :immediate) ;; Modern list library
+     (:name dash-functional :load :immediate) ;; Further functions for dash
+     (:name f               :load :immediate) ;; Modern file API
+     (:name s               :load :immediate) ;; Modern string API
+     (:name names           :load :immediate) ;; Sane namespace handling
+     (:name seq             :load :immediate) ;; Unified sequence handling
      )
   "List of the core packages required by everything else, which have no dependencies.")
 
 (defconst sbw/pkg-additional-packages
-  '(                     ;; General usability
-     (:name undo-tree)   ;; Undo tree visualisation
-     (:name flyspell)    ;; Spell checking
-     (:name flycheck)    ;; Syntax checking
+  '(                                        ;; General usability
+     (:name undo-tree         :load :defer) ;; Undo tree visualisation
+     (:name flyspell          :load :defer) ;; Spell checking
+     (:name flycheck          :load :defer) ;; Syntax checking
 
      ;; org-mode
-     (:name org)      ;; Your life in plain text
-     (:name htmlize)  ;; html org-mode reports
-     (:name org-gcal) ;; Org sync with Google Calendar
+     (:name org               :load :defer)     ;; Your life in plain text
+     (:name htmlize           :load :on-demand) ;; html org-mode reports
+     (:name org-gcal          :load :on-demand) ;; Org sync with Google Calendar
 
      ;; Git
-     (:name magit) ;; Control Git from Emacs
+     (:name magit             :load :defer) ;; Control Git from Emacs
 
      ;; Emacs
-     (:name ert-expectations) ;; Better unit testing
+     (:name ert-expectations  :load :on-demand) ;; Better unit testing
      
      ;; Auto-complete
-     (:name company) ;; Auto-completion
+     (:name company           :load :defer) ;; Auto-completion
 
      ;; Interface
-     (:name powerline)        ;; Emacs version of the Vim powerline
-     (:name diminish)         ;; Abbreviate minor mode indicators
-     (:name projectile)       ;; Project interaction library for Emacs
-     (:name avy)              ;; Jump to things in Emacs tree-style
-     (:name ace-window)       ;; Quickly switch windows
-     (:name golden-ratio)     ;; Automatic resizing of Emacs windows to the golden ratio
-     (:name expand-region)    ;; Expand region by semantic units
-     (:name hydra)            ;; Make Emacs bindings that stick around
+     (:name powerline         :load :on-demand) ;; Emacs version of the Vim powerline
+     (:name diminish          :load :on-demand) ;; Abbreviate minor mode indicators
+     (:name projectile        :load :immediate) ;; Project interaction library for Emacs
+     (:name avy               :load :defer)     ;; Jump to things in Emacs tree-style
+     (:name ace-window        :load :defer)     ;; Quickly switch windows
+     (:name golden-ratio      :load :on-demand) ;; Automatic resizing of Emacs windows to the golden ratio
+     (:name expand-region     :load :defer)     ;; Expand region by semantic units
+     (:name hydra             :load :defer)     ;; Make Emacs bindings that stick around
      ;; (:name worf)          ;; Vi-like bindings for org-mode
-     (:name multiple-cursors) ;; An experiment in adding multiple cursors to emacs
-     (:name key-chord)        ;; Map pairs of simultaneously pressed keys to commands
+     (:name multiple-cursors  :load :defer) ;; An experiment in adding multiple cursors to emacs
+     (:name key-chord         :load :defer) ;; Map pairs of simultaneously pressed keys to commands
 
      ;; Helm
-     (:name helm)            ;; Incremental narrowing framework
-     (:name helm-swoop)      ;; Efficiently skipping between matches
-     (:name helm-projectile) ;; Helm integration for projectile
+     (:name helm              :load :immediate) ;; Incremental narrowing framework
+     (:name helm-swoop        :load :immediate) ;; Efficiently skipping between matches
+     (:name helm-projectile   :load :immediate) ;; Helm integration for projectile
      
      ;; Clojure
-     (:name clojure-mode)      ;; Clojure mode
-     (:name cider)             ;; REPL support
-     (:name smartparens)       ;; Improved paredit
-     (:name expectations-mode) ;; Clojure expectations minor mode
+     (:name clojure-mode      :load :on-demand) ;; Clojure mode
+     (:name cider             :load :on-demand) ;; REPL support
+     (:name smartparens       :load :on-demand) ;; Improved paredit
+     (:name expectations-mode :load :on-demand) ;; Clojure expectations minor mode
      
      ;; Graphviz
-     (:name graphviz-dot-mode) ;; Graphviz DOT file support and previews
+     (:name graphviz-dot-mode :load :on-demand) ;; Graphviz DOT file support and previews
 
      ;; Markdown
-     (:name markdown-mode) ;; Markdown mode
+     (:name markdown-mode     :load :on-demand) ;; Markdown mode
 
      ;; Groovy
-     (:name groovy-mode) ;; Groovy mode
+     (:name groovy-mode       :load :on-demand) ;; Groovy mode
 
      ;; Yaml
-     (:name yaml-mode) ;; YAML mode
+     (:name yaml-mode         :load :on-demand) ;; YAML mode
 
      ;; Yasnippets
-     (:name yasnippet) ;; Yet another snippet extension for Emacs
+     (:name yasnippet         :load :defer) ;; Yet another snippet extension for Emacs
 
      ;; Elisp
-     (:name json)  ;; JavaScript Object Notation parser / generator
-     (:name async) ;; Asynchronous processing in Emacs
+     (:name json              :load :on-demand) ;; JavaScript Object Notation parser / generator
+     (:name async             :load :on-demand) ;; Asynchronous processing in Emacs
 
      ;; Vi
-     (:name evil) ;; Welcome home
+     (:name evil              :load :defer) ;; Welcome home
 
      ;; XML
-     ;;(:name nxml-mode) ;; Major mode for editing XML
+     ;;(:name nxml-mode         :load :on-demand) ;; Major mode for editing XML
 
      ;; HTML
-     (:name web-mode) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
+     (:name web-mode          :load :on-demand) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
      )
   "List of the additional packages required for this Emacs configuration.")
 

@@ -1,7 +1,8 @@
 ;; Package bootstrapping
 
 (defmacro sbw/bootstrap--with-package-config (pkg &rest body)
-  `(lexical-let* ( (name (plist-get ,pkg :name)) )
+  `(lexical-let* ( (name (plist-get ,pkg :name))
+                   (load (plist-get ,pkg :load)))
      ,@body))
 
 (defun sbw/bootstrap--filter (p l)
