@@ -16,7 +16,7 @@
     (defalias 'message (symbol-function 'sbw/message--original))))
 
 (defun sbw/message-enable-timestamps ()
-  "Display the display of timestamps in the message buffer."
+  "Display timestamps in the message buffer."
   (sbw/message-wrap-with
     (lambda (fmt-string &rest args)
       (apply 'format
