@@ -16,6 +16,7 @@
   x-select-request-type             '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 ;; Backups
+(make-directory "~/.emacs.d/temp" :no-error-if-exists)
 (setq
   temporary-file-directory "~/.emacs.d/temp"
   backup-directory-alist) '(("." . "~/.emacs.d/backups")
