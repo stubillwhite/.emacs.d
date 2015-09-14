@@ -84,23 +84,20 @@
      (:name seq             :load :immediate) ;; Unified sequence handling
 
      ;; General usability
-     (:name undo-tree         :load :defer) ;; Undo tree visualisation
-     (:name flyspell          :load :defer) ;; Spell checking
-     (:name flycheck          :load :defer) ;; Syntax checking
+     (:name undo-tree         :load :immediate) ;; Undo tree visualisation
+     (:name flyspell          :load :immediate) ;; Spell checking
+     (:name flycheck          :load :immediate) ;; Syntax checking
 
      ;; org-mode
-     (:name org               :load :defer)     ;; Your life in plain text
-     (:name htmlize           :load :on-demand) ;; html org-mode reports
-     (:name org-gcal          :load :on-demand) ;; Org sync with Google Calendar
+     (:name org               :load :immediate) ;; Your life in plain text
+     (:name htmlize           :load :defer)     ;; html org-mode reports
+     (:name org-gcal          :load :defer)     ;; Org sync with Google Calendar
 
      ;; Git
      (:name magit             :load :immediate) ;; Control Git from Emacs
 
-     ;; Emacs
-     (:name ert-expectations  :load :on-demand) ;; Better unit testing
-     
      ;; Auto-complete
-     (:name company           :load :defer) ;; Auto-completion
+     (:name company           :load :immediate) ;; Auto-completion
 
      ;; Interface
      (:name powerline         :load :immediate) ;; Emacs version of the Vim powerline
@@ -111,8 +108,8 @@
      (:name golden-ratio      :load :immediate) ;; Automatic resizing of Emacs windows to the golden ratio
      (:name expand-region     :load :immediate) ;; Expand region by semantic units
      (:name hydra             :load :immediate) ;; Make Emacs bindings that stick around
-     (:name multiple-cursors  :load :immedatei) ;; An experiment in adding multiple cursors to emacs
-     (:name key-chord         :load :immedate)  ;; Map pairs of simultaneously pressed keys to commands
+     (:name multiple-cursors  :load :immediate) ;; An experiment in adding multiple cursors to emacs
+     (:name key-chord         :load :immediate)  ;; Map pairs of simultaneously pressed keys to commands
 
      ;; Helm
      (:name helm              :load :immediate) ;; Incremental narrowing framework
@@ -120,35 +117,35 @@
      (:name helm-projectile   :load :immediate) ;; Helm integration for projectile
      
      ;; Clojure
-     (:name clojure-mode      :load :on-demand) ;; Clojure mode
-     (:name cider             :load :on-demand) ;; REPL support
+     (:name clojure-mode      :load :immediate) ;; Clojure mode
+     (:name cider             :load :immediate) ;; REPL support
      (:name smartparens       :load :immediate) ;; Improved paredit
-     (:name expectations-mode :load :on-demand) ;; Clojure expectations minor mode
+     (:name expectations-mode :load :immediate) ;; Clojure expectations minor mode
      
      ;; Graphviz
-     (:name graphviz-dot-mode :load :on-demand) ;; Graphviz DOT file support and previews
+     (:name graphviz-dot-mode :load :immediate) ;; Graphviz DOT file support and previews
 
      ;; Markdown
-     (:name markdown-mode     :load :on-demand) ;; Markdown mode
+     (:name markdown-mode     :load :immediate) ;; Markdown mode
 
      ;; Groovy
-     (:name groovy-mode       :load :on-demand) ;; Groovy mode
+     (:name groovy-mode       :load :immediate) ;; Groovy mode
 
      ;; Yaml
-     (:name yaml-mode         :load :on-demand) ;; YAML mode
+     (:name yaml-mode         :load :immediate) ;; YAML mode
 
      ;; Yasnippets
-     (:name yasnippet         :load :defer) ;; Yet another snippet extension for Emacs
+     (:name yasnippet         :load :immediate) ;; Yet another snippet extension for Emacs
 
      ;; Elisp
-     (:name json              :load :on-demand) ;; JavaScript Object Notation parser / generator
-     (:name async             :load :on-demand) ;; Asynchronous processing in Emacs
+     (:name json              :load :immediate) ;; JavaScript Object Notation parser / generator
+     (:name async             :load :immediate) ;; Asynchronous processing in Emacs
 
      ;; Vi
-     (:name evil              :load :defer) ;; Welcome home
+     (:name evil              :load :immediate) ;; Welcome home
 
      ;; HTML
-     (:name web-mode          :load :on-demand) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
+     (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
      )
   "List of the all packages required for this Emacs configuration.")
 
