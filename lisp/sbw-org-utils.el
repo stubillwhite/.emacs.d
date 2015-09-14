@@ -1,3 +1,5 @@
+(require 'org)
+
 (define-namespace sbw/org-utils-
 
   (defun -heading-points-for-current-buffer ()
