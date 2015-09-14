@@ -23,6 +23,9 @@
         (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
         (apply 'list dirs)))
 
+    ;; TODO Swtich to
+    ;;    (f-glob "*.org" (concat org-directory "/current/*"))
+    ;; and filter out things we shouldn't include, and derive top level categories from directories
     (defun sbw/org-find-org-files ()
       "Scan org-directory for org files."
       (interactive)
@@ -238,10 +241,13 @@
       (interactive)
       (if (org-clocking-p)
         (message "Currently clocked in on a task. Clock out and re-run the command to sort the subtree.")
-        (save-excursion
-          (sbw/org-multisort ?o ?p ?s ?d ?a)
-          (hide-subtree)
-          (org-cycle))))
+        (let* ( (original-value org-todo-keywords) )
+          (setq org-todo-keywords '("STARTED(s)" "|" "TODO(t)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))
+          (save-excursion
+            (sbw/org-multisort ?o ?p ?s ?d ?a)
+            (hide-subtree)
+            (org-cycle))
+          (setq org-todo-keywords original-value))))
 
     (defun sbw/sort-all-subtrees-in-buffer ()
       "Sorts all the subtrees in the current org-mode buffer."
@@ -280,17 +286,7 @@
     ;; Stuff to rationalise
 
     (setq org-fontify-done-headline t)
-    (custom-set-faces
-      '(org-done ((t (                  ;:foreground "PaleGreen"   
-                       :weight normal
-                       :strike-through t))))
-      '(org-headline-done 
-         ((((class color) (min-colors 16) (background dark)) 
-            (                           ; :foreground "LightSalmon"
-              :strike-through t))))
-      )
-
-
+    
     (setq org-clock-heading-function
       (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30))))
 
@@ -324,5 +320,19 @@
   (interactive "r")
   (let* ( (fill-column (point-max)) )
     (fill-region start end nil)))
+
+
+
+
+
+    ;; TODO Swtich to
+    ;;    (f-glob "*.org" (concat org-directory "/current/*"))
+    ;; and filter out things we shouldn't include, and derive top level categories from directories
+(defun sbw/org-find-org-files-new ()
+  "Scan org-directory for org files."
+  (interactive)
+  (let* ( (projects (f-glob org-directory)) )))
+
+
 
 (provide 'sbw-configure-org-mode)
