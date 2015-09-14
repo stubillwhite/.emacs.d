@@ -75,11 +75,12 @@
       (cider-find-and-clear-repl-buffer)
       (cider-insert-in-repl "(ns user)" t)
       (cider-insert-in-repl "(refresh)" t)
-      (cider-insert-in-repl "(reset)" t)))
+      (cider-insert-in-repl "(reset)" t))
 
-  :bind
-  ("TAB"    . cider-repl-indent-and-complete-symbol)
-  ("<f5>"   . sbw/cider-reset-repl)
-  ("C-<f5>" . sbw/cider-refresh-repl))
+    (bind-keys :map cider-mode
+      ("TAB"    . cider-repl-indent-and-complete-symbol)
+      ("<f5>"   . sbw/cider-reset-repl)
+      ("C-<f5>" . sbw/cider-refresh-repl)))
+  )
 
 (provide 'sbw-configure-cider)
