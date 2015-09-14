@@ -11,6 +11,10 @@
     (require 'helm-config)
     (require 'helm-grep)
 
+    ;; For some reason, helm-projectile-grep seems to reference this unset variable. Need to find out where this should
+    ;; actually come from and why it is unset, but defining this now works.
+    (setq helm-grep-mode-line-string nil)
+
     ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
     ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
     ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
@@ -46,7 +50,6 @@
     (define-key helm-find-files-map           (kbd "<C-backspace>") 'backward-kill-word)
     (define-key helm-projectile-find-file-map (kbd "<C-backspace>") 'backward-kill-word)
     
-    (helm-mode 1)
-    ))
+    (helm-mode 1)))
 
 (provide 'sbw-configure-helm)
