@@ -33,12 +33,12 @@
 
   (mapc
     (lambda (x) (apply 'sbw/theme--create-face x))
-    `( (sbw-dark-muted-powerline-one-active      `((t (:foreground "gray100" :background "SkyBlue4"))))
-       (sbw-dark-muted-powerline-one-inactive    `((t (:foreground "gray100" :background "gray30"))))
-       (sbw-dark-muted-powerline-one-evil-insert `((t (:foreground "gray100" :background "coral3"))))
-       (sbw-dark-muted-powerline-one-evil-normal `((t (:foreground "gray100" :background "coral4"))))
-       (sbw-dark-muted-powerline-two             `((t (:foreground "gray100" :background "gray20"))))
-       (sbw-dark-muted-powerline-three           `((t (:foreground "gray100" :background "gray15"))))
+    `( (sbw-dark-muted-powerline-one-active      `((t (:foreground ,*emphasis-fg* :background "SkyBlue4"))))
+       (sbw-dark-muted-powerline-one-inactive    `((t (:foreground ,*emphasis-fg* :background "gray30"))))
+       (sbw-dark-muted-powerline-one-evil-insert `((t (:foreground ,*emphasis-fg* :background "coral3"))))
+       (sbw-dark-muted-powerline-one-evil-normal `((t (:foreground ,*emphasis-fg* :background "coral4"))))
+       (sbw-dark-muted-powerline-two             `((t (:foreground ,*emphasis-fg* :background "gray20"))))
+       (sbw-dark-muted-powerline-three           `((t (:foreground ,*emphasis-fg* :background "gray15"))))
 
        (sbw-dark-muted-normal              `((t (:inherit default               :foreground ,*normal-fg*   :background ,*normal-bg*))))
        (sbw-dark-muted-selection           `((t (:inherit sbw-dark-muted-normal                            :background ,*selection-bg*))))
@@ -53,8 +53,8 @@
        (sbw-dark-muted-mismatch            `((t (:inherit sbw-dark-muted-normal :foreground ,*mismatch-fg* :background ,*mismatch-bg*))))
        (sbw-dark-muted-keyword             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-3*))))
 
-       (sbw-dark-muted-menu                `((t (:inherit sbw-dark-muted-normal                            :background "gray30"))))
-       (sbw-dark-muted-menu-selection      `((t (:inherit sbw-dark-muted-normal                            :background "SkyBlue4"))))
+       (sbw-dark-muted-menu                `((t (:inherit sbw-dark-muted-normal                            :background ,*menu-bg*))))
+       (sbw-dark-muted-menu-selection      `((t (:inherit sbw-dark-muted-normal                            :background ,*menu-selection-bg*))))
        ))
 
   (custom-theme-set-faces 'sbw-dark-muted
