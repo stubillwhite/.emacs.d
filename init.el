@@ -22,62 +22,28 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/themes")
 
 ;; Bootstrap the system and install all packages
-(setq use-old-bootstrap nil)
-(if use-old-bootstrap
-  (progn
-    (require 'sbw-common-config)
-    (require 'sbw-bootstrap)
-    (require 'sbw-package-list)
-    
-    (sbw/init-message "Initializing bootstrap")
-    (sbw/bootstrap-initialize)
+(require 'sbw-common-config)
+(require 'sbw-bootstrap)
+(require 'sbw-package-list)
 
-    (sbw/init-message "Installing packages")
-    (sbw/bootstrap-install sbw/pkg-all-packages)
+(sbw/init-message "Initializing bootstrap")
+(sbw/bootstrap-initialize)
 
-    (sbw/init-message "Initializing package manager")
-    (sbw/bootstrap-package-initialize)
+(sbw/init-message "Installing packages")
+(sbw/bootstrap-install sbw/pkg-package-list)
 
-    (sbw/init-message "Requiring core packages")
-    (sbw/bootstrap-require sbw/pkg-core-packages)
+(sbw/init-message "Initializing package manager")
+(sbw/bootstrap-package-initialize)
 
-    (sbw/init-message "Loading package configuration")
-    (sbw/bootstrap-configure "~/.emacs.d/lisp/package-config" sbw/pkg-all-packages)
+(sbw/init-message "Loading and configuring packages")
+(sbw/bootstrap-load-and-configure-packages sbw/pkg-package-list)
+(sbw/bootstrap-load-deferred-packages-when-idle)
 
-    (sbw/init-message "Loading personal packages")
-    (sbw/bootstrap-require sbw/pkg-personal-packages)
+(sbw/init-message "Loading personal packages")
+(sbw/bootstrap-require sbw/pkg-personal-packages)
 
-    (sbw/init-message "Loading tests")
-    (sbw/bootstrap-load-elisp-files "~/.emacs.d/lisp/test")
+(sbw/init-message "Loading tests")
+(sbw/bootstrap-load-elisp-files "~/.emacs.d/lisp/test")
 
-    (sbw/init-message "Unused configurations")
-    (sbw/bootstrap-display-unused-configurations "~/.emacs.d/lisp/package-config" sbw/pkg-all-packages))
-  
-  (progn
-    (require 'sbw-common-config)
-    (require 'sbw-bootstrap2)
-    (require 'sbw-package-list)
-
-    (sbw/init-message "Initializing bootstrap")
-    (sbw/bootstrap2-initialize)
-
-    (sbw/init-message "Installing packages")
-    (sbw/bootstrap2-install sbw/pkg2-package-list)
-
-    (sbw/init-message "Initializing package manager")
-    (sbw/bootstrap2-package-initialize)
-
-    (sbw/init-message "Loading and configuring packages")
-    (sbw/bootstrap2-load-and-configure-packages sbw/pkg2-package-list)
-    (sbw/bootstrap2-load-deferred-packages-when-idle)
-
-    (sbw/init-message "Loading personal packages")
-    (sbw/bootstrap2-require sbw/pkg-personal-packages)
-
-    (sbw/init-message "Loading tests")
-    (sbw/bootstrap2-load-elisp-files "~/.emacs.d/lisp/test")
-
-    (sbw/init-message "Unused configurations")
-    (sbw/bootstrap2-display-unused-configurations "~/.emacs.d/lisp/package-config" sbw/pkg-all-packages)))
-
-
+(sbw/init-message "Unused configurations")
+(sbw/bootstrap-display-unused-configurations "~/.emacs.d/lisp/package-config" sbw/pkg-package-list)
