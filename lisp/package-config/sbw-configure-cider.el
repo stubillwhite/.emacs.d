@@ -50,7 +50,7 @@
     (defun sbw/cider-switch-to-repl-buffer ()
       "Open the REPL window if it not currently open and switch focus to it."
       (let* ( (repl-buffer (cider-current-repl-buffer)) )
-        (when (not (string= (buffer-name (current-buffer)) repl-buffer))
+        (when (not (eq (current-buffer) repl-buffer))
           (if (get-buffer-window repl-buffer)
             (progn
               (switch-to-buffer-other-window repl-buffer))
