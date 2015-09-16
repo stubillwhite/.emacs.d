@@ -37,7 +37,7 @@
 
 (sbw/init-message "Loading and configuring packages")
 (sbw/bootstrap-load-and-configure-packages sbw/pkg-package-list)
-(sbw/bootstrap-load-deferred-packages-when-idle)
+(sbw/bootstrap-load-on-idle-packages-when-idle)
 
 (sbw/init-message "Loading personal packages")
 (sbw/bootstrap-require sbw/pkg-personal-packages)

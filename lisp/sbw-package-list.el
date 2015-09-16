@@ -18,8 +18,8 @@
 
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
-     (:name htmlize           :load :defer)     ;; html org-mode reports
-     (:name org-gcal          :load :defer)     ;; Org sync with Google Calendar
+     (:name htmlize           :load :on-idle)   ;; html org-mode reports
+     (:name org-gcal          :load :on-idle)   ;; Org sync with Google Calendar
 
      ;; Git
      (:name magit             :load :immediate) ;; Control Git from Emacs
@@ -37,7 +37,7 @@
      (:name expand-region     :load :immediate) ;; Expand region by semantic units
      (:name hydra             :load :immediate) ;; Make Emacs bindings that stick around
      (:name multiple-cursors  :load :immediate) ;; An experiment in adding multiple cursors to emacs
-     (:name key-chord         :load :immediate)  ;; Map pairs of simultaneously pressed keys to commands
+     (:name key-chord         :load :immediate) ;; Map pairs of simultaneously pressed keys to commands
 
      ;; Helm
      (:name helm              :load :immediate) ;; Incremental narrowing framework

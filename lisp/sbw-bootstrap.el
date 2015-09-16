@@ -2,19 +2,19 @@
 
 (defvar sbw/bootstrap--state
   (list
-    :deferred-pkgs (list)
-    :loader        nil
-    :idle-period   5
-    :idle-delay    1
-    :timings       (make-hash-table :test 'equal))
+    :on-idle-pkgs (list)
+    :loader       nil
+    :idle-period  5
+    :idle-delay   1
+    :timings      (make-hash-table :test 'equal))
   "The state of the bootstrapper.")
 
 (defmacro sbw/bootstrap--with-state (state &rest body)
-  `(lexical-let* ( (deferred-pkgs (plist-get ,state :deferred-pkgs))
-                   (loader        (plist-get ,state :loader))
-                   (timings       (plist-get ,state :timings))
-                   (idle-period   (plist-get ,state :idle-period))
-                   (idle-delay    (plist-get ,state :idle-delay)) )
+  `(lexical-let* ( (on-idle-pkgs (plist-get ,state :on-idle-pkgs))
+                   (loader       (plist-get ,state :loader))
+                   (timings      (plist-get ,state :timings))
+                   (idle-period  (plist-get ,state :idle-period))
+                   (idle-delay   (plist-get ,state :idle-delay)) )
      ,@body))
 
 (defun sbw/bootstrap--load-package-now (pkg)
@@ -35,39 +35,39 @@
 
 (defun sbw/bootstrap--load-package-later (pkg)
   (sbw/bootstrap--with-state sbw/bootstrap--state
-    (plist-put sbw/bootstrap--state :deferred-pkgs (cons pkg deferred-pkgs))))
+    (plist-put sbw/bootstrap--state :on-idle-pkgs (cons pkg on-idle-pkgs))))
 
 (defun sbw/bootstrap--load-package (pkg)
   (sbw/bootstrap--with-package-config pkg
     (cond
       ((eq load :immediate) (sbw/bootstrap--load-package-now pkg))
-      ((eq load :defer)     (sbw/bootstrap--load-package-later pkg)))))
+      ((eq load :on-idle)   (sbw/bootstrap--load-package-later pkg)))))
 
 (defun sbw/bootstrap-load-and-configure-packages (pkg-list)
   (mapc 'sbw/bootstrap--load-package pkg-list))
 
-(defun sbw/bootstrap--schedule-loading-remaining-deferred-packages (delay)
+(defun sbw/bootstrap--schedule-loading-remaining-on-idle-packages (delay)
   (sbw/bootstrap--with-state sbw/bootstrap--state
-    (if deferred-pkgs
+    (if on-idle-pkgs
       (let* ( (start-time (or (current-idle-time) (seconds-to-time 0))) )
         (run-with-idle-timer
           (time-add start-time (seconds-to-time delay))
           nil
-          'sbw/bootstrap--load-deferred-package)))))
+          'sbw/bootstrap--load-on-idle-package)))))
 
-(defun sbw/bootstrap--load-deferred-package ()
+(defun sbw/bootstrap--load-on-idle-package ()
   (sbw/bootstrap--with-state sbw/bootstrap--state
-    (sbw/bootstrap--load-package-now (car deferred-pkgs))
-    (plist-put sbw/bootstrap--state :deferred-pkgs (cdr deferred-pkgs))
-    (sbw/bootstrap--schedule-loading-remaining-deferred-packages idle-delay)))
+    (sbw/bootstrap--load-package-now (car on-idle-pkgs))
+    (plist-put sbw/bootstrap--state :on-idle-pkgs (cdr on-idle-pkgs))
+    (sbw/bootstrap--schedule-loading-remaining-on-idle-packages idle-delay)))
 
-(defun sbw/bootstrap-load-deferred-packages-when-idle ()
+(defun sbw/bootstrap-load-on-idle-packages-when-idle ()
   (sbw/bootstrap--with-state sbw/bootstrap--state
-    (sbw/bootstrap--schedule-loading-remaining-deferred-packages idle-period)))
+    (sbw/bootstrap--schedule-loading-remaining-on-idle-packages idle-period)))
 
 (defmacro sbw/bootstrap--with-package-config (pkg &rest body)
   `(lexical-let* ( (name (plist-get ,pkg :name))
-                   (load (plist-get ,pkg :load)))
+                   (load (plist-get ,pkg :load)) )
      ,@body))
 
 (defun sbw/bootstrap--filter (p l)
@@ -105,11 +105,6 @@
   "Initialise the package manager."
   (add-to-list 'load-path "~/.emacs.d/elpa")
   (package-initialize))
-
-
-
-
-
 
 (defun sbw/bootstrap-require (pkg-list)
   "Require the specified packages."
@@ -156,7 +151,5 @@
   (mapc
     (lambda (x) (message " - %s" x))
     (sbw/bootstrap--unused-configurations dir pkg-list)))
-
-
 
 (provide 'sbw-bootstrap)
