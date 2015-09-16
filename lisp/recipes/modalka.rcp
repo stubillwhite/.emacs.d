@@ -1,0 +1,5 @@
+( :name modalka
+  :description "Easily introduce native modal editing of your own design"
+  :type        github
+  :pkgname     "mrkkrp/modalka"
+  :depends      (cl-lib) )

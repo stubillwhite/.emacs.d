@@ -40,6 +40,7 @@
      (:name multiple-cursors  :load :immediate) ;; An experiment in adding multiple cursors to emacs
      (:name key-chord         :load :immediate) ;; Map pairs of simultaneously pressed keys to commands
      (:name which-key         :load :immediate) ;; Display available key bindings
+     (:name modalka           :load :immediate) ;; Easily introduce native modal editing of your own design
 
      ;; Helm
      (:name helm              :load :immediate) ;; Incremental narrowing framework
