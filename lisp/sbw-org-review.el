@@ -1,5 +1,6 @@
 (require 'cl)
 (require 'sbw-org-utils)
+(require 'org)
 
 (setq sbw/org-report-dir (concat org-directory "/reports"))
 

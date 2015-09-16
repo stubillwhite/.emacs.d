@@ -12,9 +12,10 @@
      (:name seq             :load :immediate) ;; Unified sequence handling
 
      ;; General usability
-     (:name undo-tree         :load :immediate) ;; Undo tree visualisation
-     (:name flyspell          :load :immediate) ;; Spell checking
-     (:name flycheck          :load :immediate) ;; Syntax checking
+     (:name undo-tree           :load :immediate) ;; Undo tree visualisation
+     (:name flyspell            :load :immediate) ;; Spell checking
+     (:name flycheck            :load :immediate) ;; Syntax checking
+     (:name evil-nerd-commenter :load :immediate) ;; Efficient language-independent commenting
 
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
@@ -38,6 +39,8 @@
      (:name hydra             :load :immediate) ;; Make Emacs bindings that stick around
      (:name multiple-cursors  :load :immediate) ;; An experiment in adding multiple cursors to emacs
      (:name key-chord         :load :immediate) ;; Map pairs of simultaneously pressed keys to commands
+     (:name which-key         :load :immediate) ;; Display available key bindings
+     (:name modalka           :load :immediate) ;; Easily introduce native modal editing of your own design
 
      ;; Helm
      (:name helm              :load :immediate) ;; Incremental narrowing framework
