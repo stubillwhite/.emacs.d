@@ -1,3 +1,4 @@
 ( :name        flycheck
   :description "On-the-fly syntax checking extension"
-  :type        elpa )
+  :type        elpa ;; Fetch from elpa to simplify installation on Windows machines
+  )

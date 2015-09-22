@@ -52,6 +52,7 @@
      (:name cider             :load :immediate) ;; REPL support
      (:name smartparens       :load :immediate) ;; Improved paredit
      (:name expectations-mode :load :immediate) ;; Clojure expectations minor mode
+     (:name clj-refactor      :load :immediate) ;; Clojure refactoring functions
      
      ;; Graphviz
      (:name graphviz-dot-mode :load :immediate) ;; Graphviz DOT file support and previews
@@ -81,7 +82,7 @@
   "List of the all packages required for this Emacs configuration.")
 
 (defconst sbw/pkg-personal-packages
-  '( (:name sbw-bindings)
+  '( (:name sbw-bindings) ;; Remove
      (:name sbw-cosmetics)
      (:name sbw-cosmetics-code-style)
      (:name sbw-countdown)

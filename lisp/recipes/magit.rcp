@@ -1,3 +1,4 @@
 ( :name        magit
   :description "It's Magit! An Emacs mode for Git."
-  :type        elpa )
+  :type        elpa ;; Fetch from elpa to simplify installation on Windows machines
+  )
