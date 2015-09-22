@@ -48,7 +48,7 @@
 
 (defun sbw/bootstrap--schedule-loading-remaining-on-idle-packages (delay)
   (sbw/bootstrap--with-state sbw/bootstrap--state
-    (if on-idle-pkgs
+    (when on-idle-pkgs
       (let* ( (start-time (or (current-idle-time) (seconds-to-time 0))) )
         (run-with-idle-timer
           (time-add start-time (seconds-to-time delay))
@@ -57,13 +57,20 @@
 
 (defun sbw/bootstrap--load-on-idle-package ()
   (sbw/bootstrap--with-state sbw/bootstrap--state
-    (sbw/bootstrap--load-package-now (car on-idle-pkgs))
-    (plist-put sbw/bootstrap--state :on-idle-pkgs (cdr on-idle-pkgs))
-    (sbw/bootstrap--schedule-loading-remaining-on-idle-packages idle-delay)))
+    (when on-idle-pkgs
+      (sbw/bootstrap--load-package-now (car on-idle-pkgs))
+      (plist-put sbw/bootstrap--state :on-idle-pkgs (cdr on-idle-pkgs))
+      (sbw/bootstrap--schedule-loading-remaining-on-idle-packages idle-delay))))
 
 (defun sbw/bootstrap-load-on-idle-packages-when-idle ()
   (sbw/bootstrap--with-state sbw/bootstrap--state
     (sbw/bootstrap--schedule-loading-remaining-on-idle-packages idle-period)))
+
+(defun sbw/bootstrap-load-on-idle-packages-now ()
+  (interactive)
+  (plist-put sbw/bootstrap--state :idle-period 0)
+  (plist-put sbw/bootstrap--state :idle-delay  0)
+  (sbw/bootstrap-load-on-idle-packages-when-idle))
 
 (defmacro sbw/bootstrap--with-package-config (pkg &rest body)
   `(lexical-let* ( (name (plist-get ,pkg :name))
