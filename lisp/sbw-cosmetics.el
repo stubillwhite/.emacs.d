@@ -9,9 +9,8 @@
 (setq frame-title-format sbw/frame-title-format)
 
 ;; Indentation
-(setq lisp-indent-offset 2)                      ;; Default indent for Lisps
-(setq-default indent-tabs-mode nil)              ;; Indent spaces not tabs
-(setq-default truncate-lines t)                  ;; Truncate lines don't wrap
+(setq-default indent-tabs-mode nil) ;; Indent spaces not tabs
+(setq-default truncate-lines t)     ;; Truncate lines don't wrap
 
 ;; Font
 (when (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
