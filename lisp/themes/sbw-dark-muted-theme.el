@@ -147,6 +147,7 @@
     `(helm-buffer-process                 ((t (:inherit sbw-dark-muted-keyword))))
     `(helm-candidate-number               ((t (:inherit sbw-dark-muted-keyword))))
     `(helm-selection                      ((t (:inherit sbw-dark-muted-menu-selection))))
+    '(helm-visible-mark                   ((t (:inherit sbw-dark-muted-match))))
 
     ;; helm-swoop
     `(helm-swoop-target-word-face         ((t (:inherit sbw-dark-muted-emphasis))))
