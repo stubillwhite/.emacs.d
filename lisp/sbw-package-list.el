@@ -74,7 +74,7 @@
      (:name async             :load :immediate) ;; Asynchronous processing in Emacs
 
      ;; Vi
-     (:name evil              :load :immediate) ;; Welcome home
+     ;; (:name evil              :load :immediate) ;; Welcome home
 
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)

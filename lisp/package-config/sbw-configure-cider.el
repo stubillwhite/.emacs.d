@@ -74,8 +74,15 @@
       (sbw/cider-switch-to-repl-buffer)
       (cider-find-and-clear-repl-buffer)
       (cider-insert-in-repl "(ns user)" t)
-      (cider-insert-in-repl "(refresh)" t)
+      ;;(cider-insert-in-repl "(refresh)" t)
       (cider-insert-in-repl "(reset)" t))
+
+    (defun sbw/cider-jack-in-and-go ()
+      (interactive)
+      (save-some-buffers t)
+      (sbw/cider-switch-to-repl-buffer)
+      (cider-insert-in-repl "(ns user)")
+      (cider-insert-in-repl "(go)"))
 
     (bind-keys :map cider-mode
       ("TAB"    . cider-repl-indent-and-complete-symbol)
