@@ -58,4 +58,26 @@
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
+;; Ediff configuration
+(setq
+  ediff-highlight-all-diffs   'nil                                            ;; Just highlight the current diff
+  ediff-temp-file-prefix      (expand-file-name temporary-file-directory)     ;; Temporary file location
+  ediff-diff-options          "-w"                                            ;; Not whitespace sensitive by default
+  ediff-window-setup-function 'ediff-setup-windows-plain                      ;; Single frame for Ediff mode-line
+  ediff-split-window-function 'split-window-horizontally                      ;; Vertical split
+  )
+
+(defun sbw/cosmetics-save-window-config ()
+  "Store the current window configuration."
+  (setq sbw/cosmetics--saved-window-config (current-window-configuration)))
+
+(defun sbw/cosmetics-restore-window-config ()
+  "Restore the window configuration last saved."
+  (when (boundp 'sbw/cosmetics--saved-window-config)
+    (set-window-configuration sbw/cosmetics--saved-window-config)))
+
+(add-hook 'ediff-before-setup-hook 'sbw/cosmetics-save-window-config)
+(add-hook 'ediff-quit-hook         'sbw/cosmetics-restore-window-config)
+(add-hook 'ediff-suspend-hook      'sbw/cosmetics-restore-window-config)
+
 (provide 'sbw-cosmetics)
