@@ -3,7 +3,7 @@
 (require 'dash)
 (require 'sbw-utils)
 (require 'sbw-hash-tables)
-;; TODO Update to include names
+(require 'sbw-org-config)
 
 (defun sbw/menu-action (key description function)
   "Returns a menu action with the specified KEY binding, DESCRIPTION, and FUNCTION to execute."
@@ -96,17 +96,30 @@
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
-    (sbw/menu-submenu ?r "Review"           (sbw/menu "Review"
-                                              (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
-                                              (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                              (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
-                                              ))
-    (sbw/menu-submenu ?t "Timers"           (sbw/menu "Timers"
-                                              (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
-                                              (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
-                                              (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
-    (sbw/menu-action  ?w "Work agenda"      (lambda () (interactive) (org-agenda nil "cw")))
-    (sbw/menu-action  ?p "Personal agenda"  (lambda () (interactive) (org-agenda nil "cp")))
-    (sbw/menu-action  ?x "Export agenda"    'org-store-agenda-views)))
+            (sbw/menu-submenu ?r "Review"
+                              (sbw/menu "Review"
+                                        (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
+                                        (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
+                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
+                                        ))
+            (sbw/menu-submenu ?t "Timers"
+                              (sbw/menu "Timers"
+                                        (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
+                                        (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
+                                        (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
+            (sbw/menu-submenu ?d "Dashboard"
+                              (sbw/menu "Dashboard"
+                                        (sbw/menu-submenu ?a "All"
+                                                          (sbw/menu "All"
+                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "caa")))
+                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cat")))))
+                                        (sbw/menu-submenu ?w "Work"
+                                                          (sbw/menu "Work"
+                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cwa")))
+                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cwt")))))
+                                        (sbw/menu-submenu ?p "Personal"
+                                                          (sbw/menu "Personal"
+                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cpa")))
+                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cpt")))))))))
 
 (provide 'sbw-menu)

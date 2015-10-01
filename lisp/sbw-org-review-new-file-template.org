@@ -1,5 +1,4 @@
 * ${category}
 :PROPERTIES:
 :CATEGORY: ${category}
-:ARCHIVE: archive-${category}.org
 :END:
