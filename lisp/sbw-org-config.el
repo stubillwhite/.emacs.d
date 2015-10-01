@@ -65,29 +65,48 @@ names, or nil to indicate that all should be included."
 (defmacro sbw/org-config-prioritised-tasks (binding title files)
   `(quote (,binding
            ,title
-           ((tags-todo "+PRIORITY=\"A\""
-                       ((org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
-                        (org-agenda-files ,files)
-                        (org-agenda-todo-ignore-scheduled t)
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))))
-            (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
-                       ((org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
-                        (org-agenda-files ,files)
-                        (org-agenda-todo-ignore-scheduled t)
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))))
-            (tags-todo "+PRIORITY=\"C\""
-                       ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
-                         (org-agenda-files ,files)
-                         (org-agenda-todo-ignore-scheduled t)
-                         (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))))))))
+           ((todo "TODO|STARTED"
+                  ((org-agenda-overriding-header (sbw/make-title-string "Open tasks"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (todo "BLOCKED|POSTPONED"
+                  ((org-agenda-overriding-header (sbw/make-title-string "Stalled tasks"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (todo "DONE|CANCELLED"
+                  ((org-agenda-overriding-header (sbw/make-title-string "Completed tasks"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+                        
+            ;; (tags-todo "+PRIORITY=\"A\""
+            ;;            ((org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
+            ;;             (org-agenda-files ,files)
+            ;;             (org-agenda-todo-ignore-scheduled t)
+            ;;             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            ;; (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
+            ;;            ((org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
+            ;;             (org-agenda-files ,files)
+            ;;             (org-agenda-todo-ignore-scheduled t)
+            ;;             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            ;; (tags-todo "+PRIORITY=\"C\""
+            ;;            ((org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
+            ;;             (org-agenda-files ,files)
+            ;;             (org-agenda-todo-ignore-scheduled t)
+            ;;             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            ))))
 
 (defmacro sbw/org-config-agenda (binding title days files)
   `(quote (,binding
            ,title
            ((agenda ""
                     ((org-agenda-ndays ,days)
-                     (org-agenda-files ,files)
-                     ))))))
+                     (org-agenda-files ,files)))))))
 
 (setq
  sbw/org-config-personal-files (sbw/org-config-files (sbw/org-config) ["current"] ["personal"])
