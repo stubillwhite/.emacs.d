@@ -72,10 +72,7 @@
      ;; Elisp
      (:name json              :load :immediate) ;; JavaScript Object Notation parser / generator
      (:name async             :load :immediate) ;; Asynchronous processing in Emacs
-
-     ;; Vi
-     ;; (:name evil              :load :immediate) ;; Welcome home
-
+     
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
      )
@@ -93,10 +90,10 @@
      (:name sbw-message)
      (:name sbw-org-review)
      (:name sbw-org-utils)
+     (:name sbw-org-config)
      (:name sbw-time)
      (:name sbw-utils)
-     (:name sbw-value-eq))
+     (:name sbw-value-eq) )
   "List of my packages.")
-
 
 (provide 'sbw-package-list)
