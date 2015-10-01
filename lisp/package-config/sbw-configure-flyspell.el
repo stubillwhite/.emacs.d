@@ -25,8 +25,8 @@
     ;; Personal dictionary location        
     (setq ispell-personal-dictionary
       (cond
-        ((eq system-type 'cygwin)    "/cygwin64/home/GB105549/.emacs.d/.ispell")
-        ((eq system-type 'gnu/linux) "~/.emacs.d/.ispell"))))
+        ((sbw/is-windows?) "/cygwin64/home/GB105549/.emacs.d/.ispell")
+        ((sbw/is-linux?)   "~/.emacs.d/.ispell"))))
 
   
 

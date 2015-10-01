@@ -1,3 +1,4 @@
+;; TODO REMOVE ME
 (defun sbw/filter (p l)
   "Returns the items from list L for which predicate P is true."
   (delq nil

@@ -13,14 +13,14 @@
 (setq-default truncate-lines t)     ;; Truncate lines don't wrap
 
 ;; Font
-(when (or (eq system-type 'windows-nt) (eq system-type 'cygwin))
+(when (sbw/is-windows?)
   ;; (set-frame-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
   ;; (set-frame-font "Lucida Console-10")
   ;; (set-frame-font "Inconsolata-dz-10")
   (set-frame-font "Monaco 10")
   )
 
-(when (eq system-type 'gnu/linux)
+(when (sbw/is-linux?)
   ;; (set-frame-font "DejaVu Sans Mono-10")
   ;; (set-frame-font "Ubuntu Mono-12")
   ;; (set-frame-font "Droid Sans Mono-10")
@@ -72,7 +72,7 @@
   (setq sbw/cosmetics--saved-window-config (current-window-configuration)))
 
 (defun sbw/cosmetics-restore-window-config ()
-  "Restore the window configuration last saved."
+  "Restore the last saved window configuration."
   (when (boundp 'sbw/cosmetics--saved-window-config)
     (set-window-configuration sbw/cosmetics--saved-window-config)))
 

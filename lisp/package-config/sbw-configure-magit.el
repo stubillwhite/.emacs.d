@@ -10,7 +10,7 @@
   :config
   (progn
     ;; Point to git.exe in Windows systems for a more responsive Magit
-    (if (eq system-type 'cygwin)
+    (if (sbw/is-windows?)
       (setq magit-git-executable "/usr/bin/git.exe"))   
     )
 
