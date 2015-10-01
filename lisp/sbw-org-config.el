@@ -82,24 +82,7 @@ names, or nil to indicate that all should be included."
                    (org-agenda-files ,files)
                    (org-agenda-todo-ignore-scheduled t)
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-                        
-            ;; (tags-todo "+PRIORITY=\"A\""
-            ;;            ((org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
-            ;;             (org-agenda-files ,files)
-            ;;             (org-agenda-todo-ignore-scheduled t)
-            ;;             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            ;; (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
-            ;;            ((org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
-            ;;             (org-agenda-files ,files)
-            ;;             (org-agenda-todo-ignore-scheduled t)
-            ;;             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            ;; (tags-todo "+PRIORITY=\"C\""
-            ;;            ((org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
-            ;;             (org-agenda-files ,files)
-            ;;             (org-agenda-todo-ignore-scheduled t)
-            ;;             (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            ))))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
 
 (defmacro sbw/org-config-agenda (binding title days files)
   `(quote (,binding
@@ -116,15 +99,14 @@ names, or nil to indicate that all should be included."
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
 (add-to-list 'org-agenda-custom-commands '("cp" . "Personal"))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" sbw/org-config-personal-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 7 sbw/org-config-personal-files))
 (add-to-list 'org-agenda-custom-commands '("cw" . "Work"))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" sbw/org-config-work-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 sbw/org-config-work-files))
 (add-to-list 'org-agenda-custom-commands '("ca" . "All"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks  "cpt" "Personal tasks" sbw/org-config-personal-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda "cpa" "Personal agenda" 7 sbw/org-config-personal-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks  "cwt" "Work tasks" sbw/org-config-work-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda "cwa" "Work agenda" 7 sbw/org-config-work-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks  "cat" "All tasks" sbw/org-config-all-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda "caa" "All agenda" 7 sbw/org-config-all-files))
-;;(org-agenda)
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-files))
 
 (provide 'sbw-org-config)
 
