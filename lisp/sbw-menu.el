@@ -113,6 +113,10 @@
                                                           (sbw/menu "All"
                                                                     (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "caa")))
                                                                     (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cat")))))
+                                        (sbw/menu-submenu ?l "Level-up"
+                                                          (sbw/menu "Level-up"
+                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cla")))
+                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "clt")))))
                                         (sbw/menu-submenu ?w "Work"
                                                           (sbw/menu "Work"
                                                                     (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cwa")))

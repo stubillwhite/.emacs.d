@@ -43,22 +43,25 @@
     ;; General settings
 
     (setq 
-      org-clock-into-drawer         t                      ;; Clock into drawers
-      org-src-fontify-natively      t                      ;; Fontify embedded code blocks
-      org-ellipsis                  "\u2026"               ;; Small ellipsis character
-      org-agenda-fontify-priorities nil                    ;; Don't let priority change task representation
-      org-indent-mode               t                      ;; Use indent mode
-      org-log-into-drawer           t                      ;; Log into drawers
-      org-log-done                  'time                  ;; Timestamp task completion so it can be used in reports
-      org-M-RET-may-split-line      nil                    ;; Don't split lines
-      org-return-follows-link       t                      ;; Easy link navigation
-      org-use-property-inheritance  t                      ;; Child items should inherit all from parents
-      org-default-priority          ?B                     ;; Default priority for unprioritised items
-      appt-display-interval         5                      ;; Reminder for an appointment every five minutes...
-      appt-message-warning-time     15                     ;; ...starting fifteeen minutes before it is due
-      org-frame-title-format-backup sbw/frame-title-format ;; Override title frame title format
-      org-tag-alist                 nil                    ;; No tags
-      org-startup-folded            'content               ;; Display content when first opening org files
+      org-list-empty-line-terminates-plain-lists t                            ;; Single empty line terminates plain lists
+      org-blank-before-new-entry                 '( (heading         . nil)   ;; No blank lines before headings
+                                                    (plain-list-item . nil) ) ;; No blank lines before plain list items
+      org-clock-into-drawer                      t                            ;; Clock into drawers
+      org-src-fontify-natively                   t                            ;; Fontify embedded code blocks
+      org-ellipsis                               "\u2026"                     ;; Small ellipsis character
+      org-agenda-fontify-priorities              nil                          ;; Don't let priority change task representation
+      org-indent-mode                            t                            ;; Use indent mode
+      org-log-into-drawer                        t                            ;; Log into drawers
+      org-log-done                               'time                        ;; Timestamp task completion so it can be used in reports
+      org-M-RET-may-split-line                   nil                          ;; Don't split lines
+      org-return-follows-link                    t                            ;; Easy link navigation
+      org-use-property-inheritance               t                            ;; Child items should inherit all from parents
+      org-default-priority                       ?B                           ;; Default priority for unprioritised items
+      appt-display-interval                      5                            ;; Reminder for an appointment every five minutes...
+      appt-message-warning-time                  15                           ;; ...starting fifteeen minutes before it is due
+      org-frame-title-format-backup              sbw/frame-title-format       ;; Override title frame title format
+      org-tag-alist                              nil                          ;; No tags
+      org-startup-folded                         'content                     ;; Display content when first opening org files
       )
     
     (setq org-todo-keywords
@@ -107,98 +110,6 @@
         (cdr (assoc (match-string 3)
                '(("[X]" . 1) ("[-]" . 2) ("[ ]" . 3) (nil . 4))))
         4))
-
-    ;; Custom agendas
-    ;; TODO Remove boilerplate
-    ;; TODO Look at http://stackoverflow.com/questions/22394394/orgmode-a-report-of-tasks-that-are-done-within-the-week for how to tidy this up
-
-    (defun sbw/make-title-string (title)
-      (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
-
-    (setq org-agenda-prefix-format
-      '( (agenda . " %i %-20:c%?-20t% s")
-         (timeline . "  % s")
-         (todo . " %i %-20:c")
-         (tags . " %i %-20:c")
-         (search . " %i %-20:c")) )
-
-    (setq org-agenda-remove-tags 1)
-
-    (setq org-agenda-custom-commands
-      '( ("c" . "Custom agenda")
-         ("cw" "Work agenda"
-           ( (agenda ""
-               ( (org-agenda-ndays 7)
-                 (org-agenda-files sbw/org-work-files)
-                 ))
-                  
-             (tags-todo "+PRIORITY=\"A\""
-               ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
-                 (org-agenda-files sbw/org-work-files)
-                 (org-agenda-todo-ignore-scheduled t)
-                 (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
-                 ))
-
-             (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
-               ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
-                 (org-agenda-files sbw/org-work-files)
-                 (org-agenda-todo-ignore-scheduled t)
-                 (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
-                 ))
-
-             (tags-todo "+PRIORITY=\"C\""
-               ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
-                 (org-agenda-files sbw/org-work-files)
-                 (org-agenda-todo-ignore-scheduled t)
-                 (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
-                 ))
-
-             )
-           nil
-           ("C:/Users/IBM_ADMIN/Dropbox/Private/org/work-agenda.html"))
-     
-         ("cp" "Personal agenda"
-           ( (agenda ""
-               ( (org-agenda-ndays 7)
-                 (org-agenda-files sbw/org-personal-files)
-                 ))
-         
-             (tags-todo "+PRIORITY=\"A\""
-               ( (org-agenda-overriding-header (sbw/make-title-string "High priority tasks"))
-                 (org-agenda-files sbw/org-personal-files)
-                 (org-agenda-todo-ignore-scheduled t)
-                 (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
-                 ))
-
-             (tags-todo "-PRIORITY=\"A\"&-PRIORITY=\"C\""
-               ( (org-agenda-overriding-header (sbw/make-title-string  "Normal priority tasks"))
-                 (org-agenda-files sbw/org-personal-files)
-                 (org-agenda-todo-ignore-scheduled t)
-                 (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
-                 ))
-
-             (tags-todo "+PRIORITY=\"C\""
-               ( (org-agenda-overriding-header (sbw/make-title-string  "Low priority tasks"))
-                 (org-agenda-files sbw/org-personal-files)
-                 (org-agenda-todo-ignore-scheduled t)
-                 (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline))))
-                 ))
-             )
-           nil
-           ("C:/Users/IBM_ADMIN/Dropbox/Private/org/personal-agenda.html"))
-         ))
-
-    ;; Appointments
-    ;; Refresh when the agenda is displayed
-
-    (defun sbw/org-refresh-appointments-from-agenda ()
-      "Update the appointment list from the agenda."
-      (interactive)
-      (setq appt-time-msg-list nil)
-      (org-agenda-to-appt))
-
-    (add-hook 'org-finalize-agenda-hook 'sbw/org-refresh-appointments-from-agenda 'append)
-    (appt-activate t)
 
     ;; org-protocol
 
@@ -321,18 +232,7 @@
   (let* ( (fill-column (point-max)) )
     (fill-region start end nil)))
 
-
-
-
-
-    ;; TODO Swtich to
-    ;;    (f-glob "*.org" (concat org-directory "/current/*"))
-    ;; and filter out things we shouldn't include, and derive top level categories from directories
-(defun sbw/org-find-org-files-new ()
-  "Scan org-directory for org files."
-  (interactive)
-  (let* ( (projects (f-glob org-directory)) )))
-
-
-
 (provide 'sbw-configure-org-mode)
+
+
+
