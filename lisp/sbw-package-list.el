@@ -83,6 +83,7 @@
      (:name sbw-cosmetics)
      (:name sbw-cosmetics-code-style)
      (:name sbw-countdown)
+     (:name sbw-edit-utils)
      (:name sbw-hash-tables)
      (:name sbw-menu)
      (:name sbw-misc)

@@ -1,16 +1,6 @@
 (require 'sbw-utils)
 (require 'sbw-hash-tables)
 
-;; sbw/filter
-
-(ert-deftest sbw/filter-given-predicate-and-list-then-retains-items-for-which-predicate-is-true ()
-  "sbw/filter given predicate and list then retains items for which predicate is true."
-  (let ((is-even? (lambda (x) (= (% x 2) 0))))
-    (should (equal (sbw/filter is-even? (list))         (list)))
-    (should (equal (sbw/filter is-even? (list 1 3 5 7)) (list)))
-    (should (equal (sbw/filter is-even? (list 1 2 3 4)) (list 2 4)))
-    (should (equal (sbw/filter is-even? (list 2 4 6 8)) (list 2 4 6 8)))))
-
 ;; sbw/assq-ensure-is-first
 
 (ert-deftest sbw/assq-ensure-is-first-given-map-then-removes-duplicates-and-ensures-is-first ()

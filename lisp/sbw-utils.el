@@ -1,4 +1,3 @@
-;; TODO REMOVE ME
 (defun sbw/filter (p l)
   "Returns the items from list L for which predicate P is true."
   (delq nil
@@ -43,12 +42,6 @@
     (sbw/ht-create)
     l))
 
-;; TODO Might be replaced with s.el now?
-;; TODO Test these, break tests into a separate file
-(defun sbw/join (sep list)
-  "Returns a string with the items from list joined by separator."
-  (apply 'concat (-drop 1 (-interleave (-repeat (length list) sep) list))))
-
 ;; TODO Prefix these
 (defalias 'sbw/dec '1- "Return x minus one.")
 (defalias 'sbw/inc '1+ "Return x plus one.")
@@ -58,17 +51,5 @@
   "Return X as a pretty-printed string."
   (let ( (json-encoding-pretty-print t) )
     (s-replace "\"" "" (json-encode x))))
-
-;; TODO Test me
-(defun sbw/range (x &optional y step)
-  "Returns a sequence of integers. If X is specified, return
-integers in range 0 to X; if both X and Y are specified return
-integers in range X to 8. If STEP is not specified then assume
-1."
-  (if (not y)
-    (number-sequence 0 (- x 1) step)
-    (number-sequence x (- y 1) step)))
-
-
 
 (provide 'sbw-utils)
