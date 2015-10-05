@@ -71,16 +71,30 @@ names, or nil to indicate that all should be included."
         (lambda (x) (funcall filter-vals x categories))
         (funcall filter-vals (sbw/ht-get sbw/org-config :categorised) projects)))))
 
+(defun sbw/org-config-select--prompt-for-input ()
+  (let* ( (projects-source   (helm-build-sync-source "Projects"
+                               :candidates (sbw/org-config-projects)
+                               :action     (lambda (candidate) (helm-marked-candidates))))
+          (categories-source (helm-build-sync-source "Categories"
+                               :candidates (sbw/org-config-categories)
+                               :action     (lambda (candidate) (helm-marked-candidates)))) )
+    (list
+     (helm :buffer "*helm org-config*" :sources projects-source)
+     (helm :buffer "*helm org-config*" :sources categories-source))))
+
 (defun sbw/org-config-select (projects categories)
   "Select the org-mode files filtered by the specified PROJECTS
 and CATEGORIES, where PROJECTS and CATEGORIES are lists of string
-names, or nil to indicate that all should be included."
-  (setq sbw/org-config
-        (-> sbw/org-config
-            (sbw/ht-assoc :selected-projects projects)
-            (sbw/ht-assoc :selected-categories categories)
-            (sbw/ht-assoc :selected-files (sbw/org-config-files projects categories))))
-  (setq org-agenda-files (sbw/ht-get sbw/org-config :selected-files)))
+names, or nil to indicate that all should be included. If called
+interactively, prompt to select PROJECTS and CATEGORIES."
+  (interactive (sbw/org-config-select--prompt-for-input))
+  (setq sbw/org-config (-> sbw/org-config
+                           (sbw/ht-assoc :selected-projects projects)
+                           (sbw/ht-assoc :selected-categories categories)
+                           (sbw/ht-assoc :selected-files (sbw/org-config-files projects categories))))
+  (setq
+   org-agenda-files   (sbw/ht-get sbw/org-config :selected-files)
+   org-refile-targets (quote ((org-agenda-files :maxlevel . 1)))))
 
 ;; Agenda
 
