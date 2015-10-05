@@ -72,6 +72,7 @@
      ;; Elisp
      (:name json              :load :immediate) ;; JavaScript Object Notation parser / generator
      (:name async             :load :immediate) ;; Asynchronous processing in Emacs
+     (:name nameless          :load :immediate) ;; Less is more. Hide package namespace in your emacs-lisp code
      
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)

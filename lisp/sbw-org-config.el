@@ -1,4 +1,4 @@
-;; General org-mode configuration
+;;; sbw/org-config.el --- Functions for managing my org-mode configuration
 
 (require 's)
 (require 'f)
@@ -29,36 +29,58 @@
     (sbw/ht-create)
     files))
 
-(defun sbw/org-config ()
-  "Returns information about my org-mode configuration."
-  (let* ( (org-file? (lambda (x) (s-ends-with? ".org" (f-filename x))))
-          (all-files (f-entries org-directory org-file? :recursive)) )
+(defun sbw/org-config--find-and-categorise-files ()
+  (let* ( (org-file?   (lambda (x) (s-ends-with? ".org" (f-filename x))))
+          (all-files   (f-entries org-directory org-file? :recursive))
+          (categorised (sbw/org-config--categorise-files all-files)) )
     (sbw/ht-create
-      :all-files   all-files
-      :categorised (sbw/org-config--categorise-files all-files))))
+      :all-files           all-files
+      :categorised         categorised
+      :selected-projects   nil
+      :selected-categories nil
+      :selected-files      all-files)))
 
-(defun sbw/org-config-projects (config)
+(defun sbw/org-config-refresh ()
+  "Refresh the org-mode configuration."
+  (interactive)
+  (setq sbw/org-config (sbw/org-config--find-and-categorise-files)))
+
+(defvar sbw/org-config (sbw/org-config-refresh)
+   "The org-mode configuration.")
+
+(defun sbw/org-config-projects ()
   "Returns a list of org-mode projects."
-  (sbw/ht-keys (sbw/ht-get config :categorised)))
+  (sbw/ht-keys (sbw/ht-get sbw/org-config :categorised)))
 
-(defun sbw/org-config-categories (config)
+(defun sbw/org-config-categories ()
   "Returns a list of org-mode categories."
   (seq-uniq
     (seq-mapcat
       'sbw/ht-keys
-      (sbw/ht-vals (sbw/ht-get config :categorised))())))
+      (sbw/ht-vals (sbw/ht-get sbw/org-config :categorised)))))
 
-(defun sbw/org-config-files (config projects categories)
+(defun sbw/org-config-files (projects categories)
   "Returns the org-mode files filtered by the specified PROJECTS
 and CATEGORIES, where PROJECTS and CATEGORIES are lists of string
 names, or nil to indicate that all should be included."
-  (let* ( (projects    (or projects   (sbw/org-config-projects config)))
-          (categories  (or categories (sbw/org-config-categories config)))
+  (let* ( (projects    (or projects   (sbw/org-config-projects)))
+          (categories  (or categories (sbw/org-config-categories)))
           (filter-vals (lambda (ht ks) (sbw/ht-vals (sbw/ht-select-keys ht ks)))) )
     (apply (-partial 'seq-concatenate 'list)
       (seq-mapcat
         (lambda (x) (funcall filter-vals x categories))
-        (funcall filter-vals (sbw/ht-get config :categorised) projects)))))
+        (funcall filter-vals (sbw/ht-get sbw/org-config :categorised) projects)))))
+
+(defun sbw/org-config-select (projects categories)
+  "Select the org-mode files filtered by the specified PROJECTS
+and CATEGORIES, where PROJECTS and CATEGORIES are lists of string
+names, or nil to indicate that all should be included."
+  (setq sbw/org-config
+        (-> sbw/org-config
+            (sbw/ht-assoc :selected-projects projects)
+            (sbw/ht-assoc :selected-categories categories)
+            (sbw/ht-assoc :selected-files (sbw/org-config-files projects categories))))
+  (setq org-agenda-files (sbw/ht-get sbw/org-config :selected-files)))
 
 ;; Agenda
 
@@ -95,10 +117,12 @@ names, or nil to indicate that all should be included."
                      (org-agenda-files ,files)))))))
 
 (setq
- sbw/org-config-personal-files (sbw/org-config-files (sbw/org-config) ["current"] ["personal"])
- sbw/org-config-work-files     (sbw/org-config-files (sbw/org-config) ["current"] ["work"])
- sbw/org-config-level-up-files (sbw/org-config-files (sbw/org-config) ["current"] ["level-up"])
- sbw/org-config-all-files      (sbw/org-config-files (sbw/org-config) ["current"] nil))
+ sbw/org-config-personal-files (sbw/org-config-files ["current"] ["personal"])
+ sbw/org-config-work-files     (sbw/org-config-files ["current"] ["work"])
+ sbw/org-config-level-up-files (sbw/org-config-files ["current"] ["level-up"])
+ sbw/org-config-all-files      (sbw/org-config-files ["current"] nil))
+
+
 
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
@@ -114,8 +138,6 @@ names, or nil to indicate that all should be included."
 (add-to-list 'org-agenda-custom-commands '("ca" . "All"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-files))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-files))
-
-(sbw/org-config-categories (sbw/org-config))
 
 ;; Agenda appearance
 
