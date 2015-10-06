@@ -63,6 +63,9 @@
       org-tag-alist                              nil                          ;; No tags
       org-startup-folded                         'content                     ;; Display content when first opening org files
       )
+
+    ;; Start with source blocks hidden
+    (add-hook 'org-mode-hook 'org-hide-block-all)
     
     (setq org-todo-keywords
       '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))

@@ -113,10 +113,11 @@
                                                           (sbw/menu "All"
                                                                     (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "caa")))
                                                                     (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cat")))))
-                                        (sbw/menu-submenu ?l "Level-up"
-                                                          (sbw/menu "Level-up"
-                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cla")))
-                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "clt")))))
+                                        (sbw/menu-submenu ?s "Selection"
+                                                          (sbw/menu "Selection"
+                                                                    (sbw/menu-action ?c "Change" (lambda () (interactive) (call-interactively 'sbw/org-config-select)))
+                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "csa")))
+                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cst")))))
                                         (sbw/menu-submenu ?w "Work"
                                                           (sbw/menu "Work"
                                                                     (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cwa")))

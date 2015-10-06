@@ -136,8 +136,6 @@ interactively, prompt to select PROJECTS and CATEGORIES."
  sbw/org-config-level-up-files (sbw/org-config-files ["current"] ["level-up"])
  sbw/org-config-all-files      (sbw/org-config-files ["current"] nil))
 
-
-
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
 (add-to-list 'org-agenda-custom-commands '("cp" . "Personal"))
@@ -146,9 +144,9 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands '("cw" . "Work"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" sbw/org-config-work-files))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 sbw/org-config-work-files))
-(add-to-list 'org-agenda-custom-commands '("cl" . "Level-up"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "clt" "Level-up tasks" sbw/org-config-level-up-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cla" "Level-up agenda" 7 sbw/org-config-level-up-files))
+(add-to-list 'org-agenda-custom-commands '("cs" . "Selection"))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "clt" "Selection tasks" (sbw/ht-get sbw/org-config :selected-files)))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cla" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-files)))
 (add-to-list 'org-agenda-custom-commands '("ca" . "All"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-files))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-files))
