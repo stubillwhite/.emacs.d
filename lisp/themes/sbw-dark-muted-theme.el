@@ -143,6 +143,7 @@
     `(helm-ff-symlink                     ((t (:inherit sbw-dark-muted-keyword))))
     `(helm-ff-invalid-symlink             ((t (:inherit sbw-dark-muted-keyword))))
     `(helm-ff-directory                   ((t (:inherit sbw-dark-muted-keyword))))
+    `(helm-ff-dotted-directory            ((t (:inherit sbw-dark-muted-keyword))))
     `(helm-ff-executable                  ((t (:inherit sbw-dark-muted-normal))))
     `(helm-buffer-process                 ((t (:inherit sbw-dark-muted-keyword))))
     `(helm-candidate-number               ((t (:inherit sbw-dark-muted-keyword))))
