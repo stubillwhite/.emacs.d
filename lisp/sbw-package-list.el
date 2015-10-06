@@ -46,6 +46,7 @@
      (:name helm              :load :immediate) ;; Incremental narrowing framework
      (:name helm-swoop        :load :immediate) ;; Efficiently skipping between matches
      (:name helm-projectile   :load :immediate) ;; Helm integration for projectile
+     (:name helm-ag           :load :immediate) ;; The silver searcher with Helm interface
      
      ;; Clojure
      (:name clojure-mode      :load :immediate) ;; Clojure mode

@@ -1,4 +1,0 @@
-( :name        helm-projectile
-  :description "Emacs incremental and narrowing framework"
-  :type        elpa ;; Fetch from elpa to simplify installation on Windows machines
-  )
