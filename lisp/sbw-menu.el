@@ -109,22 +109,18 @@
                                         (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
             (sbw/menu-submenu ?d "Dashboard"
                               (sbw/menu "Dashboard"
-                                        (sbw/menu-submenu ?a "All"
-                                                          (sbw/menu "All"
-                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "caa")))
-                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cat")))))
                                         (sbw/menu-submenu ?s "Selection"
                                                           (sbw/menu "Selection"
                                                                     (sbw/menu-action ?c "Change" (lambda () (interactive) (call-interactively 'sbw/org-config-select)))
-                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "csa")))
-                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cst")))))
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-selected-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-selected-tasks)))
                                         (sbw/menu-submenu ?w "Work"
                                                           (sbw/menu "Work"
-                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cwa")))
-                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cwt")))))
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-work-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-work-tasks)))
                                         (sbw/menu-submenu ?p "Personal"
                                                           (sbw/menu "Personal"
-                                                                    (sbw/menu-action ?a "Agenda" (lambda () (interactive) (org-agenda nil "cpa")))
-                                                                    (sbw/menu-action ?t "Tasks"  (lambda () (interactive) (org-agenda nil "cpt")))))))))
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-personal-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-personal-tasks)))))))
 
 (provide 'sbw-menu)
