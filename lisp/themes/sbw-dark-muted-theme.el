@@ -192,10 +192,14 @@
     `(org-priority                        ((t (:inherit sbw-dark-muted-emphasis))))
     `(org-scheduled                       ((t (:inherit sbw-dark-muted-normal))))
     `(org-scheduled-previously            ((t (:inherit sbw-dark-muted-error))))
+    `(org-upcoming-deadline               ((t (:inherit sbw-dark-muted-warning))))
     `(org-scheduled-today                 ((t (:inherit sbw-dark-muted-normal))))
     `(org-special-keyword                 ((t (:inherit sbw-dark-muted-emphasis))))
     `(org-time-grid                       ((t (:inherit sbw-dark-muted-keyword))))
     `(org-todo                            ((t (:inherit sbw-dark-muted-emphasis))))
+
+    ;; sh
+    `(sh-quoted-exec                      ((t (:inherit sbw-dark-muted-keyword))))
 
     ;; Smartparens
     `(sp-show-pair-match-face             ((t (:inherit sbw-dark-muted-match))))

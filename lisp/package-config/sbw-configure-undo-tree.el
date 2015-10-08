@@ -17,6 +17,7 @@
     (defalias 'redo 'undo-tree-redo))
 
   :bind
+  ("C-z"   . undo-tree-undo)
   ("C-c u" . undo-tree-visualize))
 
 (provide 'sbw-configure-undo-tree)

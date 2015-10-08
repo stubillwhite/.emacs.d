@@ -18,8 +18,12 @@
     (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
 
     ;; Turn off electric-pair-mode to avoid interference
-    (electric-pair-mode 0)   
-    )
+    (defun sbw/smartparens-disable-electric-pair-mode ()
+      (make-variable-buffer-local 'electric-pair-mode)
+      (electric-pair-mode 0))
+    (add-hook 'cider-repl-mode-hook 'sbw/smartparens-disable-electric-pair-mode)
+    (add-hook 'clojure-mode-hook    'sbw/smartparens-disable-electric-pair-mode)
+    (add-hook 'emacs-lisp-mode-hook 'sbw/smartparens-disable-electric-pair-mode))
 
   :config
   (progn
@@ -123,7 +127,5 @@
                                         ;(sp-local-pair "(" nil :bind "C-("))
     
     ))
-
-
 
 (provide 'sbw-configure-smartparens)
