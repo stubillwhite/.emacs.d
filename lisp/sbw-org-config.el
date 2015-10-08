@@ -155,7 +155,7 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 
 (setq
  org-agenda-remove-tags   1
- org-agenda-prefix-format '( (agenda   . " %-20:c%-20t%s")
+ org-agenda-prefix-format '( (agenda   . " %-20:c%-20t%-20s")
                              (timeline . "  %s")
                              (todo     . " %-20:c")
                              (tags     . " %-20:c")
