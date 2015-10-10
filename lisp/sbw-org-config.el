@@ -147,18 +147,14 @@ interactively, prompt to select PROJECTS and CATEGORIES."
                     ((org-agenda-ndays ,days)
                      (org-agenda-files ,files)))))))
 
-(setq
- sbw/org-config-personal-files (sbw/org-config-files ["current"] ["personal"])
- sbw/org-config-work-files     (sbw/org-config-files ["current"] ["work"]))
-
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
 (add-to-list 'org-agenda-custom-commands '("cp" . "Personal"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" sbw/org-config-personal-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 7 sbw/org-config-personal-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-files ["current"] ["personal" "level-up"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 14 (sbw/org-config-files ["current"] ["personal" "level-up"])))
 (add-to-list 'org-agenda-custom-commands '("cw" . "Work"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" sbw/org-config-work-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 sbw/org-config-work-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" (sbw/org-config-files ["current"] ["work"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 (sbw/org-config-files ["current"] ["work"])))
 (add-to-list 'org-agenda-custom-commands '("cs" . "Selection"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cst" "Selection tasks" (sbw/ht-get sbw/org-config :selected-files)))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-files)))
