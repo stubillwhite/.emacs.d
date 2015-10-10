@@ -40,10 +40,18 @@
       :selected-categories nil
       :selected-files      all-files)))
 
+(defun sbw/org-config--set-org-variables ()
+  (setq
+   org-agenda-files       (sbw/ht-get sbw/org-config :selected-files)
+   org-default-notes-file (concat org-directory "/incoming.org")
+   org-refile-targets     (quote ((org-agenda-files :maxlevel . 1))))
+  sbw/org-config)
+
 (defun sbw/org-config-refresh ()
   "Refresh the org-mode configuration."
   (interactive)
-  (setq sbw/org-config (sbw/org-config--find-and-categorise-files)))
+  (setq sbw/org-config (sbw/org-config--find-and-categorise-files))
+  (sbw/org-config--set-org-variables))
 
 (defvar sbw/org-config (sbw/org-config-refresh)
    "The org-mode configuration.")
@@ -71,7 +79,7 @@ names, or nil to indicate that all should be included."
         (lambda (x) (funcall filter-vals x categories))
         (funcall filter-vals (sbw/ht-get sbw/org-config :categorised) projects)))))
 
-(defun sbw/org-config-select--prompt-for-input ()
+(defun sbw/org-config--select-projects-and-categories ()
   (let* ( (projects-source   (helm-build-sync-source "Projects"
                                :candidates (sbw/org-config-projects)
                                :action     (lambda (candidate) (helm-marked-candidates))))
@@ -87,14 +95,23 @@ names, or nil to indicate that all should be included."
 and CATEGORIES, where PROJECTS and CATEGORIES are lists of string
 names, or nil to indicate that all should be included. If called
 interactively, prompt to select PROJECTS and CATEGORIES."
-  (interactive (sbw/org-config-select--prompt-for-input))
+  (interactive (sbw/org-config--select-projects-and-categories))
   (setq sbw/org-config (-> sbw/org-config
                            (sbw/ht-assoc :selected-projects projects)
                            (sbw/ht-assoc :selected-categories categories)
                            (sbw/ht-assoc :selected-files (sbw/org-config-files projects categories))))
-  (setq
-   org-agenda-files   (sbw/ht-get sbw/org-config :selected-files)
-   org-refile-targets (quote ((org-agenda-files :maxlevel . 1)))))
+  (sbw/org-config--set-org-variables))
+
+(defun sbw/org-config-new-file (project category)
+  "Create a new file with specified PROJECT and CATEGORY, prompting for those values if rn interactively"
+  (interactive "sProject: \nsCategory: ")
+  (interactive (-map 'car (sbw/org-config--select-projects-and-categories)))
+  (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
+          (path     (s-lex-format "${org-directory}/${project}/${category}.org")) )
+    (f-mkdir (f-dirname path))
+    (f-write (s-replace-all `(("${category}" . ,category)) content) 'utf-8 path)
+    (sbw/org-config-refresh)
+    (message "Created and added %s" path)))
 
 ;; Agenda
 
@@ -132,9 +149,7 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 
 (setq
  sbw/org-config-personal-files (sbw/org-config-files ["current"] ["personal"])
- sbw/org-config-work-files     (sbw/org-config-files ["current"] ["work"])
- sbw/org-config-level-up-files (sbw/org-config-files ["current"] ["level-up"])
- sbw/org-config-all-files      (sbw/org-config-files ["current"] nil))
+ sbw/org-config-work-files     (sbw/org-config-files ["current"] ["work"]))
 
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
@@ -181,4 +196,3 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 (appt-activate t)
 
 (provide 'sbw-org-config)
-

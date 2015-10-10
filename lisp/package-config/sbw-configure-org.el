@@ -23,9 +23,7 @@
         (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
         (apply 'list dirs)))
 
-    ;; TODO Swtich to
-    ;;    (f-glob "*.org" (concat org-directory "/current/*"))
-    ;; and filter out things we shouldn't include, and derive top level categories from directories
+    ;; TODO Remove this
     (defun sbw/org-find-org-files ()
       "Scan org-directory for org files."
       (interactive)
@@ -182,20 +180,6 @@
       (org-update-all-dblocks)
       (sbw/sort-all-subtrees-in-buffer)
       nil)
-
-    ;; Creating a new org file
-
-    (defun sbw/org-new-org-file (project category)
-      (interactive "sProject: \nsCategory: ")
-      (let* ( (content (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
-              (path    (s-lex-format "${org-directory}/current/${project}/${category}.org" )))
-        (f-write
-          (->> content
-            (s-replace-all `(("${category}" . ,category))))
-          'utf-8
-          path)
-        (sbw/org-find-org-files)
-        (message "Created and added %s" path)))
 
     ;; Stuff to rationalise
 
