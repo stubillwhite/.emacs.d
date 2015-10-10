@@ -169,7 +169,7 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 (defun sbw/org-config-agenda-personal-agenda () (interactive) (org-agenda nil "cpa"))
 (defun sbw/org-config-agenda-personal-tasks  () (interactive) (org-agenda nil "cpt"))
 
-;; Default config: include everything except non-project files
+;; Default config: include all current projects, excluding non-project files
 (sbw/org-config-refresh)
 (sbw/org-config-select ["current"] (-filter (lambda (x) (not (seq-contains ["non-project"] x))) (sbw/org-config-categories)))
 
@@ -183,16 +183,13 @@ interactively, prompt to select PROJECTS and CATEGORIES."
                              (tags     . " %-20:c")
                              (search   . " %-20:c")) )
 
-;; Appointments
-;; Refresh when the agenda is displayed
+;; Refresh appointments when the agenda is displayed
 
-(defun sbw/org-refresh-appointments-from-agenda ()
-  "Update the appointment list from the agenda."
-  (interactive)
+(defun sbw/org-config--refresh-appointments-from-agenda ()
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt))
 
-(add-hook 'org-finalize-agenda-hook 'sbw/org-refresh-appointments-from-agenda 'append)
+(add-hook 'org-finalize-agenda-hook 'sbw/org-config--refresh-appointments-from-agenda 'append)
 (appt-activate t)
 
 (provide 'sbw-org-config)
