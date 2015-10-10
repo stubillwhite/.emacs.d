@@ -23,21 +23,6 @@
         (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
         (apply 'list dirs)))
 
-    ;; TODO Remove this
-    (defun sbw/org-find-org-files ()
-      "Scan org-directory for org files."
-      (interactive)
-      (setq sbw/org-personal-files    (sbw/org-files (concat org-directory "/current/personal")))
-      (setq sbw/org-non-project-files (sbw/org-files (concat org-directory "/current/non-project")))
-      (setq sbw/org-work-files        (sbw/org-files (concat org-directory "/current/work")))
-      (setq sbw/org-all-files         (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
-      (setq sbw/org-refile-targets    (-filter (lambda (x) (not (-contains? sbw/org-non-project-files x))) sbw/org-all-files))
-      (setq org-agenda-files          sbw/org-all-files)
-      (setq org-default-notes-file    (concat org-directory "/current/non-project/incoming.org"))
-      (setq org-refile-targets        (quote ((sbw/org-refile-targets :maxlevel . 1)))))
-
-    (sbw/org-find-org-files)
-    
     ;; General settings
 
     (setq 

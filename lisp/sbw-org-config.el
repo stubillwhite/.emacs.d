@@ -169,6 +169,10 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 (defun sbw/org-config-agenda-personal-agenda () (interactive) (org-agenda nil "cpa"))
 (defun sbw/org-config-agenda-personal-tasks  () (interactive) (org-agenda nil "cpt"))
 
+;; Default config: include everything except non-project files
+(sbw/org-config-refresh)
+(sbw/org-config-select ["current"] (-filter (lambda (x) (not (seq-contains ["non-project"] x))) (sbw/org-config-categories)))
+
 ;; Agenda appearance
 
 (setq
