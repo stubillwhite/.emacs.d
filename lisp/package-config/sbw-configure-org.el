@@ -134,12 +134,14 @@
         (reverse criteria)))
 
     (defun sbw/org-sort-subtree ()
-      "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
+      "Sort the current subtree by TODO state (prioritising
+STARTED tasks above all others), priority, scheduled date,
+deadline, then alphabetic."
       (interactive)
       (if (org-clocking-p)
         (message "Currently clocked in on a task. Clock out and re-run the command to sort the subtree.")
-        (let* ( (original-value org-todo-keywords) )
-          (setq org-todo-keywords '("STARTED(s)" "|" "TODO(t)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))
+        (let* ( (original-value org-todo-keywords-1) )
+          (setq org-todo-keywords-1 '("STARTED" "TODO" "BLOCKED" "POSTPONED" "DONE" "CANCELLED"))
           (save-excursion
             (sbw/org-multisort ?o ?p ?s ?d ?a)
             (hide-subtree)
