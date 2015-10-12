@@ -135,7 +135,7 @@
     
     (setq org-capture-templates
       '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO %?%a\n%i")
+           "* TODO Check out %?%a\n%i")
          ("l" "Link" entry (file+olp org-default-notes-file "Links")
            "* TODO %?%a\n%i")
          ("r" "RTC task" entry (file+headline org-default-notes-file "Tasks")
