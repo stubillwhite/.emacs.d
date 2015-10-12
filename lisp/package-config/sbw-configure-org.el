@@ -23,23 +23,6 @@
         (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
         (apply 'list dirs)))
 
-    ;; TODO Swtich to
-    ;;    (f-glob "*.org" (concat org-directory "/current/*"))
-    ;; and filter out things we shouldn't include, and derive top level categories from directories
-    (defun sbw/org-find-org-files ()
-      "Scan org-directory for org files."
-      (interactive)
-      (setq sbw/org-personal-files    (sbw/org-files (concat org-directory "/current/personal")))
-      (setq sbw/org-non-project-files (sbw/org-files (concat org-directory "/current/non-project")))
-      (setq sbw/org-work-files        (sbw/org-files (concat org-directory "/current/work")))
-      (setq sbw/org-all-files         (append sbw/org-personal-files sbw/org-work-files sbw/org-non-project-files (list)))
-      (setq sbw/org-refile-targets    (-filter (lambda (x) (not (-contains? sbw/org-non-project-files x))) sbw/org-all-files))
-      (setq org-agenda-files          sbw/org-all-files)
-      (setq org-default-notes-file    (concat org-directory "/current/non-project/incoming.org"))
-      (setq org-refile-targets        (quote ((sbw/org-refile-targets :maxlevel . 1)))))
-
-    (sbw/org-find-org-files)
-    
     ;; General settings
 
     (setq 
@@ -66,9 +49,11 @@
 
     ;; Start with source blocks hidden
     (add-hook 'org-mode-hook 'org-hide-block-all)
-    
-    (setq org-todo-keywords
-      '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))
+
+    ;; Keywords and preferred sort order
+    (setq
+     org-todo-keywords       '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)")
+     sbw/org-todo-sort-order '("STARTED" "TODO" "BLOCKED" "POSTPONED" "DONE" "CANCELLED"))
 
     (setq org-drawers
       '("PROPERTIES" "CLOCK" "LOGBOOK" "NOTES"))
@@ -151,17 +136,18 @@
         (reverse criteria)))
 
     (defun sbw/org-sort-subtree ()
-      "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
+      "Sort the current subtree by TODO state, priority,
+scheduled date, deadline, then alphabetic."
       (interactive)
       (if (org-clocking-p)
         (message "Currently clocked in on a task. Clock out and re-run the command to sort the subtree.")
-        (let* ( (original-value org-todo-keywords) )
-          (setq org-todo-keywords '("STARTED(s)" "|" "TODO(t)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)"))
+        (let* ( (original-value org-todo-keywords-1) )
+          (setq org-todo-keywords-1 sbw/org-todo-sort-order)
           (save-excursion
             (sbw/org-multisort ?o ?p ?s ?d ?a)
             (hide-subtree)
             (org-cycle))
-          (setq org-todo-keywords original-value))))
+          (setq org-todo-keywords-1 original-value))))
 
     (defun sbw/sort-all-subtrees-in-buffer ()
       "Sorts all the subtrees in the current org-mode buffer."
@@ -182,20 +168,6 @@
       (org-update-all-dblocks)
       (sbw/sort-all-subtrees-in-buffer)
       nil)
-
-    ;; Creating a new org file
-
-    (defun sbw/org-new-org-file (project category)
-      (interactive "sProject: \nsCategory: ")
-      (let* ( (content (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
-              (path    (s-lex-format "${org-directory}/current/${project}/${category}.org" )))
-        (f-write
-          (->> content
-            (s-replace-all `(("${category}" . ,category))))
-          'utf-8
-          path)
-        (sbw/org-find-org-files)
-        (message "Created and added %s" path)))
 
     ;; Stuff to rationalise
 

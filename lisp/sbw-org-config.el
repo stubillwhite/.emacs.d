@@ -40,10 +40,18 @@
       :selected-categories nil
       :selected-files      all-files)))
 
+(defun sbw/org-config--set-org-variables ()
+  (setq
+   org-agenda-files       (sbw/ht-get sbw/org-config :selected-files)
+   org-default-notes-file (concat org-directory "/incoming.org")
+   org-refile-targets     (quote ((org-agenda-files :maxlevel . 1))))
+  sbw/org-config)
+
 (defun sbw/org-config-refresh ()
   "Refresh the org-mode configuration."
   (interactive)
-  (setq sbw/org-config (sbw/org-config--find-and-categorise-files)))
+  (setq sbw/org-config (sbw/org-config--find-and-categorise-files))
+  (sbw/org-config--set-org-variables))
 
 (defvar sbw/org-config (sbw/org-config-refresh)
    "The org-mode configuration.")
@@ -71,7 +79,7 @@ names, or nil to indicate that all should be included."
         (lambda (x) (funcall filter-vals x categories))
         (funcall filter-vals (sbw/ht-get sbw/org-config :categorised) projects)))))
 
-(defun sbw/org-config-select--prompt-for-input ()
+(defun sbw/org-config--select-projects-and-categories ()
   (let* ( (projects-source   (helm-build-sync-source "Projects"
                                :candidates (sbw/org-config-projects)
                                :action     (lambda (candidate) (helm-marked-candidates))))
@@ -87,14 +95,23 @@ names, or nil to indicate that all should be included."
 and CATEGORIES, where PROJECTS and CATEGORIES are lists of string
 names, or nil to indicate that all should be included. If called
 interactively, prompt to select PROJECTS and CATEGORIES."
-  (interactive (sbw/org-config-select--prompt-for-input))
+  (interactive (sbw/org-config--select-projects-and-categories))
   (setq sbw/org-config (-> sbw/org-config
                            (sbw/ht-assoc :selected-projects projects)
                            (sbw/ht-assoc :selected-categories categories)
                            (sbw/ht-assoc :selected-files (sbw/org-config-files projects categories))))
-  (setq
-   org-agenda-files   (sbw/ht-get sbw/org-config :selected-files)
-   org-refile-targets (quote ((org-agenda-files :maxlevel . 1)))))
+  (sbw/org-config--set-org-variables))
+
+(defun sbw/org-config-new-file (project category)
+  "Create a new file with specified PROJECT and CATEGORY, prompting for those values if rn interactively"
+  (interactive "sProject: \nsCategory: ")
+  (interactive (-map 'car (sbw/org-config--select-projects-and-categories)))
+  (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
+          (path     (s-lex-format "${org-directory}/${project}/${category}.org")) )
+    (f-mkdir (f-dirname path))
+    (f-write (s-replace-all `(("${category}" . ,category)) content) 'utf-8 path)
+    (sbw/org-config-refresh)
+    (message "Created and added %s" path)))
 
 ;; Agenda
 
@@ -130,20 +147,14 @@ interactively, prompt to select PROJECTS and CATEGORIES."
                     ((org-agenda-ndays ,days)
                      (org-agenda-files ,files)))))))
 
-(setq
- sbw/org-config-personal-files (sbw/org-config-files ["current"] ["personal"])
- sbw/org-config-work-files     (sbw/org-config-files ["current"] ["work"])
- sbw/org-config-level-up-files (sbw/org-config-files ["current"] ["level-up"])
- sbw/org-config-all-files      (sbw/org-config-files ["current"] nil))
-
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
 (add-to-list 'org-agenda-custom-commands '("cp" . "Personal"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" sbw/org-config-personal-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 7 sbw/org-config-personal-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-files ["current"] ["personal" "level-up"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 14 (sbw/org-config-files ["current"] ["personal" "level-up"])))
 (add-to-list 'org-agenda-custom-commands '("cw" . "Work"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" sbw/org-config-work-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 sbw/org-config-work-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" (sbw/org-config-files ["current"] ["work"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 (sbw/org-config-files ["current"] ["work"])))
 (add-to-list 'org-agenda-custom-commands '("cs" . "Selection"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cst" "Selection tasks" (sbw/ht-get sbw/org-config :selected-files)))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-files)))
@@ -158,6 +169,10 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 (defun sbw/org-config-agenda-personal-agenda () (interactive) (org-agenda nil "cpa"))
 (defun sbw/org-config-agenda-personal-tasks  () (interactive) (org-agenda nil "cpt"))
 
+;; Default config: include all current projects, excluding non-project files
+(sbw/org-config-refresh)
+(sbw/org-config-select ["current"] (-filter (lambda (x) (not (seq-contains ["non-project"] x))) (sbw/org-config-categories)))
+
 ;; Agenda appearance
 
 (setq
@@ -168,17 +183,13 @@ interactively, prompt to select PROJECTS and CATEGORIES."
                              (tags     . " %-20:c")
                              (search   . " %-20:c")) )
 
-;; Appointments
-;; Refresh when the agenda is displayed
+;; Refresh appointments when the agenda is displayed
 
-(defun sbw/org-refresh-appointments-from-agenda ()
-  "Update the appointment list from the agenda."
-  (interactive)
+(defun sbw/org-config--refresh-appointments-from-agenda ()
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt))
 
-(add-hook 'org-finalize-agenda-hook 'sbw/org-refresh-appointments-from-agenda 'append)
+(add-hook 'org-finalize-agenda-hook 'sbw/org-config--refresh-appointments-from-agenda 'append)
 (appt-activate t)
 
 (provide 'sbw-org-config)
-
