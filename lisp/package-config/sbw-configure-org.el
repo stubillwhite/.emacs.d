@@ -53,7 +53,7 @@
     ;; Keywords and preferred sort order
     (setq
      org-todo-keywords       '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)")
-     sbw/org-todo-sort-order '("STARTED" "TODO" "BLOCKED" "POSTPONED" "DONE" "CANCELLED"))
+     sbw/org-todo-sort-order '("STARTED" "BLOCKED" "TODO" "POSTPONED" "DONE" "CANCELLED"))
 
     (setq org-drawers
       '("PROPERTIES" "CLOCK" "LOGBOOK" "NOTES"))
@@ -121,11 +121,8 @@
     (setq org-capture-templates
       '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
            "* TODO Check out %?%a\n%i")
-         ("l" "Link" entry (file+olp org-default-notes-file "Links")
-           "* TODO %?%a\n%i")
          ("r" "RTC task" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO %?%(sbw/org-capture-rtc-task)")       
-         ))
+           "* TODO %?%(sbw/org-capture-rtc-task)") ))
 
     ;; Sorting subtrees
 
