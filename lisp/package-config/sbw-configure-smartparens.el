@@ -16,14 +16,22 @@
     (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
     (add-hook 'clojure-mode-hook    'smartparens-strict-mode)
     (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
+    (add-hook 'groovy-mode-hook     'smartparens-strict-mode)
 
-    ;; Turn off electric-pair-mode to avoid interference
-    (defun sbw/smartparens-disable-electric-pair-mode ()
-      (make-variable-buffer-local 'electric-pair-mode)
-      (electric-pair-mode 0))
-    (add-hook 'cider-repl-mode-hook 'sbw/smartparens-disable-electric-pair-mode)
-    (add-hook 'clojure-mode-hook    'sbw/smartparens-disable-electric-pair-mode)
-    (add-hook 'emacs-lisp-mode-hook 'sbw/smartparens-disable-electric-pair-mode))
+    ;; Certain modes turn on electric-pair and this screws up smartparens, so ensure that it stays off
+    (add-hook 'electric-pair-mode-hook (lambda () (electric-pair-mode 0)))
+    
+    ;; Indentation for block-based languages
+    
+    (defun sbw/smartparens-newline-and-indent (id action context)
+      (when (eq action 'insert)
+        (newline)
+        (newline)
+        (indent-according-to-mode)
+        (previous-line)
+        (indent-according-to-mode)))
+
+    (sp-local-pair 'groovy-mode "{" nil :post-handlers '(:add sbw/smartparens-newline-and-indent)))
 
   :config
   (progn
@@ -129,3 +137,4 @@
     ))
 
 (provide 'sbw-configure-smartparens)
+
