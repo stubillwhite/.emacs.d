@@ -47,6 +47,8 @@
      (:name helm-swoop        :load :immediate) ;; Efficiently skipping between matches
      (:name helm-projectile   :load :immediate) ;; Helm integration for projectile
      (:name helm-ag           :load :immediate) ;; The silver searcher with Helm interface
+     (:name helm-flycheck     :load :immediate) ;; Show flycheck errors with Helm
+     ;; (:name helm-flyspell     :load :immediate) ;; Helm extension for correcting words with Flyspell
      
      ;; Clojure
      (:name clojure-mode      :load :immediate) ;; Clojure mode

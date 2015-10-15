@@ -1,0 +1,5 @@
+(:name helm-flyspell
+       :description "Helm extension for correcting words with Flyspell"
+       :website "https://github.com/pronobis/helm-flyspell"
+       :type github
+       :pkgname "pronobis/helm-flyspell")

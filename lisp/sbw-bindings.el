@@ -7,6 +7,26 @@
 (bind-key* "<f12>"    (lambda () (interactive) (sbw/menu-display sbw/menu-common-commands)))
 (bind-key* "C-l"      'goto-line)
 
+(key-chord-define-global
+ "qs"
+ (defhydra hydra-zoom ()
+   "zoom"
+   ("=" text-scale-increase "in")
+   ("-" text-scale-decrease "out")
+   ("0" (text-scale-adjust 0) "reset")
+   ("q" nil "quit" :color blue)))
+
+(key-chord-define-global
+ "qo"
+ (defhydra hydra-org (:color red :columns 3)
+   "Org Mode Movements"
+   ("n" outline-next-visible-heading "next heading")
+   ("p" outline-previous-visible-heading "prev heading")
+   ("N" org-forward-heading-same-level "next heading at same level")
+   ("P" org-backward-heading-same-level "prev heading at same level")
+   ("u" outline-up-heading "up heading")
+   ("g" org-goto "goto" :exit t)))
+
 ;; -----------------------------------------------------------------------------
 ;; Old system
 ;; -----------------------------------------------------------------------------
