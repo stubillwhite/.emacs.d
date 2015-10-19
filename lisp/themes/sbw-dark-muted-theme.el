@@ -199,8 +199,9 @@
     `(org-todo                            ((t (:inherit sbw-dark-muted-emphasis))))
 
     ;; sh
+    `(sh-heredoc                          ((t (:inherit sbw-dark-muted-string))))
     `(sh-quoted-exec                      ((t (:inherit sbw-dark-muted-keyword))))
-
+    
     ;; Smartparens
     `(sp-show-pair-match-face             ((t (:inherit sbw-dark-muted-match))))
     `(sp-show-pair-mismatch-face          ((t (:inherit sbw-dark-muted-mismatch))))

@@ -1,3 +1,5 @@
+;; C-style languages
+
 ;; Also check out http://www.emacswiki.org/emacs/IndentingC
     
 (defconst sbw/java-style
@@ -43,5 +45,11 @@
   (electric-pair-mode)
   (turn-off-smartparens-mode)
   (c-add-style "sbw-java" sbw/java-style t))
+
+;; Shell scripts
+
+(setq sh-basic-offset 2 ;; Basic indentation for shell scripts
+      sh-indentation  2 ;; Basic indentation for shell scripts
+      )
 
 (provide 'sbw-cosmetics-code-style)
