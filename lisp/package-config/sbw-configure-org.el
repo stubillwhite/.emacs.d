@@ -47,6 +47,9 @@
       org-startup-folded                         'content                     ;; Display content when first opening org files
       )
 
+    ;; Display elapsed time as hours and minutes only
+    (setq org-time-clocksum-format '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+    
     ;; Start with source blocks hidden
     (add-hook 'org-mode-hook 'org-hide-block-all)
 
