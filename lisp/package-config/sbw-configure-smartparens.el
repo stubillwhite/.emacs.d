@@ -18,20 +18,33 @@
     (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
     (add-hook 'groovy-mode-hook     'smartparens-strict-mode)
 
-    ;; Certain modes turn on electric-pair and this screws up smartparens, so ensure that it stays off
-    (add-hook 'electric-pair-mode-hook (lambda () (electric-pair-mode 0)))
-    
-    ;; Indentation for block-based languages
-    
-    (defun sbw/smartparens-newline-and-indent (id action context)
-      (when (eq action 'insert)
-        (newline)
-        (newline)
-        (indent-according-to-mode)
-        (previous-line)
-        (indent-according-to-mode)))
+    ;; Currently experimenting with smartparens for other modes
+    ;; (setq sbw/smartparens-block-based-modes :use-smartparens)
+    (setq sbw/smartparens-block-based-modes :use-electric-pair)
+    (if (eq sbw/smartparens-block-based-modes :use-smartparens)
+        (progn
+          ;; Certain modes turn on electric-pair and this screws up smartparens, so ensure that it stays off
+          (add-hook 'electric-pair-mode-hook (lambda () (electric-pair-mode 0)))
+          
+          ;; Indentation for block-based modes
+          (defun sbw/smartparens-newline-and-indent (id action context)
+            (when (eq action 'insert)
+              (newline)
+              (newline)
+              (indent-according-to-mode)
+              (previous-line)
+              (indent-according-to-mode)))
 
-    (sp-local-pair 'groovy-mode "{" nil :post-handlers '(:add sbw/smartparens-newline-and-indent)))
+          (sp-local-pair 'groovy-mode "{" nil :post-handlers '(:add sbw/smartparens-newline-and-indent))))
+    
+    (if (eq sbw/smartparens-block-based-modes :use-electric-pair)
+        (progn
+          (defun sbw/smartparens-disable-electric-pair-mode ()
+            (make-variable-buffer-local 'electric-pair-mode)
+            (electric-pair-mode 0))
+          (add-hook 'cider-repl-mode-hook 'sbw/smartparens-disable-electric-pair-mode)
+          (add-hook 'clojure-mode-hook    'sbw/smartparens-disable-electric-pair-mode)
+          (add-hook 'emacs-lisp-mode-hook 'sbw/smartparens-disable-electric-pair-mode))))
 
   :config
   (progn
@@ -119,20 +132,21 @@
     ;; (define-key sp-keymap (kbd "H-s j")            'sp-join-sexp)
     ;; (define-key sp-keymap (kbd "H-s s")            'sp-split-sexp)
 
-                                        ;(sp-with-modes '( lisp-mode 
-                                        ;clojure-mode)
-                                        ;(sp-local-pair "(" nil :bind "M-(")
-                                        ;(sp-local-pair "[" nil :bind "M-[")
-                                        ;(sp-local-pair "{" nil :bind "M-{")
-                                        ;(sp-local-pair "\"" nil :bind "M-\""))
+    ;; (sp-with-modes '(lisp-mode clojure-mode)
+    ;;   (sp-local-pair "(" nil :bind "M-(")
+    ;;   (sp-local-pair "[" nil :bind "M-[")
+    ;;   (sp-local-pair "{" nil :bind "M-{")
+    ;;   (sp-local-pair "\"" nil :bind "M-\""))
 
-                                        ;(sp-with-modes '(emacs-lisp-mode clojure-mode common-lisp-mode)
-                                        ;(sp-local-pair "(" nil :bind "M-(")
-                                        ;(sp-local-pair "'" nil :actions nil)
-                                        ;(sp-local-pair "`" "'" :when '(sp-in-string-p)))
+    ;; (sp-with-modes '(emacs-lisp-mode clojure-mode common-lisp-mode)
+    ;;   (sp-local-pair "(" nil :bind "M-(")
+    ;;   (sp-local-pair "'" nil :actions nil)
+    ;;   (sp-local-pair "`" "'" :when '(sp-in-string-p)))
 
-                                        ;(sp-with-modes sp--lisp-modes
-                                        ;(sp-local-pair "(" nil :bind "C-("))
+
+                                        
+;(sp-with-modes sp--lisp-modes
+;(sp-local-pair "(" nil :bind "C-("))
     
     ))
 
