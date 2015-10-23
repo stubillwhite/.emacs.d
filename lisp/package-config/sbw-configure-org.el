@@ -53,6 +53,9 @@
     ;; Start with source blocks hidden
     (add-hook 'org-mode-hook 'org-hide-block-all)
 
+    ;; Open org-mode links in the same frame
+    (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)
+    
     ;; Keywords and preferred sort order
     (setq
      org-todo-keywords       '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)")
@@ -208,6 +211,4 @@ scheduled date, deadline, then alphabetic."
     (fill-region start end nil)))
 
 (provide 'sbw-configure-org-mode)
-
-
 

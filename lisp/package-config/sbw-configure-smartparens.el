@@ -15,14 +15,16 @@
     ;; Strict mode
     (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
     (add-hook 'clojure-mode-hook    'smartparens-strict-mode)
-    (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
-    (add-hook 'groovy-mode-hook     'smartparens-strict-mode)
+    (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)    
 
     ;; Currently experimenting with smartparens for other modes
     ;; (setq sbw/smartparens-block-based-modes :use-smartparens)
     (setq sbw/smartparens-block-based-modes :use-electric-pair)
     (if (eq sbw/smartparens-block-based-modes :use-smartparens)
         (progn
+          ;; Be strict
+          (add-hook 'groovy-mode-hook     'smartparens-strict-mode)
+          
           ;; Certain modes turn on electric-pair and this screws up smartparens, so ensure that it stays off
           (add-hook 'electric-pair-mode-hook (lambda () (electric-pair-mode 0)))
           
