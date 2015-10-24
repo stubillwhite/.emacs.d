@@ -20,6 +20,8 @@
   ("C-c m t 2" . markdown-insert-header-atx-2)
   ("C-c m t 3" . markdown-insert-header-atx-3)
   ("C-c m t 4" . markdown-insert-header-atx-4)
+  ("C-c m t 5" . markdown-insert-header-atx-5)
+  ("C-c m t 6" . markdown-insert-header-atx-6)
   ("C-c m i"   . markdown-insert-italic)
   ("C-c m b"   . markdown-insert-bold)
   ("C-c m c"   . markdown-insert-code)
