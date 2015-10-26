@@ -11,11 +11,16 @@
      (:name names           :load :immediate) ;; Sane namespace handling
      (:name seq             :load :immediate) ;; Unified sequence handling
 
+     ;; Evil
+     (:name evil            :load :immediate) ;; Welcome home
+     (:name evil-leader     :load :immediate)
+     
      ;; General usability
      (:name undo-tree           :load :immediate) ;; Undo tree visualisation
      (:name flyspell            :load :immediate) ;; Spell checking
      (:name flycheck            :load :immediate) ;; Syntax checking
      (:name evil-nerd-commenter :load :immediate) ;; Efficient language-independent commenting
+     (:name drag-stuff          :load :immediate) ;; Drag stuff around in Emacs
 
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
