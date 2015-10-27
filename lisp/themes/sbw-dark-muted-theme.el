@@ -97,7 +97,7 @@
     `(company-scrollbar-fg                ((t (:inherit sbw-dark-muted-menu-selection))))
 
     ;; compile
-    `(compilation-info                    ((t (:inherit sbw-dark-muted-emphasisq))))
+    `(compilation-info                    ((t (:inherit sbw-dark-muted-emphasis))))
     
     ;; ert
     `(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))
