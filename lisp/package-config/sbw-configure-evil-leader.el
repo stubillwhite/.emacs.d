@@ -23,7 +23,14 @@
       "wS" 'split-window-below-and-focus
       "wv" 'split-window-right
       "wV" 'split-window-right-and-focus
-      "w=" 'balance-windows))
+      "w=" 'balance-windows)
+
+    ;; org-mode
+    (evil-leader/set-key-for-mode 'org-mode
+      "ml" 'org-open-at-point
+      "mi" 'org-clock-in
+      "mo" 'org-clock-out)
+    )
   
   :config
   (progn))

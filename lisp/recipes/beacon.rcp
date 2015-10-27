@@ -1,0 +1,5 @@
+(:name beacon
+       :description "A light that follows your cursor around so you don't lose it!"
+       :website "https://github.com/Malabarba/beacon"
+       :type github
+       :pkgname "Malabarba/beacon")

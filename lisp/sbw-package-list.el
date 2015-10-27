@@ -13,7 +13,8 @@
 
      ;; Evil
      (:name evil            :load :immediate) ;; Welcome home
-     (:name evil-leader     :load :immediate)
+     (:name evil-leader     :load :immediate) ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
+     (:name key-chord       :load :immediate) ;; Map pairs of simultaneously pressed keys to commands
      
      ;; General usability
      (:name undo-tree           :load :immediate) ;; Undo tree visualisation
@@ -21,6 +22,7 @@
      (:name flycheck            :load :immediate) ;; Syntax checking
      (:name evil-nerd-commenter :load :immediate) ;; Efficient language-independent commenting
      (:name drag-stuff          :load :immediate) ;; Drag stuff around in Emacs
+     (:name beacon              :load :immediate) ;; A light that follows your cursor around so you don't lose it!
 
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
@@ -43,7 +45,6 @@
      (:name expand-region     :load :immediate) ;; Expand region by semantic units
      (:name hydra             :load :immediate) ;; Make Emacs bindings that stick around
      (:name multiple-cursors  :load :immediate) ;; An experiment in adding multiple cursors to emacs
-     (:name key-chord         :load :immediate) ;; Map pairs of simultaneously pressed keys to commands
      (:name which-key         :load :immediate) ;; Display available key bindings
      (:name modalka           :load :immediate) ;; Easily introduce native modal editing of your own design
 
