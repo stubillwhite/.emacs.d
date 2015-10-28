@@ -5,17 +5,19 @@
 (require 'dash)
 
 ;; Functions for finding files within my org-mode file structure, which is of the form:
-;;
+;; activity area project
+;; workflow project category
 ;;     org-directory
-;;       project-one
-;;         category-one
-;;           foo.org
-;;           bar.org
-;;         category-two
-;;           baz.org
-;;       project-two
-;;         category-three
-;;           gonk.org
+;;       workflow
+;;         project-one
+;;           category-one
+;;             foo.org
+;;             bar.org
+;;           category-two
+;;             baz.org
+;;         project-two
+;;           category-three
+;;             gonk.org
 ;;
 ;; This could all probably be done with one monolithic file and tags, but I like to keep stuff separate.
 
@@ -102,14 +104,25 @@ interactively, prompt to select PROJECTS and CATEGORIES."
                            (sbw/ht-assoc :selected-files (sbw/org-config-files projects categories))))
   (sbw/org-config--set-org-variables))
 
-(defun sbw/org-config-new-file (project category)
-  "Create a new file with specified PROJECT and CATEGORY, prompting for those values if rn interactively"
-  (interactive "sProject: \nsCategory: ")
-  (interactive (-map 'car (sbw/org-config--select-projects-and-categories)))
+(defmacro sbw/org-config-with-selection (projects categories &rest body)
+  "Execute BODY with temporary selection of org-mode files."
+  `(let* ( (original-projects   (sbw/ht-get sbw/org-config :selected-projects))
+           (original-categories (sbw/ht-get sbw/org-config :selected-categories)) )
+     (progn
+       (sbw/org-config-select ,projects ,categories))
+     ,@body
+     (progn
+       (sbw/org-config-select original-projects original-categories))))
+
+(defun sbw/org-config-new-file (workflow project category)
+  "Create a new file with specified WORKFLOW, PROJECT, and CATEGORY, prompting for those values if run interactively"
+  (interactive "sWorkflow: \nsProject: \nsCategory: ")
   (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
-          (path     (s-lex-format "${org-directory}/${project}/${category}.org")) )
+          (path     (s-lex-format "${org-directory}/${workflow}/${project}/${category}.org")) )
     (f-mkdir (f-dirname path))
-    (f-write (s-replace-all `(("${category}" . ,category)) content) 'utf-8 path)
+    (f-write (->> content
+                  (s-replace-all `(("${category}" . ,category)))
+                  (s-replace-all `(("${project}" . ,project)))) 'utf-8 path)
     (sbw/org-config-refresh)
     (message "Created and added %s" path)))
 
@@ -186,10 +199,33 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 ;; Refresh appointments when the agenda is displayed
 
 (defun sbw/org-config--refresh-appointments-from-agenda ()
+  (message "Updating appointments from agenda")
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt))
 
 (add-hook 'org-finalize-agenda-hook 'sbw/org-config--refresh-appointments-from-agenda 'append)
 (appt-activate t)
+
+;; Archiving
+
+(defun sbw/org-config--refile-immediate ()
+  (let* ( (command (vconcat [?\M-x] (string-to-vector "org-refile") [return] [return])) )
+    (execute-kbd-macro command)))
+
+(defun sbw/org-config-archive-task ()
+  "Archive the task at point."
+  (interactive)
+  (let* ( (summary          (sbw/org-utils-heading-summary-at-point (point)))
+          (category         (sbw/ht-get summary :category))
+          (project          (sbw/ht-get summary :project))
+          (path             (s-lex-format "${org-directory}/archive/${project}/archive-${category}.org"))
+          (original-targets org-refile-targets)
+          (archive-targets  `(((,path) :maxlevel . 1))) )
+    (when (not (f-file? path))
+      (sbw/org-config-new-file "archive" category (s-concat "archive-" project)))
+    (setq org-refile-targets archive-targets)
+    (sbw/org-config--refile-immediate)
+    (setq org-refile-targets original-targets)
+    (message (format "Refiled to '%s'" path))))
 
 (provide 'sbw-org-config)
