@@ -52,7 +52,6 @@
       (goto-char x)
       (puthash :filename (buffer-file-name) summary)
       (puthash :point    x summary)
-      (puthash :project  (sbw/org-utils--extract-string (org-entry-get-with-inheritance "PROJECT")) summary)
       (puthash :category (sbw/org-utils--extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
       (puthash :state    (sbw/org-utils--extract-string (org-get-todo-state)) summary)
       (puthash :tags     (sbw/org-utils--extract-string (org-get-tags-at)) summary)

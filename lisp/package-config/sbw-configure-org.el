@@ -195,7 +195,8 @@ scheduled date, deadline, then alphabetic."
   ("C-c o c l" . org-insert-link)
   ("C-c o c c" . org-capture)
   ("C-c o f"   . fill-paragraph)
-  ("C-c o F"   . sbw/unfill-paragraph))
+  ("C-c o F"   . sbw/unfill-paragraph)
+  ("C-c o a"   . sbw/org-config-archive-task))
 
 ;; TODO Move somewhere more sensible
 (defun sbw/unfill-paragraph ()

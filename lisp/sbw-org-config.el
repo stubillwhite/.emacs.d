@@ -4,47 +4,54 @@
 (require 'f)
 (require 'dash)
 
-;; Functions for finding files within my org-mode file structure, which is of the form:
-;; activity area project
-;; workflow project category
+;; Functions for managing files within my org-mode file structure, which is of the form:
+;; 
 ;;     org-directory
 ;;       workflow
-;;         project-one
-;;           category-one
-;;             foo.org
-;;             bar.org
-;;           category-two
-;;             baz.org
-;;         project-two
-;;           category-three
-;;             gonk.org
+;;         category
+;;           project.org
 ;;
-;; This could all probably be done with one monolithic file and tags, but I like to keep stuff separate.
+;; From bottom up:
+;;  - Individual org files track things for a particular project (e.g., a holiday, building something)
+;;  - Categories group related projects (e.g., projects at work, domestic projects, recreational coding projects)
+;;  - Workflows group categories into flows (e.g., active stuff, inactive stuff, archived stuff)
+;;
+;; This could all probably be done with one monolithic file and tags, but I like to keep stuff separate and my org files
+;; get large and slow due to notes in tasks, code snippets, logs. Particularly on Windows.
+;;
+;; Project tasks are archived to a hardcoded "archive" workflow to move them out of the way.
 
-(defun sbw/org-config--categorise-files (files)
+(defun sbw/org-config--project-attributes (path)
+  (let* ( (split-path (s-split "/" (f-relative path org-directory)))
+          (workflow   (car split-path))
+          (category   (cadr split-path))
+          (project    (caddr split-path)) )
+    (sbw/ht-create :workflow workflow :category category :project project)))
+
+(defun sbw/org-config--build-index (projects)
   (-reduce-from
     (lambda (acc x)
-      (let* ( (path    (s-split "/" (f-relative x org-directory)))
-              (stack   (car path))
-              (project (cadr path)) )
-        (sbw/ht-update-in acc (vector stack project) (lambda (y) (cons x y)))))
+      (let* ( (attributes (sbw/org-config--project-attributes x))
+              (workflow   (sbw/ht-get attributes :workflow))
+              (category   (sbw/ht-get attributes :category)) )
+        (sbw/ht-update-in acc (vector workflow category) (lambda (y) (cons x y)))))
     (sbw/ht-create)
-    files))
+    projects))
 
-(defun sbw/org-config--find-and-categorise-files ()
-  (let* ( (org-file?   (lambda (x) (s-ends-with? ".org" (f-filename x))))
-          (all-files   (f-entries org-directory org-file? :recursive))
-          (categorised (sbw/org-config--categorise-files all-files)) )
+(defun sbw/org-config--find-and-index-projects ()
+  (let* ( (org-file?    (lambda (x) (s-ends-with? ".org" (f-filename x))))
+          (all-projects (f-entries org-directory org-file? :recursive))
+          (index        (sbw/org-config--build-index all-projects)) )
     (sbw/ht-create
-      :all-files           all-files
-      :categorised         categorised
-      :selected-projects   nil
+      :all-projects        all-projects
+      :index               index
+      :selected-workflows  nil
       :selected-categories nil
-      :selected-files      all-files)))
+      :selected-projects   all-projects)))
 
 (defun sbw/org-config--set-org-variables ()
   (setq
-   org-agenda-files       (sbw/ht-get sbw/org-config :selected-files)
+   org-agenda-files       (sbw/ht-get sbw/org-config :selected-projects)
    org-default-notes-file (concat org-directory "/incoming.org")
    org-refile-targets     (quote ((org-agenda-files :maxlevel . 1))))
   sbw/org-config)
@@ -52,73 +59,73 @@
 (defun sbw/org-config-refresh ()
   "Refresh the org-mode configuration."
   (interactive)
-  (setq sbw/org-config (sbw/org-config--find-and-categorise-files))
+  (setq sbw/org-config (sbw/org-config--find-and-index-projects))
   (sbw/org-config--set-org-variables))
 
 (defvar sbw/org-config (sbw/org-config-refresh)
    "The org-mode configuration.")
 
-(defun sbw/org-config-projects ()
-  "Returns a list of org-mode projects."
-  (sbw/ht-keys (sbw/ht-get sbw/org-config :categorised)))
+(defun sbw/org-config-workflows ()
+  "Returns a list of org-mode workflows."
+  (sbw/ht-keys (sbw/ht-get sbw/org-config :index)))
 
 (defun sbw/org-config-categories ()
   "Returns a list of org-mode categories."
   (seq-uniq
     (seq-mapcat
       'sbw/ht-keys
-      (sbw/ht-vals (sbw/ht-get sbw/org-config :categorised)))))
+      (sbw/ht-vals (sbw/ht-get sbw/org-config :index)))))
 
-(defun sbw/org-config-files (projects categories)
-  "Returns the org-mode files filtered by the specified PROJECTS
-and CATEGORIES, where PROJECTS and CATEGORIES are lists of string
+(defun sbw/org-config-projects (workflows categories)
+  "Returns the projects filtered by the specified WORKFLOWS and
+CATEGORIES, where WORKFLOWS and CATEGORIES are lists of string
 names, or nil to indicate that all should be included."
-  (let* ( (projects    (or projects   (sbw/org-config-projects)))
+  (let* ( (workflows   (or workflows  (sbw/org-config-workflows)))
           (categories  (or categories (sbw/org-config-categories)))
           (filter-vals (lambda (ht ks) (sbw/ht-vals (sbw/ht-select-keys ht ks)))) )
     (apply (-partial 'seq-concatenate 'list)
       (seq-mapcat
         (lambda (x) (funcall filter-vals x categories))
-        (funcall filter-vals (sbw/ht-get sbw/org-config :categorised) projects)))))
+        (funcall filter-vals (sbw/ht-get sbw/org-config :index) workflows)))))
 
-(defun sbw/org-config--select-projects-and-categories ()
-  (let* ( (projects-source   (helm-build-sync-source "Projects"
-                               :candidates (sbw/org-config-projects)
+(defun sbw/org-config--select-workflows-and-categories ()
+  (let* ( (workflows-source  (helm-build-sync-source "Projects"
+                               :candidates (sbw/org-config-workflows)
                                :action     (lambda (candidate) (helm-marked-candidates))))
           (categories-source (helm-build-sync-source "Categories"
                                :candidates (sbw/org-config-categories)
                                :action     (lambda (candidate) (helm-marked-candidates)))) )
     (list
-     (helm :buffer "*helm org-config*" :sources projects-source)
+     (helm :buffer "*helm org-config*" :sources workflows-source)
      (helm :buffer "*helm org-config*" :sources categories-source))))
 
-(defun sbw/org-config-select (projects categories)
-  "Select the org-mode files filtered by the specified PROJECTS
-and CATEGORIES, where PROJECTS and CATEGORIES are lists of string
-names, or nil to indicate that all should be included. If called
-interactively, prompt to select PROJECTS and CATEGORIES."
-  (interactive (sbw/org-config--select-projects-and-categories))
+(defun sbw/org-config-select (workflows categories)
+  "Select the org-mode files filtered by the specified WORKFLOWS
+and CATEGORIES, where WORKFLOWS and CATEGORIES are lists of
+string names, or nil to indicate that all should be included. If
+called interactively, prompt to select WORKFLOWS and CATEGORIES."
+  (interactive (sbw/org-config--select-workflows-and-categories))
   (setq sbw/org-config (-> sbw/org-config
-                           (sbw/ht-assoc :selected-projects projects)
+                           (sbw/ht-assoc :selected-workflows workflows)
                            (sbw/ht-assoc :selected-categories categories)
-                           (sbw/ht-assoc :selected-files (sbw/org-config-files projects categories))))
+                           (sbw/ht-assoc :selected-projects (sbw/org-config-projects workflows categories))))
   (sbw/org-config--set-org-variables))
 
-(defmacro sbw/org-config-with-selection (projects categories &rest body)
-  "Execute BODY with temporary selection of org-mode files."
-  `(let* ( (original-projects   (sbw/ht-get sbw/org-config :selected-projects))
+(defmacro sbw/org-config-with-selection (workflows categories &rest body)
+  "Execute BODY with temporary selection of projects."
+  `(let* ( (original-workflows  (sbw/ht-get sbw/org-config :selected-workflows))
            (original-categories (sbw/ht-get sbw/org-config :selected-categories)) )
      (progn
-       (sbw/org-config-select ,projects ,categories))
+       (sbw/org-config-select ,workflows ,categories))
      ,@body
      (progn
-       (sbw/org-config-select original-projects original-categories))))
+       (sbw/org-config-select original-workflows original-categories))))
 
 (defun sbw/org-config-new-file (workflow project category)
-  "Create a new file with specified WORKFLOW, PROJECT, and CATEGORY, prompting for those values if run interactively"
-  (interactive "sWorkflow: \nsProject: \nsCategory: ")
+  "Create a new file with specified WORKFLOW, CATEGORY, and PROJECT prompting for those values if run interactively"
+  (interactive "sWorkflow: \nsCategory: \nsProject: ")
   (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
-          (path     (s-lex-format "${org-directory}/${workflow}/${project}/${category}.org")) )
+          (path     (s-lex-format "${org-directory}/${workflow}/${category}/${project}.org")) )
     (f-mkdir (f-dirname path))
     (f-write (->> content
                   (s-replace-all `(("${category}" . ,category)))
@@ -163,17 +170,17 @@ interactively, prompt to select PROJECTS and CATEGORIES."
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
 (add-to-list 'org-agenda-custom-commands '("cp" . "Personal"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-files ["current"] ["personal" "level-up"])))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 14 (sbw/org-config-files ["current"] ["personal" "level-up"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-projects ["current"] ["personal" "level-up"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 14 (sbw/org-config-projects ["current"] ["personal" "level-up"])))
 (add-to-list 'org-agenda-custom-commands '("cw" . "Work"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" (sbw/org-config-files ["current"] ["work"])))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 (sbw/org-config-files ["current"] ["work"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" (sbw/org-config-projects ["current"] ["work"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 (sbw/org-config-projects ["current"] ["work"])))
 (add-to-list 'org-agenda-custom-commands '("cs" . "Selection"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cst" "Selection tasks" (sbw/ht-get sbw/org-config :selected-files)))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-files)))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cst" "Selection tasks" (sbw/ht-get sbw/org-config :selected-projects)))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-projects)))
 (add-to-list 'org-agenda-custom-commands '("ca" . "All"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-files))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-files))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-projects))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-projects))
 
 (defun sbw/org-config-agenda-selected-agenda () (interactive) (org-agenda nil "csa"))
 (defun sbw/org-config-agenda-selected-tasks  () (interactive) (org-agenda nil "cst"))
@@ -216,9 +223,10 @@ interactively, prompt to select PROJECTS and CATEGORIES."
   "Archive the task at point."
   (interactive)
   (let* ( (summary          (sbw/org-utils-heading-summary-at-point (point)))
-          (category         (sbw/ht-get summary :category))
-          (project          (sbw/ht-get summary :project))
-          (path             (s-lex-format "${org-directory}/archive/${project}/archive-${category}.org"))
+          (attributes       (sbw/org-config--project-attributes buffer-file-name))
+          (category         (sbw/ht-get attributes :category))
+          (project          (sbw/ht-get attributes :project))
+          (path             (s-lex-format "${org-directory}/archive/${category}/archive-${project}"))
           (original-targets org-refile-targets)
           (archive-targets  `(((,path) :maxlevel . 1))) )
     (when (not (f-file? path))
