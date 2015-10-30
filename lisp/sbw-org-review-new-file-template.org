@@ -1,6 +1,5 @@
 * ${category}
 :PROPERTIES:
-:PROJECT: ${project}
 :CATEGORY: ${category}
 :END:
 ** Recurring
