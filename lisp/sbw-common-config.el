@@ -8,6 +8,10 @@
   "Returns truthy if running on Linux."
   (eq system-type 'gnu/linux))
 
+(defun sbw/is-darwin? ()
+  "Returns truthy if running on Darwin."
+  (eq system-type 'darwin))
+
 (defvar sbw/frame-title-format "emacs [%b]")
 
 (provide 'sbw-common-config)
