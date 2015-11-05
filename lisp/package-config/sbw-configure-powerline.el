@@ -100,7 +100,12 @@
                    (powerline-render rhs))))))))
     
     (sbw/powerline-personal-theme)
-    (setq powerline-default-separator 'wave))
+    (setq powerline-default-separator 'wave)
+
+    ;; Separator generation is not sRGB aware but normal colors are by default. Turn off sRGB globally to ensure that
+    ;; the separators and other colors match.
+    (when (sbw/is-darwin?)
+      (setq ns-use-srgb-colorspace nil)))
 
   :config
   (progn))

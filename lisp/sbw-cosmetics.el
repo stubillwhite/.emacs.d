@@ -30,6 +30,9 @@
   (set-frame-font "Monaco-10")
   )
 
+(when (sbw/is-darwin?)
+  (set-frame-font "Monaco-12"))
+
 ;; Horizontal non-blinking cursor
 (setq-default cursor-type 'hbar)
 (blink-cursor-mode 0)
