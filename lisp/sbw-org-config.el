@@ -111,6 +111,11 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                            (sbw/ht-assoc :selected-projects (sbw/org-config-projects workflows categories))))
   (sbw/org-config--set-org-variables))
 
+(defun sbw/org-config-default ()
+  "Select deafult configuration, which includes all current projects and excludes all non-project files."
+  (interactive)
+  (sbw/org-config-select ["current"] (-filter (lambda (x) (not (seq-contains ["non-project"] x))) (sbw/org-config-categories))))
+
 (defmacro sbw/org-config-with-selection (workflows categories &rest body)
   "Execute BODY with temporary selection of projects."
   `(let* ( (original-workflows  (sbw/ht-get sbw/org-config :selected-workflows))
@@ -189,10 +194,6 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defun sbw/org-config-agenda-personal-agenda () (interactive) (org-agenda nil "cpa"))
 (defun sbw/org-config-agenda-personal-tasks  () (interactive) (org-agenda nil "cpt"))
 
-;; Default config: include all current projects, excluding non-project files
-(sbw/org-config-refresh)
-(sbw/org-config-select ["current"] (-filter (lambda (x) (not (seq-contains ["non-project"] x))) (sbw/org-config-categories)))
-
 ;; Agenda appearance
 
 (setq
@@ -235,5 +236,8 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
     (sbw/org-config--refile-immediate)
     (setq org-refile-targets original-targets)
     (message (format "Refiled to '%s'" path))))
+
+(sbw/org-config-refresh)
+(sbw/org-config-default)
 
 (provide 'sbw-org-config)

@@ -15,7 +15,7 @@
       (cond
         ((eq system-type 'gnu/linux)  "~/Dropbox/Private/org")
         ((eq system-type 'windows-nt) "C:/Users/IBM_ADMIN/Dropbox/Private/org")
-        ((eq system-type 'cygwin)     "/cygdrive/c/Users/IBM_ADMIN/Dropbox/Private/org")))
+        ((eq system-type 'cygwin)     "~/Dropbox/Private/org")))
            
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."

@@ -6,9 +6,14 @@
 
   :init
   (progn
-    ;; Spell check all text modes
+    ;; Spell check all text modes, apart from markup modes
+    (defun sbw/flyspell--enable-flyspell-mode ()
+      (let* ( (non-flyspell-modes '(nxml-mode)) )
+        (when (not (-contains? non-flyspell-modes major-mode))
+          (flyspell-mode 1))))
+    
     (dolist (x '(text-mode-hook))
-      (add-hook x (lambda () (flyspell-mode 1)))))
+      (add-hook x 'sbw/flyspell--enable-flyspell-mode)))
 
   :config
   (progn

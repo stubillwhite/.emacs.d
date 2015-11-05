@@ -72,6 +72,7 @@
                               (powerline-major-mode face2 'l)
                               (powerline-process face2)
                               (powerline-minor-modes face2 'l)
+                              (powerline-raw (concat " " (if electric-pair-mode "!" "") "") face2 'l)
                               (powerline-narrow face2 'l)
                               (powerline-raw " " face2)
                               ;; Level 3
