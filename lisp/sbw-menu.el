@@ -111,9 +111,10 @@
                               (sbw/menu "Dashboard"
                                         (sbw/menu-submenu ?s "Selection"
                                                           (sbw/menu "Selection"
-                                                                    (sbw/menu-action ?c "Change" (lambda () (interactive) (call-interactively 'sbw/org-config-select)))
-                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-selected-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-selected-tasks)))
+                                                                    (sbw/menu-action ?c "Change"  (lambda () (interactive) (call-interactively 'sbw/org-config-select)))
+                                                                    (sbw/menu-action ?d "Default" 'sbw/org-config-default)
+                                                                    (sbw/menu-action ?a "Agenda"  'sbw/org-config-agenda-selected-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"   'sbw/org-config-agenda-selected-tasks)))
                                         (sbw/menu-submenu ?w "Work"
                                                           (sbw/menu "Work"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-work-agenda)
