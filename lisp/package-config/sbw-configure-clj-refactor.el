@@ -6,7 +6,7 @@
   
   :init
   (progn
-    (add-hook 'cider-mode-hook 'clj-refactor-mode)
+    (add-hook 'clojure-mode-hook 'clj-refactor-mode)
     (cljr-add-keybindings-with-prefix "C-c C-m"))
 
   :config
