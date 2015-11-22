@@ -176,7 +176,7 @@ scheduled date, deadline, then alphabetic."
     ;; When storing file links, abbreviate the description to just the filename
 
     (defun sbw/org-make-link-description (link description)
-      (if (s-starts-with? "file" link) (f-filename description) link))
+      (if (s-starts-with? "file" link) (f-filename description) (read-string "Description: " desc)))
     (setq org-make-link-description-function 'sbw/org-make-link-description)
     
     ;; Stuff to rationalise
