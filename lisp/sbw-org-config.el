@@ -133,8 +133,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
           (path     (s-lex-format "${org-directory}/${workflow}/${category}/${project}")) )
     (f-mkdir (f-dirname path))
     (f-write (->> content
-                  (s-replace-all `(("${category}" . ,category)))
-                  (s-replace-all `(("${project}" . ,project)))) 'utf-8 path)
+                  (s-replace-all `(("${category}" . ,project)))) 'utf-8 path)
     (sbw/org-config-refresh)
     (message "Created and added %s" path)))
 
