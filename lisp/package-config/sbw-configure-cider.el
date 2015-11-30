@@ -18,9 +18,6 @@
     ;; Enable eldoc in Clojure buffers
     (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
-    ;; Enable expectations-mode in Clojure buffers
-    (add-hook 'cider-mode-hook 'expectations-mode)
-
     ;; General settings
     (setq 
       cider-auto-select-error-buffer        nil      ;; Don't auto-select the error buffer when displayed

@@ -60,7 +60,6 @@
      (:name clojure-mode      :load :immediate) ;; Clojure mode
      (:name cider             :load :immediate) ;; REPL support
      (:name smartparens       :load :immediate) ;; Improved paredit
-     (:name expectations-mode :load :immediate) ;; Clojure expectations minor mode
      (:name clj-refactor      :load :immediate) ;; Clojure refactoring functions
      
      ;; Graphviz
