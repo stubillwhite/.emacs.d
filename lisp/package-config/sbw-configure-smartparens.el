@@ -18,26 +18,22 @@
     (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)    
 
     ;; Currently experimenting with smartparens for other modes
-    ;; (setq sbw/smartparens-block-based-modes :use-smartparens)
-    (setq sbw/smartparens-block-based-modes :use-electric-pair)
+    (setq sbw/smartparens-block-based-modes :use-smartparens)
     (if (eq sbw/smartparens-block-based-modes :use-smartparens)
         (progn
-          ;; Be strict
-          (add-hook 'groovy-mode-hook     'smartparens-strict-mode)
-          
-          ;; Certain modes turn on electric-pair and this screws up smartparens, so ensure that it stays off
-          (add-hook 'electric-pair-mode-hook (lambda () (electric-pair-mode 0)))
-          
           ;; Indentation for block-based modes
-          (defun sbw/smartparens-newline-and-indent (id action context)
-            (when (eq action 'insert)
-              (newline)
-              (newline)
-              (indent-according-to-mode)
-              (previous-line)
-              (indent-according-to-mode)))
-
-          (sp-local-pair 'groovy-mode "{" nil :post-handlers '(:add sbw/smartparens-newline-and-indent))))
+          ;; (defun sbw/smartparens-newline-and-indent (id action context)
+          ;;   (when (eq action 'insert)
+          ;;     (newline)
+          ;;     (newline)
+          ;;     (indent-according-to-mode)
+          ;;     (previous-line)
+          ;;     (indent-according-to-mode)))
+          ;; (sp-local-pair 'groovy-mode "{" nil :post-handlers '(:add sbw/smartparens-newline-and-indent))
+         
+          (sp-with-modes '(groovy-mode)
+            (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))          
+      ))
     
     (if (eq sbw/smartparens-block-based-modes :use-electric-pair)
         (progn

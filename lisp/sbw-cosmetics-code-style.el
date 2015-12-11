@@ -42,8 +42,8 @@
   "Set code style to sbw-java style"
   (interactive)
   (setq tab-width 4)
-  (electric-pair-mode)
-  (turn-off-smartparens-mode)
+  (electric-pair-mode 0)
+  (smartparens-strict-mode)
   (c-add-style "sbw-java" sbw/java-style t))
 
 ;; Shell scripts
