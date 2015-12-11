@@ -10,7 +10,13 @@
   :config
   (progn
     (setq
-      company-dabbrev-ignore-case nil
-      company-dabbrev-downcase    nil)))
+     company-dabbrev-ignore-case nil
+     company-dabbrev-downcase    nil
+     company-idle-delay          0)
+
+    (define-key company-active-map (kbd "M-n") nil)
+    (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)))
 
 (provide 'sbw-configure-company)
