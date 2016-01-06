@@ -47,6 +47,7 @@
      (:name multiple-cursors  :load :immediate) ;; An experiment in adding multiple cursors to emacs
      (:name which-key         :load :immediate) ;; Display available key bindings
      (:name modalka           :load :immediate) ;; Easily introduce native modal editing of your own design
+     (:name highlight-symbol  :load :immediate) ;; Quickly highlight a symbol throughout the buffer and cycle through its locations
 
      ;; Helm
      (:name helm              :load :immediate) ;; Incremental narrowing framework
