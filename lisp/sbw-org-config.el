@@ -216,7 +216,8 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 ;; Archiving
 
 (defun sbw/org-config--refile-immediate ()
-  (let* ( (command (vconcat [?\M-x] (string-to-vector "org-refile") [return] [return])) )
+  (let* ( (command            (vconcat [?\M-x] (string-to-vector "org-refile") [return] [return]))
+          (org-refile-history '()) )
     (execute-kbd-macro command)))
 
 (defun sbw/org-config-archive-task ()
