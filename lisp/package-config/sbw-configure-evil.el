@@ -9,15 +9,15 @@
     (defvar sbw/evil--good-cursor-type nil
       "The value of the cursor-type before activating Evil mode.")
     
-    (defun sbw/evil-toggle-evil-mode ()
+    (defun sbw/evil-toggle-global-evil-mode ()
       (interactive)
-      (if (bound-and-true-p evil-local-mode)
+      (if (bound-and-true-p evil-mode)
           (progn
-            (turn-off-evil-mode)
+            (evil-mode -1)
             (setq cursor-type sbw/evil--good-cursor-type))
         (progn
           (setq sbw/evil--good-cursor-type cursor-type)
-          (turn-on-evil-mode))))
+          (evil-mode))))
 
     ;; (defun sbw/evil-escape (prompt)
     ;;   (cond
@@ -36,5 +36,6 @@
     )
 
   :bind
-  ("C-c v" . sbw/evil-toggle-evil-mode)
-  ("M-["   . sbw/evil-toggle-evil-mode))
+  ("C-c v" . sbw/evil-toggle-global-evil-mode)
+  ("M-["   . sbw/evil-toggle-global-evil-mode)
+  )

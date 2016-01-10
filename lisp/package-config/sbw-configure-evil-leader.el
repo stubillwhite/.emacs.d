@@ -29,7 +29,12 @@
     (evil-leader/set-key-for-mode 'org-mode
       "ml" 'org-open-at-point
       "mi" 'org-clock-in
-      "mo" 'org-clock-out)
+      "mo" 'org-clock-out
+      "ma" 'sbw/org-config-archive-task)
+
+    
+
+    
     )
   
   :config
