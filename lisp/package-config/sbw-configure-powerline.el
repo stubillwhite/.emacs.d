@@ -9,12 +9,12 @@
               (evil        (bound-and-true-p evil-local-mode))
               (evil-insert (and evil (evil-insert-state-p)))
               (evil-normal (and evil (evil-normal-state-p))) )
-        (cond
-          (evil-insert 'sbw-dark-muted-powerline-one-evil-insert)
-          (evil-normal 'sbw-dark-muted-powerline-one-evil-normal)
-          (active      'sbw-dark-muted-powerline-one-active)
-          (t           'sbw-dark-muted-powerline-one-inactive))))
-
+        (cond 
+         ((not active) 'sbw-dark-muted-powerline-one-inactive) 
+         (evil-insert  'sbw-dark-muted-powerline-one-evil-insert)
+         (evil-normal  'sbw-dark-muted-powerline-one-evil-normal)
+         (t            'sbw-dark-muted-powerline-one-active))))
+    
     (defun sbw/powerline--buffer-id (parent-face)
       (let* ( (out-of-sync? (and buffer-file-name (or (buffer-modified-p) (not (verify-visited-file-modtime (current-buffer)))))) )
         (concat

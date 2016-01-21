@@ -15,11 +15,11 @@
         (*selection-bg*      "gray30")
         (*success-fg*        "DarkSeaGreen3")
         (*warning-fg*        "burlywood2")
-        (*error-fg*          "IndianRed3")
+        (*error-fg*          "Coral4")
 
         (*match-bg*          "darkslategray")
         (*match-fg*          "gray100")
-        (*mismatch-bg*       "IndianRed3")
+        (*mismatch-bg*       "Coral4")
         (*mismatch-fg*       "gray100")
        
         (*item-1*            "DarkSeaGreen3")
@@ -35,7 +35,7 @@
     (lambda (x) (apply 'sbw/theme--create-face x))
     `( (sbw-dark-muted-powerline-one-active      `((t (:foreground ,*emphasis-fg* :background "SkyBlue4"))))
        (sbw-dark-muted-powerline-one-inactive    `((t (:foreground ,*emphasis-fg* :background "gray30"))))
-       (sbw-dark-muted-powerline-one-evil-insert `((t (:foreground ,*emphasis-fg* :background "coral3"))))
+       (sbw-dark-muted-powerline-one-evil-insert `((t (:foreground ,*emphasis-fg* :background "aquamarine4"))))
        (sbw-dark-muted-powerline-one-evil-normal `((t (:foreground ,*emphasis-fg* :background "coral4"))))
        (sbw-dark-muted-powerline-two             `((t (:foreground ,*emphasis-fg* :background "gray20"))))
        (sbw-dark-muted-powerline-three           `((t (:foreground ,*emphasis-fg* :background "gray15"))))

@@ -14,21 +14,10 @@
 
 ;; Font
 (when (sbw/is-windows?)
-  ;; (set-frame-font "-outline-Lucida Console-normal-normal-normal-mono-14-*-*-*-c-*-iso8859-1")
-  ;; (set-frame-font "Lucida Console-10")
-  ;; (set-frame-font "Inconsolata-dz-10")
-  (set-frame-font "Monaco 10")
-  )
+  (set-frame-font "Monaco 10"))
 
 (when (sbw/is-linux?)
-  ;; (set-frame-font "DejaVu Sans Mono-10")
-  ;; (set-frame-font "Ubuntu Mono-12")
-  ;; (set-frame-font "Droid Sans Mono-10")
-  ;; (set-frame-font "Free Mono-10")
-  ;; (set-frame-font "Liberation Mono-10")
-  ;; (set-frame-font "Nimbus Mono L-10")
-  (set-frame-font "Monaco-10")
-  )
+  (set-frame-font "Monaco-10"))
 
 (when (sbw/is-darwin?)
   (set-frame-font "Monaco-12"))
@@ -82,5 +71,14 @@
 (add-hook 'ediff-before-setup-hook 'sbw/cosmetics-save-window-config)
 (add-hook 'ediff-quit-hook         'sbw/cosmetics-restore-window-config)
 (add-hook 'ediff-suspend-hook      'sbw/cosmetics-restore-window-config)
+
+;; CUA mode and shift-click to select
+(cua-mode t)
+(setq cua-auto-tabify-rectangles nil)
+(transient-mark-mode 1)
+(setq cua-keep-region-after-copy nil)
+(define-key global-map (kbd "<S-down-mouse-1>") 'ignore) 
+(define-key global-map (kbd "<S-mouse-1>") 'mouse-set-point)
+(put 'mouse-set-point 'CUA 'move)
 
 (provide 'sbw-cosmetics)
