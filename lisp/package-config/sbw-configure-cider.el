@@ -52,7 +52,8 @@
             (progn
               (switch-to-buffer-other-window repl-buffer))
             (progn
-              (split-window-below 10)
+              (split-window-right)
+              (switch-to-buffer-other-window (buffer-name))
               (switch-to-buffer repl-buffer))))))
 
     (defun sbw/cider-reset-repl ()
