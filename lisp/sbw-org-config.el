@@ -21,7 +21,8 @@
 ;;
 ;; Project tasks are archived to a hardcoded "archive" workflow to move them out of the way.
 
-(defun sbw/org-config--project-attributes (path)
+(defun sbw/org-config-project-attributes (path)
+  "Returns a hash-map of the attributes of the project file at PATH."
   (let* ( (split-path (s-split "/" (f-relative path org-directory)))
           (workflow   (car split-path))
           (category   (cadr split-path))
@@ -31,7 +32,7 @@
 (defun sbw/org-config--build-index (projects)
   (-reduce-from
     (lambda (acc x)
-      (let* ( (attributes (sbw/org-config--project-attributes x))
+      (let* ( (attributes (sbw/org-config-project-attributes x))
               (workflow   (sbw/ht-get attributes :workflow))
               (category   (sbw/ht-get attributes :category)) )
         (sbw/ht-update-in acc (vector workflow category) (lambda (y) (cons x y)))))
@@ -224,7 +225,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
   "Archive the task at point."
   (interactive)
   (let* ( (summary          (sbw/org-utils-heading-summary-at-point (point)))
-          (attributes       (sbw/org-config--project-attributes buffer-file-name))
+          (attributes       (sbw/org-config-project-attributes buffer-file-name))
           (category         (sbw/ht-get attributes :category))
           (project          (sbw/ht-get attributes :project))
           (path             (s-lex-format "${org-directory}/archive/${category}/archive-${project}"))
@@ -236,6 +237,34 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
     (sbw/org-config--refile-immediate)
     (setq org-refile-targets original-targets)
     (message (format "Refiled to '%s'" path))))
+
+;; Link handling -- personal links in personal browser, others in generic
+
+(defun sbw/org-config-browse-url--chromium (url)
+  (shell-command
+   (s-concat "\"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe\" " url)))
+
+(defun sbw/org-config-browse-url--personal (url &optional NEW-WINDOW)
+  (message "Opening in personal browser")
+  (if (sbw/is-windows?)
+      (sbw/org-config-browse-url--chromium url)
+    (browse-url-chromium url NEW-WINDOW)))
+
+(defun sbw/org-config-browse-url--default (url &optional NEW-WINDOW)
+  (message "Opening in generic browser")
+  (browse-url-default-browser url NEW-WINDOW))
+
+(defun sbw/org-config-browse-url (url &optional NEW-WINDOW)
+  (interactive)
+  (let ( (attributes (sbw/org-config-project-attributes (buffer-file-name))) )
+    (if (s-equals? (sbw/ht-get attributes :category) "personal")
+        (sbw/org-config-browse-url--personal url NEW-WINDOW)
+      (sbw/org-config-browse-url--default url NEW-WINDOW))))
+
+(setq browse-url-browser-function 'sbw/org-config-browse-url)
+(setq browse-url-browser-function 'browse-url-default-browser)
+
+;; Default configuration initially
 
 (sbw/org-config-refresh)
 (sbw/org-config-default)
