@@ -112,7 +112,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
   (sbw/org-config--set-org-variables))
 
 (defun sbw/org-config-default ()
-  "Select deafult configuration, which includes all current projects and excludes all non-project files."
+  "Select default configuration, which includes all current projects and excludes all non-project files."
   (interactive)
   (sbw/org-config-select ["current"] (-filter (lambda (x) (not (seq-contains ["non-project"] x))) (sbw/org-config-categories))))
 
