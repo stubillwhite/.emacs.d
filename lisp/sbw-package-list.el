@@ -108,7 +108,6 @@
      (:name sbw-org-review)
      (:name sbw-org-utils)
      (:name sbw-org-config)
-     (:name sbw-text)
      (:name sbw-time)
      (:name sbw-utils)
      (:name sbw-value-eq) )
