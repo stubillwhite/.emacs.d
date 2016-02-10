@@ -23,11 +23,15 @@
      (:name evil-nerd-commenter :load :immediate) ;; Efficient language-independent commenting
      (:name drag-stuff          :load :immediate) ;; Drag stuff around in Emacs
      (:name beacon              :load :immediate) ;; A light that follows your cursor around so you don't lose it!
+     (:name ranger              :load :immediate) ;; Bringing the goodness of ranger to dired
 
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
      (:name htmlize           :load :on-idle)   ;; html org-mode reports
      (:name org-gcal          :load :on-idle)   ;; Org sync with Google Calendar
+
+     ;; Text
+     (:name speed-type        :load :on-use) ;; Typing tests
 
      ;; Git
      (:name magit             :load :immediate) ;; Control Git from Emacs
@@ -85,6 +89,9 @@
      
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
+
+     ;; XML
+     (:name nxml-mode         :load :included) ;; In-built nXML mode
      )
   "List of the all packages required for this Emacs configuration.")
 
