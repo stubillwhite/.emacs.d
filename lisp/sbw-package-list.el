@@ -91,7 +91,7 @@
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
 
      ;; XML
-     (:name nxml-mode         :load :included) ;; In-built nXML mode
+     ;; (:name nxml-mode         :load :included) ;; In-built nXML mode
      )
   "List of the all packages required for this Emacs configuration.")
 
