@@ -74,6 +74,9 @@
      ;; Markdown
      (:name markdown-mode     :load :immediate) ;; Markdown mode
 
+     ;; json-mode
+     (:name json-mode         :load :immediate) ;; Major mode for editing JSON files
+
      ;; Groovy
      (:name groovy-mode       :load :immediate) ;; Groovy mode
 

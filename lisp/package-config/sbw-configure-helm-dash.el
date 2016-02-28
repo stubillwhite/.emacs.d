@@ -3,11 +3,11 @@
 (use-package helm-dash
 
   :init
-  (progn)
+  (progn
+    (setq helm-dash-common-docsets '("Guava")))
 
   :config
-  (progn
-    (helm-dash-activate-docset "Guava"))
+  (progn)
 
   :bind
   ("<f2>" . helm-dash))
