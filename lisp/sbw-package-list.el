@@ -24,6 +24,7 @@
      (:name drag-stuff          :load :immediate) ;; Drag stuff around in Emacs
      (:name beacon              :load :immediate) ;; A light that follows your cursor around so you don't lose it!
      (:name ranger              :load :immediate) ;; Bringing the goodness of ranger to dired
+     (:name keyfreq             :load :immediate) ;; Track Emacs commands frequency
 
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
