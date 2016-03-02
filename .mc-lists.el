@@ -4,7 +4,10 @@
 (setq mc/cmds-to-run-for-all
       '(
         cua-cut-region
+        org-kill-line
+        org-self-insert-command
         sp-backward-delete-char
+        sp-backward-unwrap-sexp
         sp-delete-char
         sp-forward-slurp-sexp
         sp-select-next-thing-exchange
@@ -12,4 +15,11 @@
 
 (setq mc/cmds-to-run-once
       '(
+        sbw/hydra-multiple-cursors/mc/mark-next-like-this
+        sbw/hydra-multiple-cursors/mc/mark-previous-like-this
+        sbw/hydra-multiple-cursors/mc/skip-to-next-like-this
+        sbw/hydra-multiple-cursors/mc/skip-to-previous-like-this
+        sbw/hydra-multiple-cursors/mc/unmark-next-like-this
+        sbw/hydra-multiple-cursors/mc/unmark-previous-like-this
+        sbw/hydra-multiple-cursors/nil
         ))
