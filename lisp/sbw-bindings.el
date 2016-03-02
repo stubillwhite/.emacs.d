@@ -29,14 +29,14 @@
 
 (key-chord-define-global
  "mc"
- (defhydra sbw/hydra-multiple-cursors (:color amaranth :hint  nil)   
+ (defhydra sbw/hydra-multiple-cursors (:color amaranth :hint nil)
    "
-^Previous^            ^Next^        ^Other^
-----------------------------------------------
-_p_:   Previous _n_   Next    [_e_] Edit lines
-_P_:   Skip     _N_   Skip    [_a_] Mark all
-_M-p_: Unmark   _M-n_ Unmark  [_r_] Mark by regex
-_q_:   Quit
+^Previous^         ^Next^           ^Other^
+-------------------------------------------------
+_p_   Previous     _n_   Next       _a_ Mark all 
+_P_   Skip         _N_   Skip       _r_ Mark by regex
+_M-p_ Unmark       _M-n_ Unmark
+_q_   Quit
 "
    ("p" mc/mark-previous-like-this)
    ("P" mc/skip-to-previous-like-this)
@@ -44,14 +44,9 @@ _q_:   Quit
    ("n" mc/mark-next-like-this)
    ("N" mc/skip-to-next-like-this)
    ("M-n" mc/unmark-next-like-this)
-   ("e" mc/edit-lines :exit t)
    ("a" mc/mark-all-like-this :exit t)
    ("r" mc/mark-all-in-region-regexp :exit t)
    ("q" nil)))
-
-
-
-
 
 ;; -----------------------------------------------------------------------------
 ;; Old system

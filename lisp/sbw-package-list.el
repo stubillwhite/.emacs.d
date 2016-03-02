@@ -94,6 +94,7 @@
      
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
+     (:name rainbow-mode      :load :immediate) ;; Colorize color names in buffers
 
      ;; XML
      ;; (:name nxml-mode         :load :included) ;; In-built nXML mode

@@ -10,11 +10,14 @@
         sp-backward-unwrap-sexp
         sp-delete-char
         sp-forward-slurp-sexp
+        sp-kill-word
         sp-select-next-thing-exchange
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        helm-M-x
+        sbw/hydra-multiple-cursors/body
         sbw/hydra-multiple-cursors/mc/mark-next-like-this
         sbw/hydra-multiple-cursors/mc/mark-previous-like-this
         sbw/hydra-multiple-cursors/mc/skip-to-next-like-this
