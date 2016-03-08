@@ -131,6 +131,23 @@
              ("r" "RTC task" entry (file+headline org-default-notes-file "Tasks")
               "* TODO %?%(sbw/org-capture-rtc-task)") ))
 
+    ;; Bookmarklet
+    ;; javascript:location.href='org-protocol://store-markdown-link://'+encodeURIComponent(location.href)+'//'+encodeURIComponent(document.title)
+
+    (defun sbw/org-protocol-store-markdown-link (arg-str) 
+      (let* ( (args          (org-protocol-split-data arg-str t org-protocol-data-separator))
+              (uri           (org-protocol-sanitize-uri (car args)))
+              (title         (cadr args))
+              (markdown-link (s-lex-format "[${title}](${uri})")) )
+        (kill-new markdown-link)
+        (message "`%s' to insert `%s'" (substitute-command-keys"\\[yank]") uri))
+      nil)
+
+    (setq org-protocol-protocol-alist
+          '(("store-markdown-link"
+             :protocol "store-markdown-link"
+             :function sbw/org-protocol-store-markdown-link)))
+
     ;; Sorting subtrees
 
     (defun sbw/org-multisort (&rest criteria)
@@ -219,5 +236,3 @@ scheduled date, deadline, then alphabetic."
     (fill-region start end nil)))
 
 (provide 'sbw-configure-org-mode)
-
-
