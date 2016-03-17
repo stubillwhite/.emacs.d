@@ -1,8 +1,3 @@
-(defun sbw/filter (p l)
-  "Returns the items from list L for which predicate P is true."
-  (delq nil
-        (mapcar (lambda (x) (and (funcall p x) x)) l)))
-
 (defun sbw/assq-ensure-is-first (key alist)
   "Mutates associative ALIST so that the value for KEY is first."
   (let ((entry (assq key alist)))
@@ -42,14 +37,7 @@
     (sbw/ht-create)
     l))
 
-;; TODO Prefix these
 (defalias 'sbw/dec '1- "Return x minus one.")
 (defalias 'sbw/inc '1+ "Return x plus one.")
-
-;; TODO Test these, break tests into a separate file
-(defun sbw/pprint (x)
-  "Return X as a pretty-printed string."
-  (let ( (json-encoding-pretty-print t) )
-    (s-replace "\"" "" (json-encode x))))
 
 (provide 'sbw-utils)

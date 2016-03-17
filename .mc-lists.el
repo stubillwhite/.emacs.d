@@ -17,6 +17,7 @@
 (setq mc/cmds-to-run-once
       '(
         helm-M-x
+        mouse-yank-primary
         sbw/hydra-multiple-cursors/body
         sbw/hydra-multiple-cursors/mc/mark-next-like-this
         sbw/hydra-multiple-cursors/mc/mark-previous-like-this
