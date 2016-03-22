@@ -7,6 +7,7 @@
         org-kill-line
         org-self-insert-command
         sp-backward-delete-char
+        sp-backward-kill-word
         sp-backward-unwrap-sexp
         sp-delete-char
         sp-forward-slurp-sexp
