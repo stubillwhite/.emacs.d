@@ -10,7 +10,8 @@
      (:name s               :load :immediate) ;; Modern string API
      (:name names           :load :immediate) ;; Sane namespace handling
      (:name seq             :load :immediate) ;; Unified sequence handling
-
+     (:name cygwin-mount    :load :immediate) ;; Teach cygwin EMACS about windows styles path
+   
      ;; Evil
      (:name evil            :load :immediate) ;; Welcome home
      (:name evil-leader     :load :immediate) ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
@@ -39,7 +40,7 @@
 
      ;; Auto-complete
      (:name company           :load :immediate) ;; Auto-completion
-
+     
      ;; Interface
      (:name powerline         :load :immediate) ;; Emacs version of the Vim powerline
      (:name diminish          :load :immediate) ;; Abbreviate minor mode indicators

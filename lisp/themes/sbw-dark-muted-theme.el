@@ -26,7 +26,7 @@
         (*item-2*            "burlywood1")
         (*item-3*            "CadetBlue3")
         (*item-4*            "burlywood2")
-
+        
         (*menu-bg*           "gray30")
         (*menu-selection-bg* "SkyBlue4")
         )
@@ -111,9 +111,18 @@
     `(expectations-success-face           ((t (:inherit sbw-dark-muted-success))))
     `(expectations-error-face             ((t (:inherit sbw-dark-muted-warning))))
 
+    ;; flycheck
+    `(flycheck-warning                    ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
+    `(flycheck-fringe-warning             ((t (:inherit sbw-dark-muted-warning))))
+    `(flycheck-error-list-warning         ((t (:inherit sbw-dark-muted-normal :underline (:color ,*error-fg* :style wave)))))
+    `(flycheck-fringe-error               ((t (:inherit sbw-dark-muted-error))))
+    `(flycheck-error-list-error           ((t (:inherit sbw-dark-muted-error))))
+    `(flycheck-error-list-line-number     ((t (:inherit sbw-dark-muted-normal))))
+    `(flycheck-error-list-column-number   ((t (:inherit sbw-dark-muted-normal))))
+  
     ;; flyspell
-    `(flyspell-duplicate-face ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
-    `(flyspell-incorrect-face ((t (:inherit sbw-dark-muted-normal :underline (:color ,*error-fg*   :style wave)))))
+    `(flyspell-duplicate-face             ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
+    `(flyspell-incorrect-face             ((t (:inherit sbw-dark-muted-normal :underline (:color ,*error-fg*   :style wave)))))
     
     ;; font-lock
     `(font-lock-builtin-face              ((t (:inherit sbw-dark-muted-normal))))
@@ -211,3 +220,4 @@
     ))
 
 (provide-theme 'sbw-dark-muted)
+
