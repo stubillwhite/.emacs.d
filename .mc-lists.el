@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        c-electric-semi&comma
         cua-cut-region
         org-kill-line
         org-self-insert-command

@@ -1,5 +1,6 @@
 .org-id-locations
 .smex-items
+.yas-compiled-snippets.el
 ac-comphist.dat
 backups/
 elpa/
