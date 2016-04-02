@@ -69,6 +69,7 @@
       (interactive)
       (save-some-buffers t)
       (sbw/cider-switch-to-repl-buffer)
+      (cider-repl-clear-buffer)
       (cider-insert-in-repl "(ns user)" t)
       (cider-insert-in-repl "(refresh-all)" t)
       (cider-insert-in-repl "(reset)" t))
