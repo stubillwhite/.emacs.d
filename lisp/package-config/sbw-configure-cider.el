@@ -70,7 +70,7 @@
       (save-some-buffers t)
       (sbw/cider-switch-to-repl-buffer)
       (cider-insert-in-repl "(ns user)" t)
-      (cider-insert-in-repl "(refresh)" t)
+      (cider-insert-in-repl "(refresh-all)" t)
       (cider-insert-in-repl "(reset)" t))
 
     (defun sbw/cider-jack-in-and-go ()
