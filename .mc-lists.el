@@ -3,8 +3,12 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        c-electric-colon
+        c-electric-delete-forward
         c-electric-semi&comma
         cua-cut-region
+        cua-paste
+        helm-show-kill-ring
         org-kill-line
         org-self-insert-command
         sp-backward-delete-char
