@@ -52,12 +52,12 @@
 
 ;; Ediff configuration
 (setq
-  ediff-highlight-all-diffs   'nil                                            ;; Just highlight the current diff
-  ediff-temp-file-prefix      (expand-file-name temporary-file-directory)     ;; Temporary file location
-  ediff-diff-options          "-w"                                            ;; Not whitespace sensitive by default
-  ediff-window-setup-function 'ediff-setup-windows-plain                      ;; Single frame for Ediff mode-line
-  ediff-split-window-function 'split-window-horizontally                      ;; Vertical split
-  )
+ ediff-highlight-all-diffs   'nil                                        ;; Just highlight the current diff
+ ediff-temp-file-prefix      (expand-file-name temporary-file-directory) ;; Temporary file location
+ ediff-diff-options          "-w"                                        ;; Not whitespace sensitive by default
+ ediff-window-setup-function 'ediff-setup-windows-plain                  ;; Single frame for Ediff mode-line
+ ediff-split-window-function 'split-window-horizontally                  ;; Vertical split
+ )
 
 (defun sbw/cosmetics-save-window-config ()
   "Store the current window configuration."
@@ -71,6 +71,11 @@
 (add-hook 'ediff-before-setup-hook 'sbw/cosmetics-save-window-config)
 (add-hook 'ediff-quit-hook         'sbw/cosmetics-restore-window-config)
 (add-hook 'ediff-suspend-hook      'sbw/cosmetics-restore-window-config)
+
+;; Whitespace
+(setq whitespace-display-mappings '((space-mark   #x0020 [#x0020])
+                                    (newline-mark #x000A [#x00B6 #x000A])
+                                    (tab-mark     #x0009 [#x25BA #x0009])))
 
 (defun sbw/transparency (x)
   "Set the transparency of the window."

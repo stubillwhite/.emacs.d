@@ -167,6 +167,10 @@
     `(helm-swoop-target-line-face         ((t (:inherit sbw-dark-muted-selection))))
     `(helm-swoop-target-line-block-face   ((t (:inherit sbw-dark-muted-selection))))
     `(helm-source-header                  ((t (:inherit sbw-dark-muted-emphasis))))
+    
+    `(hydra-face-blue                     ((t (:inherit sbw-dark-muted-keyword))))
+    `(hydra-face-red                      ((t (:inherit sbw-dark-muted-error))))
+    
         
     ;; nXML
     `(nxml-attribute-colon                ((t (:inherit sbw-dark-muted-normal))))
@@ -217,6 +221,14 @@
     ;; Smartparens
     `(sp-show-pair-match-face             ((t (:inherit sbw-dark-muted-match))))
     `(sp-show-pair-mismatch-face          ((t (:inherit sbw-dark-muted-mismatch))))
+
+    ;; whitespace
+    `(whitespace-empty                    ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
+    `(whitespace-line                     ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
+    `(whitespace-indentation              ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
+    `(whitespace-space                    ((t (:inherit sbw-dark-muted-normal))))
+    `(whitespace-newline                  ((t (:inherit sbw-dark-muted-normal))))    
+    `(whitespace-trailing                 ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
     ))
 
 (provide-theme 'sbw-dark-muted)

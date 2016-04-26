@@ -18,6 +18,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        cua-scroll-up
         helm-M-x
         mouse-yank-primary
         sbw/hydra-multiple-cursors/body

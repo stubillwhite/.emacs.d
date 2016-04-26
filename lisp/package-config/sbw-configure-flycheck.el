@@ -25,7 +25,7 @@
                                     (id (one-or-more (not (any " "))))
                                     (message (one-or-more not-newline) (zero-or-more "\n" (any " ") (one-or-more not-newline)))
                                     line-end))
-          :modes          (text-mode markdown-mode gfm-mode)))
+          :modes          (text-mode markdown-mode)))
 
     (if (sbw/is-linux?)
         (flycheck-define-checker proselint
@@ -36,7 +36,7 @@
                                     (id (one-or-more (not (any " "))))
                                     (message (one-or-more not-newline) (zero-or-more "\n" (any " ") (one-or-more not-newline)))
                                     line-end))
-          :modes          (text-mode markdown-mode gfm-mode)))
+          :modes          (text-mode markdown-mode)))
     
     (add-to-list 'flycheck-checkers 'proselint)
 
