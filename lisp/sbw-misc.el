@@ -34,6 +34,12 @@
   save-interprogram-paste-before-kill t   ;; Save clipboard to kill ring when killing
   )
 
+;; Fix for visible bell issue on OSX El Capitan where the bell glitches the display
+;; http://debbugs.gnu.org/cgi/bugreport.cgi?bug=21662
+(when (sbw/is-darwin?)
+  (setq visible-bell       nil
+        ring-bell-function 'ignore))
+
 ;; 120 columns
 (setq-default fill-column 120)
 
