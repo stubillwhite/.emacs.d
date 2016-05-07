@@ -9,6 +9,7 @@
         cua-cut-region
         cua-paste
         helm-show-kill-ring
+        kill-region
         org-kill-line
         org-self-insert-command
         sp-backward-delete-char
@@ -16,6 +17,7 @@
         sp-backward-unwrap-sexp
         sp-delete-char
         sp-forward-slurp-sexp
+        sp-kill-hybrid-sexp
         sp-kill-word
         sp-select-next-thing-exchange
         ))

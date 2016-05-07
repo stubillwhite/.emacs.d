@@ -34,10 +34,8 @@ _q_: Quit
       ("=" (lambda () (interactive) (progn (golden-ratio-mode 0) (balance-windows))))
       ("q" nil :color blue))
 
-
-
-    (define-key org-agenda-mode-map
-      "v" 'hydra-org-agenda-view/body)
+    ;; (eval-after-load "org"
+    ;;   '(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body))
 
     (defun org-agenda-cts ()
       (let ((args (get-text-property
@@ -47,6 +45,8 @@ _q_: Quit
 
     (defhydra hydra-org-agenda-view (:hint nil)
       "
+^Navigate^         ^Modify^                 ^Resize^
+^============================================================
 _d_: ?d? day       _g_: time grid=?g? _a_: arch-trees
 _w_: ?w? week      _[_: inactive      _A_: arch-files
 _t_: ?t? fortnight _f_: follow=?f?    _r_: report=?r?
