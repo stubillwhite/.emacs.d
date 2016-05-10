@@ -214,6 +214,18 @@
     `(org-time-grid                       ((t (:inherit sbw-dark-muted-keyword))))
     `(org-todo                            ((t (:inherit sbw-dark-muted-emphasis))))
 
+    ;; scala
+    `(scala-font-lock:abstract-face       ((t (:inherit sbw-dark-muted-normal))))
+    `(scala-font-lock:final-face          ((t (:inherit sbw-dark-muted-constant))))
+    `(scala-font-lock:implicit-face       ((t (:inherit sbw-dark-muted-normal))))
+    `(scala-font-lock:lazy-face           ((t (:inherit sbw-dark-muted-normal))))
+    `(scala-font-lock:override-face       ((t (:inherit sbw-dark-muted-normal))))
+    `(scala-font-lock:private-face        ((t (:inherit sbw-dark-muted-normal))))
+    `(scala-font-lock:protected-face      ((t (:inherit sbw-dark-muted-normal))))
+    `(scala-font-lock:sealed-face         ((t (:inherit sbw-dark-muted-constant))))
+    `(scala-font-lock:var-face            ((t (:inherit sbw-dark-muted-normal))))
+    `(scala-font-lock:var-keyword-face    ((t (:inherit sbw-dark-muted-keyword))))
+    
     ;; sh
     `(sh-heredoc                          ((t (:inherit sbw-dark-muted-string))))
     `(sh-quoted-exec                      ((t (:inherit sbw-dark-muted-keyword))))

@@ -40,7 +40,8 @@
 
      ;; Auto-complete
      (:name company           :load :immediate) ;; Auto-completion
-     
+     (:name yasnippet         :load :immediate) ;; Yet another snippet extension for Emacs
+
      ;; Interface
      (:name powerline         :load :immediate) ;; Emacs version of the Vim powerline
      (:name diminish          :load :immediate) ;; Abbreviate minor mode indicators
@@ -64,6 +65,13 @@
      (:name helm-flyspell     :load :immediate) ;; Helm extension for correcting words with Flyspell
      (:name helm-dash         :load :immediate) ;; Browse Dash docsets inside Emacs
      
+     ;; Elisp
+     (:name json              :load :immediate) ;; JavaScript Object Notation parser / generator
+     (:name async             :load :immediate) ;; Asynchronous processing in Emacs
+     (:name nameless          :load :immediate) ;; Less is more. Hide package namespace in your emacs-lisp code
+
+     ;; Languages
+     
      ;; Clojure
      (:name clojure-mode      :load :immediate) ;; Clojure mode
      (:name cider             :load :immediate) ;; REPL support
@@ -76,26 +84,21 @@
      ;; Markdown
      (:name markdown-mode     :load :immediate) ;; Markdown mode
 
-     ;; json-mode
+     ;; JSON
      (:name json-mode         :load :immediate) ;; Major mode for editing JSON files
 
      ;; Groovy
      (:name groovy-mode       :load :immediate) ;; Groovy mode
 
-     ;; Yaml
-     (:name yaml-mode         :load :immediate) ;; YAML mode
-
-     ;; Yasnippets
-     (:name yasnippet         :load :immediate) ;; Yet another snippet extension for Emacs
-
-     ;; Elisp
-     (:name json              :load :immediate) ;; JavaScript Object Notation parser / generator
-     (:name async             :load :immediate) ;; Asynchronous processing in Emacs
-     (:name nameless          :load :immediate) ;; Less is more. Hide package namespace in your emacs-lisp code
-     
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
      (:name rainbow-mode      :load :immediate) ;; Colorize color names in buffers
+    
+     ;; Scala
+     (:name scala-mode2       :load :immediate) ;; Scala mode
+     
+     ;; Yaml
+     (:name yaml-mode         :load :immediate) ;; YAML mode
 
      ;; XML
      ;; (:name nxml-mode         :load :included) ;; In-built nXML mode
