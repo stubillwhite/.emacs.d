@@ -9,8 +9,10 @@
 
 (let* ( (*normal-bg*         "gray10")
         (*normal-fg*         "gray80")
-        (*emphasis-bg*       "gray10")
+        (*emphasis-bg*       *normal-bg*)
         (*emphasis-fg*       "gray100")
+        (*demphasis-bg*      *normal-bg*)
+        (*demphasis-fg*      "gray50")
 
         (*selection-bg*      "gray30")
         (*success-fg*        "DarkSeaGreen3")
@@ -26,19 +28,24 @@
         (*item-2*            "burlywood1")
         (*item-3*            "CadetBlue3")
         (*item-4*            "burlywood2")
-        
-        (*menu-bg*           "gray30")
-        (*menu-selection-bg* "SkyBlue4")
+
+        (*ui-bg-active*      "SkyBlue4")
+        (*ui-bg-inactive*    "gray30")
+                
+        (*menu-bg*           *ui-bg-inactive*)
+        (*menu-selection-bg* *ui-bg-active*)
+
+        (*modeline-fg*          *emphasis-fg*)
+        (*modeline-bg-active*   *ui-bg-active*) 
+        (*modeline-bg-inactive* *ui-bg-inactive*)        
         )
 
   (mapc
     (lambda (x) (apply 'sbw/theme--create-face x))
-    `( (sbw-dark-muted-powerline-one-active      `((t (:foreground ,*emphasis-fg* :background "SkyBlue4"))))
-       (sbw-dark-muted-powerline-one-inactive    `((t (:foreground ,*emphasis-fg* :background "gray30"))))
-       (sbw-dark-muted-powerline-one-evil-insert `((t (:foreground ,*emphasis-fg* :background "aquamarine4"))))
-       (sbw-dark-muted-powerline-one-evil-normal `((t (:foreground ,*emphasis-fg* :background "coral4"))))
-       (sbw-dark-muted-powerline-two             `((t (:foreground ,*emphasis-fg* :background "gray20"))))
-       (sbw-dark-muted-powerline-three           `((t (:foreground ,*emphasis-fg* :background "gray15"))))
+    `( (sbw-dark-muted-powerline-one-active      `((t (:foreground ,*modeline-fg* :background ,*modeline-bg-active*))))
+       (sbw-dark-muted-powerline-one-inactive    `((t (:foreground ,*modeline-fg* :background ,*modeline-bg-inactive*))))
+       (sbw-dark-muted-powerline-two             `((t (:foreground ,*modeline-fg* :background ,(color-darken-name *modeline-bg-inactive* 8)))))
+       (sbw-dark-muted-powerline-three           `((t (:foreground ,*modeline-fg* :background ,(color-darken-name *modeline-bg-inactive* 15)))))
 
        (sbw-dark-muted-normal              `((t (:inherit default               :foreground ,*normal-fg*   :background ,*normal-bg*))))
        (sbw-dark-muted-selection           `((t (:inherit sbw-dark-muted-normal                            :background ,*selection-bg*))))
@@ -48,6 +55,7 @@
        (sbw-dark-muted-warning             `((t (:inherit sbw-dark-muted-normal :foreground ,*warning-fg*))))
        (sbw-dark-muted-error               `((t (:inherit sbw-dark-muted-normal :foreground ,*error-fg*))))    
        (sbw-dark-muted-emphasis            `((t (:inherit sbw-dark-muted-normal :foreground ,*emphasis-fg* :background ,*emphasis-bg*))))    
+       (sbw-dark-muted-demphasis           `((t (:inherit sbw-dark-muted-normal :foreground ,*demphasis-fg* :background ,*demphasis-bg*))))    
        (sbw-dark-muted-match               `((t (:inherit sbw-dark-muted-normal :foreground ,*match-fg*    :background ,*match-bg*))))
        (sbw-dark-muted-constant            `((t (:inherit sbw-dark-muted-normal :foreground ,*item-2*))))
        (sbw-dark-muted-mismatch            `((t (:inherit sbw-dark-muted-normal :foreground ,*mismatch-fg* :background ,*mismatch-bg*))))
@@ -235,13 +243,12 @@
     `(sp-show-pair-mismatch-face          ((t (:inherit sbw-dark-muted-mismatch))))
 
     ;; whitespace
-    `(whitespace-empty                    ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
-    `(whitespace-line                     ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
-    `(whitespace-indentation              ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
-    `(whitespace-space                    ((t (:inherit sbw-dark-muted-normal))))
-    `(whitespace-newline                  ((t (:inherit sbw-dark-muted-normal))))    
-    `(whitespace-trailing                 ((t (:inherit sbw-dark-muted-normal :underline (:color ,*warning-fg* :style wave)))))
+    `(whitespace-empty                    ((t (:inherit sbw-dark-muted-demphasis :underline (:color ,*warning-fg* :style wave)))))
+    `(whitespace-line                     ((t (:inherit sbw-dark-muted-demphasis :underline (:color ,*warning-fg* :style wave)))))
+    `(whitespace-indentation              ((t (:inherit sbw-dark-muted-demphasis :underline (:color ,*warning-fg* :style wave)))))
+    `(whitespace-space                    ((t (:inherit sbw-dark-muted-demphasis))))
+    `(whitespace-newline                  ((t (:inherit sbw-dark-muted-demphasis))))
+    `(whitespace-trailing                 ((t (:inherit sbw-dark-muted-demphasis :underline (:color ,*warning-fg* :style wave)))))
     ))
 
 (provide-theme 'sbw-dark-muted)
-

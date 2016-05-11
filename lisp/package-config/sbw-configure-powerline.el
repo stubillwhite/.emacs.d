@@ -5,14 +5,9 @@
   (progn
 
     (defun sbw/powerline--level-one-face ()
-      (let* ( (active      (powerline-selected-window-active))
-              (evil        (bound-and-true-p evil-local-mode))
-              (evil-insert (and evil (evil-insert-state-p)))
-              (evil-normal (and evil (evil-normal-state-p))) )
+      (let* ( (active (powerline-selected-window-active)) )
         (cond 
          ((not active) 'sbw-dark-muted-powerline-one-inactive) 
-         (evil-insert  'sbw-dark-muted-powerline-one-evil-insert)
-         (evil-normal  'sbw-dark-muted-powerline-one-evil-normal)
          (t            'sbw-dark-muted-powerline-one-active))))
     
     (defun sbw/powerline--buffer-id (parent-face)

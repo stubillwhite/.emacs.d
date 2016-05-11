@@ -73,9 +73,13 @@
 (add-hook 'ediff-suspend-hook      'sbw/cosmetics-restore-window-config)
 
 ;; Whitespace
+;; TODO Move to a configure file
+(require 'whitespace)
 (setq whitespace-display-mappings '((space-mark   #x0020 [#x0020])
                                     (newline-mark #x000A [#x00B6 #x000A])
                                     (tab-mark     #x0009 [#x25BA #x0009])))
+(setq whitespace-style
+      (-remove (lambda (x) (-contains? '(lines lines-tail) x)) whitespace-style))
 
 (defun sbw/transparency (x)
   "Set the transparency of the window."
