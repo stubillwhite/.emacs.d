@@ -81,6 +81,16 @@
 (setq whitespace-style
       (-remove (lambda (x) (-contains? '(lines lines-tail) x)) whitespace-style))
 
+;; Uniquify
+;; TODO Move to a configure file
+(require 'uniquify)
+
+(setq 
+ uniquify-buffer-name-style  'forward
+ uniquify-separator           "/"
+ uniquify-after-kill-buffer-p t 
+ uniquify-ignore-buffers-re   "^\\*")
+
 (defun sbw/transparency (x)
   "Set the transparency of the window."
    (interactive "nTransparency: ")
