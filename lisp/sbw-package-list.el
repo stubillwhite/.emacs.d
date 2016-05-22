@@ -20,6 +20,7 @@
      ;; General usability
      (:name undo-tree           :load :immediate) ;; Undo tree visualisation
      (:name flyspell            :load :immediate) ;; Spell checking
+     (:name flyspell-correct    :load :immediate) ;; Correcting words with flyspell via custom interface
      (:name flycheck            :load :immediate) ;; Syntax checking
      (:name evil-nerd-commenter :load :immediate) ;; Efficient language-independent commenting
      (:name drag-stuff          :load :immediate) ;; Drag stuff around in Emacs
