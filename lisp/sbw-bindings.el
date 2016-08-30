@@ -1,3 +1,4 @@
+
 (require 'sbw-utils)
 
 ;; -----------------------------------------------------------------------------
@@ -6,6 +7,20 @@
 
 (bind-key* "<f12>"    (lambda () (interactive) (sbw/menu-display sbw/menu-common-commands)))
 (bind-key* "C-l"      'goto-line)
+
+
+(when (sbw/is-darwin?)
+  ;; HOME and END should behave sensibly
+  (global-set-key (kbd "<home>") 'beginning-of-line)
+  (global-set-key (kbd "<end>")  'end-of-line)
+
+  ;; Use cmd as meta
+  (setq mac-command-modifier        'meta
+        ns-right-alternate-modifier (quote none))
+
+  ;; (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+  ;; (define-key isearch-mode-map (kbd "M-3") '(lambda () (interactive) (isearch-process-search-char ?\#)))
+  )
 
 (key-chord-define-global
  "qs"

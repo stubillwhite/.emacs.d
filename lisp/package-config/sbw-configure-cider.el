@@ -35,7 +35,10 @@
       nrepl-port                            "4555"   ;; Default port number
       )
 
-    (setq cider-lein-command "~/tools/bin/lein")
+    (setq cider-lein-command
+          (if (sbw/is-darwin?)
+              "/usr/local/bin/lein"
+            "~/tools/bin/lein"))
 
     ;; Better naming for the REPL buffer
     (setq 

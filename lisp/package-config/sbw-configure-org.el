@@ -15,7 +15,7 @@
           (cond
            ((sbw/is-linux?)   "~/Dropbox/Private/org")
            ((sbw/is-windows?) "/cygdrive/c/Users/IBM_ADMIN/Dropbox/Private/org")
-           ((sbw/is-darwin?)  "~/Dropbox/Private/org")))
+           ((sbw/is-darwin?)  "~/Dev/org")))
         
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."
