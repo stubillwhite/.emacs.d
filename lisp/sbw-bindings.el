@@ -6,7 +6,11 @@
 ;; -----------------------------------------------------------------------------
 
 (bind-key* "<f12>"    (lambda () (interactive) (sbw/menu-display sbw/menu-common-commands)))
-(bind-key* "C-l"      'goto-line)
+
+;; IntelliJ style bindings
+(bind-key* "M-l"      'goto-line)
+(bind-key* "M-f"      'isearch-forward)
+
 
 
 (when (sbw/is-darwin?)

@@ -2,9 +2,10 @@
 
 (use-package helm-ag
   :init
-  (progn
-    (custom-set-variables
-     '(helm-ag-base-command "ack --nocolor --nogroup")))
+  (progn)
 
   :config
-  (progn))
+  (progn)
+
+  :bind
+  ("C-c p s a" . helm-ag))

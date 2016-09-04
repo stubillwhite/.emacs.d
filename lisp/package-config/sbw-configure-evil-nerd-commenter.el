@@ -5,6 +5,6 @@
   (progn)
 
   :bind
-  ("M-;" . evilnc-comment-or-uncomment-lines))
+  ("M-/" . evilnc-comment-or-uncomment-lines))
 
 (provide 'sbw-configure-evil-nerd-commenter)

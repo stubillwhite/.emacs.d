@@ -8,6 +8,7 @@
         c-electric-semi&comma
         cua-cut-region
         cua-paste
+        evilnc-comment-or-uncomment-lines
         helm-show-kill-ring
         kill-region
         org-kill-line

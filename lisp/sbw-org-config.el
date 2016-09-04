@@ -221,6 +221,11 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
           (org-refile-history '()) )
     (execute-kbd-macro command)))
 
+(defun sbw/org-config--strip-suffix (suffix s)
+  (if (s-ends-with? suffix s)
+      (s-left (- (length s) (length suffix)) s)
+    s))
+
 (defun sbw/org-config-archive-task ()
   "Archive the task at point."
   (interactive)
@@ -228,11 +233,12 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
           (attributes       (sbw/org-config-project-attributes buffer-file-name))
           (category         (sbw/ht-get attributes :category))
           (project          (sbw/ht-get attributes :project))
+          (project-name     (sbw/org-config--strip-suffix ".org" project))
           (path             (s-lex-format "${org-directory}/archive/${category}/archive-${project}"))
           (original-targets org-refile-targets)
           (archive-targets  `(((,path) :maxlevel . 1))) )
     (when (not (f-file? path))
-      (sbw/org-config-new-file "archive" category (s-concat "archive-" project)))
+      (sbw/org-config-new-file "archive" category (s-concat "archive-" project-name)))
     (setq org-refile-targets archive-targets)
     (sbw/org-config--refile-immediate)
     (setq org-refile-targets original-targets)

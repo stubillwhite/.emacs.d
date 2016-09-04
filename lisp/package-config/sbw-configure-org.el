@@ -112,24 +112,24 @@
 
     (setq org-protocol-default-template-key nil)
 
-    (defun sbw/org-extract-rtc-description (s)
-      (let* ( (regex "^\\(.* [0-9]+: \\)\\(.*\\)\\( - Change and Configuration Management\\)") )
+    (defun sbw/org-extract-jira-description (s)
+      (let* ( (regex "^\\(.*\\) - JIRA") )
         (if (string-match regex s)
-            (match-string 2 s)
+            (match-string 1 s)
           s)))
     
-    (defun sbw/org-capture-rtc-task ()
+    (defun sbw/org-capture-jira-task ()
       ;; The docs state that placeholders will be expanded before evaluating Elisp, but that doesn't appear to be
       ;; happening in practice so we have to access the link via an internal variable.
       (let* ( (url   (plist-get org-store-link-plist :link))
               (descr (plist-get org-store-link-plist :description)) )
-        (concat (sbw/org-extract-rtc-description descr) "\n" (s-lex-format "[[${url}][Link to RTC task]]"))))
+        (concat (sbw/org-extract-jira-description descr) "\n" (s-lex-format "[[${url}][Link to task]]\n"))))
     
     (setq org-capture-templates
           '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
               "* TODO Check out %?%a\n%i")
-             ("r" "RTC task" entry (file+headline org-default-notes-file "Tasks")
-              "* TODO %?%(sbw/org-capture-rtc-task)") ))
+             ("j" "JIRA task" entry (file+headline org-default-notes-file "Tasks")
+              "* TODO %?%(sbw/org-capture-jira-task)") ))
 
     ;; Bookmarklet
     ;; javascript:location.href='org-protocol://store-markdown-link://'+encodeURIComponent(location.href)+'//'+encodeURIComponent(document.title)

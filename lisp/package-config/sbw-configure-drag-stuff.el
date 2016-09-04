@@ -4,11 +4,13 @@
   :diminish drag-stuff-mode
 
   :init
-  (progn
-    (setq drag-stuff-except-modes '(org-mode))
-    (drag-stuff-global-mode))
+  (progn)
 
   :config
-  (progn))
+  (progn)
+
+  :bind
+  ("M-S-<up>" . drag-stuff-up)
+  ("M-S-<down>" . drag-stuff-down))
 
 (provide 'sbw-configure-drag-stuff)

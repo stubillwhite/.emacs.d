@@ -5,7 +5,7 @@
   (progn)
 
   :bind
-  ("C-=" . er/expand-region)
-  ("C--" . er/contract-region))
+  ("M-<up>" . er/expand-region)
+  ("M-<down>" . er/contract-region))
 
 (provide 'sbw-configure-expand-region)
