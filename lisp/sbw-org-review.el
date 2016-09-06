@@ -180,6 +180,7 @@
 
 (defun sbw/org-review--write-report (config report)
   (let* ( (filename (sbw/ht-get config :filename)) )
+    (f-mkdir (f-dirname filename))
     (with-temp-file filename (insert report))
     (message (format "Created '%s'" filename))
     (find-file filename)

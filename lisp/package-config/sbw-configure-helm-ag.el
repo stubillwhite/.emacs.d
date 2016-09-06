@@ -8,4 +8,5 @@
   (progn)
 
   :bind
-  ("C-c p s a" . helm-ag))
+  ("M-S-f" . helm-ag))
+
