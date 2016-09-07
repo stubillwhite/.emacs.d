@@ -45,7 +45,7 @@
   ;; (add-hook 'org-mode-hook 'sbw/ispell-configure-org-mode-ignored-regions)
 
   :bind
-  ("C-c s w" . ispell-word)
+  ("C-c s w" . helm-flyspell-correct)
   ("C-c s b" . flyspell-buffer))
 
 (provide 'sbw-configure-flyspell)

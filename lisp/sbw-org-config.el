@@ -187,12 +187,12 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-projects))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-projects))
 
-(defun sbw/org-config-agenda-selected-agenda () (interactive) (org-agenda nil "csa"))
-(defun sbw/org-config-agenda-selected-tasks  () (interactive) (org-agenda nil "cst"))
-(defun sbw/org-config-agenda-work-agenda     () (interactive) (org-agenda nil "cwa"))
-(defun sbw/org-config-agenda-work-tasks      () (interactive) (org-agenda nil "cwt"))
-(defun sbw/org-config-agenda-personal-agenda () (interactive) (org-agenda nil "cpa"))
-(defun sbw/org-config-agenda-personal-tasks  () (interactive) (org-agenda nil "cpt"))
+(defun sbw/org-config-agenda-selected-agenda () (interactive) (org-agenda nil "csa") (delete-other-windows))
+(defun sbw/org-config-agenda-selected-tasks  () (interactive) (org-agenda nil "cst") (delete-other-windows))
+(defun sbw/org-config-agenda-work-agenda     () (interactive) (org-agenda nil "cwa") (delete-other-windows))
+(defun sbw/org-config-agenda-work-tasks      () (interactive) (org-agenda nil "cwt") (delete-other-windows))
+(defun sbw/org-config-agenda-personal-agenda () (interactive) (org-agenda nil "cpa") (delete-other-windows))
+(defun sbw/org-config-agenda-personal-tasks  () (interactive) (org-agenda nil "cpt") (delete-other-windows))
 
 ;; Agenda appearance
 

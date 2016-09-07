@@ -12,6 +12,9 @@
     ;; Highlight matching pairs
     (show-smartparens-global-mode t)
 
+    ;; Respect autoskip of closing characters even if the cursor moves backwards
+    (setq sp-cancel-autoskip-on-backward-movement nil)
+
     ;; Strict mode
     (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
     (add-hook 'clojure-mode-hook    'smartparens-strict-mode)
