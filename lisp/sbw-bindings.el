@@ -18,10 +18,16 @@
   (global-set-key (kbd "<home>") 'beginning-of-line)
   (global-set-key (kbd "<end>")  'end-of-line)
 
-  ;; Use cmd as meta
-  ;; (setq mac-command-modifier        'meta
-  ;;       ns-right-alternate-modifier (quote none))
-
+  ;; fn as H-, ctrl as C-, alt as M-, cmd as s-
+  (setq  
+   mac-function-modifier       'hyper
+   mac-control-modifier        'control
+   mac-command-modifier        'meta
+   mac-option-modifier         'meta
+   mac-right-control-modifier  'control
+   mac-right-command-modifier  'meta
+   mac-right-option-modifier   'meta)
+  
   ;; (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
   ;; (define-key isearch-mode-map (kbd "M-3") '(lambda () (interactive) (isearch-process-search-char ?\#)))
   )

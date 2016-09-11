@@ -251,7 +251,7 @@
      end
      (sbw/org-review--build-filename "monthly-report" start end))))
 
-(defun config-for-period ()
+(defun sbw/org-review-config-for-period ()
   "Returns the configuration for a period specified interactively by the user."
   (interactive)
   (let* ( (prompt-for-date (lambda (prompt) (org-read-date nil :to-time nil prompt)))
