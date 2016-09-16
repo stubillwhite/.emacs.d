@@ -48,6 +48,26 @@
      org-context-in-file-links                  nil                          ;; Don't store position when creating file links
      )
 
+    ;; Babel
+    
+    (org-babel-do-load-languages                'org-babel-load-languages
+                                                '((emacs-lisp . t)
+                                                  (sh         . t)
+                                                  (python     . t)
+                                                  (perl       . t)
+                                                  (dot        . t)))
+
+    (setq org-babel-default-header-args         '((:results . "replace value drawer")))
+    
+    (setq
+     org-babel-sh-command        "zsh -i" ;; Interactive Zsh for shell
+     org-babel-confirm-evaluate  nil      ;; Don't ask confirmation to execute
+     )
+
+    ;; Capture standard error when executing shell blocks
+    ;; (setq org-babel-default-header-args:sh '((:prologue . "exec 2>&1")
+    ;;                                          (:epilogue . ":")))
+    
     ;; Display elapsed time as hours and minutes only
     (setq org-time-clocksum-format '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
     
