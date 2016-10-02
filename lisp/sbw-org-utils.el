@@ -33,17 +33,33 @@
   (when x
     (date-to-time x)))
 
-(defun sbw/org-utils--extract-clock ()
-  (-let* [ (is-clock?   (lambda (x) (-let [(k . v) x] (string-equal k "CLOCK"))))
-           (clock-value (lambda (x) (-let [(k . v) x] v))) ]
-    (->> (org-entry-properties)
-         (-filter is-clock?)
-         (-map clock-value))))
+(defun sbw/org-utils--entry-text-at-point (x)
+  (save-excursion
+    (goto-char x)
+    (buffer-substring-no-properties (org-entry-beginning-position) (org-entry-end-position))))
 
-(defun sbw/org-utils-heading-summaries-for-file (fnam)
-  "Return summaries for all the headings in file fnam."
-  (set-buffer (find-file-noselect fnam))
-  (-map 'sbw/org-utils-heading-summary-at-point (sbw/org-utils-heading-points-for-current-buffer)))
+(defconst sbw/org-utils--org-clock-line-re
+  (let* ( (re-datetime "\\(\\[.*?\\]\\)")
+          (re-elapsed  "\\([0-9]+:[0-9]\\)") )
+    (format "%s %s--%s[ \t]+=>[ \t]+%s" org-clock-string
+                      re-datetime
+                      re-datetime
+                      re-elapsed))
+  "Matches a line of clocked org-mode time.")
+
+(defun sbw/org-utils--clock-table-entries ()
+  (->> (sbw/org-utils--entry-text-at-point (point))
+       (s-split "\n")
+       (-filter (lambda (x) (s-match sbw/org-utils--org-clock-line-re x)))))
+
+(defun sbw/org-utils--extract-clock-table-entry (s)
+  (-let* ( (match (s-match sbw/org-utils--org-clock-line-re s)) )
+    (when match
+      (format "%s--%s" (nth 1 match) (nth 2 match)))))
+
+(defun sbw/org-utils--extract-clock ()
+  (->> (sbw/org-utils--clock-table-entries)
+       (-map 'sbw/org-utils--extract-clock-table-entry)))
 
 (defun sbw/org-utils-heading-summary-at-point (x)
   "Return a summary of the org heading at point X."
@@ -58,9 +74,14 @@
       (puthash :heading  (sbw/org-utils--extract-string (org-get-heading nil t)) summary)
       (puthash :level    (funcall outline-level) summary)
       (puthash :clock    (sbw/org-utils--extract-clock) summary)
-      (puthash :closed   (sbw/org-utils--extract-timestamp (cdr (assoc "CLOSED" (org-entry-properties)))) summary)
-      )
+      (puthash :closed   (sbw/org-utils--extract-timestamp (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
     summary)
   )
 
+(defun sbw/org-utils-heading-summaries-for-file (fnam)
+  "Return summaries for all the headings in file fnam."
+  (set-buffer (find-file-noselect fnam))
+  (-map 'sbw/org-utils-heading-summary-at-point (sbw/org-utils-heading-points-for-current-buffer)))
+
 (provide 'sbw-org-utils)
+
