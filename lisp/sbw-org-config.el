@@ -132,7 +132,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
   (interactive "sWorkflow: \nsCategory: \nsProject: ")
   (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
           (path     (s-lex-format "${org-directory}/${workflow}/${category}/${project}.org")) )
-    (f-mkdir (f-dirname path))
+    (apply 'f-mkdir (f-split (f-dirname path)))
     (f-write (->> content
                   (s-replace-all `(("${category}" . ,project)))) 'utf-8 path)
     (sbw/org-config-refresh)

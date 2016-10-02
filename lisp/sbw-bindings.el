@@ -11,8 +11,6 @@
 (bind-key* "M-l"      'goto-line)
 (bind-key* "M-f"      'isearch-forward)
 
-
-
 (when (sbw/is-darwin?)
   ;; HOME and END should behave sensibly
   (global-set-key (kbd "<home>") 'beginning-of-line)
@@ -33,16 +31,16 @@
   )
 
 (key-chord-define-global
- "qs"
+ "§z"
  (defhydra hydra-zoom ()
    "zoom"
-   ("=" text-scale-increase "in")
-   ("-" text-scale-decrease "out")
-   ("0" (text-scale-adjust 0) "reset")
+   ("=" zoom-frm-in "in")
+   ("-" zoom-frm-out "out")
+   ("0" zoom-frm-unzoom "reset")
    ("q" nil "quit" :color blue)))
 
 (key-chord-define-global
- "qo"
+ "§o"
  (defhydra hydra-org (:color red :columns 3)
    "Org Mode Movements"
    ("n" outline-next-visible-heading "next heading")
@@ -53,7 +51,7 @@
    ("g" org-goto "goto" :exit t)))
 
 (key-chord-define-global
- "mc"
+ "§c"
  (defhydra sbw/hydra-multiple-cursors (:color amaranth :hint nil)
    "
 ^Previous^         ^Next^           ^Other^

@@ -27,7 +27,8 @@
      (:name beacon              :load :immediate) ;; A light that follows your cursor around so you don't lose it!
      (:name keyfreq             :load :immediate) ;; Track Emacs commands frequency
      (:name macrostep           :load :immediate) ;; Interactive macro expander for Emacs
-
+     (:name zoom-frm            :load :immediate) ;; Commands to zoom frame font size
+     
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
      (:name htmlize           :load :on-idle)   ;; html org-mode reports

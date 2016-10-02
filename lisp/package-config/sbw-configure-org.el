@@ -61,7 +61,7 @@
     
     (setq
      org-babel-sh-command        "zsh -i" ;; Interactive Zsh for shell
-     org-babel-confirm-evaluate  nil      ;; Don't ask confirmation to execute
+     org-confirm-babel-evaluate  nil      ;; Don't ask confirmation to execute
      )
 
     ;; Capture standard error when executing shell blocks
