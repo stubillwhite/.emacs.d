@@ -190,18 +190,25 @@
   (let* ( (marker (s-repeat level "#")) )
     (format "%s %s %s\n\n" marker s marker)))
 
+(defun sbw/org-review--markdown-body (s)
+  (format "%s\n\n" s))
+
 (defun sbw/org-review--build-report (config)
   (let* ( (summaries (sbw/org-review--heading-summaries config)) )
     (concat
      (sbw/org-review--markdown-header 1 (sbw/ht-get config :title))
      (sbw/org-review--markdown-header 2 "Completed tasks")
+     (sbw/org-review--markdown-body "Tasks moved into a completed or cancelled state.")
      (sbw/org-review-completed-tasks-generate-report config summaries)
      (sbw/org-review--markdown-header 2 "Activity")
+     (sbw/org-review--markdown-body "Time spent on both completed and still incomplete tasks.")
      (sbw/org-review-clocked-time-generate-report config summaries))))
 
 (defun sbw/org-review-generate (config)
   "Generates the report from the configuration."
-  (sbw/org-review--write-report config (sbw/org-review--build-report config)))
+  (message "Generating report...")
+  (let* ( (inhibit-message t) )
+    (sbw/org-review--write-report config (sbw/org-review--build-report config))))
 
 (defun sbw/org-review--format-date (time)
   (format-time-string "%Y%m%d" time))

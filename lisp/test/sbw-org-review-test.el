@@ -22,12 +22,10 @@
       (should (string= actual expected))))
 
   (ert-deftest sbw/org-review-clocked-time-generate-report-then-expected-report ()
-    :expected-result :failed
     "sbw/org-review-clocked-time-generate-report then expected report"
     (lexical-let* ( (summaries (sbw/org-utils-heading-summaries-for-file (funcall test-file "clocked-time-report-input.org")))
                     (expected  (funcall file-text "clocked-time-report-expected.txt"))
                     (actual    (sbw/org-review-clocked-time-generate-report config summaries)) )
-      (should (string= actual expected))))
-  )
+      (should (string= actual expected)))))
 
 (provide 'sbw-org-reports-test)

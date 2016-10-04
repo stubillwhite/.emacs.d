@@ -1,4 +1,3 @@
-
 (require 'sbw-utils)
 
 ;; -----------------------------------------------------------------------------
@@ -30,13 +29,29 @@
   ;; (define-key isearch-mode-map (kbd "M-3") '(lambda () (interactive) (isearch-process-search-char ?\#)))
   )
 
+(defun sbw/bindings--zoom-and-redraw (f)
+  (funcall f)
+  (powerline-reset))
+
+(defun sbw/bindings--zoom-in ()
+  (interactive)
+  (sbw/bindings--zoom-and-redraw 'zoom-frm-in))
+
+(defun sbw/bindings--zoom-out ()
+  (interactive)
+  (sbw/bindings--zoom-and-redraw 'zoom-frm-out))
+
+(defun sbw/bindings--zoom-reset ()
+  (interactive)
+  (sbw/bindings--zoom-and-redraw 'zoom-frm-unzoom))
+
 (key-chord-define-global
  "§z"
  (defhydra hydra-zoom ()
    "zoom"
-   ("=" zoom-frm-in "in")
-   ("-" zoom-frm-out "out")
-   ("0" zoom-frm-unzoom "reset")
+   ("=" sbw/bindings--zoom-in "in")
+   ("-" sbw/bindings--zoom-out "out")
+   ("0" sbw/bindings--zoom-reset "reset")
    ("q" nil "quit" :color blue)))
 
 (key-chord-define-global

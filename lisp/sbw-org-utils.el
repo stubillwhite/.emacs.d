@@ -13,7 +13,7 @@
              (lambda (x) (when (outline-previous-heading) (cons (point) x)))
              :unused-seed))
       (org-overview))
-    points))
+    (reverse points)))
 
 (defun sbw/org-utils--replace-urls-with-descriptions (s)
   (let* ( (str s) )

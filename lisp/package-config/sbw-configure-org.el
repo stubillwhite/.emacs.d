@@ -133,7 +133,8 @@
     (setq org-protocol-default-template-key nil)
 
     (defun sbw/org-extract-jira-description (s)
-      (let* ( (regex "^\\(.*\\) - JIRA") )
+      (setq white-debug s)
+      (let* ( (regex "^\\(.*\\) - \\(JIRA\\|Mendeley JIRA\\)") )
         (if (string-match regex s)
             (match-string 1 s)
           s)))
