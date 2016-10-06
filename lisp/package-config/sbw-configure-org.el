@@ -45,13 +45,15 @@
      org-frame-title-format-backup              sbw/frame-title-format       ;; Override title frame title format
      org-tag-alist                              nil                          ;; No tags
      org-startup-folded                         'content                     ;; Display content when first opening org files
+     org-hide-block-startup                     t                            ;; Do not display code block content when opening org files
      org-context-in-file-links                  nil                          ;; Don't store position when creating file links
      )
 
     ;; Babel
     
     (org-babel-do-load-languages                'org-babel-load-languages
-                                                '((emacs-lisp . t)
+                                                '((clojure    . t)
+                                                  (emacs-lisp . t)
                                                   (sh         . t)
                                                   (python     . t)
                                                   (perl       . t)
@@ -63,6 +65,13 @@
      org-babel-sh-command        "zsh -i" ;; Interactive Zsh for shell
      org-confirm-babel-evaluate  nil      ;; Don't ask confirmation to execute
      )
+
+    (require 'ob-clojure)
+    (setq org-babel-clojure-backend 'cider)
+
+    (setq org-babel-default-header-args:clojure
+          (cons '(:results . "replace output drawer")
+                (assq-delete-all :results org-babel-default-header-args)))
 
     ;; Capture standard error when executing shell blocks
     ;; (setq org-babel-default-header-args:sh '((:prologue . "exec 2>&1")
