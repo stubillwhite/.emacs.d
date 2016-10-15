@@ -86,6 +86,9 @@
      ;; Markdown
      (:name markdown-mode     :load :immediate) ;; Markdown mode
 
+     ;; Elm
+     (:name elm-mode          :load :immediate) ;; Elm mode for emacs
+     
      ;; JSON
      (:name json-mode         :load :immediate) ;; Major mode for editing JSON files
 

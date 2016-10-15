@@ -54,10 +54,12 @@
 (setq
  ediff-highlight-all-diffs   'nil                                        ;; Just highlight the current diff
  ediff-temp-file-prefix      (expand-file-name temporary-file-directory) ;; Temporary file location
- ediff-diff-options          "-w"                                        ;; Not whitespace sensitive by default
  ediff-window-setup-function 'ediff-setup-windows-plain                  ;; Single frame for Ediff mode-line
  ediff-split-window-function 'split-window-horizontally                  ;; Vertical split
  )
+
+;; Not whitespace sensitive by default
+(setq-default ediff-ignore-similar-regions t)
 
 (defun sbw/cosmetics-save-window-config ()
   "Store the current window configuration."

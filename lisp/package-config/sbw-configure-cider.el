@@ -20,20 +20,20 @@
 
     ;; General settings
     (setq 
-      cider-auto-select-error-buffer        nil      ;; Don't auto-select the error buffer when displayed
-      cider-popup-stacktraces               nil      ;; Suppress the error buffer pop up in buffers other than the REPL
-      cider-repl-display-in-current-window  t        ;; C-c C-z switch to the REPL
-      cider-repl-history-size               3000     ;; Longer history
-      cider-repl-pop-to-buffer-on-connect   nil      ;; Suppress auto-display of the REPL buffer on connection
-      cider-repl-popup-stacktraces          nil      ;; Don't allow the the error buffer to pop up in the REPL
-      cider-repl-print-length               100      ;; Limit the items of collections to print
-      cider-repl-result-prefix              ";; => " ;; Comment prefix for results in the REPL
-      cider-repl-use-clojure-font-lock      t        ;; Prettier fonts in the REPL
-      cider-repl-use-pretty-printing        nil      ;; Pretty print results in the REPL
-      cider-repl-wrap-history               t        ;; Wrap history
-      nrepl-log-messages                    t        ;; Log messages to aid debug of CIDER problems
-      nrepl-port                            "4555"   ;; Default port number
-      )
+     cider-auto-select-error-buffer        nil      ;; Don't auto-select the error buffer when displayed
+     cider-popup-stacktraces               nil      ;; Suppress the error buffer pop up in buffers other than the REPL
+     cider-repl-display-in-current-window  t        ;; C-c C-z switch to the REPL
+     cider-repl-history-size               3000     ;; Longer history
+     cider-repl-pop-to-buffer-on-connect   nil      ;; Suppress auto-display of the REPL buffer on connection
+     cider-repl-popup-stacktraces          nil      ;; Don't allow the the error buffer to pop up in the REPL
+     cider-repl-print-length               100      ;; Limit the items of collections to print
+     cider-repl-result-prefix              ";; => " ;; Comment prefix for results in the REPL
+     cider-repl-use-clojure-font-lock      t        ;; Prettier fonts in the REPL
+     cider-repl-use-pretty-printing        nil      ;; Pretty print results in the REPL
+     cider-repl-wrap-history               t        ;; Wrap history
+     nrepl-log-messages                    t        ;; Log messages to aid debug of CIDER problems
+     nrepl-port                            "4555"   ;; Default port number
+     )
 
     (setq cider-lein-command
           (if (sbw/is-darwin?)
@@ -42,8 +42,8 @@
 
     ;; Better naming for the REPL buffer
     (setq 
-      nrepl-buffer-name-separator "-"
-      nrepl-buffer-name-show-port t)
+     nrepl-buffer-name-separator "-"
+     nrepl-buffer-name-show-port t)
 
     ;; Helper functions
 
@@ -52,8 +52,8 @@
       (let* ( (repl-buffer (cider-current-repl-buffer)) )
         (when (not (eq (current-buffer) repl-buffer))
           (if (get-buffer-window repl-buffer)
-            (progn
-              (switch-to-buffer-other-window repl-buffer))
+              (progn
+                (switch-to-buffer-other-window repl-buffer))
             (progn
               (split-window-right)
               (switch-to-buffer-other-window (buffer-name))
@@ -77,17 +77,16 @@
       (cider-insert-in-repl "(refresh-all)" t)
       (cider-insert-in-repl "(reset)" t))
 
-    (defun sbw/cider-jack-in-and-go ()
+    (defun sbw/cider-org-mode-jack-in ()
+      "Start the org-mode-babel REPL."
       (interactive)
-      (save-some-buffers t)
-      (sbw/cider-switch-to-repl-buffer)
-      (cider-insert-in-repl "(ns user)")
-      (cider-insert-in-repl "(go)"))
+      (with-current-buffer (find-file (concat org-directory "/project.clj"))
+        (cider-jack-in))))
 
-    (bind-keys :map cider-mode
-      ("TAB"    . cider-repl-indent-and-complete-symbol)
-      ("<f5>"   . sbw/cider-reset-repl)
-      ("C-<f5>" . sbw/cider-refresh-repl)))
-  )
+  :bind
+  (:map cider-mode
+        ("TAB"    . cider-repl-indent-and-complete-symbol)
+        ("<f5>"   . sbw/cider-reset-repl)
+        ("C-<f5>" . sbw/cider-refresh-repl)))
 
 (provide 'sbw-configure-cider)
