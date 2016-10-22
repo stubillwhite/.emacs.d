@@ -75,13 +75,26 @@
       (puthash :level    (funcall outline-level) summary)
       (puthash :clock    (sbw/org-utils--extract-clock) summary)
       (puthash :closed   (sbw/org-utils--extract-timestamp (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
-    summary)
-  )
+    summary))
 
 (defun sbw/org-utils-heading-summaries-for-file (fnam)
   "Return summaries for all the headings in file fnam."
   (set-buffer (find-file-noselect fnam))
   (-map 'sbw/org-utils-heading-summary-at-point (sbw/org-utils-heading-points-for-current-buffer)))
 
+;; (defun sbw/org-utils--group (summaries grouped curr)
+;;   (if-let ((next       (car sum))
+;;            (next-level (sbw/ht-get next :level))
+;;            (curr-level (sbw/ht-get curr :level)))
+;;       (cond
+;;        (< curr-level next-level) (sbw/org-utils--group (cdr summaries) ())
+;;        (= curr-level next-level) (sbw/org-utils--group (cdr summaries) (cons curr grouped) next)
+;;        (> curr-level next-level) (sbw/org-utils--group (cdr summaries) grouped (sbw/ht-update-in curr [:children] (lambda (x) (cons next x)) curr)))
+;;       ))
+
+;; (defun sbw/org-utils-heading-summaries-for-file-grouped (fnam)
+;;   (-reduce))
+
 (provide 'sbw-org-utils)
+
 

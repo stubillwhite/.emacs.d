@@ -26,6 +26,13 @@
     (lexical-let* ( (summaries (sbw/org-utils-heading-summaries-for-file (funcall test-file "clocked-time-report-input.org")))
                     (expected  (funcall file-text "clocked-time-report-expected.txt"))
                     (actual    (sbw/org-review-clocked-time-generate-report config summaries)) )
+      (should (string= actual expected))))
+
+  (ert-deftest sbw/org-review-new-clocked-time-generate-report-then-expected-report ()
+    "sbw/org-review-new-clocked-time-generate-report then expected report"
+    (lexical-let* ( (summaries (sbw/org-utils-heading-summaries-for-file (funcall test-file "new-clocked-time-report-input.org")))
+                    (expected  (funcall file-text "new-clocked-time-report-expected.txt"))
+                    (actual    (sbw/org-review-new-clocked-time-generate-report config summaries)) )
       (should (string= actual expected)))))
 
 (provide 'sbw-org-reports-test)
