@@ -72,7 +72,7 @@
         (cider-jack-in))))
 
   :bind
-  (:map cider-mode
+  (:map cider-mode-map
         ("TAB"    . cider-repl-indent-and-complete-symbol)
         ("<f5>"   . sbw/cider-reset-repl)
         ("C-<f5>" . sbw/cider-refresh-repl)))
