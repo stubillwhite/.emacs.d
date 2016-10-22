@@ -31,7 +31,10 @@
                                     expected-summary-2)))
       (should (sbw/value-eq actual expected))))
 
-  (pp (sbw/org-utils-heading-summaries-for-file filename))
+  ;; (pp (sbw/org-utils-heading-summaries-for-file filename)) 
+  (sbw/pprint-as-json (sbw/org-utils-heading-summaries-for-file filename))
   nil)
+
+
 
 (provide 'sbw-org-utils-test)

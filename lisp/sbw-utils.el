@@ -24,6 +24,33 @@
     (concat (substring s 0 (- n 1)) "\u2026")
     s))
 
+(defun sbw/open-and-switch-to-window (buf)
+  "Open the buffer if it not currently open and switch focus to it."
+  (when (not (eq (current-buffer) buf))
+    (if (get-buffer-window buf)
+        (progn
+          (switch-to-buffer-other-window buf))
+      (progn
+        (split-window-right)
+        (switch-to-buffer-other-window (buffer-name))
+        (switch-to-buffer buf)))))
+
+(defun sbw/pprint-as-json (x)  
+  "Pretty-print object x as JSON in a temporary window."
+  (let* ((tmp-buf-name "*sbw/pprint-as-json*"))    
+    (sbw/open-and-switch-to-window tmp-buf-name)
+    (with-output-to-temp-buffer tmp-buf-name 
+      (->> (json-encode x)
+           (replace-regexp-in-string "\\\\\"" "\"")
+           (s-chop-prefix "\"")
+           (s-chop-suffix "\"")
+           (insert))
+      (json-pretty-print-buffer))    
+    (json-mode)
+    (use-local-map (copy-keymap json-mode-map))
+    (local-set-key "q" 'delete-window)
+    (message "Press 'q' to quit")))
+
 ;; TODO Test this
 ;; TODO Might be replaced with s.el now?
 (defun sbw/collect-by (f l)

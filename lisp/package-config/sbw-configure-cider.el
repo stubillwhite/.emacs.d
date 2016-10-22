@@ -47,23 +47,11 @@
 
     ;; Helper functions
 
-    (defun sbw/cider-switch-to-repl-buffer ()
-      "Open the REPL window if it not currently open and switch focus to it."
-      (let* ( (repl-buffer (cider-current-repl-buffer)) )
-        (when (not (eq (current-buffer) repl-buffer))
-          (if (get-buffer-window repl-buffer)
-              (progn
-                (switch-to-buffer-other-window repl-buffer))
-            (progn
-              (split-window-right)
-              (switch-to-buffer-other-window (buffer-name))
-              (switch-to-buffer repl-buffer))))))
-
     (defun sbw/cider-reset-repl ()
       "Open the REPL window if it not currently open, switch focus to it, and reset."
       (interactive)
       (save-some-buffers t)
-      (sbw/cider-switch-to-repl-buffer)
+      (sbw/open-and-switch-to-window (cider-current-repl-buffer))
       (cider-insert-in-repl "(ns user)" t)
       (cider-insert-in-repl "(reset)" t))
 
@@ -71,7 +59,7 @@
       "Open the REPL window if it not currently open, switch focus to it, and refresh."
       (interactive)
       (save-some-buffers t)
-      (sbw/cider-switch-to-repl-buffer)
+      (sbw/open-and-switch-to-window (cider-current-repl-buffer))
       (cider-repl-clear-buffer)
       (cider-insert-in-repl "(ns user)" t)
       (cider-insert-in-repl "(refresh-all)" t)

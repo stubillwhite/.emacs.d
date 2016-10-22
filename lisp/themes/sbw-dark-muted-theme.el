@@ -97,12 +97,14 @@
     `(avy-lead-face-2                     ((t (:inherit sbw-dark-muted-emphasis))))
         
     ;; company
-    `(company-tooltip                     ((t (:inherit sbw-dark-muted-menu))))
-    `(company-tooltip-common              ((t (:inherit sbw-dark-muted-menu :foreground ,*emphasis-fg*))))
-    `(company-tooltip-common-selection    ((t (:inherit sbw-dark-muted-menu-selection :foreground ,*emphasis-fg*))))
-    `(company-tooltip-selection           ((t (:inherit sbw-dark-muted-menu-selection))))
-    `(company-scrollbar-bg                ((t (:inherit sbw-dark-muted-menu))))
-    `(company-scrollbar-fg                ((t (:inherit sbw-dark-muted-menu-selection))))
+    `(company-tooltip                       ((t (:inherit sbw-dark-muted-menu))))
+    `(company-tooltip-common                ((t (:inherit sbw-dark-muted-menu :foreground ,*emphasis-fg*))))
+    `(company-tooltip-common-selection      ((t (:inherit sbw-dark-muted-menu-selection :foreground ,*emphasis-fg*))))
+    `(company-tooltip-annotation            ((t (:inherit sbw-dark-muted-menu))))
+    `(company-tooltip-annotation-selection  ((t (:inherit sbw-dark-muted-menu-selection :foreground ,*emphasis-fg*))))
+    `(company-tooltip-selection             ((t (:inherit sbw-dark-muted-menu-selection))))
+    `(company-scrollbar-bg                  ((t (:inherit sbw-dark-muted-menu))))
+    `(company-scrollbar-fg                  ((t (:inherit sbw-dark-muted-menu-selection))))
 
     ;; compile
     `(compilation-info                    ((t (:inherit sbw-dark-muted-emphasis))))
