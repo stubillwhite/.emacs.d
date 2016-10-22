@@ -1,5 +1,9 @@
 (require 'sbw-message)
 
+;; Prevent the built-in package manager from customising my files
+(setq custom-file "~/.emacs.d/emacs-customisations.el")
+(load custom-file)
+
 (defvar sbw/bootstrap--state
   (list
     :on-idle-pkgs (list)
