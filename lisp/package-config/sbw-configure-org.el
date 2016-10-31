@@ -265,4 +265,23 @@ scheduled date, deadline, then alphabetic."
   (let* ( (fill-column (point-max)) )
     (fill-region start end nil)))
 
+(defun sbw/org-babel--copy-errors-to-output-advice (orig-fun &rest args)
+  (let* ((exit-code (apply orig-fun args)))
+    (if (> exit-code 0)
+        (progn
+          (insert "-- ERROR --\n\n")
+          (insert-buffer-substring (get-buffer-create " *Org-Babel Error*"))
+          (goto-char (point-min))
+          (while (re-search-forward "" nil t)
+            (replace-match "\n"))
+          0)
+      exit-code)))
+
+(defun sbw/org-babel-copy-errors-to-output (enable)
+  (if enable
+      (advice-add 'org-babel--shell-command-on-region :around #'sbw/org-babel--copy-errors-to-output-advice)
+    (advice-remove 'org-babel--shell-command-on-region #'sbw/org-babel--copy-errors-to-output-advice)))
+
+(sbw/org-babel-copy-errors-to-output nil)
+
 (provide 'sbw-configure-org-mode)
