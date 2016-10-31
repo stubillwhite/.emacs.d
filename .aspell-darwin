@@ -1,4 +1,4 @@
-personal_ws-1.1 en 73 
+personal_ws-1.1 en 82 
 comparator
 ARN
 Mesos
@@ -13,9 +13,11 @@ namespace
 Elasticache
 ASGs
 BOS
+appender
 Dev
 scalability
 Reza
+Pangram
 Artifactory
 Productionise
 composability
@@ -28,21 +30,27 @@ GC
 Adamos
 Covariant
 ScienceDirect
+parameterise
 PII
 HBase
 UUID
 Xuemin's
 IllegalArgumentException
 FST
+Dropwizard
 Clojure
 balancer
 TIO
+RDBMS
 APIs
+AssertJ
 SNS
 SPI
 prototyped
 impedence
+JVM
 Solr
+POJO
 aggregator
 CRS
 Ai's
@@ -67,6 +75,7 @@ SBT
 Newsflo
 Monads
 Scopus
+POJOs
 pluggable
 Coursera
 Terraform

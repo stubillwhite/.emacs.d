@@ -32,7 +32,7 @@
       (should (sbw/value-eq actual expected))))
 
   ;; (pp (sbw/org-utils-heading-summaries-for-file filename)) 
-  (sbw/pprint-as-json (sbw/org-utils-heading-summaries-for-file filename))
+  ;; (sbw/pprint-as-json (sbw/org-utils-heading-summaries-for-file filename))
   nil)
 
 
