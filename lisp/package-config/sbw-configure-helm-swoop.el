@@ -14,8 +14,10 @@
 
     ;; When doing isearch, hand the word over to helm-swoop
     (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+
     ;; From helm-swoop to helm-multi-swoop-all
     (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+
     ;; When doing evil-search, hand the word over to helm-swoop
     ;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
 
@@ -29,3 +31,4 @@
 
 
 (provide 'sbw-configure-helm-swoop)
+
