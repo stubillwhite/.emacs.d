@@ -1,0 +1,5 @@
+(:name emacs-scala-mode
+       :description "The definitive scala-mode for emacs"
+       :website "https://github.com/ensime/emacs-scala-mode"
+       :type github
+       :pkgname "ensime/emacs-scala-mode")

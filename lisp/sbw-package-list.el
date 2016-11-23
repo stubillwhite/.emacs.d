@@ -13,12 +13,13 @@
      (:name cygwin-mount    :load :immediate) ;; Teach cygwin EMACS about windows styles path
    
      ;; Evil
-     (:name evil            :load :immediate) ;; Welcome home
-     (:name evil-leader     :load :immediate) ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
+     ;; (:name evil            :load :immediate) ;; Welcome home
+     ;; (:name evil-leader     :load :immediate) ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
      (:name key-chord       :load :immediate) ;; Map pairs of simultaneously pressed keys to commands
      
      ;; General usability
-     (:name undo-tree           :load :immediate) ;; Undo tree visualisation
+     ;; Disabled due to Emacs bug #24640
+     ;; (:name undo-tree           :load :immediate) ;; Undo tree visualisation
      (:name flyspell            :load :immediate) ;; Spell checking
      (:name flyspell-correct    :load :immediate) ;; Correcting words with flyspell via custom interface
      (:name flycheck            :load :immediate) ;; Syntax checking
@@ -63,6 +64,7 @@
      (:name helm-swoop        :load :immediate) ;; Efficiently skipping between matches
      (:name helm-projectile   :load :immediate) ;; Helm integration for projectile
      (:name helm-ag           :load :immediate) ;; The silver searcher with Helm interface
+     (:name helm-descbinds    :load :immediate) ;; A helm frontend for describe-bindings
      (:name helm-flycheck     :load :immediate) ;; Show flycheck errors with Helm
      (:name helm-flyspell     :load :immediate) ;; Helm extension for correcting words with Flyspell
      (:name helm-dash         :load :immediate) ;; Browse Dash docsets inside Emacs
@@ -100,7 +102,7 @@
      (:name rainbow-mode      :load :immediate) ;; Colorize color names in buffers
     
      ;; Scala
-     (:name scala-mode2       :load :immediate) ;; Scala mode
+     (:name emacs-scala-mode  :load :immediate) ;; Scala mode
      
      ;; Yaml
      (:name yaml-mode         :load :immediate) ;; YAML mode
