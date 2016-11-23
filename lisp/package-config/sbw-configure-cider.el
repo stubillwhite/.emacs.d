@@ -35,11 +35,16 @@
      nrepl-port                            "4555"   ;; Default port number
      )
 
+    ;; Leiningen
     (setq cider-lein-command
           (if (sbw/is-darwin?)
               "/usr/local/bin/lein"
             "~/tools/bin/lein"))
 
+    ;; Boot
+    (add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
+    (add-to-list 'magic-mode-alist '(".* boot" . clojure-mode))
+    
     ;; Better naming for the REPL buffer
     (setq 
      nrepl-buffer-name-separator "-"
