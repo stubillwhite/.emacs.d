@@ -27,6 +27,7 @@
   
   ;; (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
   ;; (define-key isearch-mode-map (kbd "M-3") '(lambda () (interactive) (isearch-process-search-char ?\#)))
+  (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "£")))
   )
 
 (defun sbw/bindings--zoom-and-redraw (f)
