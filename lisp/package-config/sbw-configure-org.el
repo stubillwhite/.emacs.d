@@ -47,6 +47,7 @@
      org-startup-folded                         'content                     ;; Display content when first opening org files
      org-hide-block-startup                     t                            ;; Do not display code block content when opening org files
      org-context-in-file-links                  nil                          ;; Don't store position when creating file links
+     org-src-window-setup                       'current-window              ;; Edit source blocks in the current frame
      )
 
     ;; Babel
@@ -54,7 +55,7 @@
     (org-babel-do-load-languages                'org-babel-load-languages
                                                 '((clojure    . t)
                                                   (emacs-lisp . t)
-                                                  (sh         . t)
+                                                  (shell      . t)
                                                   (python     . t)
                                                   (perl       . t)
                                                   (dot        . t)))
