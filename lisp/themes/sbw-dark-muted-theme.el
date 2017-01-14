@@ -180,8 +180,7 @@
     
     `(hydra-face-blue                     ((t (:inherit sbw-dark-muted-keyword))))
     `(hydra-face-red                      ((t (:inherit sbw-dark-muted-error))))
-    
-        
+            
     ;; nXML
     `(nxml-attribute-colon                ((t (:inherit sbw-dark-muted-normal))))
     `(nxml-attribute-local-name           ((t (:inherit sbw-dark-muted-normal))))

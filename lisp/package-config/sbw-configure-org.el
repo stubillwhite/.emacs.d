@@ -15,8 +15,8 @@
           (cond
            ((sbw/is-linux?)   "~/Dropbox/Private/org")
            ((sbw/is-windows?) "/cygdrive/c/Users/IBM_ADMIN/Dropbox/Private/org")
-           ((sbw/is-darwin?)  "~/Dev/org")))
-        
+           ((sbw/is-darwin?)  "~/Dropbox/Private/org")))
+
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."
       (-mapcat
@@ -48,6 +48,8 @@
      org-hide-block-startup                     t                            ;; Do not display code block content when opening org files
      org-context-in-file-links                  nil                          ;; Don't store position when creating file links
      org-src-window-setup                       'current-window              ;; Edit source blocks in the current frame
+     org-image-actual-width                     '(40)                        ;; Default 100px, unless there is a #+ATTR.*: width="200"
+     org-use-speed-commands                     t                            ;; Enable speed commands
      )
 
     ;; Babel
@@ -158,7 +160,7 @@
     
     (setq org-capture-templates
           '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-              "* TODO Check out %?%a\n%i")
+              "* TODO [#C] Check out %?%a\n%i")
              ("j" "JIRA task" entry (file+headline org-default-notes-file "Tasks")
               "* TODO %?%(sbw/org-capture-jira-task)") ))
 
@@ -224,7 +226,7 @@ scheduled date, deadline, then alphabetic."
     ;; When storing file links, abbreviate the description to just the filename
 
     (defun sbw/org-make-link-description (link description)
-      (if (s-starts-with? "file" link) (f-filename description) (read-string "Description: " desc)))
+      (if (s-starts-with? "file" link) (f-filename description) (read-string "Description: " description)))
     (setq org-make-link-description-function 'sbw/org-make-link-description)
     
     ;; Stuff to rationalise

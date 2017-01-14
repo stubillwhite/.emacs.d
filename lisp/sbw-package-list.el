@@ -19,7 +19,7 @@
      
      ;; General usability
      ;; Disabled due to Emacs bug #24640
-     ;; (:name undo-tree           :load :immediate) ;; Undo tree visualisation
+     (:name undo-tree           :load :disable)   ;; Undo tree visualisation
      (:name flyspell            :load :immediate) ;; Spell checking
      (:name flyspell-correct    :load :immediate) ;; Correcting words with flyspell via custom interface
      (:name flycheck            :load :immediate) ;; Syntax checking
@@ -29,17 +29,12 @@
      (:name keyfreq             :load :immediate) ;; Track Emacs commands frequency
      (:name macrostep           :load :immediate) ;; Interactive macro expander for Emacs
      (:name zoom-frm            :load :immediate) ;; Commands to zoom frame font size
+     (:name focus               :load :immediate) ;; Dim the color of text in surrounding paragraphs
      
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
      (:name htmlize           :load :on-idle)   ;; html org-mode reports
      (:name org-gcal          :load :on-idle)   ;; Org sync with Google Calendar
-
-     ;; Text
-     (:name speed-type        :load :on-use) ;; Typing tests
-
-     ;; Git
-     (:name magit             :load :immediate) ;; Control Git from Emacs
 
      ;; Auto-complete
      (:name company           :load :immediate) ;; Auto-completion
@@ -74,6 +69,18 @@
      (:name async             :load :immediate) ;; Asynchronous processing in Emacs
      (:name nameless          :load :immediate) ;; Less is more. Hide package namespace in your emacs-lisp code
 
+     ;; Tools
+
+     ;; Text
+     (:name speed-type        :load :on-use) ;; Typing tests
+
+     ;; Git
+     (:name magit             :load :immediate) ;; Control Git from Emacs
+
+     ;; Docker
+     (:name docker            :load :immediate) ;; Manage Docker from Emacs
+
+     
      ;; Languages
      
      ;; Clojure
@@ -81,12 +88,10 @@
      (:name cider             :load :immediate) ;; REPL support
      (:name smartparens       :load :immediate) ;; Improved paredit
      (:name clj-refactor      :load :immediate) ;; Clojure refactoring functions
+     (:name cljr-helm         :load :immediate) ;; Helm wrapper for clj-refactor
      
      ;; Graphviz
      (:name graphviz-dot-mode :load :immediate) ;; Graphviz DOT file support and previews
-
-     ;; Markdown
-     (:name markdown-mode     :load :immediate) ;; Markdown mode
 
      ;; Elm
      (:name elm-mode          :load :immediate) ;; Elm mode for emacs
@@ -97,9 +102,15 @@
      ;; Groovy
      (:name groovy-mode       :load :immediate) ;; Groovy mode
 
+     ;; Haskell
+     (:name haskell-mode      :load :immediate) ;; Haskell mode
+     
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
      (:name rainbow-mode      :load :immediate) ;; Colorize color names in buffers
+
+     ;; Markdown
+     (:name markdown-mode     :load :immediate) ;; Markdown mode
     
      ;; Scala
      (:name emacs-scala-mode  :load :immediate) ;; Scala mode

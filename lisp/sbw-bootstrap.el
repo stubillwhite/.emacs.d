@@ -21,6 +21,11 @@
                    (idle-delay   (plist-get ,state :idle-delay)) )
      ,@body))
 
+(defun sbw/bootstrap--disable-package (pkg)
+  (sbw/bootstrap--with-package-config pkg
+    (let* ( (pkg-name    (symbol-name name)) )
+      (message (format "Skipping %s because it is disabled" pkg-name)))))
+
 (defun sbw/bootstrap--load-package-now (pkg)
   (sbw/bootstrap--with-package-config pkg
     (let* ( (pkg-name    (symbol-name name))
@@ -43,9 +48,10 @@
 
 (defun sbw/bootstrap--load-package (pkg)
   (sbw/bootstrap--with-package-config pkg
-    (cond
-      ((eq load :immediate) (sbw/bootstrap--load-package-now pkg))
-      ((eq load :on-idle)   (sbw/bootstrap--load-package-later pkg)))))
+   (cond
+    ((eq load :disable)   (sbw/bootstrap--disable-package pkg))
+    ((eq load :immediate) (sbw/bootstrap--load-package-now pkg))
+    ((eq load :on-idle)   (sbw/bootstrap--load-package-later pkg)))))
 
 (defun sbw/bootstrap-load-and-configure-packages (pkg-list)
   (mapc 'sbw/bootstrap--load-package pkg-list))

@@ -55,6 +55,30 @@
    ("0" sbw/bindings--zoom-reset "reset")
    ("q" nil "quit" :color blue)))
 
+(defun sbw/bindings--update-frame-parameter (frame param f)
+  (set-frame-parameter frame param (funcall f (frame-parameter frame param))))
+
+(defun sbw/bindings--transparency-inc ()
+  (interactive)
+  (sbw/bindings--update-frame-parameter (selected-frame) 'alpha (lambda (x) (max 0 (- x 10)))))
+
+(defun sbw/bindings--transparency-dec ()
+  (interactive)
+  (sbw/bindings--update-frame-parameter (selected-frame) 'alpha (lambda (x) (min 100 (+ x 10)))))
+
+(defun sbw/bindings--transparency-reset ()
+  (interactive)
+  (set-frame-parameter (selected-frame) 'alpha 100))
+
+(key-chord-define-global
+ "§t"
+ (defhydra hydra-transparency ()
+   "transparency"
+   ("=" sbw/bindings--transparency-inc "inc")
+   ("-" sbw/bindings--transparency-dec "dec")
+   ("0" sbw/bindings--transparency-reset "reset")
+   ("q" nil "quit" :color blue)))
+
 (key-chord-define-global
  "§o"
  (defhydra hydra-org (:color red :columns 3)
@@ -226,3 +250,5 @@ _q_   Quit
 (add-hook 'org-mode-hook #'sbw-org-mode-minor-mode)
 
 (provide 'sbw-bindings)
+
+(setq org-tags-column 130)

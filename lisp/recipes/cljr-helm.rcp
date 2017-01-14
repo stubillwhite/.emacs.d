@@ -1,0 +1,5 @@
+(:name cljr-helm
+       :description "Helm wrapper for clj-refactor"
+       :website "https://github.com/philjackson/cljr-helm"
+       :type github
+       :pkgname "philjackson/cljr-helm")

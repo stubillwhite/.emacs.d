@@ -174,22 +174,22 @@
 ;; 
 ;; Alan Lomax - Sounds of the South
 
-(defun sbw/org-review-new-clocked-time-generate-report (config summaries)
-  (-let* ( (-add-total-time-clocked-in-period (lambda (x) (sbw/org-review-clocked-time--add-total-time-clocked-in-period config x)))
-           (-some-time-clocked-in-period?     (lambda (x) (sbw/org-review-clocked-time--some-time-clocked-in-period? config x))) )
-    (->> summaries
-         (funcall -add-total-time-clocked-in-period)
-         (-filter -some-time-clocked-in-period?)
-         )))
+;; (defun sbw/org-review-new-clocked-time-generate-report (config summaries)
+;;   (-let* ( (-add-total-time-clocked-in-period (lambda (x) (sbw/org-review-clocked-time--add-total-time-clocked-in-period config x)))
+;;            (-some-time-clocked-in-period?     (lambda (x) (sbw/org-review-clocked-time--some-time-clocked-in-period? config x))) )
+;;     (->> summaries
+;;          (funcall -add-total-time-clocked-in-period)
+;;          (-filter -some-time-clocked-in-period?)
+;;          )))
 
-(lexical-let* ( (start     (days-to-time 0))
-                (end       (days-to-time 7))
-                (test-file (lambda (x) (format "~/.emacs.d/lisp/test/org-review-test/%s" x)))
-                (config    (sbw/org-review-config nil nil start end nil))
-                (file-text (lambda (x) (f-read-text (funcall test-file x)))) )
-  (lexical-let* ( (summaries (sbw/org-utils-heading-summaries-for-file (funcall test-file "new-clocked-time-report-input.org")))
-                  (actual    (sbw/org-review-new-clocked-time-generate-report config summaries)) )
-    (sbw/pprint-as-json actual)))
+;; (lexical-let* ( (start     (days-to-time 0))
+;;                 (end       (days-to-time 7))
+;;                 (test-file (lambda (x) (format "~/.emacs.d/lisp/test/org-review-test/%s" x)))
+;;                 (config    (sbw/org-review-config nil nil start end nil))
+;;                 (file-text (lambda (x) (f-read-text (funcall test-file x)))) )
+;;   (lexical-let* ( (summaries (sbw/org-utils-heading-summaries-for-file (funcall test-file "new-clocked-time-report-input.org")))
+;;                   (actual    (sbw/org-review-new-clocked-time-generate-report config summaries)) )
+;;     (sbw/pprint-as-json actual)))
 
 
 ;; * 1

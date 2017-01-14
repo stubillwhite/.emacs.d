@@ -8,5 +8,5 @@
   (progn)
 
   :bind
-  ("M-S-f" . helm-ag))
+  ("M-F" . helm-do-ag-project-root))
 

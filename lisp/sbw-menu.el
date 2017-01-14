@@ -96,6 +96,7 @@
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
+            (sbw/menu-action ?f "Refresh" 'sbw/org-config-refresh)
             (sbw/menu-submenu ?r "Review"
                               (sbw/menu "Review"
                                         (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
