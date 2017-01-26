@@ -76,6 +76,14 @@
           (cons '(:results . "replace output drawer")
                 (assq-delete-all :results org-babel-default-header-args)))
 
+    (defun sbw/org--construct-edit-buffer-name-advice (orig-fun &rest args)
+      "Construct a prettier buffer name for a source editing buffer."
+      (let* ( (org-buffer-name (car args))
+              (lang            (cadr args)) )
+        (concat org-buffer-name "-src-" lang)))
+
+    (advice-add 'org-src--construct-edit-buffer-name :around #'sbw/org--construct-edit-buffer-name-advice)
+    
     ;; Capture standard error when executing shell blocks
     ;; (setq org-babel-default-header-args:sh '((:prologue . "exec 2>&1")
     ;;                                          (:epilogue . ":")))

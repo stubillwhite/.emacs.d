@@ -55,16 +55,18 @@
    ("0" sbw/bindings--zoom-reset "reset")
    ("q" nil "quit" :color blue)))
 
-(defun sbw/bindings--update-frame-parameter (frame param f)
-  (set-frame-parameter frame param (funcall f (frame-parameter frame param))))
+(defun sbw/bindings--update-frame-parameter (frame param f default)
+  (let* ((curr-val (frame-parameter frame param))
+         (curr-val (or curr-val default)))
+    (set-frame-parameter frame param (funcall f curr-val))))
 
 (defun sbw/bindings--transparency-inc ()
   (interactive)
-  (sbw/bindings--update-frame-parameter (selected-frame) 'alpha (lambda (x) (max 0 (- x 10)))))
+  (sbw/bindings--update-frame-parameter (selected-frame) 'alpha (lambda (x) (max 0 (- x 10))) 100))
 
 (defun sbw/bindings--transparency-dec ()
   (interactive)
-  (sbw/bindings--update-frame-parameter (selected-frame) 'alpha (lambda (x) (min 100 (+ x 10)))))
+  (sbw/bindings--update-frame-parameter (selected-frame) 'alpha (lambda (x) (min 100 (+ x 10))) 100))
 
 (defun sbw/bindings--transparency-reset ()
   (interactive)

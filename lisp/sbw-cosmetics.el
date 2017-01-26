@@ -93,11 +93,6 @@
  uniquify-after-kill-buffer-p t 
  uniquify-ignore-buffers-re   "^\\*")
 
-(defun sbw/transparency (x)
-  "Set the transparency of the window."
-   (interactive "nTransparency: ")
-   (set-frame-parameter (selected-frame) 'alpha x))
-
 ;; CUA mode and shift-click to select
 (cua-mode t)
 (setq cua-auto-tabify-rectangles nil)
