@@ -13,6 +13,7 @@
       ))
 
   :bind
-  ("C-c j" . avy-goto-char))
+  ("C-c j" . avy-goto-char)
+  ("C-c J" . avy-pop-mark))
 
 (provide 'sbw-configure-avy)

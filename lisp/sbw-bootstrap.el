@@ -4,6 +4,11 @@
 (setq custom-file "~/.emacs.d/emacs-customisations.el")
 (load custom-file)
 
+(defun sbw/load-secrets ()
+  "Load encrypted secrets."
+  (interactive)
+  (require 'secrets "secrets.el.gpg"))
+
 (defvar sbw/bootstrap--state
   (list
     :on-idle-pkgs (list)

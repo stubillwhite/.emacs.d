@@ -120,6 +120,10 @@
                                                           (sbw/menu "Work"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-work-agenda)
                                                                     (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-work-tasks)))
+                                        (sbw/menu-submenu ?c "Calendar"
+                                                          (sbw/menu "Calendar"
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-calendar-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-calendar-tasks)))
                                         (sbw/menu-submenu ?p "Personal"
                                                           (sbw/menu "Personal"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-personal-agenda)

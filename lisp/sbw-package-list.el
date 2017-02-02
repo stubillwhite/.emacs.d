@@ -10,7 +10,7 @@
      (:name s               :load :immediate) ;; Modern string API
      (:name names           :load :immediate) ;; Sane namespace handling
      (:name seq             :load :immediate) ;; Unified sequence handling
-     (:name cygwin-mount    :load :immediate) ;; Teach cygwin EMACS about windows styles path
+     (:name cygwin-mount    :load :disable)   ;; Teach cygwin EMACS about windows styles path
    
      ;; Evil
      ;; (:name evil            :load :immediate) ;; Welcome home
@@ -34,7 +34,7 @@
      ;; org-mode
      (:name org               :load :immediate) ;; Your life in plain text
      (:name htmlize           :load :on-idle)   ;; html org-mode reports
-     (:name org-gcal          :load :on-idle)   ;; Org sync with Google Calendar
+     (:name org-gcal          :load :immediate) ;; Org sync with Google Calendar
 
      ;; Auto-complete
      (:name company           :load :immediate) ;; Auto-completion
