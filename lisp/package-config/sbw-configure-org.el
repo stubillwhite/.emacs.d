@@ -231,10 +231,12 @@ scheduled date, deadline, then alphabetic."
       (sbw/sort-all-subtrees-in-buffer)
       nil)
 
-    ;; When storing file links, abbreviate the description to just the filename
+    ;; When storing file links, abbreviate the description to just the filename if not set
 
     (defun sbw/org-make-link-description (link description)
-      (if (s-starts-with? "file" link) (f-filename description) (read-string "Description: " description)))
+      (if (and (s-starts-with? "file" link) (not description))
+          (f-filename (f-expand (nth 1 (s-split-up-to ":" link 1))))
+        (read-string "description: " description)))
     (setq org-make-link-description-function 'sbw/org-make-link-description)
     
     ;; Stuff to rationalise

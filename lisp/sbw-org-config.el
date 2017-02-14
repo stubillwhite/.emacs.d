@@ -181,7 +181,6 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" (sbw/org-config-projects ["current"] ["work"])))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 (sbw/org-config-projects ["current"] ["work"])))
 (add-to-list 'org-agenda-custom-commands '("cc" . "Calendar"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cct" "Calendar tasks" (sbw/org-config-projects ["current"] ["calendar"])))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cca" "Calendar agenda" 7 (sbw/org-config-projects ["current"] ["calendar"])))
 (add-to-list 'org-agenda-custom-commands '("cs" . "Selection"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cst" "Selection tasks" (sbw/ht-get sbw/org-config :selected-projects)))
@@ -199,7 +198,6 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defun sbw/org-config-agenda-work-agenda     () (interactive) (sbw/org-config--open-agenda "cwa"))
 (defun sbw/org-config-agenda-work-tasks      () (interactive) (sbw/org-config--open-agenda "cwt"))
 (defun sbw/org-config-agenda-calendar-agenda () (interactive) (sbw/org-config--open-agenda "cca"))
-(defun sbw/org-config-agenda-calendar-tasks  () (interactive) (sbw/org-config--open-agenda "cct"))
 (defun sbw/org-config-agenda-personal-agenda () (interactive) (sbw/org-config--open-agenda "cpa"))
 (defun sbw/org-config-agenda-personal-tasks  () (interactive) (sbw/org-config--open-agenda "cpt"))
 
