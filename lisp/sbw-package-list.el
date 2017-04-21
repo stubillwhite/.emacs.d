@@ -20,6 +20,7 @@
      ;; General usability
      ;; Disabled due to Emacs bug #24640
      (:name undo-tree           :load :disable)   ;; Undo tree visualisation
+     (:name adaptive-wrap       :load :immediate) ;; Visually wrap text without changing text
      (:name flyspell            :load :immediate) ;; Spell checking
      (:name flyspell-correct    :load :immediate) ;; Correcting words with flyspell via custom interface
      (:name flycheck            :load :immediate) ;; Syntax checking
@@ -32,7 +33,8 @@
      (:name focus               :load :immediate) ;; Dim the color of text in surrounding paragraphs
      
      ;; org-mode
-     (:name org               :load :immediate) ;; Your life in plain text
+     ;; TODO: Workaround for using built-in org
+     ;; (:name org            :load :built-in)  ;; Your life in plain text
      (:name htmlize           :load :on-idle)   ;; html org-mode reports
      (:name org-gcal          :load :immediate) ;; Org sync with Google Calendar
 
@@ -72,14 +74,13 @@
      ;; Tools
 
      ;; Text
-     (:name speed-type        :load :on-use) ;; Typing tests
+     (:name speed-type        :load :immediate) ;; Typing tests
 
      ;; Git
      (:name magit             :load :immediate) ;; Control Git from Emacs
 
      ;; Docker
      (:name docker            :load :immediate) ;; Manage Docker from Emacs
-
      
      ;; Languages
      

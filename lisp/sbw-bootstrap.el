@@ -56,7 +56,9 @@
    (cond
     ((eq load :disable)   (sbw/bootstrap--disable-package pkg))
     ((eq load :immediate) (sbw/bootstrap--load-package-now pkg))
-    ((eq load :on-idle)   (sbw/bootstrap--load-package-later pkg)))))
+    ((eq load :on-idle)   (sbw/bootstrap--load-package-later pkg))
+    ;; ((eq load :built-in)  (sbw/bootstrap))
+    (:else                (signal 'wrong-type-argument load)))))
 
 (defun sbw/bootstrap-load-and-configure-packages (pkg-list)
   (mapc 'sbw/bootstrap--load-package pkg-list))

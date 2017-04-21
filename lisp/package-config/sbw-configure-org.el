@@ -56,11 +56,12 @@
     
     (org-babel-do-load-languages                'org-babel-load-languages
                                                 '((clojure    . t)
+                                                  (dot        . t)
                                                   (emacs-lisp . t)
-                                                  (shell      . t)
-                                                  (python     . t)
                                                   (perl       . t)
-                                                  (dot        . t)))
+                                                  (python     . t)
+                                                  (ruby       . t)
+                                                  (shell      . t)))
 
     (setq org-babel-default-header-args         '((:results . "replace value drawer")))
     
@@ -298,3 +299,4 @@ scheduled date, deadline, then alphabetic."
 (sbw/org-babel-copy-errors-to-output nil)
 
 (provide 'sbw-configure-org-mode)
+

@@ -39,6 +39,9 @@
 (sbw/bootstrap-load-and-configure-packages sbw/pkg-package-list)
 (sbw/bootstrap-load-on-idle-packages-when-idle)
 
+;; TODO: Workaround for using built-in org
+(load-file "~/.emacs.d/lisp/package-config/sbw-configure-org.el")
+
 (sbw/init-message "Loading personal packages")
 (sbw/bootstrap-require sbw/pkg-personal-packages)
 
