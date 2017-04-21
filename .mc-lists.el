@@ -11,6 +11,7 @@
         evilnc-comment-or-uncomment-lines
         helm-show-kill-ring
         kill-region
+        org-beginning-of-line
         org-kill-line
         org-self-insert-command
         orgtbl-self-insert-command
@@ -28,7 +29,9 @@
       '(
         cua-scroll-up
         helm-M-x
+        keyboard-escape-quit
         mouse-yank-primary
+        multiple-cursors-mode
         sbw/hydra-multiple-cursors/body
         sbw/hydra-multiple-cursors/mc/mark-next-like-this
         sbw/hydra-multiple-cursors/mc/mark-previous-like-this
@@ -37,4 +40,5 @@
         sbw/hydra-multiple-cursors/mc/unmark-next-like-this
         sbw/hydra-multiple-cursors/mc/unmark-previous-like-this
         sbw/hydra-multiple-cursors/nil
+        undefined
         ))

@@ -205,11 +205,11 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 
 (setq
  org-agenda-remove-tags   1
- org-agenda-prefix-format '( (agenda   . " %-20:c%-20t%-20s")
+ org-agenda-prefix-format '( (agenda   . " %-25:c%-20t%-20s")
                              (timeline . "  %s")
-                             (todo     . " %-20:c")
-                             (tags     . " %-20:c")
-                             (search   . " %-20:c")) )
+                             (todo     . " %-25:c")
+                             (tags     . " %-25:c")
+                             (search   . " %-25:c")) )
 
 ;; Refresh appointments when the agenda is displayed
 
