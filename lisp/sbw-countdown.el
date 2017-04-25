@@ -30,7 +30,7 @@
 
   (defun remaining-as-string ()
     "Returns the time remaining in the countdown timer as a string."
-    (format-time-string "%H:%M:%S" (remaining-as-time) :utc))
+    (format-time-string "%H:%M:%S" (remaining-as-time) "utc"))
 
   (defun -update-timer ()
     (-with-state sbw/countdown--state
