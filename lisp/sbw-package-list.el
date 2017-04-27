@@ -33,8 +33,7 @@
      (:name focus               :load :immediate) ;; Dim the color of text in surrounding paragraphs
      
      ;; org-mode
-     ;; TODO: Workaround for using built-in org
-     ;; (:name org            :load :built-in)  ;; Your life in plain text
+     (:name org               :load :immediate) ;; Your life in plain text
      (:name htmlize           :load :on-idle)   ;; html org-mode reports
      (:name org-gcal          :load :immediate) ;; Org sync with Google Calendar
 
