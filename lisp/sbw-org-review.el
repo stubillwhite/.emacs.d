@@ -267,9 +267,9 @@
 
 (defun sbw/org-review-config-for-weekly-report (time)
   "Returns the configuration to generate a weekly report."
-  (let* ( (weekday (sbw/ht-get (sbw/time-decompose time) :weekday))
-          (start   (sbw/time-adjust-by time (- (+ weekday 7))))
-          (end     (sbw/time-adjust-by time (- weekday))) )
+  (let* ( (end-date (sbw/time-from-org-string "Sat"))
+          (start    (sbw/time-adjust-by end-date -8))
+          (end      (sbw/time-adjust-by end-date -1)) )
     (sbw/org-review-config
      (sbw/org-review--build-title "Weekly report" start end)
      (sbw/ht-get sbw/org-config :all-projects)

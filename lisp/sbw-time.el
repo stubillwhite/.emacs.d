@@ -52,7 +52,13 @@
   (defun sum (t1 t2)
     "Returns the sum of T1 and T2."
     (seconds-to-time (+ (time-to-seconds t1) (time-to-seconds t2))))
-  
-  )
+
+  (defun from-org-string (s)
+    "Returns the time parse from the org-mode string S."
+    (->> s
+         (org-read-date nil nil)
+         (parse-time-string)
+         (-map (lambda (x) (if x x 0)))
+         (apply 'encode-time))))
 
 (provide 'sbw-time)

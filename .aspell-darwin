@@ -1,4 +1,4 @@
-personal_ws-1.1 en 174 
+personal_ws-1.1 en 180 
 SciVal
 terraformcontrol
 SBT
@@ -14,6 +14,7 @@ Dynus
 TBD
 ARN
 minima
+IPR
 CCBY
 Metabase
 Monad
@@ -31,6 +32,7 @@ IntelliJ
 EIDs
 appender
 Macker
+whitelist
 Dimitrov
 Newsflo
 That'll
@@ -62,6 +64,7 @@ Monads
 Lagom
 JVM
 namespace
+Roadmunk
 parallelised
 ScienceDirect
 Cuda
@@ -89,6 +92,7 @@ overfit
 DOIs
 Lingpipe
 Dojo
+recommenders
 Contravariant
 VGG
 DSL
@@ -107,6 +111,7 @@ Alphabeta
 UI
 Reza
 Puppetfile
+NLP
 inlining
 APIs
 Sensu
@@ -160,6 +165,7 @@ Uzma
 IllegalArgumentException
 GitLab
 Kibana
+Finne
 Elsevier
 HPCC
 timesheet
