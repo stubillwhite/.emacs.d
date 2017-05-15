@@ -7,7 +7,8 @@
 (defun sbw/theme--create-face (name spec)
   (eval `(defface ,name ,spec "Face ,name." :group 'sbw-dark-muted-faces)))
 
-(let* ( (*normal-bg*         "gray10")
+(let* (
+        (*normal-bg*         "gray10")
         (*normal-fg*         "gray80")
         (*emphasis-bg*       *normal-bg*)
         (*emphasis-fg*       "gray100")
@@ -244,6 +245,19 @@
     `(sp-show-pair-match-face             ((t (:inherit sbw-dark-muted-match))))
     `(sp-show-pair-mismatch-face          ((t (:inherit sbw-dark-muted-mismatch))))
 
+    ;; Terminal
+    `(term-color-black                    ((t (:foreground ,*normal-bg*))))
+    `(term-color-blue                     ((t (:foreground "SkyBlue4"))))
+    `(term-color-cyan                     ((t (:foreground "CadetBlue3"))))
+    `(term-color-green                    ((t (:foreground "DarkSeaGreen3"))))
+    `(term-color-magenta                  ((t (:foreground "Coral3"))))
+    `(term-color-red                      ((t (:foreground "Coral4"))))
+    `(term-color-white                    ((t (:foreground ,*normal-fg*))))
+    `(term-color-yellow                   ((t (:foreground "burlywood2"))))
+    
+    
+    
+    
     ;; whitespace
     `(whitespace-empty                    ((t (:inherit sbw-dark-muted-demphasis :underline (:color ,*warning-fg* :style wave)))))
     `(whitespace-line                     ((t (:inherit sbw-dark-muted-demphasis :underline (:color ,*warning-fg* :style wave)))))

@@ -103,6 +103,7 @@
                                         (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
                                         (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
                                         ))
+            (sbw/menu-action ?s "Shell" '(lambda () (interactive) (ansi-term "zsh")))
             (sbw/menu-submenu ?t "Timers"
                               (sbw/menu "Timers"
                                         (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
