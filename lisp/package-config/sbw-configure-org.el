@@ -32,6 +32,7 @@
      org-clock-into-drawer                      t                            ;; Clock into drawers
      org-src-fontify-natively                   t                            ;; Fontify embedded code blocks
      org-ellipsis                               "\u2026"                     ;; Small ellipsis character
+     org-emphasis-alist                         ()                           ;; Don't be fancy
      org-agenda-fontify-priorities              nil                          ;; Don't let priority change task representation
      org-indent-mode                            t                            ;; Use indent mode
      org-log-into-drawer                        t                            ;; Log into drawers
@@ -297,6 +298,11 @@ scheduled date, deadline, then alphabetic."
     (advice-remove 'org-babel--shell-command-on-region #'sbw/org-babel--copy-errors-to-output-advice)))
 
 (sbw/org-babel-copy-errors-to-output nil)
+
+;; (setq org-priority-faces '((?A . (:weight 'bold))
+;;                            (?B . (:weight 'bold))
+;;                            (?C . (:italic t)))
+;;       org-agenda-fontify-priorities t)
 
 (provide 'sbw-configure-org-mode)
 

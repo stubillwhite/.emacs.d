@@ -13,6 +13,7 @@
         kill-region
         org-beginning-of-line
         org-kill-line
+        org-metaleft
         org-self-insert-command
         orgtbl-self-insert-command
         sp-backward-delete-char

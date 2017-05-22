@@ -1,4 +1,4 @@
-personal_ws-1.1 en 180 
+personal_ws-1.1 en 181 
 SciVal
 terraformcontrol
 SBT
@@ -56,9 +56,9 @@ TIO
 HBase
 overfitting
 Jupyter
-RSS
-SPI
 SNS
+SPI
+RSS
 Clojure
 Monads
 Lagom
@@ -94,6 +94,7 @@ Lingpipe
 Dojo
 recommenders
 Contravariant
+CVs
 VGG
 DSL
 Reza's
@@ -131,7 +132,6 @@ Lundahl
 VPN
 KeyFe
 Ivo's
-Cloudwatch
 CloudWatch
 Mesos
 JARs

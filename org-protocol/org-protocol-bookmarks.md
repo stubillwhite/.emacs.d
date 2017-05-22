@@ -2,7 +2,7 @@
 
 ## org-mode link ##
 
-javascript:location.href='org-protocol://store-link://'+encodeURIComponent(location.href)+'//'+encodeURIComponent(document.title)
+javascript:location.href='org-protocol://store-link?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)
 
 ## org-mode capture ##
 
