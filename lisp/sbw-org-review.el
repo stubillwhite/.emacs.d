@@ -277,6 +277,30 @@
      end
      (sbw/org-review--build-filename "weekly-report" start end))))
 
+(defvar sbw/org-review-sprint-end-date
+  (sbw/time-from-org-string "2017-05-12")
+  "The sprint end date.")
+
+(defvar sbw/org-review-sprint-duration-in-days
+  21
+  "The duration in days of a sprint.")
+
+(defun sbw/org-review--next-sprint-end-date (time)
+  (car (-drop-while
+        (lambda (x) (time-less-p x (sbw/time-adjust-by time 1)))
+        (-iterate (lambda (x) (sbw/time-adjust-by x sbw/org-review-sprint-duration-in-days)) sbw/org-review-sprint-end-date 1000))))
+
+(defun sbw/org-review-config-for-sprint-report (time)
+  "Returns the configuration to generate a sprint report."
+  (let* ( (end   (sbw/org-review--next-sprint-end-date time))
+          (start (sbw/time-adjust-by end (* -1 sbw/org-review-sprint-duration-in-days))) )
+    (sbw/org-review-config
+     (sbw/org-review--build-title "Sprint report" start end)
+     (sbw/ht-get sbw/org-config :all-projects)
+     start
+     end
+     (sbw/org-review--build-filename "sprint-report" start end))))
+
 (defun sbw/org-review-config-for-monthly-report (time)
   "Returns the configuration to generate a monthly report."
   (let* ( (day        (sbw/ht-get (sbw/time-decompose time) :day))

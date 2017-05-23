@@ -101,7 +101,8 @@
                               (sbw/menu "Review"
                                         (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
                                         (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
+                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))                                       
+                                        (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
                                         ))
             (sbw/menu-action ?s "Shell" '(lambda () (interactive) (ansi-term "zsh")))
             (sbw/menu-submenu ?t "Timers"
