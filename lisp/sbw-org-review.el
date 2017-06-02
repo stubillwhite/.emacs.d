@@ -278,7 +278,7 @@
      (sbw/org-review--build-filename "weekly-report" start end))))
 
 (defvar sbw/org-review-sprint-end-date
-  (sbw/time-from-org-string "2017-05-12")
+  (sbw/time-from-org-string "2017-06-02")
   "The sprint end date.")
 
 (defvar sbw/org-review-sprint-duration-in-days
@@ -287,8 +287,8 @@
 
 (defun sbw/org-review--next-sprint-end-date (time)
   (car (-drop-while
-        (lambda (x) (time-less-p x (sbw/time-adjust-by time 1)))
-        (-iterate (lambda (x) (sbw/time-adjust-by x sbw/org-review-sprint-duration-in-days)) sbw/org-review-sprint-end-date 1000))))
+        (lambda (x) (time-less-p x time))
+        (-iterate (lambda (x) (sbw/time-adjust-by x sbw/org-review-sprint-duration-in-days)) sbw/org-review-sprint-end-date 5))))
 
 (defun sbw/org-review-config-for-sprint-report (time)
   "Returns the configuration to generate a sprint report."
@@ -303,11 +303,10 @@
 
 (defun sbw/org-review-config-for-monthly-report (time)
   "Returns the configuration to generate a monthly report."
-  (let* ( (day        (sbw/ht-get (sbw/time-decompose time) :day))
-          (prev-month (sbw/time-decompose (sbw/time-adjust-by time (- (sbw/inc day)))))
-          (last-day   (calendar-last-day-of-month (sbw/ht-get prev-month :month) (sbw/ht-get prev-month :year)))
-          (start      (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day 1))))
-          (end        (sbw/time-compose (sbw/ht-merge prev-month (sbw/ht-create :day last-day)))) )
+  (let* ( (curr-month (sbw/time-decompose time))
+          (last-day   (calendar-last-day-of-month (sbw/ht-get curr-month :month) (sbw/ht-get curr-month :year)))
+          (start      (sbw/time-compose (sbw/ht-merge curr-month (sbw/ht-create :day 1))))
+          (end        (sbw/time-compose (sbw/ht-merge curr-month (sbw/ht-create :day last-day)))) )
     (sbw/org-review-config
      (sbw/org-review--build-title "Monthly report" start end)
      (sbw/ht-get sbw/org-config :all-projects)

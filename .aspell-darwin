@@ -1,4 +1,4 @@
-personal_ws-1.1 en 181 
+personal_ws-1.1 en 189 
 SciVal
 terraformcontrol
 SBT
@@ -56,9 +56,9 @@ TIO
 HBase
 overfitting
 Jupyter
-SNS
-SPI
 RSS
+SPI
+SNS
 Clojure
 Monads
 Lagom
@@ -110,18 +110,23 @@ BASSC
 tokenisation
 Alphabeta
 UI
+Recommender
 Reza
 Puppetfile
+Embiggen
 NLP
 inlining
 APIs
+ETL
 Sensu
 Monoids
 Hadoop
+deliverables
 Scopus
 convolutional
 prototyped
 IAM
+Georgios
 Anonymise
 JIRA
 Pangram
@@ -149,8 +154,10 @@ stateful
 Newflo
 aggregator
 pluggable
+Mockist
 Adamos
 scalability
+Schijvenaars
 Redis
 puppetcontrol
 hoc
@@ -164,6 +171,8 @@ Alchemical
 Uzma
 IllegalArgumentException
 GitLab
+Ensmallen
+productionised
 Kibana
 Finne
 Elsevier
