@@ -6,8 +6,8 @@ javascript:location.href='org-protocol://store-link?url='+encodeURIComponent(loc
 
 ## org-mode capture ##
 
-javascript:location.href='org-protocol://capture://'+encodeURIComponent(location.href)+'/'+encodeURIComponent(document.title)+'/'+encodeURIComponent(window.getSelection())
+javascript:location.href='org-protocol://capture?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&selection='+encodeURIComponent(window.getSelection())
 
-## org-mode rtc ##
+## org-mode jira ##
 
-javascript:location.href='org-protocol://capture://r/'+encodeURIComponent(location.href)+'/'+encodeURIComponent(document.title)+'/'+encodeURIComponent(window.getSelection())
+javascript:location.href='org-protocol://capture?template=j&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&selection='+encodeURIComponent(window.getSelection())
