@@ -50,6 +50,14 @@
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
+;; Convert ANSI color codes in shell output
+(require 'ansi-color)
+(defun sbw/display-ansi-colors ()
+  "Convert ANSI color codes in the current buffer to the appropriate colors."
+  (interactive)
+  (let ( (inhibit-read-only t) )
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
 ;; Ediff configuration
 (setq
  ediff-highlight-all-diffs   'nil                                        ;; Just highlight the current diff
