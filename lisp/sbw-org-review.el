@@ -287,7 +287,7 @@
 
 (defun sbw/org-review--next-sprint-end-date (time)
   (car (-drop-while
-        (lambda (x) (time-less-p x time))
+        (lambda (x) (time-less-p (sbw/time-adjust-by x 1) time))
         (-iterate (lambda (x) (sbw/time-adjust-by x sbw/org-review-sprint-duration-in-days)) sbw/org-review-sprint-end-date 5))))
 
 (defun sbw/org-review-config-for-sprint-report (time)
