@@ -31,16 +31,7 @@
     (defun sbw/elm-mode--colorize-elm-test-buffer ()
       (when (eq major-mode 'compilation-mode)
         (sbw/display-ansi-colors)))
-    (add-hook 'compilation-filter-hook 'sbw/elm-mode--colorize-elm-test-buffer)
-
-    ;; Ensure that tests can be run from src/ or tests/ directory
-    (defun sbw/elm-mode--ignore-tests-dependency-file (orig-fun &rest args)
-      (if-let ((result (apply orig-fun args)))
-          (if (s-suffix? "tests/" result)
-              (let ((default-directory (concat result "..")))
-                (elm--find-dependency-file-path))
-            result)))
-    (advice-add 'elm--find-dependency-file-path :around #'sbw/elm-mode--ignore-tests-dependency-file))
+    (add-hook 'compilation-filter-hook 'sbw/elm-mode--colorize-elm-test-buffer))
 
   :bind
   (:map elm-mode-map
