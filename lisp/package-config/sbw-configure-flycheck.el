@@ -6,7 +6,7 @@
   :init
   (progn  
     ;; Enable Flycheck for desired modes
-    (dolist (x '(html-mode-hook emacs-lisp-mode markdown-mode))
+    (dolist (x '(html-mode-hook emacs-lisp-mode markdown-mode shell-script-mode))
       (add-hook x (lambda () (flycheck-mode 1))))
 
     ;; Disable annoying checkers
