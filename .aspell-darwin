@@ -1,5 +1,6 @@
-personal_ws-1.1 en 208 
+personal_ws-1.1 en 217 
 Reza's
+Leiningen
 APIs
 Heira
 Lagom
@@ -23,9 +24,9 @@ minima
 tmux
 Lemmatize
 EID
-RSS
-SPI
 SNS
+SPI
+RSS
 Covariant
 Trello
 Contravariant
@@ -65,20 +66,23 @@ Schijvenaars
 TensorFlow
 Keras
 Anonymise
+GDPR
 ETL
 That'll
 uncomment
 composability
 IAM
+teardown
 RDBMS
 Mendeley
 Puppetfile
+KPOs
 VPN
 Hadoop
 Terraform
 FST
-aggregators
 siloing
+aggregators
 Newsfeed
 kata
 Theano
@@ -89,6 +93,7 @@ Georgios
 Monad
 Lingpipe
 prototyped
+Scratchbox
 Alchemical
 Newflo
 Dynus
@@ -102,6 +107,7 @@ impedence
 Ai
 JIRA
 IntelliJ
+hashcode
 Productionise
 Vallianatos
 iteratively
@@ -113,6 +119,7 @@ GC
 Terraforming
 tokenising
 overfit
+KPO
 parallelised
 aggregator
 JVM
@@ -134,6 +141,7 @@ outliers
 Redis
 pluggable
 Mesos
+NLA
 ElasticSearch
 puppetcontrol
 KeyFe
@@ -201,6 +209,7 @@ SBT
 parameterise
 SCS
 TBD
+integrations
 ASG
 ARN
 karting

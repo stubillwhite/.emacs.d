@@ -12,6 +12,7 @@
         helm-show-kill-ring
         kill-region
         org-beginning-of-line
+        org-force-self-insert
         org-kill-line
         org-metaleft
         org-self-insert-command
