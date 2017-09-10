@@ -26,7 +26,8 @@
         (setq split-width-threshold  orig-width
               split-height-threshold orig-height)))
     (advice-add 'elm-repl-load :around #'sbw/elm-mode--ensure-vertical-split)
-
+    (advice-add 'elm-repl-push :around #'sbw/elm-mode--ensure-vertical-split)
+    
     ;; Colorize elm-test output
     (defun sbw/elm-mode--colorize-elm-test-buffer ()
       (when (eq major-mode 'compilation-mode)

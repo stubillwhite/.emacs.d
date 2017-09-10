@@ -181,7 +181,10 @@
     
     `(hydra-face-blue                     ((t (:inherit sbw-dark-muted-keyword))))
     `(hydra-face-red                      ((t (:inherit sbw-dark-muted-error))))
-            
+
+    ;; Markdown
+    `(markdown-code-face                  ((t (:inherit sbw-dark-muted-constant))))
+    
     ;; nXML
     `(nxml-attribute-colon                ((t (:inherit sbw-dark-muted-normal))))
     `(nxml-attribute-local-name           ((t (:inherit sbw-dark-muted-normal))))
@@ -254,9 +257,6 @@
     `(term-color-red                      ((t (:foreground "Coral4"))))
     `(term-color-white                    ((t (:foreground ,*normal-fg*))))
     `(term-color-yellow                   ((t (:foreground "burlywood2"))))
-    
-    
-    
     
     ;; whitespace
     `(whitespace-empty                    ((t (:inherit sbw-dark-muted-demphasis :underline (:color ,*warning-fg* :style wave)))))
