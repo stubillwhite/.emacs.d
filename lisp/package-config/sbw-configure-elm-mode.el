@@ -26,7 +26,13 @@
         (setq split-width-threshold  orig-width
               split-height-threshold orig-height)))
     (advice-add 'elm-repl-load :around #'sbw/elm-mode--ensure-vertical-split)
-    (advice-add 'elm-repl-push :around #'sbw/elm-mode--ensure-vertical-split)
+    (advice-add 'elm-repl-push-decl :around #'sbw/elm-mode--ensure-vertical-split)
+
+    ;; Return to the original buffer when pushing
+    (defun sbw/elm-mode--keep-current-buffer (orig-fun &rest args)
+      (apply orig-fun args)
+      (other-window -1))
+    (advice-add 'elm-repl-push-decl :around #'sbw/elm-mode--keep-current-buffer)
     
     ;; Colorize elm-test output
     (defun sbw/elm-mode--colorize-elm-test-buffer ()
