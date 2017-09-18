@@ -8,6 +8,8 @@
   (progn
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
+    (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown.css"))
+        
     (when (sbw/is-windows?)
       (setq
         markdown-command-needs-filename t

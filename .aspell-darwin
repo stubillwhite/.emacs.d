@@ -1,4 +1,4 @@
-personal_ws-1.1 en 217 
+personal_ws-1.1 en 225 
 Reza's
 Leiningen
 APIs
@@ -24,9 +24,10 @@ minima
 tmux
 Lemmatize
 EID
-SNS
-SPI
 RSS
+SPI
+SNS
+microservice
 Covariant
 Trello
 Contravariant
@@ -57,6 +58,7 @@ ASGs
 DSL
 inlining
 Vectorise
+Dockerised
 Alphabeta
 Dropwizard
 ACLs
@@ -73,6 +75,7 @@ uncomment
 composability
 IAM
 teardown
+blockchain
 RDBMS
 Mendeley
 Puppetfile
@@ -80,6 +83,7 @@ KPOs
 VPN
 Hadoop
 Terraform
+parsers
 FST
 siloing
 aggregators
@@ -109,6 +113,7 @@ JIRA
 IntelliJ
 hashcode
 Productionise
+Reflow
 Vallianatos
 iteratively
 Ivo
@@ -118,6 +123,7 @@ Scopus
 GC
 Terraforming
 tokenising
+kanban
 overfit
 KPO
 parallelised
@@ -138,6 +144,7 @@ overfitting
 Akka
 Lundahl
 outliers
+Etherium
 Redis
 pluggable
 Mesos
@@ -172,6 +179,7 @@ Clojure
 Elsevier
 Idris
 Adamos
+microservices
 PII
 AMIs
 FROS

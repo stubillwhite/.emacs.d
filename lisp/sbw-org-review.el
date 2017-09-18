@@ -170,10 +170,6 @@
          (sbw/org-review-clocked-time--add-category-totals)
          (sbw/org-review-clocked-time--construct-report))))
 
-;;
-;; 
-;; Alan Lomax - Sounds of the South
-
 ;; (defun sbw/org-review-new-clocked-time-generate-report (config summaries)
 ;;   (-let* ( (-add-total-time-clocked-in-period (lambda (x) (sbw/org-review-clocked-time--add-total-time-clocked-in-period config x)))
 ;;            (-some-time-clocked-in-period?     (lambda (x) (sbw/org-review-clocked-time--some-time-clocked-in-period? config x))) )
@@ -212,7 +208,8 @@
     (-mapcat 'sbw/org-utils-heading-summaries-for-file org-files)))  
 
 (defun sbw/org-review--write-report (config report)
-  (let* ( (filename (sbw/ht-get config :filename)) )
+  (let* ( (filename (sbw/ht-get config :filename))
+          (revert-without-query (list filename)) )
     (f-mkdir (f-dirname filename))
     (with-temp-file filename (insert report))
     (message (format "Created '%s'" filename))
@@ -288,7 +285,7 @@
 (defun sbw/org-review--next-sprint-end-date (time)
   (car (-drop-while
         (lambda (x) (time-less-p (sbw/time-adjust-by x 1) time))
-        (-iterate (lambda (x) (sbw/time-adjust-by x sbw/org-review-sprint-duration-in-days)) sbw/org-review-sprint-end-date 5))))
+        (-iterate (lambda (x) (sbw/time-adjust-by x sbw/org-review-sprint-duration-in-days)) sbw/org-review-sprint-end-date 20))))
 
 (defun sbw/org-review-config-for-sprint-report (time)
   "Returns the configuration to generate a sprint report."
