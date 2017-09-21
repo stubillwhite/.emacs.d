@@ -34,6 +34,7 @@
      org-ellipsis                               "\u2026"                     ;; Small ellipsis character
      org-emphasis-alist                         ()                           ;; Don't be fancy
      org-agenda-fontify-priorities              nil                          ;; Don't let priority change task representation
+     org-duration-format                        'h:mm                        ;; Display durations in hours, not days
      org-indent-mode                            t                            ;; Use indent mode
      org-log-into-drawer                        t                            ;; Log into drawers
      org-log-done                               'time                        ;; Timestamp task completion so it can be used in reports
