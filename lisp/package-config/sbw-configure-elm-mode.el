@@ -26,8 +26,14 @@
         (setq split-width-threshold  orig-width
               split-height-threshold orig-height)))
     (advice-add 'elm-repl-load :around #'sbw/elm-mode--ensure-vertical-split)
+    (advice-add 'elm-test-project :around #'sbw/elm-mode--ensure-vertical-split)
     (advice-add 'elm-repl-push-decl :around #'sbw/elm-mode--ensure-vertical-split)
 
+    (defun sbw/advice-save-buffers (orig-fun &rest args)
+      (save-some-buffers t)
+      (apply orig-fun args))
+    (advice-add 'elm-mode-format-buffer :around #'sbw/advice-save-buffers)
+    
     ;; Return to the original buffer when pushing
     (defun sbw/elm-mode--keep-current-buffer (orig-fun &rest args)
       (apply orig-fun args)

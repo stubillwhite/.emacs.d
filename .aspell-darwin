@@ -1,4 +1,4 @@
-personal_ws-1.1 en 225 
+personal_ws-1.1 en 226 
 Reza's
 Leiningen
 APIs
@@ -24,9 +24,9 @@ minima
 tmux
 Lemmatize
 EID
-RSS
-SPI
 SNS
+SPI
+RSS
 microservice
 Covariant
 Trello
@@ -57,8 +57,8 @@ ASJC
 ASGs
 DSL
 inlining
-Vectorise
 Dockerised
+Vectorise
 Alphabeta
 Dropwizard
 ACLs
@@ -74,8 +74,8 @@ That'll
 uncomment
 composability
 IAM
-teardown
 blockchain
+teardown
 RDBMS
 Mendeley
 Puppetfile
@@ -122,8 +122,8 @@ Lucene
 Scopus
 GC
 Terraforming
-tokenising
 kanban
+tokenising
 overfit
 KPO
 parallelised
@@ -192,6 +192,7 @@ GitLab
 Cuda
 stateful
 Embiggen
+Odersky
 outlier
 Ai's
 LinkedIn
