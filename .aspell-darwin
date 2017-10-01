@@ -1,6 +1,7 @@
-personal_ws-1.1 en 226 
+personal_ws-1.1 en 238 
 Reza's
 Leiningen
+occurrance
 APIs
 Heira
 Lagom
@@ -24,12 +25,13 @@ minima
 tmux
 Lemmatize
 EID
-SNS
-SPI
 RSS
+SPI
+SNS
 microservice
 Covariant
 Trello
+SPM
 Contravariant
 ScienceDirect
 CRS
@@ -108,9 +110,11 @@ IPR
 Coursera
 Jupyter
 impedence
+Punchdrunk
 Ai
 JIRA
 IntelliJ
+trigrams
 hashcode
 Productionise
 Reflow
@@ -149,9 +153,11 @@ Redis
 pluggable
 Mesos
 NLA
+unintuitive
 ElasticSearch
 puppetcontrol
 KeyFe
+votives
 Xuemin's
 UUID
 terraformcontrol
@@ -161,6 +167,7 @@ buddying
 CCBY
 BASSC
 Ensmallen
+waypoint
 SciVal
 Kotlin
 Lemmatizer
@@ -187,18 +194,22 @@ ramping
 CQRS
 REPL
 balancer
+trigram
 timestamp
 GitLab
 Cuda
+Punchdrunk's
 stateful
 Embiggen
 Odersky
 outlier
+HipChat
 Ai's
 LinkedIn
 tokenisation
 Mockist
 LexisNexis
+maenads
 Kyriakos
 Recommender
 RETS
@@ -206,6 +217,7 @@ DOIs
 Dojo
 productionised
 Vimeo
+Kabeiroi
 OSX
 pre
 whitelist

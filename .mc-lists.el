@@ -10,8 +10,10 @@
         cua-paste
         evilnc-comment-or-uncomment-lines
         helm-show-kill-ring
+        indent-for-tab-command
         kill-region
         org-beginning-of-line
+        org-fill-paragraph
         org-force-self-insert
         org-kill-line
         org-metaleft
