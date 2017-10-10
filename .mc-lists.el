@@ -6,6 +6,7 @@
         c-electric-colon
         c-electric-delete-forward
         c-electric-semi&comma
+        cua--prefix-override-handler
         cua-cut-region
         cua-paste
         evilnc-comment-or-uncomment-lines
@@ -14,11 +15,11 @@
         kill-region
         org-beginning-of-line
         org-fill-paragraph
-        org-force-self-insert
         org-kill-line
         org-metaleft
         org-self-insert-command
         orgtbl-self-insert-command
+        sbw/unfill-paragraph
         sp-backward-delete-char
         sp-backward-kill-word
         sp-backward-unwrap-sexp

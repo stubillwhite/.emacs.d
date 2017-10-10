@@ -1,0 +1,86 @@
+pre, code {
+    font-family: Monaco, monospace;
+}
+
+pre {
+    padding: .5rem;
+    line-height: 1.25;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    line-height: 1.85;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 1.3rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: inherit;
+    font-size: inherit
+}
+
+/* http://type-scale.com/ - Augmented fourth */
+
+h1 {
+    font-size: 399.8%;
+}
+
+h2 {
+    font-size: 282.7%;
+}
+
+h3 {
+    font-size: 199.9%;
+}
+
+h4 {
+    font-size: 141.4%;
+}
+
+h5 {
+    font-size: 100%;
+}
+
+h6 {
+    font-size: 70.5%;
+}
+
+small {
+    font-size: 50%;
+}
+
+img, canvas, iframe, video, svg, select, textarea {
+    max-width: 100%;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+
+@import url(http://fonts.googleapis.com/css?family=Arimo:700,700italic);
+
+html {
+    font-size: 16px;
+    max-width: 100%;
+}
+
+body {
+    color: Black;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 300;
+    margin: 0 auto;
+    max-width: 75rem;
+    line-height: 1.45;
+    padding: .25rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, sans-serif;
+    border-bottom: 2px solid;
+    text-align: center;
+}
+

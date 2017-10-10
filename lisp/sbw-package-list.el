@@ -80,6 +80,9 @@
 
      ;; Docker
      (:name docker            :load :immediate) ;; Manage Docker from Emacs
+
+     ;; Slack
+     (:name slack             :load :immediate) ;; Slack for Emacs
      
      ;; Languages
      

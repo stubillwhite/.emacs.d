@@ -1,4 +1,4 @@
-personal_ws-1.1 en 238 
+personal_ws-1.1 en 243 
 Reza's
 Leiningen
 occurrance
@@ -25,9 +25,9 @@ minima
 tmux
 Lemmatize
 EID
-RSS
-SPI
 SNS
+SPI
+RSS
 microservice
 Covariant
 Trello
@@ -84,6 +84,7 @@ Puppetfile
 KPOs
 VPN
 Hadoop
+Elsevier's
 Terraform
 parsers
 FST
@@ -110,11 +111,12 @@ IPR
 Coursera
 Jupyter
 impedence
+reproducibility
 Punchdrunk
 Ai
+trigrams
 JIRA
 IntelliJ
-trigrams
 hashcode
 Productionise
 Reflow
@@ -161,6 +163,7 @@ votives
 Xuemin's
 UUID
 terraformcontrol
+architecting
 Seitl
 NLP
 buddying
@@ -201,10 +204,12 @@ Cuda
 Punchdrunk's
 stateful
 Embiggen
+Karolina
 Odersky
 outlier
 HipChat
 Ai's
+Nikeil
 LinkedIn
 tokenisation
 Mockist

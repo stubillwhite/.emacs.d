@@ -81,7 +81,9 @@
     `(show-paren-match                    ((t (:inherit sbw-dark-muted-match))))
     `(show-paren-mismatch                 ((t (:inherit sbw-dark-muted-mismatch))))
     `(underline                           ((t (:inherit sbw-dark-muted-normal :underline t))))
-
+    `(link                                ((t (:inherit sbw-dark-muted-keyword :underline t))))
+    `(link-visited                        ((t (:inherit sbw-dark-muted-normal :underline t))))
+    
     ;; GUI
     `(cursor                              ((t (:inherit sbw-dark-muted-normal))))
     `(fringe                              ((t (:inherit sbw-dark-muted-normal))))
@@ -243,7 +245,17 @@
     ;; sh
     `(sh-heredoc                          ((t (:inherit sbw-dark-muted-string))))
     `(sh-quoted-exec                      ((t (:inherit sbw-dark-muted-keyword))))
-    
+
+    ;; slack
+    `(lui-time-stamp-face                 ((t (:inherit sbw-dark-muted-keyword))))
+    `(lui-strong-face                     ((t (:inherit sbw-dark-muted-normal))))
+    `(lui-button-face                     ((t (:inherit sbw-dark-muted-demphasis))))
+    `(slack-message-deleted-face          ((t (:inherit sbw-dark-muted-error))))
+    `(slack-message-output-header         ((t (:inherit sbw-dark-muted-keyword))))
+    `(slack-message-output-reaction       ((t (:inherit sbw-dark-muted-normal))))
+    `(slack-message-output-text           ((t (:inherit sbw-dark-muted-normal))))
+    `(slack-me ((t (:inherit sbw-dark-muted-normal))))
+ 
     ;; Smartparens
     `(sp-show-pair-match-face             ((t (:inherit sbw-dark-muted-match))))
     `(sp-show-pair-mismatch-face          ((t (:inherit sbw-dark-muted-mismatch))))
