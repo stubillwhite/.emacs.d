@@ -25,8 +25,15 @@
         (setq lui-fill-type   ""
               lui-fill-column 120)))
 
+    (use-package emojify
+      :init
+      (progn
+        (add-hook 'slack-mode-hook #'emojify-mode)))
+    
     ;; Teams
+    
     (sbw/load-secrets)
+    
     (slack-register-team
      :name                "test"
      :client-id           sbw/slack-test-client-id
@@ -40,6 +47,12 @@
      :client-secret       sbw/slack-bos-client-secret
      :token               sbw/slack-bos-token
      :subscribed-channels '())
+
+    ;; General configuration
+
+    ;; Suppress user statuses
+    (defun slack-user-status (_id _team) "")
+
     )
 
   (setq slack-prefer-current-team      t

@@ -250,6 +250,7 @@
     `(lui-time-stamp-face                 ((t (:inherit sbw-dark-muted-keyword))))
     `(lui-strong-face                     ((t (:inherit sbw-dark-muted-normal))))
     `(lui-button-face                     ((t (:inherit sbw-dark-muted-demphasis))))
+    `(slack-attachment-footer             ((t (:inherit sbw-dark-muted-demphasis))))
     `(slack-message-deleted-face          ((t (:inherit sbw-dark-muted-error))))
     `(slack-message-output-header         ((t (:inherit sbw-dark-muted-keyword))))
     `(slack-message-output-reaction       ((t (:inherit sbw-dark-muted-normal))))

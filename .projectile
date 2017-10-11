@@ -3,6 +3,7 @@
 -/el-get
 -/elpa
 -/eshell
+-/emojis
 -/org-gcal
 -/projectile-bookmarks.eld
 -/projectile.cache
@@ -15,6 +16,7 @@
 -\el-get
 -\elpa
 -\eshell
+-\emojis
 -\org-gcal
 -\projectile-bookmarks.eld
 -\projectile.cache

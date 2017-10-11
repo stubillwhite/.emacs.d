@@ -83,6 +83,7 @@
 
      ;; Slack
      (:name slack             :load :immediate) ;; Slack for Emacs
+     (:name emojify           :load :immediate) ;; Emoji for Slack
      
      ;; Languages
      

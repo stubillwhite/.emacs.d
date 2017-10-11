@@ -96,20 +96,6 @@
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
-            (sbw/menu-action ?f "Refresh" 'sbw/org-config-refresh)
-            (sbw/menu-submenu ?r "Review"
-                              (sbw/menu "Review"
-                                        (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
-                                        (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))                                       
-                                        (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
-                                        ))
-            (sbw/menu-action ?s "Shell" '(lambda () (interactive) (ansi-term "zsh")))
-            (sbw/menu-submenu ?t "Timers"
-                              (sbw/menu "Timers"
-                                        (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
-                                        (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
-                                        (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
             (sbw/menu-submenu ?d "Dashboard"
                               (sbw/menu "Dashboard"
                                         (sbw/menu-submenu ?s "Selection"
@@ -129,6 +115,24 @@
                                         (sbw/menu-submenu ?p "Personal"
                                                           (sbw/menu "Personal"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-personal-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-personal-tasks)))))))
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-personal-tasks)))))
+            (sbw/menu-action ?f "Refresh" 'sbw/org-config-refresh)
+            (sbw/menu-submenu ?r "Review"
+                              (sbw/menu "Review"
+                                        (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
+                                        (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
+                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))                                       
+                                        (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
+                                        ))
+            (sbw/menu-submenu ?s "Slack"
+                              (sbw/menu "Slack"
+                                        (sbw/menu-action ?s "Select room"        'slack-select-rooms)
+                                        (sbw/menu-action ?u "Select unread room" 'slack-select-unread-rooms)))
+            (sbw/menu-submenu ?t "Timers"
+                              (sbw/menu "Timers"
+                                        (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
+                                        (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
+                                        (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
+            (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))
 
 (provide 'sbw-menu)
