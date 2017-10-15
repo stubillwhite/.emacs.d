@@ -1,4 +1,4 @@
-personal_ws-1.1 en 243 
+personal_ws-1.1 en 244 
 Reza's
 Leiningen
 occurrance
@@ -25,9 +25,9 @@ minima
 tmux
 Lemmatize
 EID
-SNS
-SPI
 RSS
+SPI
+SNS
 microservice
 Covariant
 Trello
@@ -50,6 +50,7 @@ Monads
 Svetlana
 POJOs
 Erlang
+Moulin
 JSON
 activations
 timesheet
