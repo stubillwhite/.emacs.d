@@ -17,8 +17,8 @@
     (use-package alert
       :commands (alert)
       :init
-      (setq alert-default-style 'notifier))
-
+      (setq alert-default-style (if (sbw/is-darwin?) 'osx-notifier 'notifier)))
+   
     (use-package circe
       :init
       (progn
@@ -39,14 +39,14 @@
      :client-id           sbw/slack-test-client-id
      :client-secret       sbw/slack-test-client-secret
      :token               sbw/slack-test-token
-     :subscribed-channels '())
+     :subscribed-channels '(random general))
 
     (slack-register-team
-     :name                "Elsevier"
+     :name                "elsevier-bos"
      :client-id           sbw/slack-bos-client-id
      :client-secret       sbw/slack-bos-client-secret
      :token               sbw/slack-bos-token
-     :subscribed-channels '())
+     :subscribed-channels '(random general))
 
     ;; (slack-register-team
     ;;  :name                "Elm"
@@ -68,21 +68,65 @@
     ;; Suppress user statuses
     (defun slack-user-status (_id _team) "")
 
-    ;; (defun sbw/slack--force-face-height (orig-fun &rest args)
-    ;;   (message "Forcing to 12")
-    ;;   120)
-    ;; (advice-add 'emojify-default-font-height :around #'sbw/slack--force-font-height)
-
     (setq slack-prefer-current-team      t
           slack-display-team-name        nil
           slack-buffer-function          #'switch-to-buffer)
     
     (defun sbw/slack-message-embed-mention ()
       (interactive)
-      (call-interactively #'slack-message-embed-mention)))
+      (call-interactively #'slack-message-embed-mention))
+
+    ;; Rules
+
+    (add-to-list 'alert-user-configuration
+                 '(( (:message  . "Stu")
+                     (:title    . "\\(random\\|general\\)")
+                     ;; (:category . "slack")
+                     )
+                   nil nil))
+
+    (defun sbw/slack-insert-newline ()
+      (interactive)
+      (open-line 1)
+      (next-line 1)))
   
   :bind
   (:map slack-mode-map
-        ("@" . sbw/slack-message-embed-mention)))
+        ("@" . sbw/slack-message-embed-mention)
+        ("C-c t" . slack-thread-show-or-create)
+        ("C-c r" . slack-message-add-reaction)
+        ("S-<return>" . sbw/slack-insert-newline)))
 
 (provide 'sbw-configure-slack)
+;; (add-to-list 'alert-user-configuration
+;;              '(( (:message  . "Etu")
+;;                  ;; (:title    . "\\(random\\|general\\)")
+;;                  ;; (:category . "slack")
+;;                  )
+;;                osx-notifier nil))
+
+;; (defun white-test-alert (info)
+;;   (string-match (plist-get info :message) "Qtu"))
+
+;; (add-to-list 'alert-user-configuration
+;;                  '(( (:message  . "Rtu")
+;;                      ;; (:title    . "\\(random\\|general\\)")
+;;                      ;; (:category . "slack")
+;;                      )
+;;                    osx-notifier nil))
+
+;; (alert-add-rule
+;;  ;; :status     '(buried visible idle)
+;;  ;; :severity   '(moderate high urgent)
+;;  ;; :mode       'slack-mode
+;;  ;; :predicate  #'(lambda (info) (string-match (plist-get info :message) "Qtu"))
+;;  :predicate #'white-test-alert
+;;  :persistent #'(lambda (info) nil)
+;;  ;; :style      'osx-notifier
+;;  :continue   t
+;;  )
+
+;; (alert-add-rule :category "slack"
+;;                 :style 'osx-notifier
+;;                 :predicate (lambda (_) t)
+;;                 :continue t)
