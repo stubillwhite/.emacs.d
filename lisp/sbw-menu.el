@@ -126,6 +126,8 @@
                                         ))
             (sbw/menu-submenu ?s "Slack"
                               (sbw/menu "Slack"
+                                        (sbw/menu-action ?d "Disable"            'slack-ws-close)
+                                        (sbw/menu-action ?e "Enable"             'slack-start)
                                         (sbw/menu-action ?s "Select room"        'slack-select-rooms)
                                         (sbw/menu-action ?u "Select unread room" 'slack-select-unread-rooms)))
             (sbw/menu-submenu ?t "Timers"

@@ -35,33 +35,11 @@
     (sbw/load-secrets)
     
     (slack-register-team
-     :name                "test"
-     :client-id           sbw/slack-test-client-id
-     :client-secret       sbw/slack-test-client-secret
-     :token               sbw/slack-test-token
-     :subscribed-channels '(random general))
-
-    (slack-register-team
      :name                "elsevier-bos"
      :client-id           sbw/slack-bos-client-id
      :client-secret       sbw/slack-bos-client-secret
      :token               sbw/slack-bos-token
      :subscribed-channels '(random general))
-
-    ;; (slack-register-team
-    ;;  :name                "Elm"
-    ;;  :client-id           sbw/slack-elm-client-id
-    ;;  :client-secret       sbw/slack-elm-client-secret
-    ;;  :token               sbw/slack-elm-token
-    ;;  :subscribed-channels '())
-
-    ;; (slack-register-team
-    ;;  :name                "Clojurians"
-    ;;  :client-id           sbw/slack-clojurians-client-id
-    ;;  :client-secret       sbw/slack-clojurians-client-secret
-    ;;  :token               sbw/slack-clojurians-token
-    ;;  :subscribed-channels '()
-    ;;  )
 
     ;; General configuration
 
@@ -78,12 +56,18 @@
 
     ;; Rules
 
+    ;; Ignore everything by default
     (add-to-list 'alert-user-configuration
-                 '(( (:message  . "Stu")
-                     (:title    . "\\(random\\|general\\)")
-                     ;; (:category . "slack")
-                     )
-                   nil nil))
+                 '(((:category . "slack")) ignore nil))
+
+    ;; Alert me if my name or username is mentioned in a room
+    (add-to-list 'alert-user-configuration
+                 '(((:message  . "\\(Stu\\|stuw\\)")
+                    (:title    . "\\(random\\|general\\)")
+                    (:category . "slack"))
+                   osx-notifier nil))
+
+    ;; Keys
 
     (defun sbw/slack-insert-newline ()
       (interactive)
@@ -98,35 +82,3 @@
         ("S-<return>" . sbw/slack-insert-newline)))
 
 (provide 'sbw-configure-slack)
-;; (add-to-list 'alert-user-configuration
-;;              '(( (:message  . "Etu")
-;;                  ;; (:title    . "\\(random\\|general\\)")
-;;                  ;; (:category . "slack")
-;;                  )
-;;                osx-notifier nil))
-
-;; (defun white-test-alert (info)
-;;   (string-match (plist-get info :message) "Qtu"))
-
-;; (add-to-list 'alert-user-configuration
-;;                  '(( (:message  . "Rtu")
-;;                      ;; (:title    . "\\(random\\|general\\)")
-;;                      ;; (:category . "slack")
-;;                      )
-;;                    osx-notifier nil))
-
-;; (alert-add-rule
-;;  ;; :status     '(buried visible idle)
-;;  ;; :severity   '(moderate high urgent)
-;;  ;; :mode       'slack-mode
-;;  ;; :predicate  #'(lambda (info) (string-match (plist-get info :message) "Qtu"))
-;;  :predicate #'white-test-alert
-;;  :persistent #'(lambda (info) nil)
-;;  ;; :style      'osx-notifier
-;;  :continue   t
-;;  )
-
-;; (alert-add-rule :category "slack"
-;;                 :style 'osx-notifier
-;;                 :predicate (lambda (_) t)
-;;                 :continue t)
