@@ -39,7 +39,7 @@
      :client-id           sbw/slack-bos-client-id
      :client-secret       sbw/slack-bos-client-secret
      :token               sbw/slack-bos-token
-     :subscribed-channels '(random general))
+     :subscribed-channels '(random general bos))
 
     ;; General configuration
 
@@ -47,7 +47,6 @@
     (defun slack-user-status (_id _team) "")
 
     (setq slack-prefer-current-team      t
-          slack-display-team-name        nil
           slack-buffer-function          #'switch-to-buffer)
     
     (defun sbw/slack-message-embed-mention ()
@@ -63,7 +62,7 @@
     ;; Alert me if my name or username is mentioned in a room
     (add-to-list 'alert-user-configuration
                  '(((:message  . "\\(Stu\\|stuw\\)")
-                    (:title    . "\\(random\\|general\\)")
+                    (:title    . "\\(random\\|general\\|bos\\)")
                     (:category . "slack"))
                    osx-notifier nil))
 
