@@ -10,9 +10,10 @@
   :config
   (progn
     (setq
-     company-dabbrev-ignore-case nil
-     company-dabbrev-downcase    nil
-     company-idle-delay          0)
+     company-minimum-prefix-length 2
+     company-dabbrev-ignore-case   nil
+     company-dabbrev-downcase      nil
+     company-idle-delay            0)
 
     (define-key company-active-map (kbd "M-n") nil)
     (define-key company-active-map (kbd "M-p") nil)

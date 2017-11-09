@@ -16,9 +16,10 @@
     (setq sp-cancel-autoskip-on-backward-movement nil)
 
     ;; Strict mode
+    (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)    
     (add-hook 'cider-repl-mode-hook 'smartparens-strict-mode)
     (add-hook 'clojure-mode-hook    'smartparens-strict-mode)
-    (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)    
+    (add-hook 'racket-mode-hook     'smartparens-strict-mode)
 
     ;; Currently experimenting with smartparens for other modes
     (setq sbw/smartparens-block-based-modes :use-smartparens)

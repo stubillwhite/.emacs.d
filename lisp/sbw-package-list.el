@@ -115,7 +115,10 @@
 
      ;; Markdown
      (:name markdown-mode     :load :immediate) ;; Markdown mode
-    
+
+     ;; Racket
+     (:name racket-mode       :load :immediate) ;; Racket mode
+     
      ;; Scala
      (:name emacs-scala-mode  :load :immediate) ;; Scala mode
      

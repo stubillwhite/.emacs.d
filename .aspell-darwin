@@ -1,4 +1,4 @@
-personal_ws-1.1 en 250 
+personal_ws-1.1 en 252 
 Reza's
 Leiningen
 occurrance
@@ -26,9 +26,9 @@ tmux
 Nataliya
 Lemmatize
 EID
-SNS
-SPI
 RSS
+SPI
+SNS
 microservice
 Covariant
 Trello
@@ -71,6 +71,7 @@ Databricks
 Schijvenaars
 TensorFlow
 Keras
+productionising
 Anonymise
 GDPR
 ETL
@@ -230,6 +231,7 @@ Dojo
 productionised
 Vimeo
 Kabeiroi
+ANI
 OSX
 pre
 whitelist
