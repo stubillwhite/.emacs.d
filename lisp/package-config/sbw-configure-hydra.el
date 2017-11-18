@@ -18,7 +18,7 @@ _k_: Up            _s_: Swap
 _l_: Right         _d_: Delete
 _a_: Ace-Window    _b_: Buffer
 
-_q_: Quit
+_q_, _RET_: Quit
 "
       ("h" windmove-left)
       ("j" windmove-down)
@@ -29,10 +29,11 @@ _q_: Quit
       ("H" split-window-vertically)
       ("s" (lambda () (interactive) (ace-window 4)))
       ("d" delete-window)
-      ("b" helm-mini)
+      ("b" helm-mini :color blue)
       ("g" golden-ratio-mode)
       ("=" (lambda () (interactive) (progn (golden-ratio-mode 0) (balance-windows))))
-      ("q" nil :color blue))
+      ("q" nil :color blue)
+      ("RET" nil : color blue))
 
     ;; (eval-after-load "org"
     ;;   '(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body))
