@@ -1,4 +1,4 @@
-personal_ws-1.1 en 252 
+personal_ws-1.1 en 258 
 Reza's
 Leiningen
 occurrance
@@ -26,9 +26,9 @@ tmux
 Nataliya
 Lemmatize
 EID
-RSS
-SPI
 SNS
+SPI
+RSS
 microservice
 Covariant
 Trello
@@ -70,8 +70,8 @@ CKAN
 Databricks
 Schijvenaars
 TensorFlow
-Keras
 productionising
+Keras
 Anonymise
 GDPR
 ETL
@@ -103,6 +103,8 @@ AssertJ
 Georgios
 Monad
 Lingpipe
+performant
+complects
 prototyped
 Scratchbox
 Alchemical
@@ -112,6 +114,7 @@ Dynus
 underfitting
 tokenisers
 MongoDB
+Logentries
 IPR
 Coursera
 Jupyter
@@ -123,6 +126,7 @@ trigrams
 JIRA
 IntelliJ
 hashcode
+ThoughtWorks
 Productionise
 Reflow
 Vallianatos
@@ -178,6 +182,7 @@ Ensmallen
 waypoint
 SciVal
 Nataliya's
+Mendeley's
 Kotlin
 Lemmatizer
 Solr
@@ -224,6 +229,7 @@ LexisNexis
 maenads
 Kyriakos
 Recommender
+agglomerative
 Ami
 RETS
 DOIs

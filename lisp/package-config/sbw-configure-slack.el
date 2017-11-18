@@ -78,6 +78,8 @@
         ("@" . sbw/slack-message-embed-mention)
         ("C-c t" . slack-thread-show-or-create)
         ("C-c r" . slack-message-add-reaction)
+        ("C-c d" . slack-message-delete)
+        ("C-c e" . slack-message-edit)
         ("S-<return>" . sbw/slack-insert-newline)))
 
 (provide 'sbw-configure-slack)
