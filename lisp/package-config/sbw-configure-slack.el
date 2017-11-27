@@ -6,8 +6,7 @@
   :commands (slack-start)
 
   :init
-  (progn
-    (setq magit-last-seen-setup-instructions "1.4.0"))
+  (progn)
   
   :config
   (progn
@@ -41,6 +40,13 @@
      :token               sbw/slack-bos-token
      :subscribed-channels '(random general bos))
 
+    ;; (slack-register-team
+    ;;  :name                "functional-programming"
+    ;;  :client-id           sbw/slack-fp-client-id
+    ;;  :client-secret       sbw/slack-fp-client-secret
+    ;;  :token               sbw/slack-fp-token
+    ;;  :subscribed-channels '(random general))
+    
     ;; General configuration
 
     ;; Suppress user statuses
@@ -71,7 +77,16 @@
     (defun sbw/slack-insert-newline ()
       (interactive)
       (open-line 1)
-      (next-line 1)))
+      (next-line 1))
+
+    ;; Temporary workaround while debugging issue #249
+
+    (defun sbw/slack-mode--catch-message-to-string-error (orig-fun &rest args)
+      (condition-case nil
+          (apply orig-fun args)
+        (error "<error parsing message>\n")))
+    (advice-add 'slack-message-to-string :around #'sbw/slack-mode--catch-message-to-string-error)
+    )
   
   :bind
   (:map slack-mode-map
@@ -83,3 +98,5 @@
         ("S-<return>" . sbw/slack-insert-newline)))
 
 (provide 'sbw-configure-slack)
+
+
