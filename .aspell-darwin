@@ -1,4 +1,4 @@
-personal_ws-1.1 en 261 
+personal_ws-1.1 en 269 
 Reza's
 Leiningen
 occurrance
@@ -71,6 +71,7 @@ CKAN
 Databricks
 Schijvenaars
 TensorFlow
+Oysho
 productionising
 Keras
 Anonymise
@@ -89,6 +90,7 @@ Puppetfile
 KPOs
 VPN
 Hadoop
+incrementing
 Elsevier's
 Terraform
 parsers
@@ -117,12 +119,14 @@ underfitting
 tokenisers
 MongoDB
 Logentries
+CloudTrail
 IPR
 Coursera
 Jupyter
 impedence
 reproducibility
 Punchdrunk
+anonymised
 Ai
 trigrams
 JIRA
@@ -143,9 +147,11 @@ kanban
 tokenising
 overfit
 KPO
+Wageningen
 parallelised
 aggregator
 JVM
+pseudonymised
 Nespresso
 whitelisted
 bayesian
@@ -196,6 +202,7 @@ UI
 recommenders
 ACL
 EIDs
+Whitelisting
 Imagenet
 YAML
 Felina
@@ -234,6 +241,7 @@ Kyriakos
 Recommender
 agglomerative
 Ami
+RDS
 RETS
 DOIs
 Dojo

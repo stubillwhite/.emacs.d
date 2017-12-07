@@ -40,10 +40,17 @@
      :token               sbw/slack-bos-token
      :subscribed-channels '(random general bos))
 
+    (slack-register-team
+     :name                "mendeley"
+     :client-id           sbw/slack-mendeley-client-id 
+     :client-secret       sbw/slack-mendeley-client-secret
+     :token               sbw/slack-mendeley-token
+     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs scala))
+    
     ;; (slack-register-team
     ;;  :name                "functional-programming"
     ;;  :client-id           sbw/slack-fp-client-id
-    ;;  :client-secret       sbw/slack-fp-client-secret
+    ;;  :client-secret       sbw/slack-fp-clseient-secret
     ;;  :token               sbw/slack-fp-token
     ;;  :subscribed-channels '(random general))
     
@@ -68,7 +75,13 @@
     ;; Alert me if my name or username is mentioned in a room
     (add-to-list 'alert-user-configuration
                  '(((:message  . "\\(Stu\\|stuw\\)")
-                    (:title    . "\\(random\\|general\\|bos\\)")
+                    (:title    . "\\(random\\|general\\|newsflo\\|newsflo-alerts\\|newsflodevs\\|scala\\)")
+                    (:category . "slack"))
+                   osx-notifier nil))
+
+    ;; Alert me for anything in rooms I'm interested in monitoring
+    (add-to-list 'alert-user-configuration
+                 '(((:title    . "\\(newsflo\\|newsflo-alerts\\|newsflodevs\\|scala\\)")
                     (:category . "slack"))
                    osx-notifier nil))
 
@@ -84,9 +97,20 @@
     (defun sbw/slack-mode--catch-message-to-string-error (orig-fun &rest args)
       (condition-case nil
           (apply orig-fun args)
-        (error "<error parsing message>\n")))
+        (error "[Error parsing message]\n")))
     (advice-add 'slack-message-to-string :around #'sbw/slack-mode--catch-message-to-string-error)
-    )
+
+    ;; UI
+
+    (defun set-window-width (n)
+      (window-resize (selected-window) (- n (window-width)) t))
+
+    (defun sbw/slack-mode--open-window ()
+      (interactive)
+      (let* ((new-window (split-window-right)))
+        (select-window new-window)
+        (set-window-width 129)
+        (slack-start))))
   
   :bind
   (:map slack-mode-map
@@ -98,5 +122,4 @@
         ("S-<return>" . sbw/slack-insert-newline)))
 
 (provide 'sbw-configure-slack)
-
 

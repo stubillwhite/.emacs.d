@@ -239,7 +239,7 @@ scheduled date, deadline, then alphabetic."
     (defun sbw/org-make-link-description (link description)
       (if (and (s-starts-with? "file" link) (not description))
           (f-filename (f-expand (nth 1 (s-split-up-to ":" link 1))))
-        (read-string "description: " description)))
+        description))
     (setq org-make-link-description-function 'sbw/org-make-link-description)
     
     ;; Stuff to rationalise
