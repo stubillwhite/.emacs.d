@@ -32,6 +32,13 @@
     ;; Teams
     
     (sbw/load-secrets)
+
+    ;; (slack-register-team
+    ;;  :name                "white-test"
+    ;;  :client-id           sbw/slack-test-client-id
+    ;;  :client-secret       sbw/slack-test-client-secret
+    ;;  :token               sbw/slack-test-token
+    ;;  :subscribed-channels '(random general))
     
     (slack-register-team
      :name                "elsevier-bos"
@@ -45,7 +52,7 @@
      :client-id           sbw/slack-mendeley-client-id 
      :client-secret       sbw/slack-mendeley-client-secret
      :token               sbw/slack-mendeley-token
-     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs scala))
+     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs bos-big-data scala engineering))
     
     ;; (slack-register-team
     ;;  :name                "functional-programming"
@@ -66,22 +73,56 @@
       (interactive)
       (call-interactively #'slack-message-embed-mention))
 
-    ;; Rules
+    ;; Notifications
 
+    ;; For some rooms I want the content of attachments to be considered when processing notifications
+    
+    (setq sbw/slack--mettachment-notifications-rooms '("newsflo-alerts" "random"))
+
+    (defun sbw/slack--message-notify-alert-with-attachment (message room team)
+      (with-slots (text attachments) message
+        (let* ((attachment-to-string (lambda (x) (slack-message-to-string x (slack-message-image-to-string message team))))
+               (attachment-strings   (mapconcat attachment-to-string attachments "\n\t-\n"))
+               (attachment-text      (slack-message-unescape-string attachment-strings team)))
+          (alert attachment-text
+                 :title    (slack-room-name room)
+                 :icon     slack-alert-icon
+                 :category 'slack))))
+
+    (defun sbw/slack--attachment-aware-notifier (message room team)
+      (let* ((room-name (slack-room-name room)))
+        (if (member room-name sbw/slack--attachment-notifications-rooms)
+            (sbw/slack--message-notify-alert-with-attachment message room team)
+          (slack-message-notify-alert message room team))))
+
+    (setq slack-message-custom-notifier 'sbw/slack--message-notify-alert-with-attachment)
+
+    ;; Notification rules
+
+    ;; Clear everything out to simplify reloading this configuration when making changes
+    (setq alert-user-configuration '())
+    
     ;; Ignore everything by default
     (add-to-list 'alert-user-configuration
-                 '(((:category . "slack")) ignore nil))
+                 '(((:category . "slack"))
+                   ignore nil))
 
-    ;; Alert me if my name or username is mentioned in a room
+    ;; Notify me if my name or username is mentioned in any of my subscribed channels
     (add-to-list 'alert-user-configuration
                  '(((:message  . "\\(Stu\\|stuw\\)")
-                    (:title    . "\\(random\\|general\\|newsflo\\|newsflo-alerts\\|newsflodevs\\|scala\\)")
                     (:category . "slack"))
                    osx-notifier nil))
 
-    ;; Alert me for anything in rooms I'm interested in monitoring
+    ;; Notify me for anything in important channels
     (add-to-list 'alert-user-configuration
-                 '(((:title    . "\\(newsflo\\|newsflo-alerts\\|newsflodevs\\|scala\\)")
+                 '(((:title    . "\\(^newsflo$\\|^newsflodevs$\\|^scala$\\)")
+                    (:category . "slack"))
+                   osx-notifier nil))
+
+    ;; Notify me for warnings or failures in the alerts channels
+    (add-to-list 'alert-user-configuration
+                 '(((:title    . "\\(^newsflo-alerts$\\)")
+                    (:message  . "\\(Failure\\|Warning\\)")
                     (:category . "slack"))
                    osx-notifier nil))
 
@@ -102,6 +143,8 @@
 
     ;; UI
 
+    (add-hook 'slack-mode-hook #'sbw/flyspell--enable-flyspell-mode)
+    
     (defun set-window-width (n)
       (window-resize (selected-window) (- n (window-width)) t))
 
@@ -122,4 +165,3 @@
         ("S-<return>" . sbw/slack-insert-newline)))
 
 (provide 'sbw-configure-slack)
-

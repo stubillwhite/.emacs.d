@@ -129,7 +129,8 @@
                                         (sbw/menu-action ?d "Disable"            'slack-ws-close)
                                         (sbw/menu-action ?e "Enable"             'slack-start)
                                         (sbw/menu-action ?s "Select room"        'slack-select-rooms)
-                                        (sbw/menu-action ?u "Select unread room" 'slack-select-unread-rooms)))
+                                        (sbw/menu-action ?u "Select unread room" 'slack-select-unread-rooms)
+                                        (sbw/menu-action ?w "Open Slack window"  'sbw/slack-mode--open-window)))
             (sbw/menu-submenu ?t "Timers"
                               (sbw/menu "Timers"
                                         (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
