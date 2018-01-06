@@ -77,7 +77,7 @@
 
     ;; For some rooms I want the content of attachments to be considered when processing notifications
     
-    (setq sbw/slack--mettachment-notifications-rooms '("newsflo-alerts"))
+    (setq sbw/slack--attachment-notifications-rooms '("newsflo-alerts"))
 
     (defun sbw/slack--message-notify-alert-with-attachment (message room team)
       (with-slots (text attachments) message
