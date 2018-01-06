@@ -77,7 +77,7 @@
 
     ;; For some rooms I want the content of attachments to be considered when processing notifications
     
-    (setq sbw/slack--mettachment-notifications-rooms '("newsflo-alerts" "random"))
+    (setq sbw/slack--mettachment-notifications-rooms '("newsflo-alerts"))
 
     (defun sbw/slack--message-notify-alert-with-attachment (message room team)
       (with-slots (text attachments) message
@@ -89,13 +89,13 @@
                  :icon     slack-alert-icon
                  :category 'slack))))
 
-    (defun sbw/slack--attachment-aware-notifier (message room team)
+    (defun sbw/slack--custom-notifier (message room team)
       (let* ((room-name (slack-room-name room)))
         (if (member room-name sbw/slack--attachment-notifications-rooms)
             (sbw/slack--message-notify-alert-with-attachment message room team)
           (slack-message-notify-alert message room team))))
 
-    (setq slack-message-custom-notifier 'sbw/slack--message-notify-alert-with-attachment)
+    (setq slack-message-custom-notifier 'sbw/slack--custom-notifier)
 
     ;; Notification rules
 
