@@ -97,6 +97,12 @@
     ;; Start with source blocks hidden
     (add-hook 'org-mode-hook 'org-hide-block-all)
 
+    ;; Latex
+    (setq org-latex-create-formula-image-program 'imagemagick                                     ;; Imagemagick for rendering
+          exec-path                              (append '("/Library/TeX/texbin") exec-path)      ;; Add executable to the path
+          org-format-latex-options               (plist-put org-format-latex-options :scale 1.5)  ;; Double size when rendering formulae
+          )
+                                                            
     ;; Open org-mode links in the same frame
     (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file)
     
