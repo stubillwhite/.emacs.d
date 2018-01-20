@@ -152,8 +152,15 @@
       (interactive)
       (let* ((new-window (split-window-right)))
         (select-window new-window)
-        (set-window-width 129)
-        (slack-start))))
+        (set-window-width 129)))
+
+    ;; (with-eval-after-load 'tracking
+    ;;   (define-key tracking-mode-map [f11]
+    ;;     #'tracking-next-buffer))
+    
+    ;; Ensure the buffer exists when a message arrives on a channel that wasn't open.
+    (setq slack-buffer-create-on-notify t)
+    )
   
   :bind
   (:map slack-mode-map
@@ -162,6 +169,48 @@
         ("C-c r" . slack-message-add-reaction)
         ("C-c d" . slack-message-delete)
         ("C-c e" . slack-message-edit)
+        ("<f10>" . tracking-next-buffer)
         ("S-<return>" . sbw/slack-insert-newline)))
 
 (provide 'sbw-configure-slack)
+;; (let* ((team (slack-team-select)))
+;;   (cl-loop for team in (list team)
+;;            append (with-slots (groups ims channels) team
+;;                     (cl-remove-if #'(lambda (room) (not (< 0 (oref room unread-count-display))))
+;;                                   (append ims groups channels)))))
+
+;; (defun sbw/slack--has-unread-messages (x)
+;;   (not (< 0 (oref x unread))))
+
+;; (cl-loop for team in slack-teams
+;;          append (with-slots (groups ims channels) team
+;;                   (append ims groups channels)))
+
+;; (cl-loop for team in slack-teams
+;;          for room in (with-slots (groups ims channels) team (append ims groups channels))
+;;          append room)
+
+
+;; (cl-loop for team in slack-teams
+;;          for room in (with-slots (groups ims channels) team (append ims groups channels))
+;;          append room
+;;          ;; unless (zerop (oref room unread-count-display))
+;;          ;; append room
+;;          )
+
+;; ;; (slack-room-create-buffer room-to-select team)
+
+
+;; (slack-teams)
+
+(defun sbw/slack--unread-rooms ()
+ (->> slack-teams
+      (-map (lambda (x) (with-slots (groups ims channels) x
+                     `((team . x) (room . ,(append channels))))))
+      (-filter (lambda (x) (map-let (team room) x
+                        (not (< 0 (oref room unread-count-display))))))))
+
+;; (map-let (team room) (car (sbw/slack--unread-rooms))
+;;   (slack-room-create-buffer room team))
+
+
