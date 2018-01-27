@@ -17,6 +17,7 @@
         org-fill-paragraph
         org-kill-line
         org-metaleft
+        org-metaright
         org-self-insert-command
         orgtbl-self-insert-command
         sbw/unfill-paragraph
@@ -28,10 +29,12 @@
         sp-kill-hybrid-sexp
         sp-kill-word
         sp-select-next-thing-exchange
+        upcase-region
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        cua-exchange-point-and-mark
         cua-scroll-up
         helm-M-x
         keyboard-escape-quit

@@ -129,6 +129,7 @@
                                         (sbw/menu-action ?d "Disable"            'slack-ws-close)
                                         (sbw/menu-action ?e "Enable"             'slack-start)
                                         (sbw/menu-action ?s "Select room"        'slack-select-rooms)
+                                        (sbw/menu-action ?t "Select thread"      'slack-thread-select)
                                         (sbw/menu-action ?u "Select unread room" 'slack-select-unread-rooms)
                                         (sbw/menu-action ?w "Open Slack window"  'sbw/slack-mode--open-window)))
             (sbw/menu-submenu ?t "Timers"
