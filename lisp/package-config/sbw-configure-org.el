@@ -52,6 +52,7 @@
      org-src-window-setup                       'current-window              ;; Edit source blocks in the current frame
      org-image-actual-width                     '(40)                        ;; Default 100px, unless there is a #+ATTR.*: width="200"
      org-use-speed-commands                     t                            ;; Enable speed commands
+     org-export-with-latex                      'imagemagick                 ;; Export LaTeX snippets
      )
 
     ;; Babel

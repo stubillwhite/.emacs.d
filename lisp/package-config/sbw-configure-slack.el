@@ -52,7 +52,7 @@
      :client-id           sbw/slack-mendeley-client-id 
      :client-secret       sbw/slack-mendeley-client-secret
      :token               sbw/slack-mendeley-token
-     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs bos-big-data scala engineering))
+     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs bos-big-data scala engineering leads))
     
     ;; (slack-register-team
     ;;  :name                "functional-programming"
@@ -109,13 +109,13 @@
 
     ;; Notify me if my name or username is mentioned in any of my subscribed channels
     (add-to-list 'alert-user-configuration
-                 '(((:message  . "\\(Stu\\|stuw\\)")
+                 '(((:message  . "\\b\\(Stuart\\|Stu\\|stuw\\)\\b")
                     (:category . "slack"))
                    osx-notifier nil))
 
     ;; Notify me for anything in important channels
     (add-to-list 'alert-user-configuration
-                 '(((:title    . "\\(^newsflo$\\|^newsflodevs$\\|^scala$\\)")
+                 '(((:title    . "\\(^newsflo$\\|^newsflodevs$\\|^leads$\\|^scala$\\)")
                     (:category . "slack"))
                    osx-notifier nil))
 

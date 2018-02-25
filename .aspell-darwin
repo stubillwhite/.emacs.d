@@ -1,4 +1,4 @@
-personal_ws-1.1 en 272 
+personal_ws-1.1 en 285 
 Reza's
 Leiningen
 occurrance
@@ -26,9 +26,9 @@ tmux
 Nataliya
 Lemmatize
 EID
-RSS
-SPI
 SNS
+SPI
+RSS
 microservice
 Covariant
 Trello
@@ -58,6 +58,7 @@ activations
 timesheet
 VGG
 CVs
+ELS
 ASJC
 ASGs
 DSL
@@ -66,11 +67,13 @@ Dockerised
 Vectorise
 Alphabeta
 Dropwizard
+servlet
 ACLs
 CKAN
 Databricks
 Schijvenaars
 TensorFlow
+Anonymising
 Oysho
 productionising
 Keras
@@ -82,6 +85,7 @@ That'll
 reflowing
 uncomment
 composability
+pseudonymise
 IAM
 blockchain
 teardown
@@ -96,6 +100,7 @@ Elsevier's
 Terraform
 parsers
 FST
+Dredd
 siloing
 aggregators
 submodules
@@ -141,6 +146,7 @@ Vallianatos
 iteratively
 Ivo
 HBase
+CloudHealth
 Lucene
 Scopus
 GC
@@ -158,6 +164,7 @@ Nespresso
 whitelisted
 bayesian
 scalability
+discoverability
 Pangram
 curation
 Monoids
@@ -183,14 +190,17 @@ Xuemin's
 UUID
 terraformcontrol
 architecting
+unmarshaling
 Seitl
 NLP
 buddying
 CCBY
 BASSC
+pseudonymising
 Ensmallen
 waypoint
 SciVal
+Misclassified
 Nataliya's
 Mendeley's
 Kotlin
@@ -223,6 +233,7 @@ CQRS
 REPL
 balancer
 trigram
+Gradle
 timestamp
 GitLab
 Cuda
@@ -263,6 +274,7 @@ CloudWatch
 SBT
 parameterise
 SCS
+Newsflo's
 TBD
 integrations
 ASG

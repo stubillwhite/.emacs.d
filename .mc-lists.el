@@ -15,6 +15,7 @@
         kill-region
         org-beginning-of-line
         org-fill-paragraph
+        org-force-self-insert
         org-kill-line
         org-metaleft
         org-metaright
@@ -41,6 +42,7 @@
         mouse-yank-primary
         multiple-cursors-mode
         sbw/hydra-multiple-cursors/body
+        sbw/hydra-multiple-cursors/mc/mark-all-like-this-and-exit
         sbw/hydra-multiple-cursors/mc/mark-next-like-this
         sbw/hydra-multiple-cursors/mc/mark-previous-like-this
         sbw/hydra-multiple-cursors/mc/skip-to-next-like-this
