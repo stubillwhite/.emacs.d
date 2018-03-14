@@ -54,7 +54,8 @@
      (:name which-key         :load :immediate) ;; Display available key bindings
      (:name modalka           :load :immediate) ;; Easily introduce native modal editing of your own design
      (:name highlight-symbol  :load :immediate) ;; Quickly highlight a symbol throughout the buffer and cycle through its locations
-
+     (:name tldr              :load :immediate) ;; Emacs client for http://tldr.sh/
+     
      ;; Helm
      (:name helm              :load :immediate) ;; Incremental narrowing framework
      (:name helm-swoop        :load :immediate) ;; Efficiently skipping between matches
@@ -64,6 +65,7 @@
      (:name helm-flycheck     :load :immediate) ;; Show flycheck errors with Helm
      (:name helm-flyspell     :load :immediate) ;; Helm extension for correcting words with Flyspell
      (:name helm-dash         :load :immediate) ;; Browse Dash docsets inside Emacs
+     (:name helm-tramp        :load :immediate) ;; Helm interface for tramp mode
      
      ;; Elisp
      (:name json              :load :immediate) ;; JavaScript Object Notation parser / generator
@@ -108,6 +110,7 @@
 
      ;; Haskell
      (:name haskell-mode      :load :immediate) ;; Haskell mode
+     (:name intero            :load :immediate) ;; Interactive Haskell development
      
      ;; HTML
      (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
