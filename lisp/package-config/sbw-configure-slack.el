@@ -52,7 +52,14 @@
      :client-id           sbw/slack-mendeley-client-id 
      :client-secret       sbw/slack-mendeley-client-secret
      :token               sbw/slack-mendeley-token
-     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs bos-big-data scala engineering leads))
+     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs bos-big-data scala engineering leads java))
+
+    ;; (slack-register-team
+    ;;  :name                "elscs"
+    ;;  :client-id           sbw/slack-elscs-client-id 
+    ;;  :client-secret       sbw/slack-elscs-client-secret
+    ;;  :token               sbw/slack-elscs-token
+    ;;  :subscribed-channels '(api-guild))
     
     ;; (slack-register-team
     ;;  :name                "functional-programming"
@@ -131,7 +138,8 @@
     (defun sbw/slack-insert-newline ()
       (interactive)
       (open-line 1)
-      (next-line 1))
+      (next-line 1)
+      (move-beginning-of-line))
 
     ;; Temporary workaround while debugging issue #249
 
