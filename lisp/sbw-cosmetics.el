@@ -1,6 +1,8 @@
 ;; Color theme, don't warn about executing code
 (load-theme 'sbw-dark-muted t)
 
+(setq inhibit-startup-screen t)
+
 ;; Maximise the screen area by stripping off menu, toolbars, and scrollbars
 (tooltip-mode -1)
 (tool-bar-mode -1)
@@ -84,11 +86,12 @@
 
 ;; Whitespace
 (require 'whitespace)
+(require 'seq)
 (setq whitespace-display-mappings '((space-mark   #x0020 [#x0020])
                                     (newline-mark #x000A [#x00B6 #x000A])
                                     (tab-mark     #x0009 [#x25BA #x0009])))
 (setq whitespace-style
-      (-remove (lambda (x) (-contains? '(lines lines-tail) x)) whitespace-style))
+      (seq-difference whitespace-style '(lines lines-tail)))
 
 ;; Uniquify
 (require 'uniquify)

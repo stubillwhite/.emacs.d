@@ -14,10 +14,10 @@
 (require 'sbw-common-config)
 (require 'sbw-bootstrap)
 (require 'sbw-package-list)
+(require 'sbw-cosmetics)
 
 (sbw/bootstrap-init)
 (sbw/bootstrap-packages sbw/package-list)
-
 
 (sbw/bootstrap-require sbw/personal-package-list)
 
@@ -25,7 +25,4 @@
 
 
 
-;; Move to cosmetics
-(setq inhibit-startup-screen t)
-(load-theme 'sbw-dark-muted t)
 

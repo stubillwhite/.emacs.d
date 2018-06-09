@@ -37,7 +37,8 @@
   (insert "Bootstrapping packages\n----------------------\n\n")
   (loop for k in pkgs
         do (with-current-buffer sbw/bootstrap--buffer-name
-             (insert (format "%-30s => %s\n" (symbol-name k) (gethash k statuses)))))
+             ;; (insert (format "%-30s => %s\n" (symbol-name k) (gethash k statuses)))
+             (insert (format "%s %s\n" (gethash k statuses) (symbol-name k)))))
   (goto-line (+ 4 (cl-position pkg pkgs)))
   (redisplay t))
 
@@ -63,13 +64,13 @@
   "Bootstrap the packages PKGS and then either configure or require the package."
   (let* ((statuses (make-hash-table :test 'eq)))
     (loop for pkg in pkgs
-          do (puthash pkg "" statuses))
+          do (puthash pkg "✘" statuses))
     (loop for pkg in pkgs
           do
-          (sbw/bootstrap--update-package-status pkg pkgs "..." statuses)
+          (sbw/bootstrap--update-package-status pkg pkgs "➜" statuses)
           (eval `(straight-use-package (quote ,pkg)))
           (sbw/bootstrap--configure pkg)
-          (sbw/bootstrap--update-package-status pkg pkgs "OK" statuses))
+          (sbw/bootstrap--update-package-status pkg pkgs "✔" statuses))
     (with-current-buffer sbw/bootstrap--buffer-name
       (end-of-line)
       (insert "\n\nDone!"))))

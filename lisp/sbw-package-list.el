@@ -18,6 +18,7 @@
         ;; Interface
         diminish  ;; Abbreviate minor mode indicators
         powerline ;; Emacs version of the Vim powerline
+        hydra     ;; Make Emacs bindings that stick around
 
         ;; Parenthesis management
         lispy ;; Short and sweet Lisp editing
@@ -25,10 +26,10 @@
         ;; Usability
         key-chord ;; Map pairs of simultaneously pressed keys to commands
 
-        ;; ;; Static checking
-        ;; flyspell         ;; Spell checking
-        ;; flyspell-correct ;; Correcting words with flyspell via custom interface
-        ;; flycheck         ;; Syntax checking
+        ;; Static checking
+        flyspell         ;; Spell checking
+        flyspell-correct ;; Correcting words with flyspell via custom interface
+        flycheck         ;; Syntax checking
 
         ;; ;; org-mode
         ;; org      ;; Your life in plain text
