@@ -1,7 +1,0 @@
-(:name slack
-       :description "Emacs client for Slack"
-       :website "https://github.com/yuya373/emacs-slack"
-       :type github
-       :pkgname "yuya373/emacs-slack"
-       :depends (circe websocket oauth2)
-       )

@@ -1,5 +1,7 @@
 (deftheme sbw-dark-muted "Dark muted theme.")
 
+(require 'color)
+
 (defgroup sbw-dark-muted-faces nil
   "Faces used by sbw-dark-muted theme."
   :group 'faces)

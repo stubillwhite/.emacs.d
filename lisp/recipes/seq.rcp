@@ -1,4 +1,0 @@
-( :name        helm
-  :description "Sequence manipulation library for Emacs."
-  :type        elpa ;; Fetch from elpa to simplify installation on Windows machines
-  )

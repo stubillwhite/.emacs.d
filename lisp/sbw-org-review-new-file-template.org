@@ -1,6 +1,0 @@
-* ${category}
-:PROPERTIES:
-:CATEGORY: ${category}
-:END:
-** Recurring
-** Meetings

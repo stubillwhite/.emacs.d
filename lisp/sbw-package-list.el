@@ -1,151 +1,67 @@
-;; Packages required for the configuration
+(setq sbw/package-list
+      '(
+        ;; Package management
+        use-package ;; Easy package use
 
-(defconst sbw/pkg-package-list
-  '(
-     ;; Core packages
-     (:name use-package     :load :immediate) ;; Easy package use
-     (:name dash            :load :immediate) ;; Modern list library
-     (:name dash-functional :load :immediate) ;; Further functions for dash
-     (:name f               :load :immediate) ;; Modern file API
-     (:name s               :load :immediate) ;; Modern string API
-     (:name names           :load :immediate) ;; Sane namespace handling
-     (:name seq             :load :immediate) ;; Unified sequence handling
-     (:name cygwin-mount    :load :disable)   ;; Teach cygwin EMACS about windows styles path
-   
-     ;; Evil
-     ;; (:name evil            :load :immediate) ;; Welcome home
-     ;; (:name evil-leader     :load :immediate) ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
-     (:name key-chord       :load :immediate) ;; Map pairs of simultaneously pressed keys to commands
+        ;; Elisp
+        dash            ;; Modern list API
+        dash-functional ;; Additional functions for dash
+        f               ;; Modern file API
+        s               ;; Modern string API
+        seq             ;; Unified abstractions for sequences
+
+        ;; Completion
+        ivy     ;; Completion framework
+        counsel ;; Ivy enhancements for common commands
+        swiper  ;; Ivy alternative for search
+
+        ;; Interface
+        diminish  ;; Abbreviate minor mode indicators
+        powerline ;; Emacs version of the Vim powerline
+
+        ;; Parenthesis management
+        lispy ;; Short and sweet Lisp editing
+        
+        ;; Usability
+        key-chord ;; Map pairs of simultaneously pressed keys to commands
+
+        ;; ;; Static checking
+        ;; flyspell         ;; Spell checking
+        ;; flyspell-correct ;; Correcting words with flyspell via custom interface
+        ;; flycheck         ;; Syntax checking
+
+        ;; ;; org-mode
+        ;; org      ;; Your life in plain text
+        ;; htmlize  ;; html org-mode reports
+        ;; org-gcal ;; Org sync with Google Calendar
+
+        ;; ;; Git
+        magit ;; Control Git from Emacs
+ 
+        ;; ;; Slack
+        ;; slack   ;; Slack for Emacs
+        ;; emojify ;; Emoji for Slack
+
+        ;; ;; Languages
+
+        ;; Haskell
+        haskell-mode ;; Haskell mode
+        intero       ;; Interactive Haskell development
+
+        ;; ;; Elm
+        ;; elm-mode     ;; Elm mode for emacs
+        ;; flycheck-elm ;; Flycheck for Elm
      
-     ;; General usability
-     ;; Disabled due to Emacs bug #24640
-     (:name undo-tree           :load :disable)   ;; Undo tree visualisation
-     (:name adaptive-wrap       :load :immediate) ;; Visually wrap text without changing text
-     (:name flyspell            :load :immediate) ;; Spell checking
-     (:name flyspell-correct    :load :immediate) ;; Correcting words with flyspell via custom interface
-     (:name flycheck            :load :immediate) ;; Syntax checking
-     (:name evil-nerd-commenter :load :immediate) ;; Efficient language-independent commenting
-     (:name drag-stuff          :load :immediate) ;; Drag stuff around in Emacs
-     (:name beacon              :load :immediate) ;; A light that follows your cursor around so you don't lose it!
-     (:name keyfreq             :load :immediate) ;; Track Emacs commands frequency
-     (:name macrostep           :load :immediate) ;; Interactive macro expander for Emacs
-     (:name zoom-frm            :load :immediate) ;; Commands to zoom frame font size
-     (:name focus               :load :immediate) ;; Dim the color of text in surrounding paragraphs
-     
-     ;; org-mode
-     (:name org               :load :immediate) ;; Your life in plain text
-     (:name htmlize           :load :on-idle)   ;; html org-mode reports
-     (:name org-gcal          :load :immediate) ;; Org sync with Google Calendar
+        ;; ;; JSON
+        ;; json-mode ;; Major mode for editing JSON files
+        ))
 
-     ;; Auto-complete
-     (:name company           :load :immediate) ;; Auto-completion
-     (:name yasnippet         :load :immediate) ;; Yet another snippet extension for Emacs
-
-     ;; Interface
-     (:name powerline         :load :immediate) ;; Emacs version of the Vim powerline
-     (:name diminish          :load :immediate) ;; Abbreviate minor mode indicators
-     (:name projectile        :load :immediate) ;; Project interaction library for Emacs
-     (:name avy               :load :immediate) ;; Jump to things in Emacs tree-style
-     (:name ace-window        :load :immediate) ;; Quickly switch windows
-     (:name golden-ratio      :load :immediate) ;; Automatic resizing of Emacs windows to the golden ratio
-     (:name expand-region     :load :immediate) ;; Expand region by semantic units
-     (:name hydra             :load :immediate) ;; Make Emacs bindings that stick around
-     (:name multiple-cursors  :load :immediate) ;; An experiment in adding multiple cursors to emacs
-     (:name which-key         :load :immediate) ;; Display available key bindings
-     (:name modalka           :load :immediate) ;; Easily introduce native modal editing of your own design
-     (:name highlight-symbol  :load :immediate) ;; Quickly highlight a symbol throughout the buffer and cycle through its locations
-
-     ;; Helm
-     (:name helm              :load :immediate) ;; Incremental narrowing framework
-     (:name helm-swoop        :load :immediate) ;; Efficiently skipping between matches
-     (:name helm-projectile   :load :immediate) ;; Helm integration for projectile
-     (:name helm-ag           :load :immediate) ;; The silver searcher with Helm interface
-     (:name helm-descbinds    :load :immediate) ;; A helm frontend for describe-bindings
-     (:name helm-flycheck     :load :immediate) ;; Show flycheck errors with Helm
-     (:name helm-flyspell     :load :immediate) ;; Helm extension for correcting words with Flyspell
-     (:name helm-dash         :load :immediate) ;; Browse Dash docsets inside Emacs
-     
-     ;; Elisp
-     (:name json              :load :immediate) ;; JavaScript Object Notation parser / generator
-     (:name async             :load :immediate) ;; Asynchronous processing in Emacs
-     (:name nameless          :load :immediate) ;; Less is more. Hide package namespace in your emacs-lisp code
-
-     ;; Tools
-
-     ;; Text
-     (:name speed-type        :load :immediate) ;; Typing tests
-
-     ;; Git
-     (:name magit             :load :immediate) ;; Control Git from Emacs
-
-     ;; Docker
-     (:name docker            :load :immediate) ;; Manage Docker from Emacs
-
-     ;; Slack
-     (:name slack             :load :immediate) ;; Slack for Emacs
-     (:name emojify           :load :immediate) ;; Emoji for Slack
-     
-     ;; Languages
-     
-     ;; Clojure
-     (:name clojure-mode      :load :immediate) ;; Clojure mode
-     (:name cider             :load :immediate) ;; REPL support
-     (:name smartparens       :load :immediate) ;; Improved paredit
-     (:name clj-refactor      :load :immediate) ;; Clojure refactoring functions
-     (:name cljr-helm         :load :immediate) ;; Helm wrapper for clj-refactor
-     
-     ;; Graphviz
-     (:name graphviz-dot-mode :load :immediate) ;; Graphviz DOT file support and previews
-
-     ;; Elm
-     (:name elm-mode          :load :immediate) ;; Elm mode for emacs
-     
-     ;; JSON
-     (:name json-mode         :load :immediate) ;; Major mode for editing JSON files
-
-     ;; Groovy
-     (:name groovy-mode       :load :immediate) ;; Groovy mode
-
-     ;; Haskell
-     (:name haskell-mode      :load :immediate) ;; Haskell mode
-     
-     ;; HTML
-     (:name web-mode          :load :immediate) ;; Emacs major mode for editing PHP/JSP/ASP HTML templates (with embedded CSS and JS blocks)
-     (:name rainbow-mode      :load :immediate) ;; Colorize color names in buffers
-
-     ;; Markdown
-     (:name markdown-mode     :load :immediate) ;; Markdown mode
-
-     ;; Racket
-     (:name racket-mode       :load :immediate) ;; Racket mode
-     
-     ;; Scala
-     (:name emacs-scala-mode  :load :immediate) ;; Scala mode
-     
-     ;; Yaml
-     (:name yaml-mode         :load :immediate) ;; YAML mode
-
-     ;; XML
-     ;; (:name nxml-mode         :load :included) ;; In-built nXML mode
-     )
-  "List of the all packages required for this Emacs configuration.")
-
-(defconst sbw/pkg-personal-packages
-  '( (:name sbw-bindings) ;; Remove
-     (:name sbw-cosmetics)
-     (:name sbw-cosmetics-code-style)
-     (:name sbw-countdown)
-     (:name sbw-hash-tables)
-     (:name sbw-menu)
-     (:name sbw-misc)
-     (:name sbw-multimethods)
-     (:name sbw-message)
-     (:name sbw-org-review)
-     (:name sbw-org-utils)
-     (:name sbw-org-config)
-     (:name sbw-time)
-     (:name sbw-utils)
-     (:name sbw-value-eq) )
-  "List of my packages.")
+(setq sbw/personal-package-list
+      '(
+        sbw-cosmetics
+        sbw-cosmetics-code-style
+        sbw-bindings
+        sbw-utils
+        ))
 
 (provide 'sbw-package-list)

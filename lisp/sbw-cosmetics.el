@@ -83,7 +83,6 @@
 (add-hook 'ediff-suspend-hook      'sbw/cosmetics-restore-window-config)
 
 ;; Whitespace
-;; TODO Move to a configure file
 (require 'whitespace)
 (setq whitespace-display-mappings '((space-mark   #x0020 [#x0020])
                                     (newline-mark #x000A [#x00B6 #x000A])
@@ -92,7 +91,6 @@
       (-remove (lambda (x) (-contains? '(lines lines-tail) x)) whitespace-style))
 
 ;; Uniquify
-;; TODO Move to a configure file
 (require 'uniquify)
 
 (setq 

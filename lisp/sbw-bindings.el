@@ -1,5 +1,7 @@
 (require 'sbw-utils)
 
+;; TODO: This all needs reviewing and tweaking
+
 ;; -----------------------------------------------------------------------------
 ;; New system, migrating piecemeal
 ;; -----------------------------------------------------------------------------
@@ -171,7 +173,6 @@ _q_   Quit
 
 (dolist (hook '(cider-mode-hook))
       (add-hook hook #'sbw/cider-minor-mode))
-
 
 ;; -----------------------------------------------------------------------------
 ;; Flyspell mode bindings

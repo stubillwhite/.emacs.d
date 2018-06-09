@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package slack
   :defer t
 
@@ -31,7 +29,7 @@
     
     ;; Teams
     
-    (sbw/load-secrets)
+    (sbw/bootstrap-load-secrets)
 
     ;; (slack-register-team
     ;;  :name                "white-test"
@@ -45,14 +43,21 @@
      :client-id           sbw/slack-bos-client-id
      :client-secret       sbw/slack-bos-client-secret
      :token               sbw/slack-bos-token
-     :subscribed-channels '(random general bos))
+     :subscribed-channels '(random general bos leads))
 
     (slack-register-team
      :name                "mendeley"
      :client-id           sbw/slack-mendeley-client-id 
      :client-secret       sbw/slack-mendeley-client-secret
      :token               sbw/slack-mendeley-token
-     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs bos-big-data scala engineering))
+     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs scala engineering java))
+
+    ;; (slack-register-team
+    ;;  :name                "elscs"
+    ;;  :client-id           sbw/slack-elscs-client-id 
+    ;;  :client-secret       sbw/slack-elscs-client-secret
+    ;;  :token               sbw/slack-elscs-token
+    ;;  :subscribed-channels '(api-guild))
     
     ;; (slack-register-team
     ;;  :name                "functional-programming"
@@ -109,13 +114,13 @@
 
     ;; Notify me if my name or username is mentioned in any of my subscribed channels
     (add-to-list 'alert-user-configuration
-                 '(((:message  . "\\(Stu\\|stuw\\)")
+                 '(((:message  . "\\b\\(Stuart\\|Stu\\|stuw\\)\\b")
                     (:category . "slack"))
                    osx-notifier nil))
 
     ;; Notify me for anything in important channels
     (add-to-list 'alert-user-configuration
-                 '(((:title    . "\\(^newsflo$\\|^newsflodevs$\\|^scala$\\)")
+                 '(((:title    . "\\(^newsflo$\\|^newsflodevs$\\|^leads$\\|^scala$\\)")
                     (:category . "slack"))
                    osx-notifier nil))
 
@@ -131,7 +136,8 @@
     (defun sbw/slack-insert-newline ()
       (interactive)
       (open-line 1)
-      (next-line 1))
+      (next-line 1)
+      (move-beginning-of-line))
 
     ;; Temporary workaround while debugging issue #249
 
@@ -212,5 +218,6 @@
 
 ;; (map-let (team room) (car (sbw/slack--unread-rooms))
 ;;   (slack-room-create-buffer room team))
+
 
 
