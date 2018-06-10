@@ -27,9 +27,10 @@
         key-chord ;; Map pairs of simultaneously pressed keys to commands
 
         ;; Static checking
-        flyspell         ;; Spell checking
-        flyspell-correct ;; Correcting words with flyspell via custom interface
-        flycheck         ;; Syntax checking
+        flyspell             ;; Spell checking
+        flyspell-correct     ;; Correcting words with flyspell via custom interface
+        flyspell-correct-ivy ;; Correcting words with flyspell via custom interface
+        flycheck             ;; Syntax checking
 
         ;; ;; org-mode
         ;; org      ;; Your life in plain text
@@ -45,16 +46,19 @@
 
         ;; ;; Languages
 
-        ;; Haskell
-        haskell-mode ;; Haskell mode
-        intero       ;; Interactive Haskell development
-
         ;; ;; Elm
         ;; elm-mode     ;; Elm mode for emacs
         ;; flycheck-elm ;; Flycheck for Elm
      
+        ;; Haskell
+        haskell-mode ;; Haskell mode
+        intero       ;; Interactive Haskell development
+
         ;; ;; JSON
         ;; json-mode ;; Major mode for editing JSON files
+
+        ;; Markdown
+        markdown-mode ;; Markdown mode
         ))
 
 (setq sbw/personal-package-list

@@ -64,13 +64,13 @@
   "Bootstrap the packages PKGS and then either configure or require the package."
   (let* ((statuses (make-hash-table :test 'eq)))
     (loop for pkg in pkgs
-          do (puthash pkg "✘" statuses))
+          do (puthash pkg "[    ]" statuses))
     (loop for pkg in pkgs
           do
-          (sbw/bootstrap--update-package-status pkg pkgs "➜" statuses)
+          (sbw/bootstrap--update-package-status pkg pkgs "[ -- ]" statuses)
           (eval `(straight-use-package (quote ,pkg)))
           (sbw/bootstrap--configure pkg)
-          (sbw/bootstrap--update-package-status pkg pkgs "✔" statuses))
+          (sbw/bootstrap--update-package-status pkg pkgs "[ OK ]" statuses))
     (with-current-buffer sbw/bootstrap--buffer-name
       (end-of-line)
       (insert "\n\nDone!"))))
