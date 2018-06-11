@@ -15,10 +15,12 @@
         swiper  ;; Ivy alternative for search
 
         ;; Interface
-        diminish      ;; Abbreviate minor mode indicators
-        powerline     ;; Emacs version of the Vim powerline
-        expand-region ;; Expand region by semantic units
-        hydra         ;; Make Emacs bindings that stick around
+        diminish           ;; Abbreviate minor mode indicators
+        projectile         ;; Project interaction library for Emacs
+        counsel-projectile ;; Ivy UI for Projectile
+        powerline          ;; Emacs version of the Vim powerline
+        expand-region      ;; Expand region by semantic units
+        hydra              ;; Make Emacs bindings that stick around
 
         ;; Parenthesis management
         lispy ;; Short and sweet Lisp editing
@@ -26,8 +28,7 @@
         ;; Usability
         evil        ;; Welcome home
         evil-leader ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
-
-        key-chord ;; Map pairs of simultaneously pressed keys to commands
+        key-chord   ;; Map pairs of simultaneously pressed keys to commands
 
         ;; Static checking
         flyspell             ;; Spell checking
@@ -36,9 +37,9 @@
         flycheck             ;; Syntax checking
 
         ;; ;; org-mode
-        ;; org      ;; Your life in plain text
-        ;; htmlize  ;; html org-mode reports
-        ;; org-gcal ;; Org sync with Google Calendar
+        org      ;; Your life in plain text
+        htmlize  ;; html org-mode reports
+        org-gcal ;; Org sync with Google Calendar
 
         ;; ;; Git
         magit ;; Control Git from Emacs
@@ -66,7 +67,6 @@
 
 (setq sbw/personal-package-list
       '(
-        sbw-cosmetics
         sbw-cosmetics-code-style
         sbw-bindings
         sbw-utils

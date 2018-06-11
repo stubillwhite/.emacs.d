@@ -10,14 +10,6 @@
     (setq alist (assq-delete-all key alist))
     (add-to-list 'alist entry :append)))
 
-(defun sbw/heading-one (s)
-  "Returns string S formatted to be a top level heading."
-  (concat s "\n" (make-string (length s) ?=) "\n"))
-
-(defun sbw/heading-two (s)
-  "Returns string S formatted to be a sub-heading."
-  (concat s "\n" (make-string (length s) ?-) "\n"))
-
 (defun sbw/truncate-string (s n)
   "Returns S truncated to N characters with ellipsis if truncation occurred."
   (if (> (length s) n)
@@ -35,37 +27,16 @@
         (switch-to-buffer-other-window (buffer-name))
         (switch-to-buffer buf)))))
 
-(defun sbw/pprint-as-json (x)  
-  "Pretty-print object x as JSON in a temporary window."
-  (let* ((tmp-buf-name "*sbw/pprint-as-json*"))    
-    (sbw/open-and-switch-to-window tmp-buf-name)
-    (with-output-to-temp-buffer tmp-buf-name 
-      (->> (json-encode x)
-           (replace-regexp-in-string "\\\\\"" "\"")
-           (s-chop-prefix "\"")
-           (s-chop-suffix "\"")
-           (insert))
-      (json-pretty-print-buffer))    
-    (json-mode)
-    (use-local-map (copy-keymap json-mode-map))
-    (local-set-key "q" 'delete-window)
-    (message "Press 'q' to quit")))
+(defun sbw/unfill-paragraph ()
+  "Convert a multi-line paragraph into a single line."
+  (interactive)
+  (let* ( (fill-column (point-max)) )
+    (fill-paragraph nil)))
 
-;; TODO Test this
-;; TODO Might be replaced with s.el now?
-(defun sbw/collect-by (f l)
-  "Returns a hash-table of lists of items, keyed by the result of (f item) for each item in list l."
-  (-reduce-from    
-    (lambda (acc val)
-      (let* ( (category (funcall f val))
-              (curr-val (gethash category acc (list))) )
-        (puthash category (cons val curr-val) acc)
-        acc))
-    (sbw/ht-create)
-    l))
-
-(defalias 'sbw/dec '1- "Return x minus one.")
-(defalias 'sbw/inc '1+ "Return x plus one.")
+(defun sbw/unfill-region (start end)
+  "Convert a multi-line region into a single line."
+  (interactive "r")
+  (let* ( (fill-column (point-max)) )
+    (fill-region start end nil)))
 
 (provide 'sbw-utils)
-
