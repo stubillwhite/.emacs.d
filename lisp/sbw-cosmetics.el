@@ -36,6 +36,26 @@
   split-width-threshold  nil
   split-height-threshold 0)
 
+(defun sbw/cosmetics-ensure-vertical-split-advice (orig-fun &rest args)
+  "Ensures that if a window split occurs then it will be vertical."
+  (let* ( (orig-width  split-width-threshold)
+          (orig-height split-height-threshold) )
+    (save-some-buffers t)
+    (setq split-width-threshold  0
+          split-height-threshold nil)    
+    (apply orig-fun args)
+    (setq split-width-threshold  orig-width
+          split-height-threshold orig-height)))
+
+(defun sbw/cosmetics-save-window-config ()
+  "Store the current window configuration."
+  (setq sbw/cosmetics--saved-window-config (current-window-configuration)))
+
+(defun sbw/cosmetics-restore-window-config ()
+  "Restore the last saved window configuration."
+  (when (boundp 'sbw/cosmetics--saved-window-config)
+    (set-window-configuration sbw/cosmetics--saved-window-config)))
+
 ;; Smooth scrolling
 (setq scroll-conservatively 10000)
 
@@ -70,15 +90,6 @@
 
 ;; Not whitespace sensitive by default
 (setq-default ediff-ignore-similar-regions t)
-
-(defun sbw/cosmetics-save-window-config ()
-  "Store the current window configuration."
-  (setq sbw/cosmetics--saved-window-config (current-window-configuration)))
-
-(defun sbw/cosmetics-restore-window-config ()
-  "Restore the last saved window configuration."
-  (when (boundp 'sbw/cosmetics--saved-window-config)
-    (set-window-configuration sbw/cosmetics--saved-window-config)))
 
 (add-hook 'ediff-before-setup-hook 'sbw/cosmetics-save-window-config)
 (add-hook 'ediff-quit-hook         'sbw/cosmetics-restore-window-config)

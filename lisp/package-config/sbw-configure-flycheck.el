@@ -2,11 +2,11 @@
   :diminish flycheck-mode
 
   :init
-  (progn  
+  (progn
     ;; Enable Flycheck for desired modes
     (dolist (x '(html-mode-hook emacs-lisp-mode-hook markdown-mode-hook shell-script-mode-hook elm-mode-hook))
       (add-hook x (lambda () (flycheck-mode))))
-    
+
     ;; Disable annoying checkers
     (setq-default flycheck-disabled-checkers
                   '(emacs-lisp-checkdoc)))
@@ -22,7 +22,7 @@
                     (switch-to-buffer "*Flycheck errors*")
                     (kill-buffer (current-buffer))
                     (delete-window)))))
-  
+
     ;; Prose checker
     (if (sbw/is-linux?)
         (flycheck-define-checker proselint

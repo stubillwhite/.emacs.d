@@ -7,7 +7,7 @@
     ;; Spell check all text modes, apart from markup modes
     (defun sbw/flyspell--enable-flyspell-mode ()
       (let* ( (non-flyspell-modes '(nxml-mode)) )
-        (when (not (seq-contains major-mode non-flyspell-modes))
+        (when (not (seq-contains non-flyspell-modes major-mode))
           (flyspell-mode 1))))
     
     (dolist (x '(text-mode-hook))
@@ -36,6 +36,7 @@
         ((sbw/is-linux?)   "~/.emacs.d/.ispell-unix")
         ((sbw/is-darwin?)  "~/.emacs.d/.aspell-darwin"))))
 
+  ;; TODO: Check wether this is required
   (defun sbw/ispell-configure-org-mode-ignored-regions ()
     (make-local-variable 'ispell-skip-region-alist)
     (add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
@@ -43,7 +44,7 @@
   ;; (add-hook 'org-mode-hook 'sbw/ispell-configure-org-mode-ignored-regions)
 
   :bind
-  ("C-c s w" . helm-flyspell-correct)
+  ("C-c s w" . flyspell-correct-at-point)
   ("C-c s b" . flyspell-buffer))
 
 (provide 'sbw-configure-flyspell)

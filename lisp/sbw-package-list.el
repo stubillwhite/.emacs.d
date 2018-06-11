@@ -1,5 +1,4 @@
-(setq sbw/package-list
-      '(
+(setq sbw/package-list '(
         ;; Package management
         use-package ;; Easy package use
 
@@ -16,14 +15,18 @@
         swiper  ;; Ivy alternative for search
 
         ;; Interface
-        diminish  ;; Abbreviate minor mode indicators
-        powerline ;; Emacs version of the Vim powerline
-        hydra     ;; Make Emacs bindings that stick around
+        diminish      ;; Abbreviate minor mode indicators
+        powerline     ;; Emacs version of the Vim powerline
+        expand-region ;; Expand region by semantic units
+        hydra         ;; Make Emacs bindings that stick around
 
         ;; Parenthesis management
         lispy ;; Short and sweet Lisp editing
         
         ;; Usability
+        evil        ;; Welcome home
+        evil-leader ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
+
         key-chord ;; Map pairs of simultaneously pressed keys to commands
 
         ;; Static checking
