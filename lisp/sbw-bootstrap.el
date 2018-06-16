@@ -37,39 +37,53 @@
   (insert "Bootstrapping packages\n----------------------\n\n")
   (loop for k in pkgs
         do (with-current-buffer sbw/bootstrap--buffer-name
-             ;; (insert (format "%-30s => %s\n" (symbol-name k) (gethash k statuses)))
-             (insert (format "%s %s\n" (gethash k statuses) (symbol-name k)))))
+             (let* ((name (symbol-name (sbw/bootstrap--pkg-name k))))
+               (insert (format "%s %s\n" (gethash name statuses) name)))))
   (goto-line (+ 4 (cl-position pkg pkgs)))
   (redisplay t))
 
 (defun sbw/bootstrap--update-package-status (pkg pkgs new-status statuses)
-  (puthash pkg new-status statuses)
+  (puthash (symbol-name (sbw/bootstrap--pkg-name pkg)) new-status statuses)
   (sbw/bootstrap--display-package-statuses pkg pkgs statuses))
 
 (defun sbw/bootstrap-init ()
   "Configure bootstrap."
+  (get-buffer-create sbw/bootstrap--buffer-name)
   (sbw/bootstrap--install-straight-if-required))
 
-(defun sbw/bootstrap--configure (pkg)
-  (let* ( (pkg-name    (symbol-name pkg))
-          (config-fnam (concat  "sbw-configure-" pkg-name ".el"))
-          (config-dir  (concat sbw/lisp-path "/package-config"))
-          (fnam        (concat config-dir "/" config-fnam)) )
-    (message fnam)
+(defun sbw/bootstrap--pkg-name (pkg)
+  (plist-get pkg :name))
+
+(defun sbw/bootstrap--pkg-action (pkg)
+  (plist-get pkg :action))
+
+(defun sbw/bootstrap--install-if-required (pkg)
+  (let* ((name   (sbw/bootstrap--pkg-name pkg))
+         (action (sbw/bootstrap--pkg-action pkg)))
+    (when (not (eq action :config-only))
+      (eval `(straight-use-package (quote ,name))))))
+
+(defun sbw/bootstrap--configure-if-required (pkg)
+  (let* ((name        (sbw/bootstrap--pkg-name pkg))
+         (config-fnam (concat  "sbw-configure-" (symbol-name name) ".el"))
+         (config-dir  (concat sbw/lisp-path "/package-config"))
+         (fnam        (concat config-dir "/" config-fnam)))
+    (message (concat "Loading " fnam))
     (if (file-exists-p fnam)
         (load-file fnam)
-      (eval `(require (quote, pkg))))))
+      (eval `(require (quote, name))))))
 
 (defun sbw/bootstrap-packages (pkgs)
   "Bootstrap the packages PKGS and then either configure or require the package."
   (let* ((statuses (make-hash-table :test 'eq)))
     (loop for pkg in pkgs
-          do (puthash pkg "[    ]" statuses))
+          do
+          (puthash (symbol-name (sbw/bootstrap--pkg-name pkg)) "[    ]" statuses))
     (loop for pkg in pkgs
           do
           (sbw/bootstrap--update-package-status pkg pkgs "[ -- ]" statuses)
-          (eval `(straight-use-package (quote ,pkg)))
-          (sbw/bootstrap--configure pkg)
+          (sbw/bootstrap--install-if-required pkg)
+          (sbw/bootstrap--configure-if-required pkg)
           (sbw/bootstrap--update-package-status pkg pkgs "[ OK ]" statuses))
     (with-current-buffer sbw/bootstrap--buffer-name
       (end-of-line)

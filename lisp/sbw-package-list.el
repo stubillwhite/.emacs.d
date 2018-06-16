@@ -1,68 +1,68 @@
 (setq sbw/package-list '(
         ;; Package management
-        use-package ;; Easy package use
+        (:name use-package) ;; Easy package use
 
         ;; Elisp
-        dash            ;; Modern list API
-        dash-functional ;; Additional functions for dash
-        f               ;; Modern file API
-        s               ;; Modern string API
-        seq             ;; Unified abstractions for sequences
+        (:name dash)            ;; Modern list API
+        (:name dash-functional) ;; Additional functions for dash
+        (:name f)               ;; Modern file API
+        (:name s)               ;; Modern string API
+        (:name seq)             ;; Unified abstractions for sequences
 
         ;; Completion
-        ivy     ;; Completion framework
-        counsel ;; Ivy enhancements for common commands
-        swiper  ;; Ivy alternative for search
+        (:name ivy)     ;; Completion framework
+        (:name counsel) ;; Ivy enhancements for common commands
+        (:name swiper)  ;; Ivy alternative for search
 
         ;; Interface
-        diminish           ;; Abbreviate minor mode indicators
-        projectile         ;; Project interaction library for Emacs
-        counsel-projectile ;; Ivy UI for Projectile
-        powerline          ;; Emacs version of the Vim powerline
-        expand-region      ;; Expand region by semantic units
-        hydra              ;; Make Emacs bindings that stick around
+        (:name diminish)           ;; Abbreviate minor mode indicators
+        (:name projectile)         ;; Project interaction library for Emacs
+        (:name counsel-projectile) ;; Ivy UI for Projectile
+        (:name powerline)          ;; Emacs version of the Vim powerline
+        (:name expand-region)      ;; Expand region by semantic units
+        (:name hydra)              ;; Make Emacs bindings that stick around
 
         ;; Parenthesis management
-        lispy ;; Short and sweet Lisp editing
+        (:name lispy) ;; Short and sweet Lisp editing
         
         ;; Usability
-        evil        ;; Welcome home
-        evil-leader ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
-        key-chord   ;; Map pairs of simultaneously pressed keys to commands
+        (:name evil)        ;; Welcome home
+        (:name evil-leader) ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
+        (:name key-chord)   ;; Map pairs of simultaneously pressed keys to commands
 
         ;; Static checking
-        flyspell             ;; Spell checking
-        flyspell-correct     ;; Correcting words with flyspell via custom interface
-        flyspell-correct-ivy ;; Correcting words with flyspell via custom interface
-        flycheck             ;; Syntax checking
+        (:name flyspell)             ;; Spell checking
+        (:name flyspell-correct)     ;; Correcting words with flyspell via custom interface
+        (:name flyspell-correct-ivy) ;; Correcting words with flyspell via custom interface
+        (:name flycheck)             ;; Syntax checking
 
-        ;; ;; org-mode
-        org      ;; Your life in plain text
-        htmlize  ;; html org-mode reports
-        org-gcal ;; Org sync with Google Calendar
+        ;; org-mode
+        (:name org)      ;; Your life in plain text
+        (:name htmlize)  ;; html org-mode reports
+        (:name org-gcal) ;; Org sync with Google Calendar
 
-        ;; ;; Git
-        magit ;; Control Git from Emacs
+        ;; Git
+        (:name magit) ;; Control Git from Emacs
  
-        ;; ;; Slack
-        ;; slack   ;; Slack for Emacs
-        ;; emojify ;; Emoji for Slack
+        ;; Slack
+        (:name slack)   ;; Slack for Emacs
+        (:name emojify) ;; Emoji for Slack
 
-        ;; ;; Languages
+        ;; Languages
 
         ;; ;; Elm
         ;; elm-mode     ;; Elm mode for emacs
         ;; flycheck-elm ;; Flycheck for Elm
      
         ;; Haskell
-        haskell-mode ;; Haskell mode
-        intero       ;; Interactive Haskell development
+        (:name haskell-mode) ;; Haskell mode
+        (:name intero)       ;; Interactive Haskell development
 
-        ;; ;; JSON
-        ;; json-mode ;; Major mode for editing JSON files
+        ;; ;; ;; JSON
+        ;; ;; json-mode ;; Major mode for editing JSON files
 
-        ;; Markdown
-        markdown-mode ;; Markdown mode
+        ;; ;; Markdown
+        ;; markdown-mode ;; Markdown mode
         ))
 
 (setq sbw/personal-package-list

@@ -1,6 +1,9 @@
 (use-package flycheck
   :diminish flycheck-mode
 
+  ;; TODO: Autoformatting of source code
+  ;; TODO: Insert or complete
+  
   :init
   (progn
     ;; Enable Flycheck for desired modes
@@ -14,14 +17,16 @@
   :config
   (progn
     ;; Display errors if they exist, and close the buffer if they do not
+    (setq sbw/flycheck-auto-display-errors nil)
     (add-hook 'flycheck-after-syntax-check-hook
               (lambda ()
-                (if flycheck-current-errors
-                    (flycheck-list-errors)
-                  (when (get-buffer "*Flycheck errors*")
-                    (switch-to-buffer "*Flycheck errors*")
-                    (kill-buffer (current-buffer))
-                    (delete-window)))))
+                (when sbw/flycheck-auto-display-errors
+                  (if flycheck-current-errors
+                      (flycheck-list-errors)
+                    (when (get-buffer "*Flycheck errors*")
+                      (switch-to-buffer "*Flycheck errors*")
+                      (kill-buffer (current-buffer))
+                      (delete-window))))))
 
     ;; Prose checker
     (if (sbw/is-linux?)
