@@ -42,13 +42,20 @@
         (:name org-gcal) ;; Org sync with Google Calendar
 
         ;; Git
-        (:name magit) ;; Control Git from Emacs
+        ;; (:name magit) ;; Control Git from Emacs
  
         ;; Slack
         (:name slack)   ;; Slack for Emacs
         (:name emojify) ;; Emoji for Slack
 
         ;; Languages
+
+        ;; Clojure
+        (:name clojure-mode) ;; Clojure mode
+        (:name cider)        ;; REPL support
+        ;; (:name smartparens)  ;; Improved paredit
+        (:name clj-refactor) ;; Clojure refactoring functions
+        ;; (:name cljr-helm)    ;; Helm wrapper for clj-refactor
 
         ;; ;; Elm
         ;; elm-mode     ;; Elm mode for emacs
