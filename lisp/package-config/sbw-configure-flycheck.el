@@ -17,7 +17,7 @@
   :config
   (progn
     ;; Display errors if they exist, and close the buffer if they do not
-    (setq sbw/flycheck-auto-display-errors nil)
+    (setq sbw/flycheck-auto-display-errors t)
     (add-hook 'flycheck-after-syntax-check-hook
               (lambda ()
                 (when sbw/flycheck-auto-display-errors
