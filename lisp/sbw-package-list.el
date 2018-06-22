@@ -35,12 +35,16 @@
                          (:name helm-flyspell)   ;; Helm extension for correcting words with Flyspell
                          (:name helm-dash)       ;; Browse Dash docsets inside Emacs
      
+                         ;; Auto-complete
+                         (:name company)   ;; Auto-completion
+                         (:name yasnippet) ;; Yet another snippet extension for Emacs
                          ;; Interface
                          (:name diminish)           ;; Abbreviate minor mode indicators
                          (:name projectile)         ;; Project interaction library for Emacs
                          (:name powerline)          ;; Emacs version of the Vim powerline
                          (:name expand-region)      ;; Expand region by semantic units
                          (:name hydra)              ;; Make Emacs bindings that stick around
+			 (:name which-key)          ;; Display available key bindings
 
                          ;; Parenthesis management
                          (:name smartparens)  ;; Improved paredit
