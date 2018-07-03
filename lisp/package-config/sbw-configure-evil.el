@@ -21,10 +21,5 @@
 
     (sbw/evil-toggle-global-evil-mode)
 
-    ;; (require 'key-chord)
-    ;; (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-    )
-
-  :bind
-  ("C-c v" . sbw/evil-toggle-global-evil-mode)
-  ("M-["   . sbw/evil-toggle-global-evil-mode))
+    (evil-define-key nil evil-normal-state-map
+                     "z=" 'flyspell-correct-at-point)))

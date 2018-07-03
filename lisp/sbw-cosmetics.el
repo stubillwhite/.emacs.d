@@ -63,7 +63,7 @@
 (show-paren-mode 1)
 
 ;; Start with a maximised window
-(setq window-setup-hook 'toggle-frame-maximized)
+(toggle-frame-maximized)
 
 ;; Hide DOS EOL characters
 (defun sbw/hide-dos-eol ()

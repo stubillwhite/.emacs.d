@@ -39,7 +39,8 @@
         do (with-current-buffer sbw/bootstrap--buffer-name
              (let* ((name (symbol-name (sbw/bootstrap--pkg-name k))))
                (insert (format "%s %s\n" (gethash name statuses) name)))))
-  (goto-line (+ 4 (cl-position pkg pkgs)))
+  (goto-char (point-min))
+  (forward-line (+ 3 (cl-position pkg pkgs)))
   (redisplay t))
 
 (defun sbw/bootstrap--update-package-status (pkg pkgs new-status statuses)
@@ -48,6 +49,8 @@
 
 (defun sbw/bootstrap-init ()
   "Configure bootstrap."
+  (switch-to-buffer (messages-buffer))
+  (split-window-right)
   (get-buffer-create sbw/bootstrap--buffer-name)
   (sbw/bootstrap--install-straight-if-required))
 
@@ -68,10 +71,9 @@
          (config-fnam (concat  "sbw-configure-" (symbol-name name) ".el"))
          (config-dir  (concat sbw/lisp-path "/package-config"))
          (fnam        (concat config-dir "/" config-fnam)))
-    (message (concat "Loading " fnam))
     (if (file-exists-p fnam)
         (load-file fnam)
-      (eval `(require (quote, name))))))
+      (sbw/bootstrap-require (list name)))))
 
 (defun sbw/bootstrap-packages (pkgs)
   "Bootstrap the packages PKGS and then either configure or require the package."
@@ -92,6 +94,8 @@
 (defun sbw/bootstrap-require (pkgs)
   "Just require the packages PKGS."
   (loop for pkg in pkgs
-        do (eval `(require (quote, pkg)))))
+        do (progn
+             (message (concat "Requiring package " (symbol-name pkg)))
+             (eval `(require (quote, pkg))))))
 
 (provide 'sbw-bootstrap)

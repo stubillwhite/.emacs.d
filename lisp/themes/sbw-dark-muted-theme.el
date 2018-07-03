@@ -85,6 +85,7 @@
     `(underline                           ((t (:inherit sbw-dark-muted-normal :underline t))))
     `(link                                ((t (:inherit sbw-dark-muted-keyword :underline t))))
     `(link-visited                        ((t (:inherit sbw-dark-muted-normal :underline t))))
+    ;; `(variable-pitch                      ((t (:inherit sbw-dark-muted-normal))))
     
     ;; GUI
     `(cursor                              ((t (:inherit sbw-dark-muted-normal))))

@@ -1,5 +1,3 @@
-(require 'use-package)
-
 ;; TODO: Check powerline config when all packages are installed
 (use-package powerline
   :init

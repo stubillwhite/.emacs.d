@@ -10,6 +10,8 @@
     (setq flycheck-check-syntax-automatically '(save new-line))
     (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
 
+    (setq intero-stack-executable "/usr/local/bin/stack")
+    
     (defun sbw/intero--ensure-vertical-split (orig-fun &rest args)
       (let* ( (orig-width  split-width-threshold)
               (orig-height split-height-threshold) )

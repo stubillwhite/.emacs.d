@@ -31,6 +31,7 @@
                          (:name helm-swoop)      ;; Efficiently skipping between matches
                          (:name helm-ag)         ;; The silver searcher with Helm interface
                          (:name helm-descbinds)  ;; A helm frontend for describe-bindings
+                         (:name helm-dash)       ;; Browse Dash docsets inside Emacs
                          (:name helm-flycheck)   ;; Show flycheck errors with Helm
                          (:name helm-flyspell)   ;; Helm extension for correcting words with Flyspell
                          (:name helm-dash)       ;; Browse Dash docsets inside Emacs
@@ -91,8 +92,8 @@
                          ;; ;; ;; JSON
                          ;; ;; json-mode ;; Major mode for editing JSON files
 
-                         ;; ;; Markdown
-                         ;; markdown-mode ;; Markdown mode
+                         ;; Markdown
+                         (:name markdown-mode) ;; Markdown mode
                          ))
 
 (setq sbw/personal-package-list
