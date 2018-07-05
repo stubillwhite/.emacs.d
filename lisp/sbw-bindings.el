@@ -115,6 +115,14 @@ _q_   Quit
    ("r" mc/mark-all-in-region-regexp :exit t)
    ("q" nil)))
 
+(defhydra hydra-configure-dash (:color amaranth :hint nil)
+             "dash"
+             ("a" helm-dash-activate-docset "activate" :exit t)
+             ("d" helm-dash-deactivate-docset "deactivate" :exit t)
+             ("q" nil "quit" :color blue))
+
+(bind-key* "S-<f2>" 'hydra-configure-dash/body)
+
 ;; -----------------------------------------------------------------------------
 ;; Old system
 ;; -----------------------------------------------------------------------------

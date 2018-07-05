@@ -28,6 +28,10 @@
                       (kill-buffer (current-buffer))
                       (delete-window))))))
 
+    (defun sbw/flycheck-toggle-auto-display-errors ()
+      (interactive)
+      (setq sbw/flycheck-auto-display-errors (not sbw/flycheck-auto-display-errors)))
+
     ;; Prose checker
     (if (sbw/is-linux?)
         (flycheck-define-checker proselint

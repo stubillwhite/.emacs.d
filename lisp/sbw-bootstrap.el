@@ -38,7 +38,7 @@
   (loop for k in pkgs
         do (with-current-buffer sbw/bootstrap--buffer-name
              (let* ((name (symbol-name (sbw/bootstrap--pkg-name k))))
-               (insert (format "%s %s\n" (gethash name statuses) name)))))
+               (insert (format "%40s : %s\n" name (gethash name statuses))))))
   (goto-char (point-min))
   (forward-line (+ 3 (cl-position pkg pkgs)))
   (redisplay t))
@@ -80,13 +80,17 @@
   (let* ((statuses (make-hash-table :test 'eq)))
     (loop for pkg in pkgs
           do
-          (puthash (symbol-name (sbw/bootstrap--pkg-name pkg)) "[    ]" statuses))
+          (puthash (symbol-name (sbw/bootstrap--pkg-name pkg)) "" statuses))
     (loop for pkg in pkgs
           do
-          (sbw/bootstrap--update-package-status pkg pkgs "[ -- ]" statuses)
+          (sbw/bootstrap--update-package-status pkg pkgs "Installing..." statuses)
           (sbw/bootstrap--install-if-required pkg)
+          (sbw/bootstrap--update-package-status pkg pkgs "Installed" statuses))
+    (loop for pkg in pkgs
+          do
+          (sbw/bootstrap--update-package-status pkg pkgs "Configuring..." statuses)
           (sbw/bootstrap--configure-if-required pkg)
-          (sbw/bootstrap--update-package-status pkg pkgs "[ OK ]" statuses))
+          (sbw/bootstrap--update-package-status pkg pkgs "Done" statuses))
     (with-current-buffer sbw/bootstrap--buffer-name
       (end-of-line)
       (insert "\n\nDone!"))))

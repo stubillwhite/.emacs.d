@@ -1,4 +1,4 @@
-personal_ws-1.1 en 273 
+personal_ws-1.1 en 280 
 Reza's
 Leiningen
 occurrance
@@ -18,6 +18,7 @@ misrecognised
 AWS
 Parallelise
 Sensu
+Tyrell
 Artifactory
 Uzma
 TIO
@@ -26,9 +27,9 @@ tmux
 Nataliya
 Lemmatize
 EID
-SNS
-SPI
 RSS
+SPI
+SNS
 microservice
 Covariant
 Trello
@@ -72,6 +73,7 @@ Databricks
 Schijvenaars
 TensorFlow
 Oysho
+replicants
 productionising
 Keras
 Anonymise
@@ -85,6 +87,7 @@ composability
 IAM
 blockchain
 teardown
+Voight
 RDBMS
 Mendeley
 Puppetfile
@@ -107,11 +110,11 @@ hoc
 AssertJ
 Georgios
 monad
-Monad
 serverless
 Lingpipe
 performant
 complects
+replicant
 prototyped
 Scratchbox
 Alchemical
@@ -124,6 +127,7 @@ MongoDB
 Logentries
 CloudTrail
 IPR
+Deckard
 Coursera
 Jupyter
 impedence
@@ -157,6 +161,7 @@ JVM
 pseudonymised
 Nespresso
 whitelisted
+LAPD
 bayesian
 scalability
 Pangram
@@ -165,6 +170,7 @@ Monoids
 deliverables
 NER
 Kibana
+Taffey
 namespace
 overfitting
 Akka
@@ -214,6 +220,7 @@ Clojure
 Elsevier
 Idris
 Adamos
+glitchy
 microservices
 submodule
 PII

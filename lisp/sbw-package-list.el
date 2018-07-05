@@ -31,7 +31,6 @@
                          (:name helm-swoop)      ;; Efficiently skipping between matches
                          (:name helm-ag)         ;; The silver searcher with Helm interface
                          (:name helm-descbinds)  ;; A helm frontend for describe-bindings
-                         (:name helm-dash)       ;; Browse Dash docsets inside Emacs
                          (:name helm-flycheck)   ;; Show flycheck errors with Helm
                          (:name helm-flyspell)   ;; Helm extension for correcting words with Flyspell
                          (:name helm-dash)       ;; Browse Dash docsets inside Emacs
