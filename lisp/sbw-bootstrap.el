@@ -64,6 +64,7 @@
   (let* ((name   (sbw/bootstrap--pkg-name pkg))
          (action (sbw/bootstrap--pkg-action pkg)))
     (when (not (eq action :config-only))
+      (message (concat "Installing " (symbol-name name)))
       (eval `(straight-use-package (quote ,name))))))
 
 (defun sbw/bootstrap--configure-if-required (pkg)

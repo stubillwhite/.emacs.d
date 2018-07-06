@@ -26,8 +26,8 @@
                          (:name seq)             ;; Unified abstractions for sequences
 
                          ;; Completion
-                         (:name helm-projectile) ;; Helm integration for projectile
                          (:name helm)            ;; Incremental narrowing framework
+                         (:name helm-projectile) ;; Helm integration for projectile
                          (:name helm-swoop)      ;; Efficiently skipping between matches
                          (:name helm-ag)         ;; The silver searcher with Helm interface
                          (:name helm-descbinds)  ;; A helm frontend for describe-bindings
@@ -38,6 +38,7 @@
                          ;; Auto-complete
                          (:name company)   ;; Auto-completion
                          (:name yasnippet) ;; Yet another snippet extension for Emacs
+
                          ;; Interface
                          (:name diminish)           ;; Abbreviate minor mode indicators
                          (:name projectile)         ;; Project interaction library for Emacs
@@ -50,9 +51,10 @@
                          (:name smartparens)  ;; Improved paredit
                          
                          ;; Usability
-                         (:name evil)        ;; Welcome home
-                         (:name evil-leader) ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
-                         (:name key-chord)   ;; Map pairs of simultaneously pressed keys to commands
+                         (:name evil)             ;; Welcome home
+                         (:name evil-leader)      ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
+                         (:name evil-smartparens) ;; Evil integration for Smartparen
+                         (:name key-chord)        ;; Map pairs of simultaneously pressed keys to commands
 
                          ;; Static checking
                          (:name flyspell)              ;; Spell checking

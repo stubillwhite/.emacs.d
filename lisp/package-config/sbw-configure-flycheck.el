@@ -17,20 +17,23 @@
   :config
   (progn
     ;; Display errors if they exist, and close the buffer if they do not
-    (setq sbw/flycheck-auto-display-errors t)
+    (setq sbw/flycheck-auto-display-errors nil)
+
+    (defun sbw/flycheck--display-or-hide-errors ()
+      (if (and flycheck-current-errors sbw/flycheck-auto-display-errors)
+          (flycheck-list-errors)
+        (when (get-buffer "*Flycheck errors*")
+          (switch-to-buffer "*Flycheck errors*")
+          (kill-buffer (current-buffer))
+          (delete-window))))
+
     (add-hook 'flycheck-after-syntax-check-hook
-              (lambda ()
-                (when sbw/flycheck-auto-display-errors
-                  (if flycheck-current-errors
-                      (flycheck-list-errors)
-                    (when (get-buffer "*Flycheck errors*")
-                      (switch-to-buffer "*Flycheck errors*")
-                      (kill-buffer (current-buffer))
-                      (delete-window))))))
+              'sbw/flycheck--display-or-hide-errors)
 
     (defun sbw/flycheck-toggle-auto-display-errors ()
       (interactive)
-      (setq sbw/flycheck-auto-display-errors (not sbw/flycheck-auto-display-errors)))
+      (setq sbw/flycheck-auto-display-errors (not sbw/flycheck-auto-display-errors))
+      (sbw/flycheck--display-or-hide-errors))
 
     ;; Prose checker
     (if (sbw/is-linux?)
