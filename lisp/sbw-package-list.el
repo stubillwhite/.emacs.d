@@ -46,6 +46,7 @@
                          (:name expand-region)      ;; Expand region by semantic units
                          (:name hydra)              ;; Make Emacs bindings that stick around
 			 (:name which-key)          ;; Display available key bindings
+			 (:name undo-tree)          ;; Visualise the undo tree
 
                          ;; Parenthesis management
                          (:name smartparens)  ;; Improved paredit
