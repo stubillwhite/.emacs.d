@@ -263,3 +263,31 @@ _q_   Quit
 (provide 'sbw-bindings)
 
 (setq org-tags-column 130)
+
+
+(defhydra hydra-spelling (:color amaranth :hint nil)
+  "
+  ^
+  ^Spelling^          ^Errors^            ^Checker^
+  ^────────^──────────^──────^────────────^───────^───────
+  _r_ Region          _p_ Previous        _t_ Toggle
+  _b_ Buffer          _n_ Next
+  _q_ Quit            _c_ Correct
+  "
+
+  ("r" flyspell-region nil)
+  ("b" flyspell-buffer nil)
+
+  ("n" flyspell-goto-next-error nil)
+  ("p" sbw/flyspell-goto-previous-error nil)
+  ("c" helm-flyspell-correct nil)
+  ("t" flyspell-mode nil)
+  ("q" nil))
+
+(global-set-key [f6] 'hydra-spelling/body)
+
+
+;; (hydra-spelling/body)
+
+
+
