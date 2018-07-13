@@ -114,12 +114,12 @@
  uniquify-ignore-buffers-re   "^\\*")
 
 ;; CUA mode and shift-click to select
-(cua-mode t)
-(setq cua-auto-tabify-rectangles nil)
-(transient-mark-mode 1)
-(setq cua-keep-region-after-copy nil)
-(define-key global-map (kbd "<S-down-mouse-1>") 'ignore) 
-(define-key global-map (kbd "<S-mouse-1>") 'mouse-set-point)
-(put 'mouse-set-point 'CUA 'move)
+;; (cua-mode t)
+;; (setq cua-auto-tabify-rectangles nil)
+;; (transient-mark-mode 1)
+;; (setq cua-keep-region-after-copy nil)
+;; (define-key global-map (kbd "<S-down-mouse-1>") 'ignore) 
+;; (define-key global-map (kbd "<S-mouse-1>") 'mouse-set-point)
+;; (put 'mouse-set-point 'CUA 'move)
 
 (provide 'sbw-cosmetics)
