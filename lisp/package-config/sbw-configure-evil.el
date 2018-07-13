@@ -21,5 +21,7 @@
 
     (sbw/evil-toggle-global-evil-mode)
 
+    (setq evil-want-fine-undo t)
+
     (evil-define-key nil evil-normal-state-map
                      "z=" 'flyspell-correct-at-point)))
