@@ -286,6 +286,46 @@ _q_   Quit
 
 (global-set-key [f6] 'hydra-spelling/body)
 
+(defhydra hydra-menu-dashboard (:color amaranth :hint nil)
+  "
+  ^
+  ^Dashboard^
+  ^─────────^────────────────────────────────────────────
+  _c_ Calendar        
+  _p_ Personal
+  _s_ Selection
+  _w_ Work
+  _q_ Quit
+  "
+
+  ("c" (lambda () (message "Not implemented")) nil)
+  ("p" (lambda () (message "Not implemented")) nil)
+  ("s" (lambda () (message "Not implemented")) nil)
+  ("w" (lambda () (message "Not implemented")) nil)
+
+  ("q" nil))
+
+(defhydra hydra-menu-root (:color amaranth :hint nil)
+  "
+  ^
+  ^Org mode^          ^Slack^            ^Timer^
+  ^────────^──────────^─────^────────────^───────^───────
+  _d_ Dashboard       _s_ Slack enable    _t_ Timers
+  _f_ Refresh
+  _r_ Review
+  _q_ Quit
+  "
+
+  ("d" hydra-menu-dashboard/body nil)
+  ("f" (lambda () (message "Not implemented")) nil)
+  ("r" (lambda () (message "Not implemented")) nil)
+  
+  ("s" (lambda () (message "Not implemented")) nil)
+
+  ("t" (lambda () (message "Not implemented")) nil)
+
+  ("q" nil))
+   
 
 ;; (hydra-spelling/body)
 

@@ -76,6 +76,16 @@
         (load-file fnam)
       (sbw/bootstrap-require (list name)))))
 
+(defun sbw/bootstrap--alternate-installation-flow (pkg)
+  (let* ((name        (sbw/bootstrap--pkg-name pkg))
+         (config-fnam (concat  "sbw-configure-" (symbol-name name) ".el"))
+         (config-dir  (concat sbw/lisp-path "/package-config"))
+         (fnam        (concat config-dir "/" config-fnam)))
+    (if (file-exists-p fnam)
+        (load-file fnam)
+      (eval `(straight-use-package (quote ,name)))
+      (eval `(require (quote ,name))))))
+
 (defun sbw/bootstrap-packages (pkgs)
   "Bootstrap the packages PKGS and then either configure or require the package."
   (let* ((statuses (make-hash-table :test 'eq)))
@@ -84,14 +94,18 @@
           (puthash (symbol-name (sbw/bootstrap--pkg-name pkg)) "" statuses))
     (loop for pkg in pkgs
           do
-          (sbw/bootstrap--update-package-status pkg pkgs "Installing..." statuses)
-          (sbw/bootstrap--install-if-required pkg)
-          (sbw/bootstrap--update-package-status pkg pkgs "Installed" statuses))
+          (if (eq (sbw/bootstrap--pkg-name pkg) 'cider)
+              (sbw/bootstrap--alternate-installation-flow pkg)
+            (sbw/bootstrap--update-package-status pkg pkgs "Installing..." statuses)
+            (sbw/bootstrap--install-if-required pkg)
+            (sbw/bootstrap--update-package-status pkg pkgs "Installed" statuses)))
     (loop for pkg in pkgs
           do
-          (sbw/bootstrap--update-package-status pkg pkgs "Configuring..." statuses)
-          (sbw/bootstrap--configure-if-required pkg)
-          (sbw/bootstrap--update-package-status pkg pkgs "Done" statuses))
+          (if (eq (sbw/bootstrap--pkg-name pkg) 'cider)
+              (message "Skipping")
+            (sbw/bootstrap--update-package-status pkg pkgs "Configuring..." statuses)
+            (sbw/bootstrap--configure-if-required pkg)
+            (sbw/bootstrap--update-package-status pkg pkgs "Done" statuses)))
     (with-current-buffer sbw/bootstrap--buffer-name
       (end-of-line)
       (insert "\n\nDone!"))))

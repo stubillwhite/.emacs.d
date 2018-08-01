@@ -1,4 +1,7 @@
 (use-package cider
+  :straight t
+  ;;:straight (cider :type git :files ("*.el" (:exclude ".dir-locals.el")) :host github :repo "clojure-emacs/cider" :branch "62de7dc372ae1c7e2bee32a30c8b45c604a14f44")
+
   :defer nil ;; Deferring interferes with jacking in
   
   :init

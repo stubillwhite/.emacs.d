@@ -13,7 +13,10 @@ projectile.cache
 recentf
 server/
 speed-type/
-straight/
+straight/build
+straight/modified
+straight/repos
+straight/build-cache.el
 temp/
 tramp
 url/

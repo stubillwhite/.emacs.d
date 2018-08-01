@@ -8,6 +8,6 @@
   (progn)
 
   :bind
-  ("<f2>" . helm-dash))
+  ("<f2>" . helm-dash-at-point))
 
 (provide 'sbw-configure-helm-dash)

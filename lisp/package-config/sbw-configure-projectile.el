@@ -3,7 +3,11 @@
   
   :init
   (progn
-    (projectile-global-mode)
+    (projectile-mode)
+
+    ;; Unbind and rebind the prefix key
+    (define-key projectile-mode-map projectile-keymap-prefix nil)
+    (define-key projectile-mode-map (kbd "C-c p") #'projectile-command-map)
     
     ;; Ensure that Windows is picking up the right version of grep
     (when (sbw/is-windows?)

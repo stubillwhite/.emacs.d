@@ -3,8 +3,9 @@
   
   :init
   (progn
-    ;; Global mode
+    ;; Global mode, apart from modes where this causes isseues (e.g., haskell-mode misbehaves with evil-smartparens evil-sp-change-line)
     (require 'smartparens-config)
+    (setq sp-ignore-modes-list (cons 'haskell-mode sp-ignore-modes-list))
     (smartparens-global-mode t)
 
     ;; Highlight matching pairs
