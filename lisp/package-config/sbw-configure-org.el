@@ -164,7 +164,7 @@
 
     (defun sbw/org-extract-jira-description (s)
       (setq white-debug s)
-      (let* ( (regex "^\\(.*\\) - \\(JIRA\\|Mendeley JIRA\\)") )
+      (let* ( (regex "^\\(.*\\) - \\(JIRA\\|Mendeley JIRA\\|Elsevier Technology JIRA\\)") )
         (if (string-match regex s)
             (match-string 1 s)
           s)))

@@ -33,7 +33,7 @@ _q_, _RET_: Quit
       ("g" golden-ratio-mode)
       ("=" (lambda () (interactive) (progn (golden-ratio-mode 0) (balance-windows))))
       ("q" nil :color blue)
-      ("RET" nil : color blue))
+      ("RET" nil :color blue))
 
     ;; (eval-after-load "org"
     ;;   '(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body))

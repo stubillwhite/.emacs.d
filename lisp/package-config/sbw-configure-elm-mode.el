@@ -15,6 +15,11 @@
     (add-hook 'elm-mode-hook #'elm-oracle-setup-completion)
     (add-to-list 'company-backends 'company-elm)
 
+    ;; Flycheck via flycheck-elm
+    ;; TODO: Should be configured in flycheck configuration but that doesn't seem to be working
+    (add-hook 'elm-mode-hook      'flycheck-mode)
+    (add-hook 'flycheck-mode-hook 'flycheck-elm-setup)
+    
     ;; Vertical split when splitting to the REPL
     (defun sbw/elm-mode--ensure-vertical-split (orig-fun &rest args)
       (let* ( (orig-width  split-width-threshold)

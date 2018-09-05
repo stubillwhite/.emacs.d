@@ -8,8 +8,9 @@
   (progn
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
-    (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown.css"))
-        
+    ;; (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown.css"))
+    (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown-light.css"))
+    
     (when (sbw/is-windows?)
       (setq
         markdown-command-needs-filename t
@@ -32,3 +33,4 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown)
+

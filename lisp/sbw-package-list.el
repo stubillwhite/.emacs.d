@@ -36,6 +36,7 @@
      (:name org               :load :immediate) ;; Your life in plain text
      (:name htmlize           :load :on-idle)   ;; html org-mode reports
      (:name org-gcal          :load :immediate) ;; Org sync with Google Calendar
+     (:name ob-async          :load :immediate) ;; Asynchronous src_block execution for org-babel
 
      ;; Auto-complete
      (:name company           :load :immediate) ;; Auto-completion
@@ -101,6 +102,7 @@
 
      ;; Elm
      (:name elm-mode          :load :immediate) ;; Elm mode for emacs
+     (:name flycheck-elm      :load :immediate) ;; Flycheck for Elm
      
      ;; JSON
      (:name json-mode         :load :immediate) ;; Major mode for editing JSON files
