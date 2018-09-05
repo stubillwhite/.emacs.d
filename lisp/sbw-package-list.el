@@ -52,9 +52,6 @@
                          (:name smartparens)  ;; Improved paredit
                          
                          ;; Usability
-                         (:name evil)             ;; Welcome home
-                         (:name evil-leader)      ;; Add <leader> shortcuts to Evil, the extensible vim emulation layer
-                         (:name evil-smartparens) ;; Evil integration for Smartparen
                          (:name key-chord)        ;; Map pairs of simultaneously pressed keys to commands
 
                          ;; Static checking
