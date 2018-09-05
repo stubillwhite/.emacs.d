@@ -65,6 +65,7 @@
 
                          ;; org-mode
                          (:name org)      ;; Your life in plain text
+                         (:name ob-async) ;; Asynchronous src_block execution for org-babel
                          (:name htmlize)  ;; html org-mode reports
                          (:name org-gcal) ;; Org sync with Google Calendar
 

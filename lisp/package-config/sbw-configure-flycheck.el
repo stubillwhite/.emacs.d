@@ -32,33 +32,19 @@
 
     (defun sbw/flycheck-toggle-auto-display-errors ()
       (interactive)
-      (setq sbw/flycheck-auto-display-errors (not sbw/flycheck-auto-display-errors))
+      (if sbw/flycheck-auto-display-errors
+          (progn
+            (setq sbw/flycheck-auto-display-errors nil)
+            (message "Disabled auto display of Flycheck errors"))
+        (progn
+          (setq sbw/flycheck-auto-display-errors t)
+          (message "Enabled auto display of Flycheck errors")))
       (sbw/flycheck--display-or-hide-errors))
 
     ;; Prose checker
-    (if (sbw/is-linux?)
-        (flycheck-define-checker proselint
-          "A linter for prose."
-          :command        ("python3" "-m" "proselint.command_line" source-inplace)
-          :error-patterns ((warning line-start
-                                    (file-name) ":" line ":" column ": "
-                                    (id (one-or-more (not (any " "))))
-                                    (message (one-or-more not-newline) (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-                                    line-end))
-          :modes          (text-mode markdown-mode)))
-
-    (if (sbw/is-darwin?)
-        (flycheck-define-checker proselint
-          "A linter for prose."
-          :command        ("proselint" source-inplace)
-          :error-patterns ((warning line-start
-                                    (file-name) ":" line ":" column ": "
-                                    (id (one-or-more (not (any " "))))
-                                    (message (one-or-more not-newline))
-                                    line-end))
-          :modes          (text-mode markdown-mode)))
+   
     
-    (add-to-list 'flycheck-checkers 'proselint)
+    ;;(add-to-list 'flycheck-checkers 'proselint)
 
     ;; HTML checker
     (setq flycheck-html-tidy-executable "tidy5")))
