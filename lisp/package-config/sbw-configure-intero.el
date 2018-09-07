@@ -40,6 +40,7 @@
 
     (haskell-decl-scan-mode)
 
+    ;; TODO: Only seems to work when on the type declaration itself
     (defun sbw/haskell-send-current-declaration ()
       (interactive)
       (save-excursion

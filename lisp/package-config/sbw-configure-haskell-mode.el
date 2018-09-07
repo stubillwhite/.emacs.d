@@ -7,7 +7,10 @@
      '(haskell-process-log t))
 
     
+    (require 'hindent)
+    (add-hook 'haskell-mode-hook #'hindent-mode)
 
+    
     ))
 
 (provide 'sbw-configure-haskell-mode)

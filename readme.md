@@ -23,3 +23,20 @@ Personal Emacs configuration, probably not very useful to others.
 
 
 #### Stack projects
+
+
+`stack install hindent`
+
+
+`stack install stylish-haskell` ? 
+Doesn't seem good for me. Hindent looks better
+/Users/white1/.local/bin/stylish-haskell -v src/Lib.hs
+
+(setq haskell-mode-stylish-haskell-path "/Users/white1/.local/bin/stylish-haskell")
+(custom-set-variables
+ '(haskell-stylish-on-save t))
+ 
+ 
+
+
+- From the command line run `stack build intero` to build the integration

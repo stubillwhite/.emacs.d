@@ -89,10 +89,12 @@
                          ;; TODO: Implement disable
                          ;; http://haroldcarr.com/posts/2017-10-24-emacs-haskell-dev-env.html
                          ;; https://www.fosskers.ca/blog/nix-en.html
+                         ;; https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
                          ;; Haskell
                          (:name haskell-mode) ;; Haskell mode
-                         ;; (:name intero)       ;; Interactive Haskell development
-                         (:name dante)        ;; Emacs mode for interactive Haskell
+                         (:name hindent)
+                         (:name intero)       ;; Interactive Haskell development
+                         ;; (:name dante)        ;; Emacs mode for interactive Haskell
                          ;; TODO: Look into haskell-mode-stylish-buffer to auto-reformat
 
                          ;; ;; ;; JSON
