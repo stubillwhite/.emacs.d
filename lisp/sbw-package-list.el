@@ -102,6 +102,10 @@
 
                          ;; Markdown
                          (:name markdown-mode) ;; Markdown mode
+
+                         ;; YAML
+                         (:name yaml-mode)         ;; Emacs major mode for editing YAML files
+                         (:name flycheck-yamllint) ;; YAML checker
                          ))
 
 (setq sbw/personal-package-list

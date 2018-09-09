@@ -7,8 +7,11 @@
   :init
   (progn
     ;; Enable Flycheck for desired modes
-    (dolist (x '(html-mode-hook emacs-lisp-mode-hook markdown-mode-hook shell-script-mode-hook elm-mode-hook))
+    (dolist (x '(html-mode-hook emacs-lisp-mode-hook markdown-mode-hook shell-script-mode-hook elm-mode-hook yaml-mode-hook))
       (add-hook x (lambda () (flycheck-mode))))
+
+    (eval-after-load 'flycheck
+      '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))
 
     ;; Disable annoying checkers
     (setq-default flycheck-disabled-checkers
