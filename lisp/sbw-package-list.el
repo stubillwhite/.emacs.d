@@ -22,6 +22,7 @@
                          (:name dash)            ;; Modern list API
                          (:name dash-functional) ;; Additional functions for dash
                          (:name f)               ;; Modern file API
+                         (:name ht)              ;; The missing hash table library for Emacs
                          (:name s)               ;; Modern string API
                          (:name seq)             ;; Unified abstractions for sequences
 
@@ -45,9 +46,11 @@
                          (:name powerline)           ;; Emacs version of the Vim powerline
                          (:name expand-region)       ;; Expand region by semantic units
                          (:name evil-nerd-commenter) ;; Efficient language-independent commenting
+                         (:name key-chord)           ;; Map pairs of simultaneously pressed keys to commands
                          (:name hydra)               ;; Make Emacs bindings that stick around
-			 (:name which-key)           ;; Display available key bindings
-			 (:name undo-tree)           ;; Visualise the undo tree
+                         (:name multiple-cursors)    ;; An experiment in adding multiple cursors to emacs
+                         (:name which-key)           ;; Display available key bindings
+                         (:name undo-tree)           ;; Visualise the undo tree
 
                          ;; Parenthesis management
                          (:name smartparens)  ;; Improved paredit
@@ -68,7 +71,7 @@
                          (:name org-gcal) ;; Org sync with Google Calendar
 
                          ;; Git
-                         ;; (:name magit) ;; Control Git from Emacs
+                         (:name magit) ;; Control Git from Emacs
  
                          ;; Slack
                          (:name slack)   ;; Slack for Emacs
@@ -83,18 +86,18 @@
                          (:name cljr-helm)    ;; Helm wrapper for clj-refactor
 
                          ;; ;; Elm
-                         ;; elm-mode     ;; Elm mode for emacs
-                         ;; flycheck-elm ;; Flycheck for Elm
+                         (:name elm-mode)     ;; Elm mode for emacs
+                         (:name flycheck-elm) ;; Flycheck for Elm
 
                          ;; TODO: Implement disable
                          ;; http://haroldcarr.com/posts/2017-10-24-emacs-haskell-dev-env.html
                          ;; https://www.fosskers.ca/blog/nix-en.html
                          ;; https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
                          ;; Haskell
-                         (:name haskell-mode) ;; Haskell mode
-                         (:name hindent)
-                         (:name intero)       ;; Interactive Haskell development
-                         ;; (:name dante)        ;; Emacs mode for interactive Haskell
+                         ;; (:name haskell-mode) ;; STACK: Haskell mode                           
+                         ;; (:name hindent)      ;; STACK: 
+                         ;; (:name intero)       ;; STACK: Interactive Haskell development
+                         (:name dante)        ;; CABAL: Emacs mode for interactive Haskell
                          ;; TODO: Look into haskell-mode-stylish-buffer to auto-reformat
 
                          ;; ;; ;; JSON

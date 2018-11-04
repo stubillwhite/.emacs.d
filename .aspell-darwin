@@ -1,4 +1,4 @@
-personal_ws-1.1 en 294 
+personal_ws-1.1 en 298 
 Reza's
 Leiningen
 occurrance
@@ -31,9 +31,9 @@ tmux
 Nataliya
 Lemmatize
 EID
-RSS
-SPI
 SNS
+SPI
+RSS
 microservice
 Covariant
 Trello
@@ -71,6 +71,7 @@ Dockerised
 Vectorise
 Alphabeta
 Dropwizard
+kinesthetic
 ACLs
 CKAN
 Databricks
@@ -115,6 +116,7 @@ Theano
 Finne
 hoc
 AssertJ
+Shkodran
 Georgios
 monad
 serverless
@@ -134,6 +136,7 @@ tokenisers
 MongoDB
 Logentries
 CloudTrail
+Visteon
 IPR
 Deckard
 Coursera
@@ -224,6 +227,7 @@ recommenders
 ACL
 EIDs
 Whitelisting
+Destructuring
 Imagenet
 YAML
 puppeteering

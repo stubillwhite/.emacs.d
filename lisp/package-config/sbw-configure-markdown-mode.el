@@ -7,6 +7,7 @@
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
     ;; (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown.css"))
+    (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown-light.css"))
         
     (when (sbw/is-windows?)
       (setq
@@ -27,6 +28,8 @@
   ("C-c m c"   . markdown-insert-code)
   ("C-c m h"   . markdown-insert-link)
   ("C-c m l"   . markdown-insert-list-item)
+  ("M-<right>" . markdown-demote)
+  ("M-<left>"  . markdown-promote)
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown)

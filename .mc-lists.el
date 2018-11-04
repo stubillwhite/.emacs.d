@@ -6,7 +6,9 @@
         c-electric-colon
         c-electric-delete-forward
         c-electric-semi&comma
+        cider-eval-defun-at-point
         cua--prefix-override-handler
+        cua-copy-region
         cua-cut-region
         cua-paste
         evilnc-comment-or-uncomment-lines
