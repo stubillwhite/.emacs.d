@@ -1,44 +1,53 @@
-(require 'use-package)
-
 (use-package flycheck
   :diminish flycheck-mode
 
+  ;; TODO: Autoformatting of source code
+  ;; TODO: Insert or complete
+  
   :init
-  (progn  
+  (progn
     ;; Enable Flycheck for desired modes
-    (dolist (x '(html-mode-hook emacs-lisp-mode markdown-mode shell-script-mode elm-mode))
-      (add-hook x (lambda () (flycheck-mode 1))))
-    
+    (dolist (x '(html-mode-hook emacs-lisp-mode-hook markdown-mode-hook shell-script-mode-hook elm-mode-hook yaml-mode-hook))
+      (add-hook x (lambda () (flycheck-mode))))
+
+    (eval-after-load 'flycheck
+      '(add-hook 'flycheck-mode-hook 'flycheck-yamllint-setup))
+
     ;; Disable annoying checkers
     (setq-default flycheck-disabled-checkers
                   '(emacs-lisp-checkdoc)))
 
   :config
   (progn
-    ;; Prose checker
-    (if (sbw/is-windows?)
-        (flycheck-define-checker proselint
-          "A linter for prose."
-          :command        ("/cygdrive/c/Python34/python.exe" "-m" "proselint.command_line" (eval (cygwin-convert-file-name-to-windows (buffer-file-name))))
-          :error-patterns ((warning line-start
-                                    (optional (in "a-zA-Z") ":") (one-or-more (not (any ":"))) ":" line ":" column ": "
-                                    (id (one-or-more (not (any " "))))
-                                    (message (one-or-more not-newline) (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-                                    line-end))
-          :modes          (text-mode markdown-mode)))
+    ;; Display errors if they exist, and close the buffer if they do not
+    (setq sbw/flycheck-auto-display-errors nil)
 
-    (if (sbw/is-linux?)
-        (flycheck-define-checker proselint
-          "A linter for prose."
-          :command        ("python3" "-m" "proselint.command_line" source-inplace)
-          :error-patterns ((warning line-start
-                                    (file-name) ":" line ":" column ": "
-                                    (id (one-or-more (not (any " "))))
-                                    (message (one-or-more not-newline) (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-                                    line-end))
-          :modes          (text-mode markdown-mode)))
+    (defun sbw/flycheck--display-or-hide-errors ()
+      (if (and flycheck-current-errors sbw/flycheck-auto-display-errors)
+          (flycheck-list-errors)
+        (when (get-buffer "*Flycheck errors*")
+          (switch-to-buffer "*Flycheck errors*")
+          (kill-buffer (current-buffer))
+          (delete-window))))
+
+    (add-hook 'flycheck-after-syntax-check-hook
+              'sbw/flycheck--display-or-hide-errors)
+
+    (defun sbw/flycheck-toggle-auto-display-errors ()
+      (interactive)
+      (if sbw/flycheck-auto-display-errors
+          (progn
+            (setq sbw/flycheck-auto-display-errors nil)
+            (message "Disabled auto display of Flycheck errors"))
+        (progn
+          (setq sbw/flycheck-auto-display-errors t)
+          (message "Enabled auto display of Flycheck errors")))
+      (sbw/flycheck--display-or-hide-errors))
+
+    ;; Prose checker
+   
     
-    (add-to-list 'flycheck-checkers 'proselint)
+    ;;(add-to-list 'flycheck-checkers 'proselint)
 
     ;; HTML checker
     (setq flycheck-html-tidy-executable "tidy5")))

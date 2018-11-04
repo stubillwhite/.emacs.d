@@ -1,5 +1,0 @@
-(:name nameless
-       :description "Less is more. Hide package namespace in your emacs-lisp code"
-       :website "https://github.com/Malabarba/Nameless"
-       :type github
-       :pkgname "Malabarba/Nameless")

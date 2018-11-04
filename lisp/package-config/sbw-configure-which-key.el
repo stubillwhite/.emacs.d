@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package which-key
   :diminish which-key-mode
   

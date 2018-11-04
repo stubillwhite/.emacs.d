@@ -1,0 +1,28 @@
+pre, code {
+    font-family: Monaco, monospace;
+    font-size: 14px;
+    background-color: #EEEEEE
+}
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+
+@import url(http://fonts.googleapis.com/css?family=Arimo:700,700italic);
+
+html {
+    font-size: 16px;
+    max-width: 100%;
+}
+
+body {
+    color: Black;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 300;
+    margin: 0 auto;
+    line-height: 1.45;
+    padding: .25rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, sans-serif;
+}
+

@@ -1,4 +1,0 @@
-( :name        org
-  :description "Your life in plain text"
-  :type        elpa ;; Fetch from elpa as the current bleeding-edge version has issues
-  )

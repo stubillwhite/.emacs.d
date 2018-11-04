@@ -11,16 +11,4 @@
 -/server
 -/temp
 -/url
--\.git
--\.smex-items
--\el-get
--\elpa
--\eshell
--\emojis
--\org-gcal
--\projectile-bookmarks.eld
--\projectile.cache
--\recentf
--\server
--\temp
--\url
+-/straight

@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package elm-mode
   :defer t
   :diminish elm-indent-mode

@@ -1,5 +1,0 @@
-(:name focus
-       :description "Dim the font color of text in surrounding paragraphs"
-       :website "https://github.com/larstvei/Focus"
-       :type github
-       :pkgname "larstvei/Focus")

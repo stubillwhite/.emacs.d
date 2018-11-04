@@ -101,19 +101,6 @@
             (replace-match (sbw/ht-get chars x) nil nil)))
         (sbw/ht-keys chars)))))
 
-;; Reformat SQL using python-sqlparse
-
-(defun sbw/sql-reformat-region (beg end)
-  "Reformat SQL in region between BEG and END."
-  (interactive "r")
-  (save-excursion
-    (shell-command-on-region beg end "sqlformat - -k \"upper\"" nil t)))
-
-(defun sbw/sql-reformat-buffer ()
- "Reformat SQL in the current buffer."
- (interactive)
- (sbw/sql-reformat-region (point-min) (point-max)))
-
 ;; Save all buffers when switching away
 (defun sbw/save-all-buffers ()
   (interactive)

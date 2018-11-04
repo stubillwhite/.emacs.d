@@ -1,5 +1,0 @@
-(:name nameless
-       :description "Show flycheck errors with helm"
-       :website "https://github.com/yasuyk/helm-flycheck"
-       :type github
-       :pkgname "yasuyk/helm-flycheck")

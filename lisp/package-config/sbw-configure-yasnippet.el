@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package yasnippet
   :diminish yas-minor-mode
 

@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package org
   :init
   (progn
@@ -208,8 +206,7 @@
             (reverse criteria)))
 
     (defun sbw/org-sort-subtree ()
-      "Sort the current subtree by TODO state, priority,
-scheduled date, deadline, then alphabetic."
+      "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
       (interactive)
       (if (org-clocking-p)
           (message "Currently clocked in on a task. Clock out and re-run the command to sort the subtree.")
@@ -276,17 +273,6 @@ scheduled date, deadline, then alphabetic."
   ("C-c o a"   . sbw/org-config-archive-task))
 
 ;; TODO Move somewhere more sensible
-(defun sbw/unfill-paragraph ()
-  "Convert a multi-line paragraph into a single line."
-  (interactive)
-  (let* ( (fill-column (point-max)) )
-    (fill-paragraph nil)))
-
-(defun sbw/unfill-region (start end)
-  "Convert a multi-line region into a single line."
-  (interactive "r")
-  (let* ( (fill-column (point-max)) )
-    (fill-region start end nil)))
 
 (defun sbw/org-babel--copy-errors-to-output-advice (orig-fun &rest args)
   (let* ((exit-code (apply orig-fun args)))
@@ -306,11 +292,6 @@ scheduled date, deadline, then alphabetic."
     (advice-remove 'org-babel--shell-command-on-region #'sbw/org-babel--copy-errors-to-output-advice)))
 
 (sbw/org-babel-copy-errors-to-output nil)
-
-;; (setq org-priority-faces '((?A . (:weight 'bold))
-;;                            (?B . (:weight 'bold))
-;;                            (?C . (:italic t)))
-;;       org-agenda-fontify-priorities t)
 
 (provide 'sbw-configure-org-mode)
 

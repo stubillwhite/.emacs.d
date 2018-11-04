@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package helm-descbinds
   :init
   (progn

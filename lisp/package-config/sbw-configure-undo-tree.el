@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package undo-tree
   :diminish undo-tree-mode
   

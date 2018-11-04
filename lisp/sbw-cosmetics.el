@@ -1,6 +1,8 @@
 ;; Color theme, don't warn about executing code
 (load-theme 'sbw-dark-muted t)
 
+(setq inhibit-startup-screen t)
+
 ;; Maximise the screen area by stripping off menu, toolbars, and scrollbars
 (tooltip-mode -1)
 (tool-bar-mode -1)
@@ -34,6 +36,26 @@
   split-width-threshold  nil
   split-height-threshold 0)
 
+(defun sbw/cosmetics-ensure-vertical-split-advice (orig-fun &rest args)
+  "Ensures that if a window split occurs then it will be vertical."
+  (let* ( (orig-width  split-width-threshold)
+          (orig-height split-height-threshold) )
+    (save-some-buffers t)
+    (setq split-width-threshold  0
+          split-height-threshold nil)    
+    (apply orig-fun args)
+    (setq split-width-threshold  orig-width
+          split-height-threshold orig-height)))
+
+(defun sbw/cosmetics-save-window-config ()
+  "Store the current window configuration."
+  (setq sbw/cosmetics--saved-window-config (current-window-configuration)))
+
+(defun sbw/cosmetics-restore-window-config ()
+  "Restore the last saved window configuration."
+  (when (boundp 'sbw/cosmetics--saved-window-config)
+    (set-window-configuration sbw/cosmetics--saved-window-config)))
+
 ;; Smooth scrolling
 (setq scroll-conservatively 10000)
 
@@ -41,7 +63,7 @@
 (show-paren-mode 1)
 
 ;; Start with a maximised window
-(setq window-setup-hook 'toggle-frame-maximized)
+(toggle-frame-maximized)
 
 ;; Hide DOS EOL characters
 (defun sbw/hide-dos-eol ()
@@ -69,30 +91,20 @@
 ;; Not whitespace sensitive by default
 (setq-default ediff-ignore-similar-regions t)
 
-(defun sbw/cosmetics-save-window-config ()
-  "Store the current window configuration."
-  (setq sbw/cosmetics--saved-window-config (current-window-configuration)))
-
-(defun sbw/cosmetics-restore-window-config ()
-  "Restore the last saved window configuration."
-  (when (boundp 'sbw/cosmetics--saved-window-config)
-    (set-window-configuration sbw/cosmetics--saved-window-config)))
-
 (add-hook 'ediff-before-setup-hook 'sbw/cosmetics-save-window-config)
 (add-hook 'ediff-quit-hook         'sbw/cosmetics-restore-window-config)
 (add-hook 'ediff-suspend-hook      'sbw/cosmetics-restore-window-config)
 
 ;; Whitespace
-;; TODO Move to a configure file
 (require 'whitespace)
+(require 'seq)
 (setq whitespace-display-mappings '((space-mark   #x0020 [#x0020])
                                     (newline-mark #x000A [#x00B6 #x000A])
                                     (tab-mark     #x0009 [#x25BA #x0009])))
 (setq whitespace-style
-      (-remove (lambda (x) (-contains? '(lines lines-tail) x)) whitespace-style))
+      (seq-difference whitespace-style '(lines lines-tail)))
 
 ;; Uniquify
-;; TODO Move to a configure file
 (require 'uniquify)
 
 (setq 

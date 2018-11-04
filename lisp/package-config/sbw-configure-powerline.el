@@ -1,5 +1,4 @@
-(require 'use-package)
-
+;; TODO: Check powerline config when all packages are installed
 (use-package powerline
   :init
   (progn
@@ -67,7 +66,7 @@
                               (powerline-major-mode face2 'l)
                               (powerline-process face2)
                               (powerline-minor-modes face2 'l)
-                              (powerline-raw (concat " " (if electric-pair-mode "!" "") "") face2 'l)
+                              ;; (powerline-raw (concat " " (if electric-pair-mode "!" "") "") face2 'l)
                               (powerline-narrow face2 'l)
                               (powerline-raw " " face2)
                               ;; Level 3
@@ -79,8 +78,8 @@
                               (sbw/powerline--global-mode-string face3 'r)
                               ;; Level 2
                               (funcall separator-right face3 face2)
-                              (sbw/powerline--org-mode-line-string face2 'r)
-                              (sbw/powerline--countdown-timer face2 'r)
+                              ;; (sbw/powerline--org-mode-line-string face2 'r)
+                              ;; (sbw/powerline--countdown-timer face2 'r)
                               ;; Level 1
                               (funcall separator-right face2 face1)
                               (powerline-raw "%4l" face1 'l)

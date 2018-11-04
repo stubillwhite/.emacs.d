@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package slack
   :defer t
 
@@ -31,7 +29,7 @@
     
     ;; Teams
     
-    (sbw/load-secrets)
+    (sbw/bootstrap-load-secrets)
 
     ;; (slack-register-team
     ;;  :name                "white-test"
@@ -45,14 +43,14 @@
      :client-id           sbw/slack-bos-client-id
      :client-secret       sbw/slack-bos-client-secret
      :token               sbw/slack-bos-token
-     :subscribed-channels '(random general bos))
+     :subscribed-channels '(random general bos leads))
 
     (slack-register-team
      :name                "mendeley"
      :client-id           sbw/slack-mendeley-client-id 
      :client-secret       sbw/slack-mendeley-client-secret
      :token               sbw/slack-mendeley-token
-     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs bos-big-data scala engineering leads java))
+     :subscribed-channels '(random general newsflo newsflo-alerts newsflodevs scala engineering java))
 
     ;; (slack-register-team
     ;;  :name                "elscs"
@@ -220,5 +218,6 @@
 
 ;; (map-let (team room) (car (sbw/slack--unread-rooms))
 ;;   (slack-room-create-buffer room team))
+
 
 

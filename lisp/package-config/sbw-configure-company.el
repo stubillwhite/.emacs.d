@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package company
   :diminish company-mode
   

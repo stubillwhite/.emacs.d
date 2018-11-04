@@ -1,5 +1,7 @@
 (require 'sbw-utils)
 
+;; TODO: This all needs reviewing and tweaking
+
 ;; -----------------------------------------------------------------------------
 ;; New system, migrating piecemeal
 ;; -----------------------------------------------------------------------------
@@ -113,6 +115,14 @@ _q_   Quit
    ("r" mc/mark-all-in-region-regexp :exit t)
    ("q" nil)))
 
+(defhydra hydra-configure-dash (:color amaranth :hint nil)
+             "dash"
+             ("a" helm-dash-activate-docset "activate" :exit t)
+             ("d" helm-dash-deactivate-docset "deactivate" :exit t)
+             ("q" nil "quit" :color blue))
+
+(bind-key* "S-<f2>" 'hydra-configure-dash/body)
+
 ;; -----------------------------------------------------------------------------
 ;; Old system
 ;; -----------------------------------------------------------------------------
@@ -171,7 +181,6 @@ _q_   Quit
 
 (dolist (hook '(cider-mode-hook))
       (add-hook hook #'sbw/cider-minor-mode))
-
 
 ;; -----------------------------------------------------------------------------
 ;; Flyspell mode bindings
@@ -254,3 +263,71 @@ _q_   Quit
 (provide 'sbw-bindings)
 
 (setq org-tags-column 130)
+
+
+(defhydra hydra-spelling (:color amaranth :hint nil)
+  "
+  ^
+  ^Spelling^          ^Errors^            ^Checker^
+  ^────────^──────────^──────^────────────^───────^───────
+  _r_ Region          _p_ Previous        _t_ Toggle
+  _b_ Buffer          _n_ Next
+  _q_ Quit            _c_ Correct
+  "
+
+  ("r" flyspell-region nil)
+  ("b" flyspell-buffer nil)
+
+  ("n" flyspell-goto-next-error nil)
+  ("p" sbw/flyspell-goto-previous-error nil)
+  ("c" helm-flyspell-correct nil)
+  ("t" flyspell-mode nil)
+  ("q" nil))
+
+(global-set-key [f6] 'hydra-spelling/body)
+
+(defhydra hydra-menu-dashboard (:color amaranth :hint nil)
+  "
+  ^
+  ^Dashboard^
+  ^─────────^────────────────────────────────────────────
+  _c_ Calendar        
+  _p_ Personal
+  _s_ Selection
+  _w_ Work
+  _q_ Quit
+  "
+
+  ("c" (lambda () (message "Not implemented")) nil)
+  ("p" (lambda () (message "Not implemented")) nil)
+  ("s" (lambda () (message "Not implemented")) nil)
+  ("w" (lambda () (message "Not implemented")) nil)
+
+  ("q" nil))
+
+(defhydra hydra-menu-root (:color amaranth :hint nil)
+  "
+  ^
+  ^Org mode^          ^Slack^            ^Timer^
+  ^────────^──────────^─────^────────────^───────^───────
+  _d_ Dashboard       _s_ Slack enable    _t_ Timers
+  _f_ Refresh
+  _r_ Review
+  _q_ Quit
+  "
+
+  ("d" hydra-menu-dashboard/body nil)
+  ("f" (lambda () (message "Not implemented")) nil)
+  ("r" (lambda () (message "Not implemented")) nil)
+  
+  ("s" (lambda () (message "Not implemented")) nil)
+
+  ("t" (lambda () (message "Not implemented")) nil)
+
+  ("q" nil))
+   
+
+;; (hydra-spelling/body)
+
+
+
