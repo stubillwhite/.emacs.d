@@ -113,10 +113,15 @@
 
 (setq sbw/personal-package-list
       '(
+        sbw-hash-tables
+        sbw-multimethods
+        sbw-value-eq
         sbw-cosmetics-code-style
         sbw-bindings
         sbw-utils
         sbw-misc
+        sbw-menu
+        sbw-org-config
         ))
 
 (provide 'sbw-package-list)
