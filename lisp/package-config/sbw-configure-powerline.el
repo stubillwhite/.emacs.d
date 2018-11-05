@@ -18,22 +18,22 @@
           (powerline-raw (if out-of-sync? "*" " ") parent-face))))
     
     (defmacro sbw/powerline--with-powerline-faces (&rest body)
-      `(lexical-let* ( (face1           (sbw/powerline--level-one-face))
-                       (face2           'sbw-dark-muted-powerline-two)
-                       (face3           'sbw-dark-muted-powerline-three)
-                       (separator-left  (intern (format "powerline-%s-%s"
-                                                  (powerline-current-separator)
-                                                  (car powerline-default-separator-dir))))
-                       (separator-right (intern (format "powerline-%s-%s"
-                                                  (powerline-current-separator)
-                                                  (cdr powerline-default-separator-dir)))) )
+      `(let* ( (face1           (sbw/powerline--level-one-face))
+               (face2           'sbw-dark-muted-powerline-two)
+               (face3           'sbw-dark-muted-powerline-three)
+               (separator-left  (intern (format "powerline-%s-%s"
+                                                (powerline-current-separator)
+                                                (car powerline-default-separator-dir))))
+               (separator-right (intern (format "powerline-%s-%s"
+                                                (powerline-current-separator)
+                                                (cdr powerline-default-separator-dir)))) )
          ,@body))
 
     (defmacro sbw/powerline--with-filtered-global-mode-string (&rest body)
-      `(lexical-let* ( (special-modes               (list 'sbw/countdown--mode-line-string 'org-mode-line-string))
-                       (countdown-string            (symbol-value (car (memq 'sbw/countdown--mode-line-string global-mode-string))))
-                       (org-string                  (symbol-value (car (memq 'org-mode-line-string global-mode-string))))
-                       (filtered-global-mode-string (-filter (lambda (x) (not (-contains? special-modes x))) global-mode-string)) )
+      `(let* ( (special-modes               (list 'sbw/countdown--mode-line-string 'org-mode-line-string))
+               (countdown-string            (symbol-value (car (memq 'sbw/countdown--mode-line-string global-mode-string))))
+               (org-string                  (symbol-value (car (memq 'org-mode-line-string global-mode-string))))
+               (filtered-global-mode-string (-filter (lambda (x) (not (-contains? special-modes x))) global-mode-string)) )
          ,@body))
 
     (defun sbw/powerline--global-mode-string (face pad)
