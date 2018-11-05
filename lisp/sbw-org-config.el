@@ -130,7 +130,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defun sbw/org-config-new-file (workflow category project)
   "Create a new file with specified WORKFLOW, CATEGORY, and PROJECT prompting for those values if run interactively"
   (interactive "sWorkflow: \nsCategory: \nsProject: ")
-  (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-review-new-file-template.org")))
+  (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-config-new-file-template.org")))
           (path     (s-lex-format "${org-directory}/${workflow}/${category}/${project}.org")) )
     (apply 'f-mkdir (f-split (f-dirname path)))
     (f-write (->> content
