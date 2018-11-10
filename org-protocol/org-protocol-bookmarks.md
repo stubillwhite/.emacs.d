@@ -11,3 +11,7 @@ javascript:location.href='org-protocol://capture?url='+encodeURIComponent(locati
 ## org-mode jira ##
 
 javascript:location.href='org-protocol://capture?template=j&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)+'&selection='+encodeURIComponent(window.getSelection())
+
+## org-mode markdown ##
+
+javascript:location.href='org-protocol://store-markdown-link?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)
