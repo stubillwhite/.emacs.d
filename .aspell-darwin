@@ -1,4 +1,4 @@
-personal_ws-1.1 en 309 
+personal_ws-1.1 en 316 
 Reza's
 Leiningen
 occurrance
@@ -19,9 +19,12 @@ JARs
 Jevon
 misrecognised
 AWS
+polymorphism
 Polymorphism
+implicits
 Parallelise
 Sensu
+Monoid
 Tyrell
 Artifactory
 Uzma
@@ -54,6 +57,7 @@ appender
 HPCC
 CSV
 Mahesh
+monads
 Monads
 Svetlana
 POJOs
@@ -157,6 +161,7 @@ IntelliJ
 hashcode
 ThoughtWorks
 Productionise
+typeclass
 Reflow
 mortems
 Vallianatos
@@ -166,6 +171,7 @@ HBase
 CloudHealth
 Lucene
 Scopus
+Scalaz
 GC
 Terraforming
 kanban
@@ -279,6 +285,7 @@ Kyriakos
 Percipio
 Recommender
 agglomerative
+typeclasses
 Ami
 RDS
 RETS

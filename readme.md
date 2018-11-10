@@ -14,19 +14,16 @@ Personal Emacs configuration, probably not very useful to others.
     -- >>> filter even (1 :. 2 :. 3 :. 4 :. 5 :. Nil)
     -- [2,4]
 
--- Evaluate block `C-c "`
--- Type at point `C-c .`
--- Info at point `C-c ,`
+- Evaluate block `C-c "`
+- Type at point `C-c .`
+- Info at point `C-c ,`
 
 [Dev Env](http://haroldcarr.com/posts/2017-10-24-emacs-haskell-dev-env.html)
 [Stuff](https://www.fosskers.ca/blog/nix-en.html)
 
-
 #### Stack projects
 
-
 `stack install hindent`
-
 
 `stack install stylish-haskell` ? 
 Doesn't seem good for me. Hindent looks better
@@ -36,7 +33,4 @@ Doesn't seem good for me. Hindent looks better
 (custom-set-variables
  '(haskell-stylish-on-save t))
  
- 
-
-
 - From the command line run `stack build intero` to build the integration

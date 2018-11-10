@@ -161,7 +161,6 @@
     (setq org-protocol-default-template-key nil)
 
     (defun sbw/org-extract-jira-description (s)
-      (setq white-debug s)
       (let* ( (regex "^\\(.*\\) - \\(JIRA\\|Mendeley JIRA\\|Elsevier Technology JIRA\\)") )
         (if (string-match regex s)
             (match-string 1 s)
@@ -181,16 +180,15 @@
               "* TODO %?%(sbw/org-capture-jira-task)") ))
 
     ;; Bookmarklet
-    ;; javascript:location.href='org-protocol://store-markdown-link://'+encodeURIComponent(location.href)+'//'+encodeURIComponent(document.title)
+    ;; javascript:location.href='org-protocol://store-markdown-link?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)
 
-    (defun sbw/org-protocol-store-markdown-link (arg-str) 
-      (let* ( (args          (org-protocol-split-data arg-str t org-protocol-data-separator))
-              (uri           (org-protocol-sanitize-uri (car args)))
-              (title         (cadr args))
-              (markdown-link (s-lex-format "[${title}](${uri})")) )
+    (defun sbw/org-protocol-store-markdown-link (x)
+      (let* ((url           (plist-get x :url))
+             (title         (plist-get x :title))
+             (markdown-link (s-lex-format "[${title}](${url})")))
         (kill-new markdown-link)
-        (message "`%s' to insert `%s'" (substitute-command-keys"\\[yank]") uri))
-      nil)
+        (message "`%s' to insert `%s'" (substitute-command-keys"\\[yank]") uri)
+        nil))
 
     (setq org-protocol-protocol-alist
           '(("store-markdown-link"
@@ -294,4 +292,6 @@
 (sbw/org-babel-copy-errors-to-output nil)
 
 (provide 'sbw-configure-org-mode)
+
+
 
