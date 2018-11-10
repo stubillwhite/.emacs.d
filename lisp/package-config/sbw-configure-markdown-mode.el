@@ -6,9 +6,13 @@
   (progn
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
-    ;; (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown.css"))
     (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown-light.css"))
-        
+
+    (when (sbw/is-darwin?)
+      (setq
+       markdown-command-needs-filename nil
+       markdown-command                "pandoc --from=gfm --to=html --standalone --metadata title='markdown-preview' --css 'file:///Users/white1/.emacs.d/lisp/package-config/markdown-light.css'"))
+    
     (when (sbw/is-windows?)
       (setq
         markdown-command-needs-filename t
@@ -33,3 +37,15 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown)
+
+(defun sbw/markdown--reload-chrome-tab ()
+  (markdown-standalone)
+  (shell-command "osascript -e 'tell application \"Google Chrome\" to tell the active tab of its first window to reload'"))
+
+(defun sbw/markdown--auto-reload-enable ()
+  (interactive)
+  (add-hook 'after-save-hook 'sbw/markdown--reload-chrome-tab))
+
+(defun sbw/markdown--auto-reload-disable ()
+  (interactive)
+  (remove-hook 'after-save-hook 'sbw/markdown--reload-chrome-tab))

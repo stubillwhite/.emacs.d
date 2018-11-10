@@ -51,6 +51,7 @@
                          (:name multiple-cursors)    ;; An experiment in adding multiple cursors to emacs
                          (:name which-key)           ;; Display available key bindings
                          (:name undo-tree)           ;; Visualise the undo tree
+                         (:name zoom-frm)            ;; Commands to zoom frame font size
 
                          ;; Parenthesis management
                          (:name smartparens)  ;; Improved paredit

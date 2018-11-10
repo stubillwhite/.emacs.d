@@ -1,4 +1,4 @@
-personal_ws-1.1 en 298 
+personal_ws-1.1 en 309 
 Reza's
 Leiningen
 occurrance
@@ -19,6 +19,7 @@ JARs
 Jevon
 misrecognised
 AWS
+Polymorphism
 Parallelise
 Sensu
 Tyrell
@@ -31,9 +32,9 @@ tmux
 Nataliya
 Lemmatize
 EID
-SNS
-SPI
 RSS
+SPI
+SNS
 microservice
 Covariant
 Trello
@@ -119,8 +120,8 @@ kata
 Theano
 Finne
 hoc
-AssertJ
 Shkodran
+AssertJ
 Georgios
 monad
 serverless
