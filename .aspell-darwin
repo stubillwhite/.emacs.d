@@ -1,4 +1,4 @@
-personal_ws-1.1 en 316 
+personal_ws-1.1 en 322 
 Reza's
 Leiningen
 occurrance
@@ -6,6 +6,7 @@ APIs
 Heira
 Lagom
 comparator
+TDM
 BOS
 SLA
 dev
@@ -17,16 +18,16 @@ ROS
 Noella
 JARs
 Jevon
+polymorphism
 misrecognised
 AWS
-polymorphism
-Polymorphism
 implicits
 Parallelise
 Sensu
 Monoid
 Tyrell
 Artifactory
+SNM
 Uzma
 DAOs
 TIO
@@ -58,7 +59,6 @@ HPCC
 CSV
 Mahesh
 monads
-Monads
 Svetlana
 POJOs
 Erlang
@@ -155,6 +155,7 @@ reproducibility
 Punchdrunk
 anonymised
 Ai
+Banquo
 trigrams
 JIRA
 IntelliJ
@@ -173,6 +174,7 @@ Lucene
 Scopus
 Scalaz
 GC
+Macbeths
 Terraforming
 kanban
 tokenising
@@ -219,6 +221,7 @@ terraformcontrol
 architecting
 unmarshaling
 Seitl
+Macduff
 NLP
 buddying
 CCBY
@@ -244,6 +247,7 @@ ACL
 EIDs
 Whitelisting
 Destructuring
+Connor
 Imagenet
 YAML
 puppeteering
@@ -258,12 +262,14 @@ submodule
 PII
 AMIs
 FROS
+Hitchcockian
 ramping
 CQRS
 REPL
 balancer
 trigram
 Gradle
+sightlines
 timestamp
 GitLab
 Cuda

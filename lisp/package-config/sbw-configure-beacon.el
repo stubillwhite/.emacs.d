@@ -1,5 +1,3 @@
-(require 'use-package)
-
 (use-package beacon
   :diminish beacon-mode
   

@@ -44,6 +44,7 @@
                          (:name diminish)            ;; Abbreviate minor mode indicators
                          (:name projectile)          ;; Project interaction library for Emacs
                          (:name powerline)           ;; Emacs version of the Vim powerline
+                         (:name avy)                 ;; Jump to things in Emacs tree-style
                          (:name expand-region)       ;; Expand region by semantic units
                          (:name evil-nerd-commenter) ;; Efficient language-independent commenting
                          (:name key-chord)           ;; Map pairs of simultaneously pressed keys to commands
