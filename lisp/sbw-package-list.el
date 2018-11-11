@@ -41,11 +41,12 @@
                          (:name yasnippet) ;; Yet another snippet extension for Emacs
 
                          ;; Interface
+                         (:name powerline)           ;; Emacs version of the Vim powerline
                          (:name diminish)            ;; Abbreviate minor mode indicators
                          (:name projectile)          ;; Project interaction library for Emacs
-                         (:name powerline)           ;; Emacs version of the Vim powerline
                          (:name avy)                 ;; Jump to things in Emacs tree-style
                          (:name expand-region)       ;; Expand region by semantic units
+			 (:name drag-stuff)          ;; Drag stuff around in Emacs
                          (:name evil-nerd-commenter) ;; Efficient language-independent commenting
                          (:name key-chord)           ;; Map pairs of simultaneously pressed keys to commands
                          (:name hydra)               ;; Make Emacs bindings that stick around
@@ -53,6 +54,7 @@
                          (:name which-key)           ;; Display available key bindings
                          (:name undo-tree)           ;; Visualise the undo tree
                          (:name zoom-frm)            ;; Commands to zoom frame font size
+                         (:name beacon)              ;; A light that follows your cursor around so you don't lose it!
 
                          ;; Parenthesis management
                          (:name smartparens)  ;; Improved paredit
