@@ -5,6 +5,7 @@
   :config
   (progn
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
+    (add-hook 'markdown-mode-hook 'auto-fill-mode)
 
     (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown-light.css"))
 

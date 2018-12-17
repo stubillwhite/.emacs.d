@@ -45,6 +45,7 @@
                          (:name diminish)            ;; Abbreviate minor mode indicators
                          (:name projectile)          ;; Project interaction library for Emacs
                          (:name avy)                 ;; Jump to things in Emacs tree-style
+                         (:name ace-window)          ;; Quickly switch windows			 
                          (:name expand-region)       ;; Expand region by semantic units
 			 (:name drag-stuff)          ;; Drag stuff around in Emacs
                          (:name evil-nerd-commenter) ;; Efficient language-independent commenting
@@ -98,10 +99,10 @@
                          ;; https://www.fosskers.ca/blog/nix-en.html
                          ;; https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
                          ;; Haskell
-                         ;; (:name haskell-mode) ;; STACK: Haskell mode                           
-                         ;; (:name hindent)      ;; STACK: 
-                         ;; (:name intero)       ;; STACK: Interactive Haskell development
-                         (:name dante)        ;; CABAL: Emacs mode for interactive Haskell
+                          (:name haskell-mode) ;; STACK: Haskell mode                           
+                          (:name hindent)      ;; STACK: 
+                          (:name intero)       ;; STACK: Interactive Haskell development
+                         ;; (:name dante)        ;; CABAL: Emacs mode for interactive Haskell
                          ;; TODO: Look into haskell-mode-stylish-buffer to auto-reformat
 
                          ;; ;; ;; JSON

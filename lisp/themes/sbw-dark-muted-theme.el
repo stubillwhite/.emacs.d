@@ -114,6 +114,10 @@
 
     ;; compile
     `(compilation-info                    ((t (:inherit sbw-dark-muted-emphasis))))
+    `(compilation-error                   ((t (:inherit sbw-dark-muted-error))))
+    `(compilation-warning                 ((t (:inherit sbw-dark-muted-warning))))
+    `(compilation-mode-line-run           ((t (:inherit sbw-dark-muted-emphasis))))
+    `(compilation-column-number           ((t (:inherit sbw-dark-muted-keyword))))
     
     ;; ert
     `(ert-test-result-expected            ((t (:inherit sbw-dark-muted-success))))

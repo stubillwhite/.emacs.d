@@ -22,6 +22,7 @@
         org-metaleft
         org-metaright
         org-self-insert-command
+        orgtbl-hijacker-command-109
         orgtbl-self-insert-command
         sbw/unfill-paragraph
         sp-backward-delete-char
@@ -43,6 +44,11 @@
         keyboard-escape-quit
         mouse-yank-primary
         multiple-cursors-mode
+        org-edit-src-save
+        org-meta-return
+        orgtbl-hijacker-command-100
+        orgtbl-hijacker-command-102
+        orgtbl-hijacker-command-105
         sbw/hydra-multiple-cursors/body
         sbw/hydra-multiple-cursors/mc/mark-all-like-this-and-exit
         sbw/hydra-multiple-cursors/mc/mark-next-like-this
@@ -52,5 +58,4 @@
         sbw/hydra-multiple-cursors/mc/unmark-next-like-this
         sbw/hydra-multiple-cursors/mc/unmark-previous-like-this
         sbw/hydra-multiple-cursors/nil
-        undefined
         ))
