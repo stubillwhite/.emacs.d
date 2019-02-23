@@ -243,7 +243,7 @@
           (f-filename (f-expand (nth 1 (s-split-up-to ":" link 1))))
         description))
     (setq org-make-link-description-function 'sbw/org-make-link-description)
-    
+
     ;; Stuff to rationalise
     
     (setq org-fontify-done-headline t)
@@ -252,7 +252,7 @@
           (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30))))
 
   :bind
-  ("C-c o s p" . org-priority)
+  ("C-c o s p" . hydra-org-set-priority/body)
   ("C-c o s e" . org-set-effort)
   ("C-c o s s" . org-schedule)
   ("C-c o s d" . org-deadline)

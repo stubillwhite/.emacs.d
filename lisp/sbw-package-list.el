@@ -25,6 +25,7 @@
                          (:name ht)              ;; The missing hash table library for Emacs
                          (:name s)               ;; Modern string API
                          (:name seq)             ;; Unified abstractions for sequences
+			 (:name nameless)        ;; Less is more. Hide package namespace in your emacs-lisp code
 
                          ;; Completion
                          (:name helm)            ;; Incremental narrowing framework
@@ -126,6 +127,7 @@
         sbw-utils
         sbw-misc
         sbw-menu
+        sbw-countdown
         sbw-org-config
         ))
 

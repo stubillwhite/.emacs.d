@@ -13,7 +13,9 @@
     (nil speed-type rainbow-mode queue org magit inflections groovy-mode flycheck evil dash-functional company)))
  '(safe-local-variable-values
    (quote
-    ((intero-targets "Foo:lib" "Foo:exe:Foo" "Foo:test:Foo-test")
+    ((cider-refresh-after-fn . "integrant.repl/resume")
+     (cider-refresh-before-fn . "integrant.repl/suspend")
+     (intero-targets "Foo:lib" "Foo:exe:Foo" "Foo:test:Foo-test")
      (intero-targets "WhiteTest:test:WhiteTest-test")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

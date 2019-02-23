@@ -22,7 +22,9 @@
         org-metaleft
         org-metaright
         org-self-insert-command
+        org-shiftright
         orgtbl-hijacker-command-109
+        orgtbl-hijacker-command-3
         orgtbl-self-insert-command
         sbw/unfill-paragraph
         sp-backward-delete-char

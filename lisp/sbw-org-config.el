@@ -146,7 +146,19 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defmacro sbw/org-config-prioritised-tasks (binding title files)
   `(quote (,binding
            ,title
-           ((todo "STARTED"
+           ((tags-todo "TIMESCALE=\"today\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - today"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags "TIMESCALE=\"this-week\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - this week"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (todo "STARTED"
                   ((org-agenda-overriding-header (sbw/org-config--title "Active tasks"))
                    (org-agenda-files ,files)
                    (org-agenda-todo-ignore-scheduled t)

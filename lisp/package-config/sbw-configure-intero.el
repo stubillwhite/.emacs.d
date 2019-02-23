@@ -76,6 +76,6 @@ the symbol."
   :bind
   ("C-c C-c" . sbw/haskell-send-current-declaration)
   ;; ("TAB" . sbw/intero-indent-and-complete-symbol)
-  ("<f5>" . intero-repl-load))
+  ("<f5>" . intero-repl-load)) ;; TODO: Just when in haskell mode
 
 (provide 'sbw-configure-intero)

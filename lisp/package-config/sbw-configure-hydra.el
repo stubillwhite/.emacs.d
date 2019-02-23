@@ -35,9 +35,6 @@ _q_, _RET_: Quit
       ("q" nil :color blue)
       ("RET" nil :color blue))
 
-    ;; (eval-after-load "org"
-    ;;   '(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body))
-
     (defun org-agenda-cts ()
       (let ((args (get-text-property
                    (min (1- (point-max)) (point))
@@ -75,10 +72,24 @@ _y_: ?y? year      _q_: quit          _L__l__c_: ?l?
              (org-agenda-check-type t 'timeline 'agenda)
              (org-agenda-redo)))
       ("q" (message "Abort") :exit t))
-    )
-  
-  :bind
-  ("C-c w" . sbw/hydra-window/body))
+
+
+    (defhydra hydra-org-set-priority (:color :amaranth :hint nil)
+      "
+^Priority^
+^==========
+_d_: Day
+_w_: Week
+_n_: None
+
+_q_, _RET_: Quit
+"
+      ("d" (lambda () (interactive) (org-set-property "TIMESCALE" "today")) :color blue)
+      ("w" (lambda () (interactive) (org-set-property "TIMESCALE" "this-week")) :color blue)
+      ("n" (lambda () (interactive) (org-delete-property "TIMESCALE")) :color blue)
+      ("q" nil :color blue)
+      ("RET" nil :color blue))
+    ))
       
 (provide 'sbw-configure-hydra)
 
