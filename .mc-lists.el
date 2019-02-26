@@ -12,6 +12,7 @@
         cua-cut-region
         cua-paste
         evilnc-comment-or-uncomment-lines
+        fill-paragraph
         helm-show-kill-ring
         indent-for-tab-command
         kill-region
