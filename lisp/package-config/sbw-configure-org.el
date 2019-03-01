@@ -183,8 +183,8 @@
     ;; javascript:location.href='org-protocol://store-markdown-link?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)
 
     (defun sbw/org-protocol-store-markdown-link (x)
-      (let* ((url           (plist-get x :url))
-             (title         (plist-get x :title))
+      (let* ((url           (org-link-unescape (plist-get x :url)))
+             (title         (org-link-unescape (plist-get x :title)))
              (markdown-link (s-lex-format "[${title}](${url})")))
         (kill-new markdown-link)
         (message "`%s' to insert `%s'" (substitute-command-keys"\\[yank]") uri)
