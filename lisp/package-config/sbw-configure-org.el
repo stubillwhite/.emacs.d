@@ -169,8 +169,8 @@
     (defun sbw/org-capture-jira-task ()
       ;; The docs state that placeholders will be expanded before evaluating Elisp, but that doesn't appear to be
       ;; happening in practice so we have to access the link via an internal variable.
-      (let* ( (url   (plist-get org-store-link-plist :link))
-              (descr (plist-get org-store-link-plist :description)) )
+      (let* ( (url   (org-link-unescape (plist-get org-store-link-plist :link)))
+              (descr (org-link-unescape (plist-get org-store-link-plist :description))) )
         (concat (sbw/org-extract-jira-description descr) "\n" (s-lex-format "[[${url}][Link to task]]\n"))))
     
     (setq org-capture-templates
@@ -292,6 +292,4 @@
 (sbw/org-babel-copy-errors-to-output nil)
 
 (provide 'sbw-configure-org-mode)
-
-
 
