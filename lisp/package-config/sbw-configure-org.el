@@ -172,10 +172,17 @@
       (let* ( (url   (org-link-unescape (plist-get org-store-link-plist :link)))
               (descr (org-link-unescape (plist-get org-store-link-plist :description))) )
         (concat (sbw/org-extract-jira-description descr) "\n" (s-lex-format "[[${url}][Link to task]]\n"))))
+
+    (defun sbw/org-capture-todo-task ()
+      ;; The docs state that placeholders will be expanded before evaluating Elisp, but that doesn't appear to be
+      ;; happening in practice so we have to access the link via an internal variable.
+      (let* ( (url   (org-link-unescape (plist-get org-store-link-plist :link)))
+              (descr (org-link-unescape (plist-get org-store-link-plist :description))) )
+        (concat "Check out " (s-lex-format "[[${url}][${descr}]]"))))
     
     (setq org-capture-templates
           '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-              "* TODO [#C] Check out %?%a\n%i")
+              "* TODO [#C] %?%(sbw/org-capture-todo-task)")
              ("j" "JIRA task" entry (file+headline org-default-notes-file "Tasks")
               "* TODO %?%(sbw/org-capture-jira-task)") ))
 

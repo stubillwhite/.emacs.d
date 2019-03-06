@@ -1,4 +1,4 @@
-personal_ws-1.1 en 394 
+personal_ws-1.1 en 403 
 Ligia
 Metabase
 parameterise
@@ -60,8 +60,8 @@ Backfill
 Lucene's
 Idris
 Parameterisation
-CVs
 ELS
+CVs
 DSL
 TIO's
 AMIs
@@ -148,8 +148,8 @@ JVM
 discoverability
 Sensu
 appender
-CloudHealth
 Cloudhealth
+CloudHealth
 prepend
 Sagemaker
 recommenders
@@ -198,6 +198,7 @@ HBase
 Lundahl
 overfitting
 Grafana
+codebase
 Unburied
 contravariant
 ORM
@@ -223,16 +224,18 @@ blockchain
 SCS
 CNNs
 Artifactory
-RIs
 TBD
+RIs
 Banquo
 Schijvenaars
 Clojure
 productionising
 Anonymise
+reactively
 ramping
 prototyped
 TDM
+rata
 LAPD
 SLA
 terraformcontrol
@@ -249,16 +252,18 @@ Silverpoint
 SNM
 TIO
 whitelists
+codebases
 IllegalArgumentException
 pseudonymised
 Newflo
 SonarQube
-RSS
-SNS
 SPI
+SNS
+RSS
 SPM
 submodule
 Mesos
+siloed
 architected
 SQS
 EIDs
@@ -271,6 +276,7 @@ Erlang
 POJO
 convolutional
 TensorFlow
+collegial
 overfit
 votives
 CQRS
@@ -318,6 +324,7 @@ Xuemin's
 remediating
 Ivo's
 trigram
+ClojureScript
 Roadmunk
 PyCharm
 Dimensionality
@@ -378,8 +385,8 @@ RDBMS
 sightlines
 LinkedIn
 buddying
-Mockito
 Mockist
+Mockito
 BDD
 Ensmallen
 monad
