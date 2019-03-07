@@ -35,6 +35,8 @@
      cider-repl-wrap-history               t                               ;; Wrap history
      nrepl-log-messages                    t                               ;; Log messages to aid debug of CIDER problems
      nrepl-port                            "4555"                          ;; Default port number
+     cider-default-cljs-repl               'figwheel-main
+     cider-figwheel-main-default-options   "dev"
      )
 
     ;; Leiningen
