@@ -112,6 +112,9 @@
                          ;; Markdown
                          (:name markdown-mode) ;; Markdown mode
 
+                         ;; Text
+                         (:name mw-thesaurus) ;; Merriam-Webster Thesaurus
+                         
                          ;; YAML
                          (:name yaml-mode)         ;; Emacs major mode for editing YAML files
                          (:name flycheck-yamllint) ;; YAML checker

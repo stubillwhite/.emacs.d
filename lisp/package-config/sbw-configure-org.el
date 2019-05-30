@@ -71,6 +71,11 @@
      org-confirm-babel-evaluate  nil      ;; Don't ask confirmation to execute
      )
 
+    (add-hook 'org-mode-hook
+          (lambda ()
+            (make-local-variable 'ac-stop-words)
+            (add-to-list 'ac-stop-words "#begin_")))
+    
     (require 'ob-clojure)
     (setq org-babel-clojure-backend 'cider)
 
