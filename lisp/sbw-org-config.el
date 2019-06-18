@@ -152,12 +152,22 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                    (org-agenda-todo-ignore-scheduled t)
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                    (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags "TIMESCALE=\"this-week\""
+            (tags-todo "TIMESCALE=\"this-week\""
                   ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - this week"))
                    (org-agenda-files ,files)
                    (org-agenda-todo-ignore-scheduled t)
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                    (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "TIMESCALE=\"this-month\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - this month"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (agenda ""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Schedule for the day"))
+                   (org-agenda-span 1)
+                   (org-agenda-files ,files)))
             (todo "STARTED"
                   ((org-agenda-overriding-header (sbw/org-config--title "Active tasks"))
                    (org-agenda-files ,files)

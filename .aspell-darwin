@@ -1,4 +1,4 @@
-personal_ws-1.1 en 435 
+personal_ws-1.1 en 452 
 Ligia
 Metabase
 parameterise
@@ -9,6 +9,7 @@ Rosi
 Dockerised
 GitLab
 semigroup
+Reinder
 BASSC
 ASG
 whitelisted
@@ -65,12 +66,12 @@ DevOps
 Idris
 Parameterisation
 Royale
-CVs
 ELS
+CVs
 DSL
 TIO's
-ANDs
 AMIs
+ANDs
 parallelised
 Savitskaya
 Solr
@@ -79,6 +80,7 @@ Redis
 Ligia's
 FROS
 Macker
+Kinesis
 Deckard
 ETL
 rebalance
@@ -89,6 +91,7 @@ agglomerative
 uncomment
 Seitl
 Hadoop
+Odul
 Lucene
 Destructuring
 Associativity
@@ -116,6 +119,7 @@ JARs
 DAOs
 comparator
 serverless
+runtime
 remediated
 whitelist
 IPR
@@ -125,6 +129,7 @@ GPUs
 That'll
 preprocessed
 aggregator
+Shobhna's
 Terraform
 polymorphism
 Sheetal
@@ -133,6 +138,7 @@ Amberley's
 Vimeo
 Kabeiroi
 tmux
+Covariance
 Reflow
 HPCC
 puppeteering
@@ -158,8 +164,8 @@ JVM
 discoverability
 Sensu
 appender
-CloudHealth
 Cloudhealth
+CloudHealth
 influencers
 prepend
 Sagemaker
@@ -201,7 +207,9 @@ Monoids
 PII
 monoid
 SciVal
+Royston's
 Dimitrov
+Contravariance
 OOP
 puppetcontrol
 QEs
@@ -242,8 +250,8 @@ abstractive
 SCS
 CNNs
 Artifactory
-RIs
 TBD
+RIs
 Banquo
 Schijvenaars
 Clojure
@@ -251,6 +259,7 @@ productionising
 Anonymise
 reactively
 ramping
+Evise
 prototyped
 TDM
 rata
@@ -276,9 +285,9 @@ IllegalArgumentException
 pseudonymised
 Newflo
 SonarQube
-RSS
-SNS
 SPI
+SNS
+RSS
 SPM
 submodule
 siloed
@@ -288,6 +297,7 @@ Bytecode
 SQS
 Ebirah
 EIDs
+Shobhna
 UUID
 balancer
 Adamos
@@ -350,15 +360,18 @@ remediating
 Ivo's
 trigram
 ClojureScript
+ZIO
 Roadmunk
 PyCharm
 Dimensionality
 GC
 Lemmatize
+Roadmap
 FP
 incrementing
 timesheet
 Reza's
+Navid
 Trello
 Uzma
 maenads
@@ -373,8 +386,9 @@ Mahesh
 Appold
 implementors
 Scalaz
+Venkata
 ontologies
-Covariant
+covariant
 typeclass
 QE
 anonymised
@@ -382,10 +396,11 @@ Puppetfile
 Keras
 Dredd
 GDPR
+Domiziana's
 outlier
 MySQL
-AlphaBeta
 Alphabeta
+AlphaBeta
 Dystopian
 Hitchcockian
 trenchcoat
@@ -398,6 +413,7 @@ binaural
 KPOs
 hashcode
 VR
+UX
 Leiningen
 ThoughtWorks
 Santorini
@@ -421,6 +437,7 @@ BDD
 Ensmallen
 monad
 PersonHub
+functioaltity
 extractive
 Voight
 Noella
