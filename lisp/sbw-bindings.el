@@ -17,6 +17,15 @@
   (global-set-key (kbd "<home>") 'beginning-of-line)
   (global-set-key (kbd "<end>")  'end-of-line)
 
+  ;; Emacs Mac Port bindings
+  ;; BACKSPACE and DELETE should behave sensibly
+  (global-set-key (kbd "<backspace>")   'delete-backward-char)
+  (global-set-key (kbd "H-<backspace>") 'delete-char)
+  (global-set-key (kbd "<H-left>")      'beginning-of-line)
+  (global-set-key (kbd "<H-right>")     'end-of-line)
+  (global-set-key (kbd "<H-up>")        'scroll-down-command)
+  (global-set-key (kbd "<H-down>")      'scroll-up-command)
+  
   ;; fn as H-, ctrl as C-, alt as M-, cmd as s-
   (setq  
    mac-function-modifier       'hyper
