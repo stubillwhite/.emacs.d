@@ -70,11 +70,6 @@
      org-babel-sh-command        "zsh -i" ;; Interactive Zsh for shell
      org-confirm-babel-evaluate  nil      ;; Don't ask confirmation to execute
      )
-
-    (add-hook 'org-mode-hook
-          (lambda ()
-            (make-local-variable 'ac-stop-words)
-            (add-to-list 'ac-stop-words "#begin_")))
     
     (require 'ob-clojure)
     (setq org-babel-clojure-backend 'cider)
@@ -256,6 +251,39 @@
         description))
     (setq org-make-link-description-function 'sbw/org-make-link-description)
 
+    ;; Setting priorities
+
+    (defun sbw/org-agenda-apply-to-headline (f)
+      "Apply F to the current headline in an agenda buffer."
+      ;; Based on org-agenda-set-property
+      (org-agenda-check-no-diary)
+      (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+                           (org-agenda-error)))
+             (buffer (marker-buffer hdmarker))
+             (pos (marker-position hdmarker))
+             (inhibit-read-only t)
+             newhead)
+        (org-with-remote-undo buffer
+          (with-current-buffer buffer
+            (widen)
+            (goto-char pos)
+            (org-show-context 'agenda)
+            (funcall f)))))
+
+    (defun sbw/org-set-property (prop val)
+      "Set a property for the current headline, regardless of whether agenda is active or not."  
+      (interactive)
+      (if (eq major-mode 'org-agenda-mode)
+          (sbw/org-agenda-apply-to-headline (lambda () (org-set-property prop val)))
+        (org-set-property prop val)))
+
+    (defun sbw/org-delete-property (prop)
+      "Delete a property from the current headline, regardless of whether agenda is active or not."  
+      (interactive)
+      (if (eq major-mode 'org-agenda-mode)
+          (sbw/org-agenda-apply-to-headline (lambda () (org-delete-property prop)))
+        (org-delete-property prop)))
+    
     ;; Stuff to rationalise
     
     (setq org-fontify-done-headline t)
