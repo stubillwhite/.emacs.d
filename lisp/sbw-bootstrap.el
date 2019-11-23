@@ -7,7 +7,7 @@
   :type 'string)
 
 ;; Prevent the built-in package manager from customising my files
-(setq custom-file "~/.emacs.d/emacs-customisations.el")
+(setq custom-file (concat user-emacs-directory "emacs-customisations.el"))
 (load custom-file)
 
 (defun sbw/bootstrap-load-secrets ()
