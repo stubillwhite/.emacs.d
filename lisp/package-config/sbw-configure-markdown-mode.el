@@ -7,12 +7,12 @@
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
     (add-hook 'markdown-mode-hook 'auto-fill-mode)
 
-    (setq markdown-css-paths '("file:///Users/white1/.emacs.d/lisp/package-config/markdown-light.css"))
+    (setq markdown-css-paths '("file:///Users/white1/Dev/my-stuff/.emacs.d/lisp/package-config/markdown-light.css"))
 
     (when (sbw/is-darwin?)
       (setq
        markdown-command-needs-filename nil
-       markdown-command                "pandoc --from=gfm --to=html --standalone --metadata title='markdown-preview' --css 'file:///Users/white1/.emacs.d/lisp/package-config/markdown-light.css'"))
+       markdown-command                "pandoc --from=gfm --to=html --standalone --metadata title='markdown-preview' --css 'file:///Users/white1/Dev/my-stuff/.emacs.d/lisp/package-config/markdown-light.css'"))
     
     (when (sbw/is-windows?)
       (setq
