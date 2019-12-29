@@ -2,6 +2,24 @@
 
 Personal Emacs configuration, probably not very useful to others.
 
+## Installation notes ##
+
+## Linux ###
+
+- Install Emacs as you would any other package
+- Clone and install [plexus/chemacs](https://github.com/plexus/chemacs) to allow multiple configurations
+- Clone this repository
+
+## OSX ###
+
+Brew has removed configuration options `--with-cocoa` so now we have to use a special build
+
+- Browse to [Emacs for Mac OSX](https://emacsformacosx.com/)
+- Download and install the latest version
+- Open `Finder` and locate the application, right-click, select `Open`, then confirm `Open` to authorize
+- Clone and install [plexus/chemacs](https://github.com/plexus/chemacs) to allow multiple configurations
+- Clone this repository
+
 ## Crib notes for things I always forget
 
 ### Haskell mode
@@ -25,12 +43,12 @@ Personal Emacs configuration, probably not very useful to others.
 
 `stack install hindent`
 
-`stack install stylish-haskell` ? 
+`stack install stylish-haskell` ?
 Doesn't seem good for me. Hindent looks better
 /Users/white1/.local/bin/stylish-haskell -v src/Lib.hs
 
 (setq haskell-mode-stylish-haskell-path "/Users/white1/.local/bin/stylish-haskell")
 (custom-set-variables
  '(haskell-stylish-on-save t))
- 
+
 - From the command line run `stack build intero` to build the integration
