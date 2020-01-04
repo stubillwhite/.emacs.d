@@ -20,6 +20,13 @@ Brew has removed configuration options `--with-cocoa` so now we have to use a sp
 - Clone and install [plexus/chemacs](https://github.com/plexus/chemacs) to allow multiple configurations
 - Clone this repository
 
+Rebind Emacs keys
+
+- Ctrl-Cmd-Q by default will lock the screen and should be changed
+   - Open System Preferences
+   - Select `Keyboard` > `App Shortcuts`
+   - Add a new shortcut with the menu title `Lock screen` and command shortcut Ctrl-Cmd-§ (or something equally unlikely)
+
 ## Crib notes for things I always forget
 
 ### Haskell mode
