@@ -17,6 +17,7 @@
         helm-show-kill-ring
         indent-for-tab-command
         kill-region
+        markdown-insert-header-atx-2
         org-beginning-of-line
         org-fill-paragraph
         org-force-self-insert

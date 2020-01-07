@@ -33,8 +33,8 @@
     (setq ispell-personal-dictionary
       (cond
         ((sbw/is-windows?) "/cygwin64/home/GB105549/.emacs.d/.ispell-win")
-        ((sbw/is-linux?)   "~/.emacs.d/.ispell-unix")
-        ((sbw/is-darwin?)  "~/.emacs.d/.aspell-darwin")))
+        ((sbw/is-linux?)   (concat user-emacs-directory ".ispell-unix"))
+        ((sbw/is-darwin?)  (concat user-emacs-directory ".aspell-darwin"))))
 
     ;; Inverse of flyspell-goto-next-error, and tightly coupled to that implementation
     (defun sbw/flyspell-goto-previous-error ()

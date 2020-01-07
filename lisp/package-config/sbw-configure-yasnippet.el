@@ -3,7 +3,7 @@
 
   :init
   (progn
-    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    ;; (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
     (yas-global-mode)
     (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand))
 
