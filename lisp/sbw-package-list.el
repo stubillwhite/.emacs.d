@@ -83,6 +83,10 @@
                          (:name slack)   ;; Slack for Emacs
                          (:name emojify) ;; Emoji for Slack
 
+                         ;; Tramp
+                         (:name docker-tramp) ;; Tramp mode for Docker
+                         (:name helm-tramp)   ;; Helm for Tramp
+
                          ;; Languages
 
                          ;; Clojure
@@ -132,6 +136,7 @@
         sbw-menu
         sbw-countdown
         sbw-org-config
+        ;; sbw-org-review
         ))
 
 (provide 'sbw-package-list)
