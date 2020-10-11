@@ -67,9 +67,20 @@
     (setq org-babel-default-header-args         '((:results . "replace value drawer")))
     
     (setq
-     org-babel-sh-command        "zsh -i" ;; Interactive Zsh for shell
+     ;; org-babel-sh-command        "zsh -i" ;; Interactive Zsh for shell
      org-confirm-babel-evaluate  nil      ;; Don't ask confirmation to execute
      )
+
+    (defun sbw/org-babel-handle-ansi-codes-in-output ()
+      (interactive)
+      (org-element-map (org-element-parse-buffer) 'src-block
+        (lambda (src)
+          (when (equalp "sh" (org-element-property :language src))
+            (let ((begin (org-element-property :begin src))
+                  (end   (org-element-property :end src)))
+              (ansi-color-apply-on-region begin end))))))
+
+    (add-to-list 'org-babel-after-execute-hook #'sbw/org-babel-handle-ansi-codes-in-output)
     
     (require 'ob-clojure)
     (setq org-babel-clojure-backend 'cider)
