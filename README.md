@@ -59,3 +59,6 @@ Doesn't seem good for me. Hindent looks better
  '(haskell-stylish-on-save t))
 
 - From the command line run `stack build intero` to build the integration
+
+- Send buffer to REPL `C-c C-l`
+- Clear REPL `C-c C-k`
