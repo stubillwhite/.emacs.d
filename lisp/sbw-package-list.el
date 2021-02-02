@@ -115,6 +115,7 @@
 
                          ;; Markdown
                          (:name markdown-mode) ;; Markdown mode
+                         (:name markdown-toc)  ;; Generate a table of contents in a markdown file
 
                          ;; Text
                          (:name mw-thesaurus) ;; Merriam-Webster Thesaurus

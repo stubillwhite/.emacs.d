@@ -30,12 +30,13 @@
   :bind
   ("C-c m p"   . markdown-preview)
   ("C-c m e"   . markdown-export)
-  ("C-c m t 1" . markdown-insert-header-atx-1)
-  ("C-c m t 2" . markdown-insert-header-atx-2)
-  ("C-c m t 3" . markdown-insert-header-atx-3)
-  ("C-c m t 4" . markdown-insert-header-atx-4)
-  ("C-c m t 5" . markdown-insert-header-atx-5)
-  ("C-c m t 6" . markdown-insert-header-atx-6)
+  ("C-c m h 0" . markdown-remove-header)
+  ("C-c m h 1" . markdown-insert-header-atx-1)
+  ("C-c m h 2" . markdown-insert-header-atx-2)
+  ("C-c m h 3" . markdown-insert-header-atx-3)
+  ("C-c m h 4" . markdown-insert-header-atx-4)
+  ("C-c m h 5" . markdown-insert-header-atx-5)
+  ("C-c m h 6" . markdown-insert-header-atx-6)
   ("C-c m i"   . markdown-insert-italic)
   ("C-c m b"   . markdown-insert-bold)
   ("C-c m c"   . markdown-insert-code)
@@ -44,7 +45,7 @@
   ("M-<left>"  . markdown-promote)
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
-(provide 'sbw-configure-markdown)
+(provide 'sbw-configure-markdown-mode)
 
 (defun sbw/markdown--reload-chrome-tab ()
   (markdown-standalone)
