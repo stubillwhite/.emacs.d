@@ -1,0 +1,20 @@
+* category-one
+:PROPERTIES:
+:CATEGORY: category-one
+:END:
+** TODO Two to do
+** TODO Two to do
+** STARTED One started
+** BLOCKED One blocked
+** POSTPONED One postponed
+* category-two
+:PROPERTIES:
+:CATEGORY: category-two
+:END:
+** CANCELLED One cancelled
+** DONE One done
+* category-three
+:PROPERTIES:
+:CATEGORY: category-three
+:END:
+

@@ -80,7 +80,6 @@
         (load-file fnam)
       (sbw/bootstrap-require (list name)))))
 
-
 (defun sbw/bootstrap--alternate-installation-flow (pkg)
   (let* ((name        (sbw/bootstrap--pkg-name pkg))
          (config-fnam (concat  "sbw-configure-" (symbol-name name) ".el"))

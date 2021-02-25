@@ -1,0 +1,5 @@
+- category-one
+    - Plan what to do in New York *[67%, 04:00]*
+    - Book tickets for New York *[33%, 02:00]*
+
+

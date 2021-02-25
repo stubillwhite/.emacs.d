@@ -97,4 +97,3 @@
 (define-hash-table-test 'sbw/value-eq-test 'sbw/value-eq 'sbw/value-eq-hashcode)
 
 (provide 'sbw-value-eq)
-

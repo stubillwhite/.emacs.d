@@ -1,0 +1,22 @@
+* category-one
+:PROPERTIES:
+:CATEGORY: category-one
+:END:
+** STARTED category-one-task-one
+:LOGBOOK:
+CLOCK: [1970-01-01 Thu 04:00]--[1970-01-01 Thu 05:00] =>  1:00
+CLOCK: [1970-01-01 Thu 03:00]--[1970-01-01 Thu 04:00] =>  1:00
+:END:
+** STARTED category-one-task-two
+:LOGBOOK:
+CLOCK: [1970-01-02 Fri 01:00]--[1970-01-02 Fri 05:00] =>  4:00
+:END:      
+
+* category-two
+:PROPERTIES:
+:CATEGORY: category-two
+:END:
+** STARTED category-two-task-one
+:LOGBOOK:
+CLOCK: [1970-01-02 Fri 06:00]--[1970-01-02 Fri 10:00] =>  4:00
+:END:      

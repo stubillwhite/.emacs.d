@@ -1,0 +1,8 @@
+- category-one *[67%, 06:00]*
+    - category-one-task-one *[33%, 04:00]*
+    - category-one-task-two *[33%, 02:00]*
+- category-two *[33%, 04:00]*
+    - category-two-task-one *[33%, 04:00]*
+
+
+

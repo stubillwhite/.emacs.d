@@ -1,0 +1,17 @@
+* category-one
+:PROPERTIES:
+:CATEGORY: category-one
+:END:
+** STARTED Book tickets for New York
+:LOGBOOK:
+CLOCK: [1970-01-01 Thu 03:00]--[1970-01-01 Thu 05:00] =>  2:00
+:END:      
+** STARTED Plan what to do in New York
+:LOGBOOK:
+CLOCK: [1970-01-07 Wed 21:00]--[1970-01-08 Thu 03:00] =>  6:00
+:END:      
+
+* category-two
+:PROPERTIES:
+:CATEGORY: category-two
+:END:

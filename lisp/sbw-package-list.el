@@ -96,7 +96,7 @@
                          (:name cljr-helm)    ;; Helm wrapper for clj-refactor
 
                          ;; ;; Elm
-                         (:name elm-mode)     ;; Elm mode for emacs
+                         (:name elm-mode)     ;; Elm mode for Emacs
                          (:name flycheck-elm) ;; Flycheck for Elm
 
                          ;; TODO: Implement disable
@@ -119,6 +119,9 @@
 
                          ;; Text
                          (:name mw-thesaurus) ;; Merriam-Webster Thesaurus
+
+                         ;; Scala
+                         (:name scala-mode) ;; Scala mode for Emacs
                          
                          ;; YAML
                          (:name yaml-mode)         ;; Emacs major mode for editing YAML files
@@ -128,16 +131,30 @@
 (setq sbw/personal-package-list
       '(
         sbw-hash-tables
+        sbw-hash-tables-test
+
         sbw-multimethods
+        sbw-multimethods-test
+
         sbw-value-eq
+        sbw-value-eq-test
+
+        sbw-org-utils
+        sbw-org-utils-test
+
         sbw-cosmetics-code-style
         sbw-bindings
         sbw-utils
+        sbw-utils-test
         sbw-misc
         sbw-menu
         sbw-countdown
         sbw-org-config
-        ;; sbw-org-review
-        ))
+
+        sbw-org-review
+        sbw-org-review-test
+
+        sbw-time
+        sbw-time-test))
 
 (provide 'sbw-package-list)

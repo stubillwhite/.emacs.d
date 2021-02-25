@@ -8,7 +8,10 @@
 ;; Configure paths
 (setq sbw/lisp-path (concat user-emacs-directory "lisp"))
 (add-to-list 'load-path sbw/lisp-path)
+(add-to-list 'load-path (concat sbw/lisp-path "/test"))
 (add-to-list 'custom-theme-load-path (concat sbw/lisp-path "/themes"))
+
+(print sbw/lisp-path)
 
 ;; Bootstrap packges
 (require 'sbw-common-config)
@@ -20,9 +23,3 @@
 (sbw/bootstrap-packages sbw/package-list)
 
 (sbw/bootstrap-require sbw/personal-package-list)
-
-
-
-
-
-

@@ -5,18 +5,13 @@
   :config
   (progn
 
-    (defun sbw/markdown--disable-clashing-modes ()
-      ;; (show-paren-mode 0)
-      ;; (smartparens-global-mode 0)
-      ;; (smartparens-mode 0)
-      ;; (show-smartparens-global-mode 0)
-      ;; (show-smartparens-mode 0)
-      )
-    
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
     (add-hook 'markdown-mode-hook 'auto-fill-mode)
-    (add-hook 'markdown-mode-hook 'sbw/markdown--disable-clashing-modes)
 
+    (diminish 'org-src-mode)
+    (diminish 'orgtbl-mode)
+    (diminish 'eldoc-mode)
+    
     (when (sbw/is-darwin?)
       (setq
        markdown-command-needs-filename nil

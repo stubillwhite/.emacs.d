@@ -27,6 +27,42 @@
         (switch-to-buffer-other-window (buffer-name))
         (switch-to-buffer buf)))))
 
+(defun sbw/pprint-as-json (x)  
+  "Pretty-print object x as JSON in a temporary window."
+  (let* ((tmp-buf-name "*sbw/pprint-as-json*"))    
+    (sbw/open-and-switch-to-window tmp-buf-name)
+    (with-output-to-temp-buffer tmp-buf-name 
+      (->> (json-encode x)
+           (replace-regexp-in-string "\\\\\"" "\"")
+           (s-chop-prefix "\"")
+           (s-chop-suffix "\"")
+           (insert))
+      (json-pretty-print-buffer))    
+    (json-mode)
+    (use-local-map (copy-keymap json-mode-map))
+    (local-set-key "q" 'delete-window)
+    (message "Press 'q' to quit")))
+
+(defun sbw/current-script-dir ()
+  "Returns the directory containing the script invoking this function."
+  (if load-file-name (file-name-directory load-file-name) default-directory))
+
+;; TODO Test this
+;; TODO Might be replaced with s.el now?
+(defun sbw/collect-by (f l)
+  "Returns a hash-table of lists of items, keyed by the result of (f item) for each item in list l."
+  (-reduce-from    
+    (lambda (acc val)
+      (let* ( (category (funcall f val))
+              (curr-val (gethash category acc (list))) )
+        (puthash category (cons val curr-val) acc)
+        acc))
+    (sbw/ht-create)
+    l))
+
+(defalias 'sbw/dec '1- "Return x minus one.")
+(defalias 'sbw/inc '1+ "Return x plus one.")
+
 (defun sbw/unfill-paragraph ()
   "Convert a multi-line paragraph into a single line."
   (interactive)

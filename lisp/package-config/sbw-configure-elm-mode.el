@@ -54,5 +54,3 @@
         ("<f5>" . elm-repl-load)))
 
 (provide 'sbw-configure-elm-mode)
-
-
