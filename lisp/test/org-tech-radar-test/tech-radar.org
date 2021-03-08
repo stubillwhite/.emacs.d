@@ -1,0 +1,31 @@
+* tech-radar
+:PROPERTIES:
+:CATEGORY: tech-radar
+:END:
+#+SEQ_TODO: ADOPT TRIAL ASSESS HOLD REMOVE
+** Engineering
+:PROPERTIES:
+:CATEGORY: Engineering
+:END:
+*** ADOPT engineering-adopt
+#+begin_src markdown
+Description for engineering-adopt is here
+#+end_src
+*** TRIAL engineering-trial
+*** ASSESS engineering-assess
+*** HOLD engineering-hold
+** Infrastructure
+:PROPERTIES:
+:CATEGORY: Infrastructure
+:END:
+*** ADOPT infrastructure-adopt
+** Quality
+:PROPERTIES:
+:CATEGORY: Quality
+:END:
+*** ADOPT quality-adopt
+** Techniques
+:PROPERTIES:
+:CATEGORY: Techniques
+:END:
+*** ADOPT techniques-adopt

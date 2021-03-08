@@ -1,0 +1,7 @@
+engineering-adopt	Engineering	ADOPT	false	tbd
+engineering-trial	Engineering	TRIAL	false	tbd
+engineering-assess	Engineering	ASSESS	false	tbd
+engineering-hold	Engineering	HOLD	false	tbd
+infrastructure-adopt	Infrastructure	ADOPT	false	tbd
+quality-adopt	Quality	ADOPT	false	tbd
+techniques-adopt	Techniques	ADOPT	false	tbd

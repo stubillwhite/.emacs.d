@@ -154,6 +154,9 @@
         sbw-org-review
         sbw-org-review-test
 
+        sbw-org-tech-radar
+        sbw-org-tech-radar-test
+
         sbw-time
         sbw-time-test))
 
