@@ -74,7 +74,9 @@
       (puthash :heading  (sbw/org-utils--extract-string (org-get-heading nil t)) summary)
       (puthash :level    (funcall outline-level) summary)
       (puthash :clock    (sbw/org-utils--extract-clock) summary)
-      (puthash :closed   (sbw/org-utils--extract-timestamp (cdr (assoc "CLOSED" (org-entry-properties)))) summary))
+      (puthash :raw-text (sbw/org-utils--entry-text-at-point (point)) summary)
+      (puthash :closed   (sbw/org-utils--extract-timestamp (cdr (assoc "CLOSED" (org-entry-properties)))) summary)
+      )
     summary))
 
 (defun sbw/org-utils-heading-summaries-for-file (fnam)
@@ -83,5 +85,4 @@
   (-map 'sbw/org-utils-heading-summary-at-point (sbw/org-utils-heading-points-for-current-buffer)))
 
 (provide 'sbw-org-utils)
-
 

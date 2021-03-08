@@ -1,7 +1,7 @@
-engineering-adopt	Engineering	ADOPT	false	tbd
-engineering-trial	Engineering	TRIAL	false	tbd
-engineering-assess	Engineering	ASSESS	false	tbd
-engineering-hold	Engineering	HOLD	false	tbd
-infrastructure-adopt	Infrastructure	ADOPT	false	tbd
-quality-adopt	Quality	ADOPT	false	tbd
-techniques-adopt	Techniques	ADOPT	false	tbd
+engineering-adopt	Engineering	ADOPT	false	Description for engineering-adopt is here
+engineering-trial	Engineering	TRIAL	false	
+engineering-assess	Engineering	ASSESS	false	
+engineering-hold	Engineering	HOLD	false	
+infrastructure-adopt	Infrastructure	ADOPT	false	
+quality-adopt	Quality	ADOPT	false	
+techniques-adopt	Techniques	ADOPT	false	

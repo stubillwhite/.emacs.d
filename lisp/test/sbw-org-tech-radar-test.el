@@ -1,7 +1,7 @@
 (require 'sbw-org-tech-radar)
 
 (lexical-let* ((test-file (lambda (x) (format "%s/test/org-tech-radar-test/%s" sbw/lisp-path x)))
-               (file-text (lambda (x) (s-trim (f-read-text (funcall test-file x))))))
+               (file-text (lambda (x) (f-read-text (funcall test-file x)))))
 
   (ert-deftest sbw/org-tech-radar-generate-tech-radar-then-expected-tech-radar ()
     "sbw/org-review-completed-tasks-generate-report then expected report"
@@ -12,5 +12,4 @@
 
 )
 
-
-(provide 'sbw-org-tech-radar-test.el)
+(provide 'sbw-org-tech-radar-test)
