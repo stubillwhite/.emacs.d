@@ -242,7 +242,7 @@
     (sbw/org-review--write-report config (sbw/org-review--build-report config))))
 
 (defun sbw/org-review--format-date (time)
-  (format-time-string "%Y%m%d" time))
+  (format-time-string "%Y-%m-%d" time))
 
 (defun sbw/org-review--build-filename (prefix start end)
   (format "%s/%s-%s-to-%s.md"

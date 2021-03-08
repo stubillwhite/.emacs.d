@@ -202,7 +202,7 @@
 
     (defun sbw/org-protocol-store-markdown-link (x)
       (let* ((url           (org-link-unescape (plist-get x :url)))
-             (title         (org-link-unescape (plist-get x :title)))
+             (title         (sbw/org-extract-jira-description (org-link-unescape (plist-get x :title))))
              (markdown-link (s-lex-format "[${title}](${url})")))
         (kill-new markdown-link)
         (message "`%s' to insert `%s'" (substitute-command-keys"\\[yank]") uri)
