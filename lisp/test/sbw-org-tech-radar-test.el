@@ -9,7 +9,6 @@
                    (expected  (funcall file-text "tech-radar-expected.txt"))
                    (actual    (sbw/org-tech-radar-generate-tech-radar filename)) )
       (should (string= actual expected))))
-
 )
 
 (provide 'sbw-org-tech-radar-test)

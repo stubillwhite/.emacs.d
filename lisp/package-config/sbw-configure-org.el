@@ -118,8 +118,9 @@
     
     ;; Keywords and preferred sort order
     (setq
-     org-todo-keywords       '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)")
-     sbw/org-todo-sort-order '("STARTED" "BLOCKED" "TODO" "POSTPONED" "DONE" "CANCELLED"))
+     sbw/org-todo-keywords   '("TODO(t)" "STARTED(s)" "BLOCKED(b)" "POSTPONED(p)" "|" "DONE(d!)" "CANCELLED(c)")
+     sbw/org-todo-sort-order '("STARTED" "BLOCKED" "TODO" "POSTPONED" "DONE" "CANCELLED")
+     org-todo-keywords       sbw/org-todo-keywords)
 
     (setq org-drawers
           '("PROPERTIES" "CLOCK" "LOGBOOK" "NOTES"))
@@ -226,14 +227,15 @@
       (interactive)
       (if (org-clocking-p)
           (message "Currently clocked in on a task. Clock out and re-run the command to sort the subtree.")
-        (let* ( (original-value org-todo-keywords-1) )
-          (setq org-todo-keywords-1 sbw/org-todo-sort-order)
+        (let* ((sort-order     (if (sbw/value-eq org-todo-keywords-1 sbw/org-todo-keywords) sbw/org-todo-sort-order org-todo-keywords-1))
+               (original-value org-todo-keywords-1))
+          (setq org-todo-keywords-1 sort-order)
           (save-excursion
             (sbw/org-multisort ?o ?p ?s ?d ?a)
             (hide-subtree)
             (org-cycle))
           (setq org-todo-keywords-1 original-value))))
-
+    
     (defun sbw/sort-all-subtrees-in-buffer ()
       "Sorts all the subtrees in the current org-mode buffer."
       (interactive)
@@ -343,4 +345,3 @@
 (sbw/org-babel-copy-errors-to-output nil)
 
 (provide 'sbw-configure-org-mode)
-
