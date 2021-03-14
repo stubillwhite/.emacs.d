@@ -1,7 +1,7 @@
-engineering-adopt	ADOPT	Engineering	false	Description for engineering-adopt is here
-infrastructure-adopt	ADOPT	Infrastructure	false	
-quality-adopt	ADOPT	Quality	false	
-techniques-adopt	ADOPT	Techniques	false	
-engineering-trial	TRIAL	Engineering	false	
-engineering-assess	ASSESS	Engineering	false	
-engineering-hold	HOLD	Engineering	false	
+"engineering-adopt","ADOPT","Engineering","false","<p>Description for engineering-adopt is here</p>"
+"infrastructure-adopt","ADOPT","Infrastructure","false",""
+"quality-adopt","ADOPT","Quality","false",""
+"techniques-adopt","ADOPT","Techniques","false",""
+"engineering-trial","TRIAL","Engineering","false","<p>Description containing ""quoted"" text</p>"
+"engineering-assess","ASSESS","Engineering","false",""
+"engineering-hold","HOLD","Engineering","false",""

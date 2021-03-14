@@ -12,6 +12,9 @@
 Description for engineering-adopt is here
 #+end_src
 *** TRIAL engineering-trial
+#+begin_src markdown
+Description containing "quoted" text
+#+end_src
 *** ASSESS engineering-assess
 *** HOLD engineering-hold
 ** Infrastructure
