@@ -29,11 +29,15 @@
        (s-join "\n")
        (sbw/org-tech-radar--to-markdown)))
 
-(defun sbw/org-tech-radar--to-tsv (org-heading)
+(defun sbw/org-tech-radar--to-csv (org-heading)
   (-let* (((&hash :category category :state state :heading heading :raw-text raw-text) org-heading)
           (is-new      "false")
           (description (sbw/org-tech-radar--extract-description raw-text)))
-    (s-join "\t" (list heading state category is-new description))))
+    (->> (list heading state category is-new description)
+         (-map (lambda (s) (s-replace-all `(("\"" . "\"\"")) s)))
+         (s-join "\",\"")
+         (s-append "\"")
+         (s-prepend "\""))))
 
 (defun sbw/org-tech-radar--summary-comparator (a b)
   (-let* (((&hash :category a-category :state a-state :heading a-heading) a)
@@ -49,7 +53,7 @@
   (->> (sbw/org-utils-heading-summaries-for-file filename)
        (-filter (lambda (x) (sbw/ht-get x :state)))
        (-sort 'sbw/org-tech-radar--summary-comparator)
-       (-map 'sbw/org-tech-radar--to-tsv)
+       (-map 'sbw/org-tech-radar--to-csv)
        (s-join "\n")
        (s-append "\n")
        (message)))
@@ -58,16 +62,18 @@
   (interactive)
   (->> "~/Dropbox/Private/org/current/work/tech-radar.org"
        (sbw/org-tech-radar-generate-tech-radar)
-       (sbw/org-tech-radar--write-file "~/trash/test.tsv")))
+       (sbw/org-tech-radar--write-file "~/Dev/my-stuff/tech-radar/tech-radar.csv")))
 
 ;; TODO: Move to utils
 (defun sbw/org-tech-radar--write-file (filename content)
   (let* ((revert-without-query (list filename)))
     (f-mkdir (f-dirname filename))
-    (with-temp-file filename (insert content))
+    (with-temp-file filename
+      (insert (s-join "," '("name" "ring" "quadrant" "isNew" "description")))
+      (insert "\n")
+      (insert content))
     (message (format "Created '%s'" filename))
     (find-file filename)
     nil))
 
 (provide 'sbw-org-tech-radar)
-
