@@ -4,15 +4,30 @@
 (require 'sbw-org-utils)
 (require 's)
 
+(defun sbw/org-tech-radar--to-markdown (text)
+  (let* ((input-buffer     "tmp.md")
+         (output-buffer    "markdown-fragment")
+         (markdown-command (concat "pandoc --from=gfm --to=html --standalone")))
+    (with-temp-buffer input-buffer
+      (insert text)                
+      (markdown output-buffer)
+      (with-current-buffer output-buffer
+        (->> (buffer-string)
+             (s-split "\n")
+             (-drop-while (lambda (x) (not (s-match "<body>" x))))
+             (-drop 1)
+             (-take-while (lambda (x) (not (s-match "</body>" x))))
+             (-map 's-trim)
+             (s-join " "))))))
+
 (defun sbw/org-tech-radar--extract-description (raw-text)
-  (message raw-text)
   (->> raw-text
        (s-split "\n")
        (-drop-while (lambda (x) (not (s-match "#\\+begin_src markdown" x))))
        (-drop 1)
        (-take-while (lambda (x) (not (s-match "#\\+end_src" x))))
-       (-map 's-trim)
-       (s-join " ")))
+       (s-join "\n")
+       (sbw/org-tech-radar--to-markdown)))
 
 (defun sbw/org-tech-radar--to-tsv (org-heading)
   (-let* (((&hash :category category :state state :heading heading :raw-text raw-text) org-heading)
@@ -39,6 +54,12 @@
        (s-append "\n")
        (message)))
 
+(defun sbw/org-tech-radar-generate ()
+  (interactive)
+  (->> "~/Dropbox/Private/org/current/work/tech-radar.org"
+       (sbw/org-tech-radar-generate-tech-radar)
+       (sbw/org-tech-radar--write-file "~/trash/test.tsv")))
+
 ;; TODO: Move to utils
 (defun sbw/org-tech-radar--write-file (filename content)
   (let* ((revert-without-query (list filename)))
@@ -49,12 +70,4 @@
     nil))
 
 (provide 'sbw-org-tech-radar)
-
-(defun white-test ()
-  (interactive)
-  (->> "~/Dropbox/Private/org/current/work/tech-radar.org"
-       (sbw/org-tech-radar-generate-tech-radar)
-       (sbw/org-tech-radar--write-file "~/trash/test.tsv")
-       ))
-
 
