@@ -221,20 +221,20 @@
       (interactive)
       (mapc #'(lambda (x) (org-sort-entries nil x))
             (reverse criteria)))
-
+    
     (defun sbw/org-sort-subtree ()
       "Sort the current subtree by TODO state, priority, scheduled date, deadline, then alphabetic."
       (interactive)
       (if (org-clocking-p)
           (message "Currently clocked in on a task. Clock out and re-run the command to sort the subtree.")
-        (let* ((sort-order     (if (sbw/value-eq org-todo-keywords-1 sbw/org-todo-keywords) sbw/org-todo-sort-order org-todo-keywords-1))
-               (original-value org-todo-keywords-1))
-          (setq org-todo-keywords-1 sort-order)
+        (let* ((is-tech-radar?      (s-equals? "tech-radar.org" (file-name-nondirectory (buffer-file-name)))) 
+               (sort-order          (if (not is-tech-radar?) sbw/org-todo-sort-order org-todo-keywords-1))
+               (original-value      org-todo-keywords-1)
+               (org-todo-keywords-1 sort-order))
           (save-excursion
             (sbw/org-multisort ?o ?p ?s ?d ?a)
             (hide-subtree)
-            (org-cycle))
-          (setq org-todo-keywords-1 original-value))))
+            (org-cycle)))))
     
     (defun sbw/sort-all-subtrees-in-buffer ()
       "Sorts all the subtrees in the current org-mode buffer."
@@ -345,3 +345,5 @@
 (sbw/org-babel-copy-errors-to-output nil)
 
 (provide 'sbw-configure-org-mode)
+
+
