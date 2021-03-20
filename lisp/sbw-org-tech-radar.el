@@ -64,6 +64,10 @@
        (sbw/org-tech-radar-generate-tech-radar)
        (sbw/org-tech-radar--write-file "~/Dev/my-stuff/tech-radar/tech-radar.csv")))
 
+(defun sbw/org-tech-radar-open ()
+  (interactive)
+  (shell-command "open 'https://radar.thoughtworks.com/?sheetId=https%3A%2F%2Fraw.githubusercontent.com%2Fstubillwhite%2Ftech-radar%2Fmain%2Ftech-radar.csv'"))
+
 ;; TODO: Move to utils
 (defun sbw/org-tech-radar--write-file (filename content)
   (let* ((revert-without-query (list filename)))
