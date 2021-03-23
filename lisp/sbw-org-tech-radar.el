@@ -1,5 +1,7 @@
 ;;; sbw/org-tech-radar.el --- Generating a technology radar from Org
 
+(require 'magit)
+(require 'markdown)
 (require 'org)
 (require 'sbw-org-utils)
 (require 's)
@@ -60,13 +62,28 @@
 
 (defun sbw/org-tech-radar-generate ()
   (interactive)
+  (message "Generating tech radar")
   (->> "~/Dropbox/Private/org/current/work/tech-radar.org"
        (sbw/org-tech-radar-generate-tech-radar)
        (sbw/org-tech-radar--write-file "~/Dev/my-stuff/tech-radar/tech-radar.csv")))
 
+(defun sbw/org-tech-radar-commit ()
+  (interactive)
+  (when (magit-anything-modified-p)
+    (message "Tech radar has changed; committing and pushing changes")
+    (magit-run-git "commit" "-am" "Update tech radar")
+    (magit-run-git "push")))
+
 (defun sbw/org-tech-radar-open ()
   (interactive)
+  (message "Opening tech radar")
   (shell-command "open 'https://radar.thoughtworks.com/?sheetId=https%3A%2F%2Fraw.githubusercontent.com%2Fstubillwhite%2Ftech-radar%2Fmain%2Ftech-radar.csv'"))
+
+(defun sbw/org-tech-radar-regenerate-and-open ()
+  (interactive)
+  (sbw/org-tech-radar-generate)
+  (sbw/org-tech-radar-commit)
+  (sbw/org-tech-radar-open))
 
 ;; TODO: Move to utils
 (defun sbw/org-tech-radar--write-file (filename content)

@@ -1,4 +1,4 @@
-;; Functions for a simple menu of common actions
+;;; sbw/menu.el --- Functions for a simple menu of common actions
 
 ;; TODO: This needs refactoring or replacing with a hydra
 
@@ -129,20 +129,16 @@
                                         (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
                                         (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))                                       
                                         (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
-                                        ))
-            (sbw/menu-submenu ?s "Slack"
-                              (sbw/menu "Slack"
-                                        (sbw/menu-action ?d "Disable"            'slack-ws-close)
-                                        (sbw/menu-action ?e "Enable"             'slack-start)
-                                        (sbw/menu-action ?s "Select room"        'slack-select-rooms)
-                                        (sbw/menu-action ?t "Select thread"      'slack-thread-select)
-                                        (sbw/menu-action ?u "Select unread room" 'slack-select-unread-rooms)
-                                        (sbw/menu-action ?w "Open Slack window"  'sbw/slack-mode--open-window)))
+                                        ))           
             (sbw/menu-submenu ?t "Timers"
                               (sbw/menu "Timers"
                                         (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
                                         (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
                                         (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
+            (sbw/menu-submenu ?x "Tech radar"
+                              (sbw/menu "Tech radar"
+                                        (sbw/menu-action ?e "Edit tech radar"              (lambda () (find-file "~/Dropbox/Private/org/current/work/tech-radar.org")))
+                                        (sbw/menu-action ?g "Generate and open tech radar" 'sbw/org-tech-radar-regenerate-and-open)))
             (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))
 
 (provide 'sbw-menu)
