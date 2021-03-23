@@ -1,4 +1,4 @@
-personal_ws-1.1 en 543 
+personal_ws-1.1 en 549 
 ACL
 ACLs
 ADFS
@@ -72,6 +72,7 @@ Coursera
 Covariance
 Cuda
 DAOs
+DOI
 DOIs
 DOM
 DS
@@ -302,7 +303,7 @@ SPI
 SPM
 SQS
 SUTD
-Sagemaker
+SageMaker
 Santorini
 Savitskaya
 ScalaBridge
@@ -341,15 +342,18 @@ TensorFlow
 Terradata
 Terraform
 Terraforming
+Terragrunt
 That'll
 Theano
 Thierry
 ThoughtWorks
+TorchServe
 Tottenham
 Trello
 Tuhin
 Tyrell
 Tyrell's
+UDF
 UI
 UUID
 UX
@@ -459,6 +463,7 @@ overfitting
 parallelisation
 parallelise
 parallelised
+parameterisation
 parameterise
 parameterising
 parsers
@@ -475,6 +480,7 @@ preprocessed
 productionise
 productionised
 productionising
+programatically
 prototyped
 pseudonymised
 pseudonymising
