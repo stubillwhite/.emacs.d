@@ -6,6 +6,7 @@
 (require 'sbw-utils)
 (require 'sbw-hash-tables)
 (require 'sbw-org-config)
+(require 'sbw-org-tech-radar)
 
 (defun sbw/menu-action (key description function)
   "Returns a menu action with the specified KEY binding, DESCRIPTION, and FUNCTION to execute."

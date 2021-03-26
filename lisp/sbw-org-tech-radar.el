@@ -1,7 +1,7 @@
 ;;; sbw/org-tech-radar.el --- Generating a technology radar from Org
 
 (require 'magit)
-(require 'markdown)
+(require 'markdown-mode)
 (require 'org)
 (require 'sbw-org-utils)
 (require 's)

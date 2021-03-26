@@ -147,8 +147,6 @@
         sbw-utils
         sbw-utils-test
         sbw-misc
-        sbw-menu
-        sbw-countdown
         sbw-org-config
 
         sbw-org-review
@@ -156,6 +154,9 @@
 
         sbw-org-tech-radar
         sbw-org-tech-radar-test
+
+        sbw-menu
+        sbw-countdown
 
         sbw-time
         sbw-time-test))
