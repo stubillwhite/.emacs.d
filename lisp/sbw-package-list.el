@@ -79,10 +79,6 @@
                          ;; Git
                          (:name magit) ;; Control Git from Emacs
  
-                         ;; Slack
-                         (:name slack)   ;; Slack for Emacs
-                         (:name emojify) ;; Emoji for Slack
-
                          ;; Tramp
                          (:name docker-tramp) ;; Tramp mode for Docker
                          (:name helm-tramp)   ;; Helm for Tramp
