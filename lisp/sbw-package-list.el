@@ -83,6 +83,10 @@
                          (:name docker-tramp) ;; Tramp mode for Docker
                          (:name helm-tramp)   ;; Helm for Tramp
 
+                         ;; Regex
+                         (:name visual-regexp)
+                         (:name visual-regexp-steroids)
+                         
                          ;; Languages
 
                          ;; Clojure
