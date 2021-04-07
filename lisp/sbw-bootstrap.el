@@ -1,3 +1,4 @@
+(require 'cl)
 (require 'cl-lib)
 
 (defvar sbw/lisp-path)

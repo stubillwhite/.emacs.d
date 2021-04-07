@@ -84,8 +84,8 @@
                          (:name helm-tramp)   ;; Helm for Tramp
 
                          ;; Regex
-                         (:name visual-regexp)
-                         (:name visual-regexp-steroids)
+                         (:name visual-regexp)          ;; A regexp/replace command for Emacs with interactive visual feedback
+                         (:name visual-regexp-steroids) ;; Extends visual-regexp to support other regexp engines
                          
                          ;; Languages
 
