@@ -51,6 +51,17 @@
      ((and (= a-state-idx b-state-idx) (string< a-category b-category)) t)
      ((and (= a-state-idx b-state-idx) (string= a-category b-category) (string< a-heading b-heading)) t))))
 
+(defun sbw/org-tech-radar--write-file (filename content)
+  (let* ((revert-without-query (list filename)))
+    (f-mkdir (f-dirname filename))
+    (with-temp-file filename
+      (insert (s-join "," '("name" "ring" "quadrant" "isNew" "description")))
+      (insert "\n")
+      (insert content))
+    (message (format "Created '%s'" filename))
+    (find-file filename)
+    nil))
+
 (defun sbw/org-tech-radar-generate-tech-radar (filename)
   (->> (sbw/org-utils-heading-summaries-for-file filename)
        (-filter (lambda (x) (sbw/ht-get x :state)))
@@ -84,17 +95,5 @@
   (sbw/org-tech-radar-generate)
   (sbw/org-tech-radar-commit)
   (sbw/org-tech-radar-open))
-
-;; TODO: Move to utils
-(defun sbw/org-tech-radar--write-file (filename content)
-  (let* ((revert-without-query (list filename)))
-    (f-mkdir (f-dirname filename))
-    (with-temp-file filename
-      (insert (s-join "," '("name" "ring" "quadrant" "isNew" "description")))
-      (insert "\n")
-      (insert content))
-    (message (format "Created '%s'" filename))
-    (find-file filename)
-    nil))
 
 (provide 'sbw-org-tech-radar)
