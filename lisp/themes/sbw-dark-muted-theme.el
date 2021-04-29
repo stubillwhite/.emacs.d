@@ -175,11 +175,14 @@
     `(helm-ff-executable                  ((t (:inherit sbw-dark-muted-normal))))
     `(helm-ff-invalid-symlink             ((t (:inherit sbw-dark-muted-keyword))))
     `(helm-ff-symlink                     ((t (:inherit sbw-dark-muted-keyword))))
+    `(helm-ff-file                        ((t (:inherit sbw-dark-muted-normal))))
+    `(helm-ff-file-extension              ((t (:inherit sbw-dark-muted-normal))))
     `(helm-grep-file                      ((t (:inherit sbw-dark-muted-normal))))
     `(helm-grep-lineno                    ((t (:inherit sbw-dark-muted-normal))))
     `(helm-grep-match                     ((t (:inherit sbw-dark-muted-emphasis))))    
     `(helm-match                          ((t (:inherit sbw-dark-muted-emphasis))))
     `(helm-selection                      ((t (:inherit sbw-dark-muted-menu-selection))))
+    
 
     ;; helm-swoop
     `(helm-swoop-target-word-face         ((t (:inherit sbw-dark-muted-emphasis))))
