@@ -16,9 +16,12 @@
     (defun sbw/open-thesaurus ()
       (interactive)
       (let ((curr-window (selected-window)))
-        (mw-thesaurus-lookup-at-point)
+        (mw-thesaurus-lookup-at-point (point))
         (sbw/open-and-switch-to-window mw-thesaurus-buffer-name)
         (select-window curr-window))))
 
   :bind
   ("<f5>" . sbw/open-thesaurus))
+
+
+
