@@ -54,7 +54,7 @@
                          (:name hydra)               ;; Make Emacs bindings that stick around
                          (:name multiple-cursors)    ;; An experiment in adding multiple cursors to emacs
                          (:name which-key)           ;; Display available key bindings
-                         (:name undo-tree)           ;; Visualise the undo tree
+                         (:name undo-fu)             ;; Simple, stable linear undo with redo for Emacs.
                          (:name zoom-frm)            ;; Commands to zoom frame font size
                          (:name beacon)              ;; A light that follows your cursor around so you don't lose it!
 
