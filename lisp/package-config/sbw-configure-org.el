@@ -194,7 +194,7 @@
     
     (setq org-capture-templates
           '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-              "* TODO [#C] %?%(sbw/org-capture-todo-task)")
+              "* TODO %?%(sbw/org-capture-todo-task)")
              ("j" "JIRA task" entry (file+headline org-default-notes-file "Tasks")
               "* TODO %?%(sbw/org-capture-jira-task)") ))
 
