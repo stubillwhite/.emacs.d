@@ -9,6 +9,7 @@
         cider-eval-defun-at-point
         cljr-slash
         cua--prefix-override-handler
+        cua-clear-rectangle-mark
         cua-copy-region
         cua-cut-region
         cua-paste
@@ -17,8 +18,11 @@
         helm-show-kill-ring
         indent-for-tab-command
         kill-region
+        markdown-insert-header-atx-1
         markdown-insert-header-atx-2
+        markdown-insert-header-atx-3
         org-beginning-of-line
+        org-end-of-line
         org-fill-paragraph
         org-force-self-insert
         org-kill-line
@@ -26,8 +30,11 @@
         org-metaright
         org-self-insert-command
         org-shiftright
+        orgtbl-ctrl-c-ctrl-c
+        orgtbl-hijacker-command-101
         orgtbl-hijacker-command-109
         orgtbl-hijacker-command-3
+        orgtbl-hijacker-command-7
         orgtbl-self-insert-command
         sbw/unfill-paragraph
         sp-backward-delete-char
@@ -45,7 +52,9 @@
       '(
         cua-exchange-point-and-mark
         cua-scroll-up
+        cua-set-rectangle-mark
         helm-M-x
+        hydra--negative-argument
         keyboard-escape-quit
         mouse-yank-primary
         multiple-cursors-mode
@@ -54,7 +63,10 @@
         orgtbl-hijacker-command-100
         orgtbl-hijacker-command-102
         orgtbl-hijacker-command-105
+        orgtbl-hijacker-command-2
+        orgtbl-hijacker-command-22
         sbw/hydra-multiple-cursors/body
+        sbw/hydra-multiple-cursors/mc/mark-all-in-region-regexp-and-exit
         sbw/hydra-multiple-cursors/mc/mark-all-like-this-and-exit
         sbw/hydra-multiple-cursors/mc/mark-next-like-this
         sbw/hydra-multiple-cursors/mc/mark-previous-like-this

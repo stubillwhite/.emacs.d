@@ -1,4 +1,4 @@
-personal_ws-1.1 en 550 
+personal_ws-1.1 en 565 
 ACL
 ACLs
 ADFS
@@ -77,6 +77,7 @@ DOIs
 DOM
 DS
 DSL
+Daniella
 Databricks
 Deckard
 Destructuring
@@ -112,6 +113,7 @@ Erlang
 Etherium
 Evise
 Expedia
+Explainability
 FP
 FROS
 FST
@@ -144,6 +146,7 @@ Idempotence
 Idris
 IllegalArgumentException
 Imagenet
+Imposter
 IntelliJ
 Iryna
 Ivo
@@ -292,6 +295,7 @@ Rosi
 Royale
 Royston's
 Runbook
+Ryun
 SBT
 SCS
 SDPR
@@ -327,6 +331,7 @@ Solange
 Solr
 SonarQube
 Spidergap
+Spotify
 Stefano
 Stefano's
 Svetlana
@@ -351,6 +356,7 @@ TorchServe
 Tottenham
 Trello
 Tuhin
+Twistlock
 Tyrell
 Tyrell's
 UDF
@@ -367,6 +373,7 @@ VPN
 VR
 Vallianatos
 Vanisha
+Varun
 Vectorise
 Venkata
 Vimeo
@@ -379,6 +386,7 @@ XNN
 Xuemin's
 YAML
 ZIO
+Zaria
 abstractive
 accessors
 activations
@@ -433,8 +441,10 @@ incentivising
 incrementing
 influencer
 influencers
+injectable
 inlining
 integrations
+interdependencies
 interoperable
 iteratively
 kanban
@@ -443,6 +453,7 @@ kata
 kinesthetic
 lifecycle
 lockdown
+lowercasing
 maenads
 microservice
 microservices
@@ -482,6 +493,7 @@ productionise
 productionised
 productionising
 programatically
+promotable
 prototyped
 pseudonymised
 pseudonymising
@@ -539,13 +551,16 @@ unclustered
 uncomment
 underfitting
 unenthused
+unglamorous
 unintuitive
 unmarshaling
+upsize
 videographer
 votives
 waypoint
 whitelist
 whitelisted
 whitelists
+whitespace
 wireframes
 workspace
