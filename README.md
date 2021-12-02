@@ -17,7 +17,7 @@ Brew has removed configuration options `--with-cocoa` so now we have to use a sp
 - Browse to [Emacs for Mac OSX](https://emacsformacosx.com/)
 - Download and install the latest version
 - Open `Finder` and locate the application, right-click, select `Open`, then confirm `Open` to authorize
-- Clone and install [plexus/chemacs](https://github.com/plexus/chemacs) to allow multiple configurations
+- Clone and install [plexus/chemacs2](https://github.com/plexus/chemacs2) to allow multiple configurations
 - Clone this repository
 
 Rebind Emacs keys
