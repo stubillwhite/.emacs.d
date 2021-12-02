@@ -25,7 +25,8 @@ Rebind Emacs keys
 - Ctrl-Cmd-Q by default will lock the screen and should be changed
    - Open System Preferences
    - Select `Keyboard` > `App Shortcuts`
-   - Add a new shortcut with the menu title `Lock screen` and command shortcut Ctrl-Cmd-§ (or something equally unlikely)
+   - Add a new shortcut with the menu title `Lock Screen` and command shortcut Ctrl-Cmd-§ (or something equally 
+     unlikely). Be careful with the name of the command -- it must exactly match the name in the Apple menu.
 
 ## Crib notes for things I always forget
 
