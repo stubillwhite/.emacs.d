@@ -5,7 +5,8 @@
   (progn
     ;; (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
     (yas-global-mode)
-    (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand))
+    ;; (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+    )
 
   :config
   (progn

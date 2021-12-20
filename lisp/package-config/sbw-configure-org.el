@@ -21,6 +21,10 @@
        (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
        (apply 'list dirs)))
 
+    (defun sbw/org-file-export ()
+      (interactive)
+      (call-process "pandoc" nil "*scratch*" nil "-f" "org" "-t" "html" "/Users/white1/Dropbox/Private/org/current/work/recs-orion.org" "-o" "/Users/white1/test.html" "--css=/Users/white1/Dev/my-stuff/style.css" "--self-contained"))
+
     ;; General settings
 
     (setq 

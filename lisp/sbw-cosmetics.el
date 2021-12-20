@@ -16,13 +16,16 @@
 
 ;; Font
 (when (sbw/is-windows?)
-  (set-frame-font "Monaco 10"))
+  (set-face-font 'fixed-pitch "Monaco-10")
+  (set-face-font 'default     "Monaco-10"))
 
 (when (sbw/is-linux?)
-  (set-frame-font "Monaco-10"))
+  (set-face-font 'fixed-pitch "Monaco-10")
+  (set-face-font 'default     "Monaco-10"))
 
 (when (sbw/is-darwin?)
-  (set-frame-font "Monaco-12"))
+  (set-face-font 'fixed-pitch "Monaco-12")
+  (set-face-font 'default     "Monaco-12"))
 
 ;; Horizontal non-blinking cursor
 (setq-default cursor-type 'hbar)
