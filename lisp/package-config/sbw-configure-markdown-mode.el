@@ -24,6 +24,13 @@
         markdown-command                "%LOCALAPPDATA%\\Pandoc\\pandoc.exe --from=markdown_github --to=html")))
 
   :bind
+  ("M-0"       . markdown-remove-header)
+  ("M-1"       . markdown-insert-header-atx-1)
+  ("M-2"       . markdown-insert-header-atx-2)
+  ("M-3"       . markdown-insert-header-atx-3)
+  ("M-4"       . markdown-insert-header-atx-4)
+  ("M-5"       . markdown-insert-header-atx-5)
+  ("M-6"       . markdown-insert-header-atx-6)
   ("C-c m p"   . markdown-preview)
   ("C-c m e"   . markdown-export)
   ("C-c m h 0" . markdown-remove-header)
