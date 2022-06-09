@@ -73,7 +73,38 @@ _y_: ?y? year      _q_: quit          _L__l__c_: ?l?
              (org-agenda-redo)))
       ("q" (message "Abort") :exit t))
 
+    (defhydra hydra-org-set-matrix (:color :amaranth :hint nil)
+      "
+^Urgency^
+^==============
+_u_: Urgent
+_n_: Not urgent
+_d_: Delete
 
+_q_, _RET_: Quit
+"
+      ("u" (lambda () (interactive) (sbw/org-set-property "MATRIX" "urgent")     (hydra-org-set-matrix-2/body)) :color blue)
+      ("n" (lambda () (interactive) (sbw/org-set-property "MATRIX" "not-urgent") (hydra-org-set-matrix-2/body)) :color blue)
+      ("d" (lambda () (interactive) (sbw/org-delete-property "MATRIX")) :color blue)
+      ("q" nil :color blue)
+      ("RET" nil :color blue))
+
+    (defhydra hydra-org-set-matrix-2 (:color :amaranth :hint nil)
+      "
+^Importance^
+^=================
+_i_: Important
+_n_: Not important
+_d_: Delete
+
+_q_, _RET_: Quit
+"
+      ("i" (lambda () (interactive) (sbw/org-set-property "MATRIX" (concat (sbw/org-get-property "MATRIX") "-important"))) :color blue)
+      ("n" (lambda () (interactive) (sbw/org-set-property "MATRIX" (concat (sbw/org-get-property "MATRIX") "-not-important"))) :color blue)
+      ("d" (lambda () (interactive) (sbw/org-delete-property "MATRIX")) :color blue)
+      ("q" nil :color blue)
+      ("RET" nil :color blue))
+    
     (defhydra hydra-org-set-priority (:color :amaranth :hint nil)
       "
 ^Priority^

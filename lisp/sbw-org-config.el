@@ -146,7 +146,32 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defmacro sbw/org-config-prioritised-tasks (binding title files)
   `(quote (,binding
            ,title
-           ((tags-todo "TIMESCALE=\"today\""
+           ((tags-todo "MATRIX=\"urgent-important\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Do it"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"urgent-not-important\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Delegate it"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"not-urgent-important\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Schedule it"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"not-urgent-not-important\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Kill it"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            
+            (tags-todo "TIMESCALE=\"today\""
                   ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - today"))
                    (org-agenda-files ,files)
                    (org-agenda-todo-ignore-scheduled t)

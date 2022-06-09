@@ -276,7 +276,7 @@
      (sbw/org-review--build-filename "weekly-report" start end))))
 
 (defvar sbw/org-review-sprint-end-date
-  (sbw/time-from-org-string "2021-02-18")
+  (sbw/time-from-org-string "2022-04-13")
   "The sprint end date.")
 
 (defvar sbw/org-review-sprint-duration-in-days

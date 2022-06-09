@@ -275,18 +275,21 @@
       "Apply F to the current headline in an agenda buffer."
       ;; Based on org-agenda-set-property
       (org-agenda-check-no-diary)
-      (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+      (let* ((ret-val  nil)
+             (hdmarker (or (org-get-at-bol 'org-hd-marker)
                            (org-agenda-error)))
              (buffer (marker-buffer hdmarker))
              (pos (marker-position hdmarker))
              (inhibit-read-only t)
              newhead)
         (org-with-remote-undo buffer
-          (with-current-buffer buffer
-            (widen)
-            (goto-char pos)
-            (org-show-context 'agenda)
-            (funcall f)))))
+          (setq ret-val
+                (with-current-buffer buffer
+                  (widen)
+                  (goto-char pos)
+                  (org-show-context 'agenda)
+                  (funcall f))))
+        ret-val))
 
     (defun sbw/org-set-property (prop val)
       "Set a property for the current headline, regardless of whether agenda is active or not."  
@@ -294,6 +297,13 @@
       (if (eq major-mode 'org-agenda-mode)
           (sbw/org-agenda-apply-to-headline (lambda () (org-set-property prop val)))
         (org-set-property prop val)))
+
+    (defun sbw/org-get-property (prop)
+      "Gets the value of a property from the current headling, regardless of whether agenda is active or not."
+      (interactive)
+      (if (eq major-mode 'org-agenda-mode)
+          (sbw/org-agenda-apply-to-headline (lambda () (org-entry-get (point) prop)))
+        (org-entry-get (point) prop)))
 
     (defun sbw/org-delete-property (prop)
       "Delete a property from the current headline, regardless of whether agenda is active or not."  
@@ -311,6 +321,7 @@
 
   :bind
   ("C-c o s p" . hydra-org-set-priority/body)
+  ("C-c o s m" . hydra-org-set-matrix/body)
   ("C-c o s e" . org-set-effort)
   ("C-c o s s" . org-schedule)
   ("C-c o s d" . org-deadline)
