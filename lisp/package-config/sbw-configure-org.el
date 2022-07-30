@@ -320,7 +320,6 @@
           (lambda () (sbw/truncate-string (nth 4 (org-heading-components)) 30))))
 
   :bind
-  ("C-c o s p" . hydra-org-set-priority/body)
   ("C-c o s m" . hydra-org-set-matrix/body)
   ("C-c o s e" . org-set-effort)
   ("C-c o s s" . org-schedule)
@@ -363,3 +362,9 @@
 (provide 'sbw-configure-org-mode)
 
 
+;; (add-function :after after-focus-change-function #'focus-test)
+;; 
+;; (defun focus-test ()
+;;   (progn
+;;     (setq org-tags-column (- 0 (window-body-width)))
+;;     (org-align-all-tags)))

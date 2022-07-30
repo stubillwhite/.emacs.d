@@ -104,24 +104,6 @@ _q_, _RET_: Quit
       ("d" (lambda () (interactive) (sbw/org-delete-property "MATRIX")) :color blue)
       ("q" nil :color blue)
       ("RET" nil :color blue))
-    
-    (defhydra hydra-org-set-priority (:color :amaranth :hint nil)
-      "
-^Priority^
-^==========
-_d_: Day
-_w_: Week
-_m_: Month
-_n_: None
-
-_q_, _RET_: Quit
-"
-      ("d" (lambda () (interactive) (sbw/org-set-property "TIMESCALE" "today")) :color blue)
-      ("w" (lambda () (interactive) (sbw/org-set-property "TIMESCALE" "this-week")) :color blue)
-      ("m" (lambda () (interactive) (sbw/org-set-property "TIMESCALE" "this-month")) :color blue)
-      ("n" (lambda () (interactive) (sbw/org-delete-property "TIMESCALE")) :color blue)
-      ("q" nil :color blue)
-      ("RET" nil :color blue))
     ))
       
 (provide 'sbw-configure-hydra)
