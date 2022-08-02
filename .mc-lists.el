@@ -50,6 +50,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        cider-repl-indent-and-complete-symbol
         cua-exchange-point-and-mark
         cua-scroll-up
         cua-set-rectangle-mark

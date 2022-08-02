@@ -1,4 +1,4 @@
-personal_ws-1.1 en 576 
+personal_ws-1.1 en 629 
 ACL
 ACLs
 ADFS
@@ -13,6 +13,7 @@ ASGs
 ASJC
 AWS
 Adamos
+Aegisthus
 Ai
 Ai's
 Akka
@@ -32,6 +33,7 @@ Associativity
 Authenticator
 Autoencoders
 Avro
+Ayce
 BASSC
 BAU
 BCIM
@@ -42,9 +44,11 @@ Backfill
 Backpressure
 Banquo
 Benoit
+Berni
 Bootcamp
 Bytecode
 CCBY
+CEF
 CKAN
 CLI
 CNNs
@@ -57,6 +61,8 @@ Carpaccio
 Chetan
 Chiffre
 Chinh
+Ciacco
+CiteScore
 Classloaders
 Classpath
 Clojure
@@ -75,17 +81,24 @@ Covariance
 Cuda
 DAL
 DAOs
+DLQ
 DOI
 DOIs
 DOM
 DS
 DSL
+DSOps
 Daniella
+Daryna
+DataBrew
+DataSets
 Databricks
 Deckard
 Destructuring
 DevOps
+Dilshad
 Dimensionality
+Dimi
 Dimitrov
 Dockerised
 Dojo
@@ -127,12 +140,15 @@ Finne's
 GC
 GDPR
 GPUs
+Gabby's
 Gameification
 Gamification
 Georgios
+Georgious
 Gettler
 Ghidorah
 Gigan
+Girdhar
 GitFlow
 GitLab
 Gradle
@@ -141,10 +157,13 @@ HBase
 HPCC
 Hadoop
 Heira
+Hibberd
 HipChat
 Hitchcockian
 IAM
 IPR
+ISSN
+ISSNs
 Idempotence
 Idris
 IllegalArgumentException
@@ -165,6 +184,7 @@ Jemini
 Jevon
 Jupyter
 JupyterHub
+KD
 KPO
 KPOs
 KRs
@@ -173,11 +193,14 @@ Karolina
 Kedro
 Keras
 KeyFe
+Keybase
 Kibana
 Kinesis
 Kobby
+Korn
 Kotlin
 Kratt
+Kravutske
 Kubernetes
 Kyriakos
 LAPD
@@ -197,6 +220,7 @@ Logentries
 Lucene
 Lucene's
 Lundahl
+MLOps
 MLflow
 MSK
 Macbeths
@@ -211,8 +235,10 @@ Mendeley's
 Mesos
 Metabase
 Metaflow
+Milkroundabout
 Misclassified
 Mockito
+Mongo
 MongoDB
 Monoids
 Moulin
@@ -228,6 +254,7 @@ Natalino
 Nataliya
 Nataliya's
 Navid
+Neela
 Negroni
 Nespresso
 Newflo
@@ -238,6 +265,7 @@ Newsflo's
 Nikeil
 Noella
 OCC
+OCCAP
 OKR
 OKR's
 OKRs
@@ -261,6 +289,7 @@ POJO
 POJOs
 Palantir
 Pamina
+Pancras
 Pangram
 Parameterisation
 Percipio
@@ -269,6 +298,9 @@ Petersburg
 PhDs
 PlumX
 Pluralsight
+Polydorus
+Polymestor
+Polyxena
 Pris
 Punchdrunk
 Punchdrunk's
@@ -276,12 +308,15 @@ Puppetfile
 PyCharm
 QE
 QEs
+RCO
 RDBMS
+RDP
 RDS
 RELX
 REPL
 RESTful
 RETS
+RIC
 RIs
 ROS
 RSS
@@ -302,6 +337,7 @@ Royale
 Royston's
 Runbook
 Ryun
+Ryun's
 SBT
 SCS
 SDK
@@ -320,6 +356,7 @@ Savitskaya
 ScalaBridge
 Scalaz
 Schijvenaars
+Schrauwen
 SciVal
 ScienceDirect
 Scopus
@@ -327,12 +364,15 @@ Scratchbox
 Seitl
 Semigroups
 Sensu
+Shareback
 Shawshank
 Sheetal
 Shkodran
 Shkodran's
 Shobhna
 Shobhna's
+Shoreditch
+Shraddha
 Silverpoint
 Solange
 Solr
@@ -345,6 +385,7 @@ Svetlana
 Syntasa
 TBD
 TDM
+TEKsystems
 TIO
 TIO's
 Taffey
@@ -361,6 +402,7 @@ Thierry
 ThoughtWorks
 TorchServe
 Tottenham
+Traffeik
 Trello
 Tuhin
 Twistlock
@@ -389,11 +431,15 @@ Voight
 Wageningen
 Whitelisting
 Whitespace
+Wiebke
+Wiebke's
+XGBoost
 XNN
 Xuemin's
 YAML
 ZIO
 Zaria
+Zendesk
 abstractive
 accessors
 activations
@@ -409,6 +455,7 @@ architecting
 balancer
 bayesian
 benchmarking
+bibliometrics
 binaural
 blockchain
 booleans
@@ -421,12 +468,15 @@ comparator
 complects
 composability
 composable
+contactless
 contravariant
 convolutional
 covariant
 curation
 deliverables
 dereference
+deserialization
+deserialize
 dev
 differentiator
 discoverability
@@ -468,6 +518,7 @@ maenads
 microservice
 microservices
 minima
+minimalistic
 misrecognised
 mockist
 monad
@@ -510,6 +561,7 @@ pseudonymised
 pseudonymising
 puppetcontrol
 puppeteering
+puppeting
 ramping
 rata
 reactively
@@ -531,6 +583,7 @@ scalability
 scalable
 schemas
 semigroup
+serialization
 serverless
 sightlines
 siloed
