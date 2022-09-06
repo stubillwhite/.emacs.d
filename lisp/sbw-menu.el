@@ -115,10 +115,10 @@
                                                           (sbw/menu "Work"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-work-agenda)
                                                                     (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-work-tasks)))
-                                        (sbw/menu-submenu ?c "Calendar"
-                                                          (sbw/menu "Calendar"
-                                                                    (sbw/menu-action ?a "Agenda"  'sbw/org-config-agenda-calendar-agenda)
-                                                                    (sbw/menu-action ?r "Refresh" 'sbw/org-gcal-synchronise-calendar)))
+                                        (sbw/menu-submenu ?k "KD"
+                                                          (sbw/menu "KD"
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-kd-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-kd-tasks)))
                                         (sbw/menu-submenu ?p "Personal"
                                                           (sbw/menu "Personal"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-personal-agenda)

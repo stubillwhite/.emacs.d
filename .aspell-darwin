@@ -1,4 +1,4 @@
-personal_ws-1.1 en 629 
+personal_ws-1.1 en 639 
 ACL
 ACLs
 ADFS
@@ -7,6 +7,7 @@ AMIs
 ANDs
 ANI
 APIs
+APM
 ARN
 ASG
 ASGs
@@ -93,6 +94,7 @@ Daryna
 DataBrew
 DataSets
 Databricks
+Deakin
 Deckard
 Destructuring
 DevOps
@@ -179,6 +181,8 @@ JS
 JSON
 JSX
 JVM
+Jacek
+Jacek's
 Jackman
 Jemini
 Jevon
@@ -236,6 +240,8 @@ Mesos
 Metabase
 Metaflow
 Milkroundabout
+Minh
+Minh's
 Misclassified
 Mockito
 Mongo
@@ -244,6 +250,7 @@ Monoids
 Moulin
 Mulholland
 MySQL
+NDCG
 NER
 NFRs
 NHS
@@ -281,6 +288,7 @@ Onboarding
 OneDrive
 OpenJDK
 OrgHub
+Oryn
 Oysho
 PDP
 PDPs
@@ -301,6 +309,7 @@ Pluralsight
 Polydorus
 Polymestor
 Polyxena
+Postgres
 Pris
 Punchdrunk
 Punchdrunk's
@@ -346,6 +355,7 @@ SLA
 SLAs
 SNM
 SNS
+SPECTER
 SPI
 SPM
 SQS
