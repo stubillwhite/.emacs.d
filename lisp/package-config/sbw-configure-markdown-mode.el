@@ -15,7 +15,7 @@
     (when (sbw/is-darwin?)
       (setq
        markdown-command-needs-filename nil
-       markdown-command                (concat "pandoc --from=gfm --to=html --metadata title='markdown-preview'")
+       markdown-command                (concat "pandoc --filter mermaid-filter --from=gfm --to=html --metadata title='markdown-preview'")
        markdown-css-paths              (list (concat user-emacs-directory "lisp/package-config/markdown-light.css"))))
     
     (when (sbw/is-windows?)
