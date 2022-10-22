@@ -116,6 +116,10 @@
  uniquify-after-kill-buffer-p t 
  uniquify-ignore-buffers-re   "^\\*")
 
+;; Bookmarks
+(setq
+ bookmark-set-fringe-mark nil)
+
 ;; CUA mode and shift-click to select
 (cua-mode t)
 (setq cua-auto-tabify-rectangles nil)
