@@ -311,6 +311,13 @@
       (if (eq major-mode 'org-agenda-mode)
           (sbw/org-agenda-apply-to-headline (lambda () (org-delete-property prop)))
         (org-delete-property prop)))
+
+    (defun sbw/org-set-priority ()
+      "Set the priority of the current headline, regardless of whether agenda is active or not."  
+      (interactive)
+      (if (eq major-mode 'org-agenda-mode)
+          (sbw/org-agenda-apply-to-headline (lambda () (org-priority)))
+        (org-priority)))
     
     ;; Stuff to rationalise
     
@@ -324,6 +331,7 @@
   ("C-c o s e" . org-set-effort)
   ("C-c o s s" . org-schedule)
   ("C-c o s d" . org-deadline)
+  ("C-c o s p" . sbw/org-set-priority)
   ("C-c o s t" . org-todo)
   ("C-c o c i" . org-clock-in)
   ("C-c o c o" . org-clock-out)
