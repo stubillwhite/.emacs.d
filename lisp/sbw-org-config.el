@@ -180,6 +180,12 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                    (org-agenda-todo-ignore-scheduled t)
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                    (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"\""
+                  ((org-agenda-overriding-header (sbw/org-config--title "To prioritise"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
             (agenda ""
                   ((org-agenda-overriding-header (sbw/org-config--title "Schedule for the week"))
                    (org-agenda-span 7)
