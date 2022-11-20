@@ -21,7 +21,28 @@
     (when (sbw/is-windows?)
       (setq
         markdown-command-needs-filename t
-        markdown-command                "%LOCALAPPDATA%\\Pandoc\\pandoc.exe --from=markdown_github --to=html")))
+        markdown-command                "%LOCALAPPDATA%\\Pandoc\\pandoc.exe --from=markdown_github --to=html"))
+
+    (defun sbw/markdown--open-in-obsidian ()
+      (interactive)
+      (let* ((vault      "obsidian")
+             (vault-path "/Users/white1/Dropbox/Private/obsidian")
+             (file       (s-replace (concat vault-path "/") "" (buffer-file-name)))
+             (url        (concat "obsidian://open?vault=" (url-hexify-string vault) "&file=" (url-hexify-string file))))
+        (shell-command (concat "open '" url "'"))))
+
+    (defun sbw/markdown-reformat-org-tables ()
+      (interactive)
+      (message "Saving")
+      (save-excursion
+        (goto-char (point-min))
+        (while (search-forward "-|-" nil t)
+          (replace-match "-|-"))))
+
+    (add-hook 'markdown-mode-hook
+              (lambda ()
+                (when buffer-file-name
+                  (add-hook 'before-save-hook 'sbw/markdown-reformat-org-tables)))))
 
   :bind
   ("M-0"       . markdown-remove-header)
@@ -44,6 +65,7 @@
   ("C-c m b"   . markdown-insert-bold)
   ("C-c m c"   . markdown-insert-code)
   ("C-c m l"   . markdown-insert-link)
+  ("C-c m o"   . sbw/markdown--open-in-obsidian)
   ("M-<right>" . markdown-demote)
   ("M-<left>"  . markdown-promote)
   ("C-c m r"   . markdown-insert-reference-link-dwim))
@@ -61,3 +83,26 @@
 (defun sbw/markdown--auto-reload-disable ()
   (interactive)
   (remove-hook 'after-save-hook 'sbw/markdown--reload-chrome-tab))
+
+
+;; Usage Example:
+;;  
+;; <!-- BEGIN RECEIVE ORGTBL ${1:YOUR_TABLE_NAME} -->
+;; <!-- END RECEIVE ORGTBL $1 -->
+;;  
+;; <!-- 
+;; #+ORGTBL: SEND $1 orgtbl-to-gfm
+;; | $0 | 
+;; -->
+(defun orgtbl-to-gfm (table params)
+  "Convert the Orgtbl mode TABLE to GitHub Flavored Markdown."
+  (let* ( (alignment (mapconcat (lambda (x) (if x "|--:" "|---"))
+                                org-table-last-alignment ""))
+         (params2
+          (list
+           :splice t
+           :hline (concat alignment "|")
+           :lstart "| " :lend " |" :sep " | ")))
+    (orgtbl-to-generic table (org-combine-plists params2 params))))
+
+;; (require 'org-table)

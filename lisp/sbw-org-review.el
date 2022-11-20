@@ -266,7 +266,7 @@
 (defun sbw/org-review-config-for-weekly-report (time)
   "Returns the configuration to generate a weekly report."
   (let* ( (end-date (sbw/time-from-org-string "Sat"))
-          (start    (sbw/time-adjust-by end-date -8))
+          (start    (sbw/time-adjust-by end-date -7))
           (end      (sbw/time-adjust-by end-date -1)) )
     (sbw/org-review-config
      (sbw/org-review--build-title "Weekly report" start end)
