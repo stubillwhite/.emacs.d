@@ -31,12 +31,23 @@
              (url        (concat "obsidian://open?vault=" (url-hexify-string vault) "&file=" (url-hexify-string file))))
         (shell-command (concat "open '" url "'"))))
 
+    (defun sbw/markdown--org-link-to-markdown-link ()
+      (interactive)
+      (let* ((regex      "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]")
+             (is-org-link (looking-at regex)))
+        (print is-org-link)
+        (when is-org-link
+          (let* ((url     (match-string-no-properties 1))
+                 (desc    (match-string-no-properties 2))
+                 (md-link (concat "[" desc "](" url ")")))
+            (replace-match md-link)))))
+    
     (defun sbw/markdown-reformat-org-tables ()
       (interactive)
-      (message "Saving")
+      (message "Reformatting org tables")
       (save-excursion
         (goto-char (point-min))
-        (while (search-forward "-|-" nil t)
+        (while (search-forward "-+-" nil t)
           (replace-match "-|-"))))
 
     (add-hook 'markdown-mode-hook
@@ -72,37 +83,3 @@
 
 (provide 'sbw-configure-markdown-mode)
 
-(defun sbw/markdown--reload-chrome-tab ()
-  (markdown-standalone)
-  (shell-command "osascript -e 'tell application \"Google Chrome\" to tell the active tab of its first window to reload'"))
-
-(defun sbw/markdown--auto-reload-enable ()
-  (interactive)
-  (add-hook 'after-save-hook 'sbw/markdown--reload-chrome-tab))
-
-(defun sbw/markdown--auto-reload-disable ()
-  (interactive)
-  (remove-hook 'after-save-hook 'sbw/markdown--reload-chrome-tab))
-
-
-;; Usage Example:
-;;  
-;; <!-- BEGIN RECEIVE ORGTBL ${1:YOUR_TABLE_NAME} -->
-;; <!-- END RECEIVE ORGTBL $1 -->
-;;  
-;; <!-- 
-;; #+ORGTBL: SEND $1 orgtbl-to-gfm
-;; | $0 | 
-;; -->
-(defun orgtbl-to-gfm (table params)
-  "Convert the Orgtbl mode TABLE to GitHub Flavored Markdown."
-  (let* ( (alignment (mapconcat (lambda (x) (if x "|--:" "|---"))
-                                org-table-last-alignment ""))
-         (params2
-          (list
-           :splice t
-           :hline (concat alignment "|")
-           :lstart "| " :lend " |" :sep " | ")))
-    (orgtbl-to-generic table (org-combine-plists params2 params))))
-
-;; (require 'org-table)
