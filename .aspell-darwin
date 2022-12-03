@@ -1,4 +1,4 @@
-personal_ws-1.1 en 702 
+personal_ws-1.1 en 751 
 ACL
 ACLs
 ADFS
@@ -50,16 +50,22 @@ Bacchae
 Backfill
 Backpressure
 Banquo
+Bengaluru
 Benoit
 Benoit's
 Berni
+Bladzich
+Bladzich's
 Bootcamp
+Bucknell
 Bytecode
 CCBY
 CEF
+CENtree
 CKAN
 CLI
 CNNs
+COI
 CQRS
 CRS
 CSAQ
@@ -86,16 +92,21 @@ Coney
 Confluent's
 Connor
 Contravariance
+Correndo
 Coursera
 Covariance
+CrowdStrike
 Cuda
 DAL
 DAOs
+DKP
 DLQ
 DNS
 DOI
 DOIs
 DOM
+DPOP
+DPOPs
 DS
 DSL
 DSOps
@@ -113,6 +124,7 @@ Dimensionality
 Dimi
 Dimitrov
 Dockerised
+DocuSign
 Dojo
 Domiziana
 Domiziana's
@@ -124,6 +136,7 @@ Dystopian
 EDM
 EID
 EIDs
+EKB
 EKS
 ELB
 ELS
@@ -139,12 +152,15 @@ Embiggen
 Empathic
 Emursive
 Ensmallen
+Entellect
 Erlang
+Ethawi
 Etherium
 Evise
 Expedia
 Explainability
 FP
+FPE
 FROS
 FST
 FTEs
@@ -164,12 +180,16 @@ Georgios
 Georgious
 Gettler
 Ghidorah
+Gianluca
 Gigan
 Girdhar
 GitFlow
 GitLab
+Goertzen
 Gradle
 Grafana
+GraphDB
+GraphQL
 Graviton
 Griffiths
 HATEOAS
@@ -179,10 +199,12 @@ Hacktober
 Hadoop
 Hamid
 Harwood
+Heike
 Heira
 Hibberd
 HipChat
 Hitchcockian
+Hoekstra
 IAM
 IPR
 IPs
@@ -195,6 +217,7 @@ IllegalArgumentException
 Imagenet
 Imposter
 IntelliJ
+Interfolio
 Iryna
 Ivo
 Ivo's
@@ -208,11 +231,13 @@ Jacek
 Jacek's
 Jackman
 Jemini
+Jeroen
 Jevon
 Joshi
 Jupyter
 JupyterHub
 KD
+KF
 KPO
 KPOs
 KRs
@@ -228,6 +253,7 @@ Keziah
 Kibana
 Kinesis
 Kingsley
+Knime
 Kobby
 Korn
 Kotlin
@@ -241,6 +267,8 @@ LAPD
 LIMF
 LSE
 Lagom
+Lapsins
+Leetcode
 Leiningen
 Leiter
 Lemmatize
@@ -295,6 +323,7 @@ NVIDIA
 Natalino
 Nataliya
 Nataliya's
+Nau
 Navid
 Neela
 Negroni
@@ -355,6 +384,7 @@ QE
 QEs
 RCO
 RDBMS
+RDF
 RDP
 RDS
 RELX
@@ -377,7 +407,10 @@ Repartitioning
 Reusability
 Reza
 Reza's
+Rhian
 Rimmer
+Rinke
+Rinke's
 Roadmunk
 Rodan
 Rosi
@@ -392,10 +425,12 @@ SDG
 SDGs
 SDK
 SDPR
+SHACL
 SLA
 SLAs
 SNM
 SNS
+SPARQL
 SPECTER
 SPI
 SPM
@@ -410,6 +445,7 @@ ScalaBridge
 Scalaz
 Schijvenaars
 Schrauwen
+SciBite
 SciVal
 ScienceDirect
 Scopus
@@ -420,6 +456,7 @@ Semigroups
 Sensu
 Shareback
 Shawshank
+Sheehan
 Sheetal
 Shkodran
 Shkodran's
@@ -439,6 +476,7 @@ Stefano's
 Stitcher
 Sulskus
 Svetlana
+Synaptica
 Syntasa
 TAs
 TBD
@@ -447,6 +485,7 @@ TEKSystems
 TEKsystems
 TIO
 TIO's
+TP
 Taffey
 Tanium
 Tatev
@@ -461,6 +500,8 @@ That'll
 Theano
 Thierry
 Thoughtworks
+TopBraid
+Topologies
 TorchServe
 Tordai
 Tottenham
@@ -473,6 +514,7 @@ Tyrell
 Tyrell's
 UDF
 UI
+URI
 UUID
 UX
 Udacity
@@ -481,6 +523,7 @@ Ugwu
 Unburied
 Uzma
 VGG
+VM
 VPC
 VPCs
 VPN
@@ -489,6 +532,7 @@ Vallianatos
 Vanisha
 Varun
 Vectorise
+Venetia
 Venkata
 Venkatraman
 Vimeo
@@ -550,6 +594,7 @@ deserialize
 dev
 differentiator
 discoverability
+dkp
 embeddings
 empathic
 extractive
@@ -557,6 +602,8 @@ forecasted
 functioaltity
 functor
 functors
+funders
+funsies
 glitchy
 hackery
 hashcode
@@ -622,6 +669,7 @@ pre
 prepend
 prepends
 preprocessed
+prized
 productionise
 productionised
 productionising
@@ -678,6 +726,7 @@ tokenising
 traceability
 transactional
 trenchcoat
+triaged
 trigram
 trigrams
 typeclass
