@@ -71,10 +71,11 @@
                          (:name flycheck)              ;; Syntax checking
 
                          ;; org-mode
-                         (:name org)      ;; Your life in plain text
-                         (:name ob-async) ;; Asynchronous src_block execution for org-babel
-                         (:name htmlize)  ;; html org-mode reports
-                         (:name org-gcal) ;; Org sync with Google Calendar
+                         (:name org)          ;; Your life in plain text
+                         (:name ob-async)     ;; Asynchronous src_block execution for org-babel
+                         (:name htmlize)      ;; html org-mode reports
+                         (:name org-gcal)     ;; Org sync with Google Calendar
+                         (:name org-download) ;; Drag and drop images to Emacs org-mode
 
                          ;; Git
                          (:name magit) ;; Control Git from Emacs

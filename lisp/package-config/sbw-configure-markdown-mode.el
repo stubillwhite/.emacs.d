@@ -35,7 +35,6 @@
       (interactive)
       (let* ((regex      "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]")
              (is-org-link (looking-at regex)))
-        (print is-org-link)
         (when is-org-link
           (let* ((url     (match-string-no-properties 1))
                  (desc    (match-string-no-properties 2))
@@ -44,12 +43,15 @@
     
     (defun sbw/markdown-reformat-org-tables ()
       (interactive)
-      (message "Reformatting org tables")
-      (save-excursion
-        (goto-char (point-min))
-        (while (search-forward "-+-" nil t)
-          (replace-match "-|-"))))
+      (print "Checking whether to reformat tables")
+      (when (derived-mode-p 'markdown-mode)
+        (print "Reformatting org tables")
+        (save-excursion
+          (goto-char (point-min))
+          (while (search-forward "-+-" nil t)
+            (replace-match "-|-")))))
 
+    (print "Adding hook")
     (add-hook 'markdown-mode-hook
               (lambda ()
                 (when buffer-file-name
