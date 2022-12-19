@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 personal_ws-1.1 en 761 
+=======
+personal_ws-1.1 en 640 
+>>>>>>> e50825d (Update dictionary)
 ACL
 ACLs
 ADFS
@@ -15,7 +19,6 @@ ASGs
 ASJC
 AWS
 Adamos
-Aditya
 Aegisthus
 Ai
 Ai's
@@ -27,14 +30,10 @@ Altmetrics
 Amberley's
 Amberly
 Ami
-Amirabadi
-Andrey
 Anonymise
 Anonymising
 Appold
 Artifactory
-Asmaa
-Asmaa's
 AssertJ
 Associativity
 Authenticator
@@ -46,14 +45,12 @@ BAU
 BCIM
 BDD
 BOS
-BST
 Bacchae
 Backfill
 Backpressure
 Banquo
 Bengaluru
 Benoit
-Benoit's
 Berni
 Bladzich
 Bladzich's
@@ -62,6 +59,7 @@ Bucknall
 Bucknell
 Bytecode
 CCBY
+CDN
 CEF
 CENtree
 CKAN
@@ -77,8 +75,6 @@ Carpaccio
 Chetan
 Chiffre
 Chinh
-Chishti
-Chithra
 Ciacco
 CiteScore
 Classloaders
@@ -104,7 +100,6 @@ DAOs
 DAWG
 DKP
 DLQ
-DNS
 DOI
 DOIs
 DOM
@@ -131,7 +126,6 @@ DocuSign
 Dojo
 Domiziana
 Domiziana's
-Doux
 Dredd
 Dropwizard
 Dynus
@@ -143,7 +137,6 @@ EKB
 EKS
 ELB
 ELS
-ELSAPI
 EMR
 ETL
 Ebirah
@@ -171,15 +164,12 @@ FWCI
 Felina
 Finne
 Finne's
-Francesco
 GC
 GDPR
 GPUs
 Gabby's
 Gameification
 Gamification
-Ganesh
-Geetha
 Georgios
 Georgious
 Gettler
@@ -192,18 +182,23 @@ GitLab
 Goertzen
 Gradle
 Grafana
+<<<<<<< HEAD
 GraphDB
 GraphQL
 Graviton
 Griffiths
 HATEOAS
+=======
+>>>>>>> e50825d (Update dictionary)
 HBase
 HPCC
-Hacktober
 Hadoop
+<<<<<<< HEAD
 Hamid
 Harwood
 Heike
+=======
+>>>>>>> e50825d (Update dictionary)
 Heira
 Hibberd
 HipChat
@@ -211,10 +206,8 @@ Hitchcockian
 Hoekstra
 IAM
 IPR
-IPs
 ISSN
 ISSNs
-Iana
 Idempotence
 Idris
 IllegalArgumentException
@@ -237,7 +230,6 @@ Jackman
 Jemini
 Jeroen
 Jevon
-Joshi
 Jupyter
 JupyterHub
 KD
@@ -248,24 +240,22 @@ KRs
 Kabeiroi
 Kanwar
 Karolina
-Karthik
 Kedro
-Kehoe
 Keras
 KeyFe
 Keybase
-Keziah
 Kibana
 Kinesis
+<<<<<<< HEAD
 Kingsley
 Knime
+=======
+>>>>>>> e50825d (Update dictionary)
 Kobby
 Korn
 Kotlin
-Krasting
 Kratt
 Kravutske
-Krishnan
 Kubernetes
 Kyriakos
 LAPD
@@ -284,12 +274,9 @@ Ligia's
 Lingpipe
 LinkedIn
 Logentries
-Loktev
 Lucene
 Lucene's
-Luci
 Lundahl
-MLE
 MLOps
 MLflow
 MSK
@@ -299,9 +286,7 @@ Macker
 Mahesh
 Manisha
 Manol
-Matthieu
 Mazeppa
-Meenakshisundaram
 Mendeley
 Mendeley's
 Mesos
@@ -381,7 +366,6 @@ Polymestor
 Polyxena
 Postgres
 Pris
-Priyanka
 Punchdrunk
 Punchdrunk's
 Puppetfile
@@ -401,8 +385,6 @@ RIC
 RIs
 ROS
 RSS
-Ramadevi
-Ramesh
 Readha
 Rebooking
 Redis
@@ -413,10 +395,13 @@ Repartitioning
 Reusability
 Reza
 Reza's
+<<<<<<< HEAD
 Rhian
 Rimmer
 Rinke
 Rinke's
+=======
+>>>>>>> e50825d (Update dictionary)
 Roadmunk
 Rodan
 Rosi
@@ -427,8 +412,6 @@ Ryun
 Ryun's
 SBT
 SCS
-SDG
-SDGs
 SDK
 SDPR
 SHACL
@@ -444,9 +427,7 @@ SQS
 STMJ
 SUTD
 SageMaker
-Sandeep
 Santorini
-Saskia
 Savitskaya
 ScalaBridge
 Scalaz
@@ -457,7 +438,6 @@ SciVal
 ScienceDirect
 Scopus
 Scratchbox
-Sehgal
 Seitl
 Semigroups
 Sensu
@@ -472,7 +452,6 @@ Shobhna's
 Shoreditch
 Shraddha
 Silverpoint
-Sneha
 Solange
 Solr
 SonarQube
@@ -480,15 +459,11 @@ Spidergap
 Spotify
 Stefano
 Stefano's
-Stitcher
-Sulskus
 Svetlana
 Synaptica
 Syntasa
-TAs
 TBD
 TDM
-TEKSystems
 TEKsystems
 TIO
 TIO's
@@ -498,12 +473,12 @@ TPR
 Taffey
 Tanium
 Tatev
-TechDesk
 TensorFlow
 Terradata
 Terraform
 Terraforming
 Terragrunt
+<<<<<<< HEAD
 Tetteh
 Tettelaar
 That'll
@@ -512,12 +487,16 @@ Thierry
 Thoughtworks
 TopBraid
 Topologies
+=======
+That'll
+Theano
+Thierry
+ThoughtWorks
+>>>>>>> e50825d (Update dictionary)
 TorchServe
-Tordai
 Tottenham
 Traffeik
 Trello
-Tsandev
 Tuhin
 Twistlock
 Tyrell
@@ -529,12 +508,14 @@ UUID
 UX
 Udacity
 Udemy
-Ugwu
 Unburied
 Uzma
 VGG
+<<<<<<< HEAD
 VM
 VPC
+=======
+>>>>>>> e50825d (Update dictionary)
 VPCs
 VPN
 VR
@@ -544,11 +525,9 @@ Varun
 Vectorise
 Venetia
 Venkata
-Venkatraman
 Vimeo
 Visteon
 Voight
-Voorons
 Wageningen
 Whitelisting
 Whitespace
@@ -556,7 +535,6 @@ Wiebke
 Wiebke's
 XGBoost
 XNN
-XOCS
 Xuemin's
 YAML
 ZIO
@@ -593,10 +571,8 @@ composable
 contactless
 contravariant
 convolutional
-coronavirus
 covariant
 curation
-dashboarding
 deliverables
 dereference
 deserialization
@@ -619,7 +595,6 @@ hackery
 hashcode
 hoc
 idempotence
-idempotency
 impedence
 implementors
 implicits
@@ -749,8 +724,6 @@ unglamorous
 unintuitive
 unmarshaling
 upsize
-vectorise
-vectorising
 videographer
 votives
 waypoint
