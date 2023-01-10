@@ -31,6 +31,14 @@
              (url        (concat "obsidian://open?vault=" (url-hexify-string vault) "&file=" (url-hexify-string file))))
         (shell-command (concat "open '" url "'"))))
 
+    (defun sbw/markdown--to-word ()
+      (interactive)
+      (let* ((input-filename  buffer-file-name)
+             (output-filename (concat (file-name-sans-extension input-filename) ".docx"))
+             (cmd             (concat "pandoc --from=gfm --to=docx -o " output-filename " " input-filename)))
+        (print (concat "Creating and opening " output-filename))
+        (shell-command cmd)
+        (shell-command (concat "open " output-filename))))
     (defun sbw/markdown--org-link-to-markdown-link ()
       (interactive)
       (let* ((regex      "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]")
@@ -43,7 +51,6 @@
     
     (defun sbw/markdown-reformat-org-tables ()
       (interactive)
-      (print "Checking whether to reformat tables")
       (when (derived-mode-p 'markdown-mode)
         (print "Reformatting org tables")
         (save-excursion
@@ -51,7 +58,6 @@
           (while (search-forward "-+-" nil t)
             (replace-match "-|-")))))
 
-    (print "Adding hook")
     (add-hook 'markdown-mode-hook
               (lambda ()
                 (when buffer-file-name
@@ -66,6 +72,7 @@
   ("M-5"       . markdown-insert-header-atx-5)
   ("M-6"       . markdown-insert-header-atx-6)
   ("C-c m p"   . markdown-preview)
+  ("C-c m w"   . sbw/markdown--to-word)
   ("C-c m e"   . markdown-export)
   ("C-c m h 0" . markdown-remove-header)
   ("C-c m h 1" . markdown-insert-header-atx-1)
@@ -84,4 +91,3 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
-
