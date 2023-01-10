@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-personal_ws-1.1 en 761 
-=======
-personal_ws-1.1 en 640 
->>>>>>> e50825d (Update dictionary)
+personal_ws-1.1 en 710 
 ACL
 ACLs
 ADFS
@@ -61,6 +57,7 @@ Bytecode
 CCBY
 CDN
 CEF
+CEFs
 CENtree
 CKAN
 CLI
@@ -182,23 +179,17 @@ GitLab
 Goertzen
 Gradle
 Grafana
-<<<<<<< HEAD
 GraphDB
 GraphQL
 Graviton
 Griffiths
 HATEOAS
-=======
->>>>>>> e50825d (Update dictionary)
 HBase
 HPCC
 Hadoop
-<<<<<<< HEAD
 Hamid
 Harwood
 Heike
-=======
->>>>>>> e50825d (Update dictionary)
 Heira
 Hibberd
 HipChat
@@ -246,11 +237,8 @@ KeyFe
 Keybase
 Kibana
 Kinesis
-<<<<<<< HEAD
 Kingsley
 Knime
-=======
->>>>>>> e50825d (Update dictionary)
 Kobby
 Korn
 Kotlin
@@ -395,13 +383,10 @@ Repartitioning
 Reusability
 Reza
 Reza's
-<<<<<<< HEAD
 Rhian
 Rimmer
 Rinke
 Rinke's
-=======
->>>>>>> e50825d (Update dictionary)
 Roadmunk
 Rodan
 Rosi
@@ -478,21 +463,15 @@ Terradata
 Terraform
 Terraforming
 Terragrunt
-<<<<<<< HEAD
 Tetteh
 Tettelaar
 That'll
 Theano
 Thierry
+ThoughtWorks
 Thoughtworks
 TopBraid
 Topologies
-=======
-That'll
-Theano
-Thierry
-ThoughtWorks
->>>>>>> e50825d (Update dictionary)
 TorchServe
 Tottenham
 Traffeik
@@ -511,11 +490,8 @@ Udemy
 Unburied
 Uzma
 VGG
-<<<<<<< HEAD
 VM
 VPC
-=======
->>>>>>> e50825d (Update dictionary)
 VPCs
 VPN
 VR

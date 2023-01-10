@@ -22,6 +22,7 @@
         markdown-insert-header-atx-2
         markdown-insert-header-atx-3
         org-beginning-of-line
+        org-delete-char
         org-end-of-line
         org-fill-paragraph
         org-force-self-insert
