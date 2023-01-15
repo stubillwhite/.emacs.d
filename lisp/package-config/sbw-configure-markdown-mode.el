@@ -35,10 +35,11 @@
       (interactive)
       (let* ((input-filename  buffer-file-name)
              (output-filename (concat (file-name-sans-extension input-filename) ".docx"))
-             (cmd             (concat "pandoc --from=gfm --to=docx -o " output-filename " " input-filename)))
+             (cmd             (concat "pandoc --filter mermaid-filter --from=gfm --to=docx -o '" output-filename "' '" input-filename "'")))
         (print (concat "Creating and opening " output-filename))
         (shell-command cmd)
-        (shell-command (concat "open " output-filename))))
+        (shell-command (concat "open '" output-filename "'"))))
+
     (defun sbw/markdown--org-link-to-markdown-link ()
       (interactive)
       (let* ((regex      "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]")

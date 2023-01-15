@@ -44,7 +44,7 @@
 (setq-default fill-column 120)
 
 ;; Shift-cursor to move between windows
-;; (windmove-default-keybindings)
+(windmove-default-keybindings)
 
 (global-set-key (kbd "C-c <left>")  'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
