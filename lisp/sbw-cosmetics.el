@@ -24,6 +24,10 @@
   (set-face-font 'default     "Monaco-10"))
 
 (when (sbw/is-darwin?)
+  (set-face-font 'fixed-pitch "FantasqueSansMono Nerd Font Mono-14")
+  (set-face-font 'default     "FantasqueSansMono Nerd Font Mono-14"))
+
+(when (sbw/is-darwin?)
   (set-face-font 'fixed-pitch "Monaco-12")
   (set-face-font 'default     "Monaco-12"))
 
