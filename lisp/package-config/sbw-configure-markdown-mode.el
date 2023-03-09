@@ -62,7 +62,22 @@
     (add-hook 'markdown-mode-hook
               (lambda ()
                 (when buffer-file-name
-                  (add-hook 'before-save-hook 'sbw/markdown-reformat-org-tables)))))
+                  (add-hook 'before-save-hook 'sbw/markdown-reformat-org-tables))))
+
+    (defun sbw/markdown--read-tags ()
+      (let ((default-directory "~/trash/list-tags")) 
+        (s-split "\n" (shell-command-to-string "source bin/activate && python list-tags.py && deactivate"))))
+
+    (defun sbw/markdown-select-tag ()
+      (interactive)
+      (let* ((tags (sbw/markdown--read-tags))
+             (tag  (helm-comp-read "Tag:" tags)))
+        tag))
+    
+    (defun sbw/markdown-insert-tag ()
+      (interactive)
+      (insert (sbw/markdown-select-tag)))
+    )
 
   :bind
   ("M-0"       . markdown-remove-header)
@@ -92,3 +107,4 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
+

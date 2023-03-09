@@ -77,8 +77,8 @@ _y_: ?y? year      _q_: quit          _L__l__c_: ?l?
       "
 ^Urgency^
 ^==============
-_u_: Urgent
-_n_: Not urgent
+_u_: Urgent        (do or delegate)
+_n_: Not urgent    (schedule or de-clutter)
 _d_: Delete
 
 _q_, _RET_: Quit
@@ -93,8 +93,8 @@ _q_, _RET_: Quit
       "
 ^Importance^
 ^=================
-_i_: Important
-_n_: Not important
+_i_: Important     (do or schedule)
+_n_: Not important (delegate or de-clutter)
 _d_: Delete
 
 _q_, _RET_: Quit

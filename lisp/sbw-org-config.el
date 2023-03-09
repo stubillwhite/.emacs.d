@@ -175,7 +175,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                    (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
             (tags-todo "MATRIX=\"not-urgent-not-important\"-PRIORITY=\"A\""
-                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Kill it"))
+                  ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - De-clutter it"))
                    (org-agenda-files ,files)
                    (org-agenda-todo-ignore-scheduled t)
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))

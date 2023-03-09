@@ -107,6 +107,11 @@
             (replace-match (sbw/ht-get chars x) nil nil)))
         (sbw/ht-keys chars)))))
 
+(defun sbw/buffer-path-to-kill-ring ()
+  "Copy the buffer path to the kill ring."
+  (interactive)
+  (kill-new (buffer-file-name)))
+
 ;; Save all buffers when switching away
 (defun sbw/save-all-buffers ()
   (interactive)
