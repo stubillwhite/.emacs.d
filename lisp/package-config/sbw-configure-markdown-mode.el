@@ -23,6 +23,11 @@
         markdown-command-needs-filename t
         markdown-command                "%LOCALAPPDATA%\\Pandoc\\pandoc.exe --from=markdown_github --to=html"))
 
+    (defun sbw/markdown-preview ()
+      (interactive)
+      (sbw/markdown-reformat-org-tables)
+      (markdown-preview))
+    
     (defun sbw/markdown--open-in-obsidian ()
       (interactive)
       (let* ((vault      "obsidian")
@@ -53,7 +58,6 @@
     (defun sbw/markdown-reformat-org-tables ()
       (interactive)
       (when (derived-mode-p 'markdown-mode)
-        (print "Reformatting org tables")
         (save-excursion
           (goto-char (point-min))
           (while (search-forward "-+-" nil t)
@@ -87,7 +91,7 @@
   ("M-4"       . markdown-insert-header-atx-4)
   ("M-5"       . markdown-insert-header-atx-5)
   ("M-6"       . markdown-insert-header-atx-6)
-  ("C-c m p"   . markdown-preview)
+  ("C-c m p"   . sbw/markdown-preview)
   ("C-c m w"   . sbw/markdown--to-word)
   ("C-c m e"   . markdown-export)
   ("C-c m h 0" . markdown-remove-header)
