@@ -28,3 +28,7 @@
         </array>
       </dict>
     </array>
+
+## Insinuiate into the browser ##
+
+- Run `./insinuate-into-chrome.sh` to allow-list `org-protcol://` in Chrome
