@@ -70,7 +70,7 @@
       (puthash :point    x summary)
       (puthash :category (sbw/org-utils--extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
       (puthash :state    (sbw/org-utils--extract-string (org-get-todo-state)) summary)
-      (puthash :tags     (sbw/org-utils--extract-string (org-get-tags-at)) summary)
+      (puthash :tags     (-map (lambda (x) (sbw/org-utils--extract-string x)) (org-get-tags)) summary)
       (puthash :heading  (sbw/org-utils--extract-string (org-get-heading nil t)) summary)
       (puthash :level    (funcall outline-level) summary)
       (puthash :clock    (sbw/org-utils--extract-clock) summary)
