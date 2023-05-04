@@ -15,21 +15,14 @@
 (setq-default truncate-lines t)     ;; Truncate lines don't wrap
 
 ;; Font
-(when (sbw/is-windows?)
-  (set-face-font 'fixed-pitch "Monaco-10")
-  (set-face-font 'default     "Monaco-10"))
-
-(when (sbw/is-linux?)
-  (set-face-font 'fixed-pitch "Monaco-10")
-  (set-face-font 'default     "Monaco-10"))
-
-(when (sbw/is-darwin?)
-  (set-face-font 'fixed-pitch "FantasqueSansMono Nerd Font Mono-14")
-  (set-face-font 'default     "FantasqueSansMono Nerd Font Mono-14"))
-
-(when (sbw/is-darwin?)
-  (set-face-font 'fixed-pitch "Monaco-12")
-  (set-face-font 'default     "Monaco-12"))
+(let* ((font-name (cond
+                   ((sbw/is-windows?) "Monaco-10")
+                   ((sbw/is-linux?)   "Monaco-10")
+                   ((sbw/is-darwin?)  "Monaco-12")
+                   ;; ((sbw/is-darwin?)  "FantasqueSansMono Nerd Font Mono-14")
+                   )))
+  (set-face-font 'fixed-pitch font-name)
+  (set-face-font 'default     font-name))
 
 ;; Horizontal non-blinking cursor
 (setq-default cursor-type 'hbar)
