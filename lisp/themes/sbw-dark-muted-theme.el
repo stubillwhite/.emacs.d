@@ -220,6 +220,7 @@
     `(org-done                            ((t (:inherit sbw-dark-muted-emphasis :strike-through t))))
     `(org-headline-done                   ((t (:inherit sbw-dark-muted-normal :strike-through t))))
     `(org-drawer                          ((t (:inherit sbw-dark-muted-normal))))
+    `(org-sexp-date                       ((t (:inherit sbw-dark-muted-normal))))
     `(org-ellipsis                        ((t (:inherit sbw-dark-muted-normal))))
     `(org-level-1                         ((t (:inherit sbw-dark-muted-normal))))
     `(org-level-2                         ((t (:inherit sbw-dark-muted-normal))))
