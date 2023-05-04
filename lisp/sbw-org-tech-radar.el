@@ -88,7 +88,7 @@
 (defun sbw/org-tech-radar-open ()
   (interactive)
   (message "Opening tech radar")
-  (shell-command "open 'https://radar.thoughtworks.com/?sheetId=https%3A%2F%2Fraw.githubusercontent.com%2Fstubillwhite%2Ftech-radar%2Fmain%2Ftech-radar.csv'"))
+  (shell-command "open 'https://radar.thoughtworks.com/?documentId=https%3A%2F%2Fraw.githubusercontent.com%2Fstubillwhite%2Ftech-radar%2Fmain%2Ftech-radar.csv'"))
 
 (defun sbw/org-tech-radar-regenerate-and-open ()
   (interactive)
