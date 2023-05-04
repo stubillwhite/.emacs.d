@@ -134,8 +134,7 @@
             (sbw/menu-submenu ?t "Timers"
                               (sbw/menu "Timers"
                                         (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
-                                        (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)
-                                        (sbw/menu-action ?u "Toggle unit timer"     'sbw/unit-timer-toggle)))
+                                        (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
             (sbw/menu-submenu ?x "Tech radar"
                               (sbw/menu "Tech radar"
                                         (sbw/menu-action ?e "Edit tech radar"              (lambda () (find-file "~/Dropbox/Private/org/current/work/tech-radar.org")))

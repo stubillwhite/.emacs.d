@@ -95,11 +95,4 @@
     (sbw/countdown-stop)
     (sbw/countdown-start (* 25 60))))
 
-(defun sbw/unit-timer-toggle ()
-  "Toggles a forty minute work unit timer."
-  (interactive)
-  (if (sbw/countdown-running?)
-    (sbw/countdown-stop)
-    (sbw/countdown-start (* 40 60))))
-
 (provide 'sbw-countdown)

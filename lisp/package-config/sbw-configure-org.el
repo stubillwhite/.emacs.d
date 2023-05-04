@@ -333,6 +333,7 @@
   ("C-c o s d" . org-deadline)
   ("C-c o s p" . sbw/org-set-priority)
   ("C-c o s t" . org-todo)
+  ("C-c o s :" . org-set-tags-command)
   ("C-c o c i" . org-clock-in)
   ("C-c o c o" . org-clock-out)
   ("C-c o c g" . org-clock-goto)
@@ -370,12 +371,29 @@
 (provide 'sbw-configure-org-mode)
 
 
-;; (add-function :after after-focus-change-function #'focus-test)
-;; 
-;; (defun focus-test ()
-;;   (progn
-;;     (setq org-tags-column (- 0 (window-body-width)))
-;;     (org-align-all-tags)))
+(defun focus-test ()
+  (progn
+    (setq org-tags-column (- 0 (window-body-width)))
+    (org-align-tags)))
+
+(defun sbw/org--enable-tags-realignment ()
+  (add-function :after after-focus-change-function #'focus-test)
+  )
+
+  ;; (add-function :after after-focus-change-function #'focus-test)
+
+    (defun sbw/set-org-tags-column-based-on-window-size ()
+      "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
+      (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
+
+    (defun sbw/right-align-tags ()
+      "Right-align the all tags in the buffer."
+      (interactive)
+      (sbw/set-org-tags-column-based-on-window-size)
+      (org-align-all-tags)
+      (redisplay t))
+
+(add-function :after after-focus-change-function #'sbw/right-align-tags)
 
 
 ;; https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
