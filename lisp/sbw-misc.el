@@ -89,15 +89,18 @@
   "Replace fancy punctuation characters in the current buffer with standard characters."
   (interactive)
   (let* ( (chars (sbw/ht-create
+                   ?\x00B4 "'"
                    ?\x0091 "'"
                    ?\x0092 "'"
                    ?\x0093 "\""
                    ?\x0094 "\""
                    ?\x2013 "-"
                    ?\x2014 "-"
+                   ?\x2018 "'"
                    ?\x2019 "'"
                    ?\x201C "\""
                    ?\x201D "\""
+                   ?\x00A0 " "
                    ?\x2026 "...") ))
     (save-excursion
       (-map
