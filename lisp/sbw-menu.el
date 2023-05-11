@@ -74,7 +74,7 @@
   (-if-let  (action      (sbw/ht-get (sbw/ht-get menu :actions) key))
     (progn
       (let* ( (description (sbw/ht-get action :description))
-              (function    (sbw/ht-get action :function))) 
+              (function    (sbw/ht-get action :function)))
         (message description)
         (funcall function)))
     (progn
@@ -119,6 +119,14 @@
                                                           (sbw/menu "KD"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-kd-agenda)
                                                                     (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-kd-tasks)))
+                                        (sbw/menu-submenu ?f "Focus area"
+                                                          (sbw/menu "Focus area"
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-focus-area-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-focus-area-tasks)))
+                                        (sbw/menu-submenu ?d "Domain"
+                                                  (sbw/menu "Domain"
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-domain-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-domain-tasks)))
                                         (sbw/menu-submenu ?p "Personal"
                                                           (sbw/menu "Personal"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-personal-agenda)
@@ -128,9 +136,9 @@
                               (sbw/menu "Review"
                                         (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
                                         (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))                                       
+                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
                                         (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
-                                        ))           
+                                        ))
             (sbw/menu-submenu ?t "Timers"
                               (sbw/menu "Timers"
                                         (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)

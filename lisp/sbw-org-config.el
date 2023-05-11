@@ -90,7 +90,7 @@ names, or nil to indicate that all should be included."
         (funcall filter-vals (sbw/ht-get sbw/org-config :index) workflows)))))
 
 (defun sbw/org-config--select-workflows-and-categories ()
-  (let* ( (workflows-source  (helm-build-sync-source "Projects"
+  (let* ( (workflows-source  (helm-build-sync-source "Workflows"
                                :candidates (sbw/org-config-workflows)
                                :action     (lambda (candidate) (helm-marked-candidates))))
           (categories-source (helm-build-sync-source "Categories"
@@ -99,6 +99,11 @@ names, or nil to indicate that all should be included."
     (list
      (helm :buffer "*helm org-config*" :sources workflows-source)
      (helm :buffer "*helm org-config*" :sources categories-source))))
+
+(defun sbw/org-config-projects-by-name (names)
+  "Returns a list of projects whose name is present in names"
+  (->> (sbw/org-config-projects nil nil)
+       (-filter (lambda (x) (seq-position names (sbw/ht-get (sbw/org-config-project-attributes x) :project))))))
 
 (defun sbw/org-config-select (workflows categories)
   "Select the org-mode files filtered by the specified WORKFLOWS
@@ -224,18 +229,31 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 
 (setq org-agenda-custom-commands nil)
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
+
 (add-to-list 'org-agenda-custom-commands '("cp" . "Personal"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-projects ["current"] ["personal" "level-up"])))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 14 (sbw/org-config-projects ["current"] ["personal" "level-up"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-projects ["current"] ["personal"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cpa" "Personal agenda" 14 (sbw/org-config-projects ["current"] ["personal"])))
+
 (add-to-list 'org-agenda-custom-commands '("cw" . "Work"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" (sbw/org-config-projects ["current"] ["work"])))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cwa" "Work agenda" 7 (sbw/org-config-projects ["current"] ["work"])))
-(add-to-list 'org-agenda-custom-commands '("ck" . "kd"))
+
+(add-to-list 'org-agenda-custom-commands '("ck" . "KD"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "ckt" "KD tasks" (sbw/org-config-projects ["current"] ["kd"])))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cka" "KD agenda" 7 (sbw/org-config-projects ["current"] ["kd"])))
+
 (add-to-list 'org-agenda-custom-commands '("cs" . "Selection"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cst" "Selection tasks" (sbw/ht-get sbw/org-config :selected-projects)))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-projects)))
+
+(add-to-list 'org-agenda-custom-commands '("cf" . "Focus area"))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cft" "Focus area tasks" (sbw/org-config-projects-by-name ["meetings.org" "data-quality.org" "generative-ai.org" "steel-thread.org" "security.org"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cfa" "Focus area agenda" 7 (sbw/org-config-projects-by-name ["meetings.org" "data-quality.org" "generative-ai.org" "steel-thread.org" "security.org"])))
+
+(add-to-list 'org-agenda-custom-commands '("cd" . "Domain"))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cdt" "Domain tasks" (sbw/org-config-projects-by-name ["meetings.org" "dkp.org" "consumption.org" "concept.org"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cda" "Domain agenda" 7 (sbw/org-config-projects-by-name ["meetings.org" "dkp.org" "consumption.org" "concept.org"])))
+
 (add-to-list 'org-agenda-custom-commands '("ca" . "All"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-projects))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-projects))
@@ -244,14 +262,18 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
   (org-agenda nil agenda)
   (delete-other-windows))
 
-(defun sbw/org-config-agenda-selected-agenda () (interactive) (sbw/org-config--open-agenda "csa"))
-(defun sbw/org-config-agenda-selected-tasks  () (interactive) (sbw/org-config--open-agenda "cst"))
-(defun sbw/org-config-agenda-work-agenda     () (interactive) (sbw/org-config--open-agenda "cwa"))
-(defun sbw/org-config-agenda-work-tasks      () (interactive) (sbw/org-config--open-agenda "cwt"))
-(defun sbw/org-config-agenda-kd-agenda       () (interactive) (sbw/org-config--open-agenda "cka"))
-(defun sbw/org-config-agenda-kd-tasks        () (interactive) (sbw/org-config--open-agenda "ckt"))
-(defun sbw/org-config-agenda-personal-agenda () (interactive) (sbw/org-config--open-agenda "cpa"))
-(defun sbw/org-config-agenda-personal-tasks  () (interactive) (sbw/org-config--open-agenda "cpt"))
+(defun sbw/org-config-agenda-selected-agenda   () (interactive) (sbw/org-config--open-agenda "csa"))
+(defun sbw/org-config-agenda-selected-tasks    () (interactive) (sbw/org-config--open-agenda "cst"))
+(defun sbw/org-config-agenda-work-agenda       () (interactive) (sbw/org-config--open-agenda "cwa"))
+(defun sbw/org-config-agenda-work-tasks        () (interactive) (sbw/org-config--open-agenda "cwt"))
+(defun sbw/org-config-agenda-kd-agenda         () (interactive) (sbw/org-config--open-agenda "cka"))
+(defun sbw/org-config-agenda-kd-tasks          () (interactive) (sbw/org-config--open-agenda "ckt"))
+(defun sbw/org-config-agenda-personal-agenda   () (interactive) (sbw/org-config--open-agenda "cpa"))
+(defun sbw/org-config-agenda-personal-tasks    () (interactive) (sbw/org-config--open-agenda "cpt"))
+(defun sbw/org-config-agenda-focus-area-agenda () (interactive) (sbw/org-config--open-agenda "cfa"))
+(defun sbw/org-config-agenda-focus-area-tasks  () (interactive) (sbw/org-config--open-agenda "cft"))
+(defun sbw/org-config-agenda-domain-agenda     () (interactive) (sbw/org-config--open-agenda "cda"))
+(defun sbw/org-config-agenda-domain-tasks      () (interactive) (sbw/org-config--open-agenda "cdt"))
 
 ;; Agenda appearance
 
@@ -335,3 +357,4 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (sbw/org-config-default)
 
 (provide 'sbw-org-config)
+
