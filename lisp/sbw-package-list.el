@@ -77,6 +77,8 @@
                          (:name org-gcal)     ;; Org sync with Google Calendar
                          (:name org-download) ;; Drag and drop images to Emacs org-mode
 
+                         ;; (:name org-ai) ;; Minor mode for Emacs org-mode that provides access to OpenAI APIs
+
                          ;; Git
                          (:name magit) ;; Control Git from Emacs
  
@@ -99,20 +101,6 @@
                          ;; ;; Elm
                          (:name elm-mode)     ;; Elm mode for Emacs
                          (:name flycheck-elm) ;; Flycheck for Elm
-
-                         ;; TODO: Implement disable
-                         ;; http://haroldcarr.com/posts/2017-10-24-emacs-haskell-dev-env.html
-                         ;; https://www.fosskers.ca/blog/nix-en.html
-                         ;; https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
-                         ;; Haskell
-                          (:name haskell-mode) ;; STACK: Haskell mode                           
-                          (:name hindent)      ;; STACK: 
-                          (:name intero)       ;; STACK: Interactive Haskell development
-                         ;; (:name dante)        ;; CABAL: Emacs mode for interactive Haskell
-                         ;; TODO: Look into haskell-mode-stylish-buffer to auto-reformat
-
-                         ;; ;; ;; JSON
-                         ;; ;; json-mode ;; Major mode for editing JSON files
 
                          ;; Markdown
                          (:name markdown-mode) ;; Markdown mode
