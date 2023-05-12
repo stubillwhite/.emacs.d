@@ -127,6 +127,10 @@
                                                   (sbw/menu "Domain"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-domain-agenda)
                                                                     (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-domain-tasks)))
+                                        (sbw/menu-submenu ?m "Management"
+                                                  (sbw/menu "Management"
+                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-management-agenda)
+                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-management-tasks)))
                                         (sbw/menu-submenu ?p "Personal"
                                                           (sbw/menu "Personal"
                                                                     (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-personal-agenda)

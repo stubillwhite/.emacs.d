@@ -254,6 +254,10 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cdt" "Domain tasks" (sbw/org-config-projects-by-name ["meetings.org" "dkp.org" "consumption.org" "concept.org"])))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cda" "Domain agenda" 7 (sbw/org-config-projects-by-name ["meetings.org" "dkp.org" "consumption.org" "concept.org"])))
 
+(add-to-list 'org-agenda-custom-commands '("cm" . "Management"))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cmt" "Management tasks" (sbw/org-config-projects-by-name ["meetings.org" "line-management.org" "engineering-culture.org"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "cma" "Management agenda" 7 (sbw/org-config-projects-by-name ["meetings.org" "line-management.org" "engineering-culture.org"])))
+
 (add-to-list 'org-agenda-custom-commands '("ca" . "All"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-projects))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "caa" "All agenda" 7 sbw/org-config-all-projects))
@@ -274,6 +278,8 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defun sbw/org-config-agenda-focus-area-tasks  () (interactive) (sbw/org-config--open-agenda "cft"))
 (defun sbw/org-config-agenda-domain-agenda     () (interactive) (sbw/org-config--open-agenda "cda"))
 (defun sbw/org-config-agenda-domain-tasks      () (interactive) (sbw/org-config--open-agenda "cdt"))
+(defun sbw/org-config-agenda-management-agenda () (interactive) (sbw/org-config--open-agenda "cma"))
+(defun sbw/org-config-agenda-management-tasks  () (interactive) (sbw/org-config--open-agenda "cmt"))
 
 ;; Agenda appearance
 
