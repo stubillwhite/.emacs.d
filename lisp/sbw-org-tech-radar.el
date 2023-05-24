@@ -74,7 +74,7 @@
 (defun sbw/org-tech-radar-generate ()
   (interactive)
   (message "Generating tech radar")
-  (->> "~/Dropbox/Private/org/current/work/tech-radar.org"
+  (->> (sbw/dropbox-subfolder "Private/org/current/work/tech-radar.org")
        (sbw/org-tech-radar-generate-tech-radar)
        (sbw/org-tech-radar--write-file "~/Dev/my-stuff/tech-radar/tech-radar.csv")))
 

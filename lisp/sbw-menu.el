@@ -104,53 +104,36 @@
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
             (sbw/menu-submenu ?d "Dashboard"
-                              (sbw/menu "Dashboard"
-                                        (sbw/menu-submenu ?s "Selection"
-                                                          (sbw/menu "Selection"
-                                                                    (sbw/menu-action ?c "Change"  (lambda () (interactive) (call-interactively 'sbw/org-config-select)))
-                                                                    (sbw/menu-action ?d "Default" 'sbw/org-config-default)
-                                                                    (sbw/menu-action ?a "Agenda"  'sbw/org-config-agenda-selected-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"   'sbw/org-config-agenda-selected-tasks)))
-                                        (sbw/menu-submenu ?w "Work"
-                                                          (sbw/menu "Work"
-                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-work-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-work-tasks)))
-                                        (sbw/menu-submenu ?k "KD"
-                                                          (sbw/menu "KD"
-                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-kd-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-kd-tasks)))
-                                        (sbw/menu-submenu ?f "Focus area"
-                                                          (sbw/menu "Focus area"
-                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-focus-area-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-focus-area-tasks)))
-                                        (sbw/menu-submenu ?d "Domain"
-                                                  (sbw/menu "Domain"
-                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-domain-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-domain-tasks)))
-                                        (sbw/menu-submenu ?m "Management"
-                                                  (sbw/menu "Management"
-                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-management-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-management-tasks)))
-                                        (sbw/menu-submenu ?p "Personal"
-                                                          (sbw/menu "Personal"
-                                                                    (sbw/menu-action ?a "Agenda" 'sbw/org-config-agenda-personal-agenda)
-                                                                    (sbw/menu-action ?t "Tasks"  'sbw/org-config-agenda-personal-tasks)))))
+                      (sbw/menu "Dashboard"
+                                (sbw/menu-submenu ?s "Selection"
+                                          (sbw/menu "Selection"
+                                                    (sbw/menu-action ?c "Change"  (lambda () (interactive) (call-interactively 'sbw/org-config-select)))
+                                                    (sbw/menu-action ?d "Default" 'sbw/org-config-default)
+                                                    (sbw/menu-action ?a "Agenda"  'sbw/org-config-agenda-selected-agenda)
+                                                    (sbw/menu-action ?t "Tasks"   'sbw/org-config-agenda-selected-tasks)))
+                                (sbw/menu-action ?p "Personal"   'sbw/org-config-agenda-personal-tasks)
+                                (sbw/menu-action ?w "Work"       'sbw/org-config-agenda-work-tasks)
+                                (sbw/menu-action ?k "KD"         'sbw/org-config-agenda-kd-tasks)
+                                (sbw/menu-action ?f "Focus area" 'sbw/org-config-agenda-focus-area-tasks)
+                                (sbw/menu-action ?d "Domain"     'sbw/org-config-agenda-domain-tasks)
+                                (sbw/menu-action ?m "Management" 'sbw/org-config-agenda-management-tasks)
+                                ))
             (sbw/menu-action ?f "Refresh" 'sbw/org-config-refresh)
             (sbw/menu-submenu ?r "Review"
-                              (sbw/menu "Review"
-                                        (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
-                                        (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                        (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
-                                        (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
-                                        ))
+                      (sbw/menu "Review"
+                                (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
+                                (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
+                                (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
+                                (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
+                                ))
             (sbw/menu-submenu ?t "Timers"
-                              (sbw/menu "Timers"
-                                        (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
-                                        (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
+                      (sbw/menu "Timers"
+                                (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
+                                (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
             (sbw/menu-submenu ?x "Tech radar"
-                              (sbw/menu "Tech radar"
-                                        (sbw/menu-action ?e "Edit tech radar"              (lambda () (find-file "~/Dropbox/Private/org/current/work/tech-radar.org")))
-                                        (sbw/menu-action ?g "Generate and open tech radar" 'sbw/org-tech-radar-regenerate-and-open)))
+                      (sbw/menu "Tech radar"
+                                (sbw/menu-action ?e "Edit tech radar"              (lambda () (find-file (sbw/dropbox-subfolder "Private/org/current/work/tech-radar.org"))))
+                                (sbw/menu-action ?g "Generate and open tech radar" 'sbw/org-tech-radar-regenerate-and-open)))
             (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))
 
 (provide 'sbw-menu)

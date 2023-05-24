@@ -9,21 +9,13 @@
 
     ;; Org files
 
-    (setq org-directory 
-          (cond
-           ((sbw/is-linux?)   "~/Dropbox/Private/org")
-           ((sbw/is-windows?) "/cygdrive/c/Users/IBM_ADMIN/Dropbox/Private/org")
-           ((sbw/is-darwin?)  "~/Dropbox/Private/org")))
+    (setq org-directory (sbw/dropbox-subfolder "Private/org"))
 
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."
       (-mapcat
        (lambda (x) (directory-files x :absolute org-agenda-file-regexp))
        (apply 'list dirs)))
-
-    (defun sbw/org-file-export ()
-      (interactive)
-      (call-process "pandoc" nil "*scratch*" nil "-f" "org" "-t" "html" "/Users/white1/Dropbox/Private/org/current/work/recs-orion.org" "-o" "/Users/white1/test.html" "--css=/Users/white1/Dev/my-stuff/style.css" "--self-contained"))
 
     ;; General settings
 

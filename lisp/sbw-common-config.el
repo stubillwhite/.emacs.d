@@ -14,4 +14,11 @@
 
 (defvar sbw/frame-title-format "emacs [%b]")
 
+(defun sbw/dropbox-subfolder (path)
+  (let* ((dropbox-folder (cond
+                          ((sbw/is-linux?)   "~/Dropbox")
+                          ((sbw/is-windows?) "/cygdrive/c/Users/IBM_ADMIN/Dropbox")
+                          ((sbw/is-darwin?)  "~/Library/CloudStorage/Dropbox"))))
+    (s-lex-format "${dropbox-folder}/${path}")))
+
 (provide 'sbw-common-config)
