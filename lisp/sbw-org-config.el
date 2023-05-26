@@ -244,7 +244,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-projects)))
 
 (add-to-list 'org-agenda-custom-commands '("cf" . "Focus area"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cft" "Focus area tasks" (sbw/org-config-projects-by-name ["meetings.org" "acceleration.org" "data-quality.org" "generative-ai.org" "internal-mobility.org" "london-wall.org" "steel-thread.org" "security.org"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cft" "Focus area tasks" (sbw/org-config-projects-by-name ["meetings.org" "acceleration.org" "data-quality.org" "generative-ai.org" "internal-mobility.org" "london-wall.org" "predictability.org" "steel-thread.org" "security.org"])))
 
 (add-to-list 'org-agenda-custom-commands '("cd" . "Domain"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cdt" "Domain tasks" (sbw/org-config-projects-by-name ["meetings.org" "dkp.org" "consumption.org" "concept.org"])))
