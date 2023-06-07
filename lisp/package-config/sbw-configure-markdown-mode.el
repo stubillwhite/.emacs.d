@@ -31,7 +31,7 @@
     (defun sbw/markdown--open-in-obsidian ()
       (interactive)
       (let* ((vault      "obsidian")
-             (vault-path (sbw/dropbox-subfolder "Private/obsidian"))
+             (vault-path "/Users/white1/Dropbox/Private/obsidian")
              (file       (s-replace (concat vault-path "/") "" (buffer-file-name)))
              (url        (concat "obsidian://open?vault=" (url-hexify-string vault) "&file=" (url-hexify-string file))))
         (shell-command (concat "open '" url "'"))))
@@ -52,6 +52,7 @@
         (when is-org-link
           (let* ((url     (match-string-no-properties 1))
                  (desc    (match-string-no-properties 2))
+                 (id      (read-string "Enter reference ID: "))
                  (md-link (concat "[" desc "](" url ")")))
             (replace-match md-link)))))
 
@@ -62,7 +63,8 @@
         (when is-org-link
           (let* ((desc     (match-string-no-properties 1))
                  (url      (match-string-no-properties 2))
-                 (ref-link (concat "[" desc "][1]\n\n[1]: " url)))
+                 (id       (read-string "Enter reference ID: "))
+                 (ref-link (s-lex-format "[${desc}][${id}]\n\n[${id}]: ${url}")))
             (replace-match ref-link)))))
     
     (defun sbw/markdown-reformat-org-tables ()
@@ -121,7 +123,3 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
-
-
-
-
