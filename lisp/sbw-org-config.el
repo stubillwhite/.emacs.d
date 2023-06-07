@@ -101,9 +101,18 @@ names, or nil to indicate that all should be included."
      (helm :buffer "*helm org-config*" :sources categories-source))))
 
 (defun sbw/org-config-projects-by-name (names)
-  "Returns a list of projects whose name is present in names"
+  "Returns a list of projects whose name is present in NAMES"
   (->> (sbw/org-config-projects nil nil)
        (-filter (lambda (x) (seq-position names (sbw/ht-get (sbw/org-config-project-attributes x) :project))))))
+
+(defun sbw/org-config-projects-with-flag (flag)
+  "Returns a list of projects which have the property flag FLAG"
+  (let* ((get-flags (lambda (x) (save-excursion
+                             (set-buffer (find-file-noselect x))
+                             (goto-char 0)
+                             (or (sbw/org-get-property "FLAGS") "")))))
+    (->> (sbw/org-config-projects nil nil)
+         (-filter (lambda (x) (s-contains? flag (funcall get-flags x))))))  )
 
 (defun sbw/org-config-select (workflows categories)
   "Select the org-mode files filtered by the specified WORKFLOWS
@@ -244,13 +253,13 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-projects)))
 
 (add-to-list 'org-agenda-custom-commands '("cf" . "Focus area"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cft" "Focus area tasks" (sbw/org-config-projects-by-name ["meetings.org" "acceleration.org" "data-quality.org" "generative-ai.org" "internal-mobility.org" "london-wall.org" "predictability.org" "steel-thread.org" "security.org"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cft" "Focus area tasks" (sbw/org-config-projects-with-flag "focus-area")))
 
 (add-to-list 'org-agenda-custom-commands '("cd" . "Domain"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cdt" "Domain tasks" (sbw/org-config-projects-by-name ["meetings.org" "dkp.org" "consumption.org" "concept.org"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cdt" "Domain tasks" (sbw/org-config-projects-with-flag "domain")))
 
 (add-to-list 'org-agenda-custom-commands '("cm" . "Management"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cmt" "Management tasks" (sbw/org-config-projects-by-name ["meetings.org" "line-management.org" "engineering-culture.org" "women-in-tech.org"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cmt" "Management tasks" (sbw/org-config-projects-with-flag "management")))
 
 (add-to-list 'org-agenda-custom-commands '("ca" . "All"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cat" "All tasks" sbw/org-config-all-projects))
