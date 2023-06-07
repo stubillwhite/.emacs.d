@@ -94,6 +94,7 @@
                    ?\x0092 "'"
                    ?\x0093 "\""
                    ?\x0094 "\""
+                   ?\x200B ""
                    ?\x2013 "-"
                    ?\x2014 "-"
                    ?\x2018 "'"
@@ -109,6 +110,13 @@
           (while (search-forward-regexp (string x) nil t)
             (replace-match (sbw/ht-get chars x) nil nil)))
         (sbw/ht-keys chars)))))
+
+(defun sbw/clean-up-text ()
+  "Clean up whitespace and fancy punctuation in the current buffer."
+  (interactive)
+  (progn
+    (sbw/fix-smart-punctuation)
+    (delete-trailing-whitespace)))
 
 (defun sbw/buffer-path-to-kill-ring ()
   "Copy the buffer path to the kill ring."
