@@ -101,6 +101,12 @@
   "Returns a menu action to display a submenu, with the specified KEY binding, DESCRIPTION, and SUBMENU to display."
   `(sbw/menu-action ,key ,description (lambda () (sbw/menu-display ,submenu))))
 
+(defun sbw/menu--open-current-status-update ()
+  (let* ((date     (s-trim-right (shell-command-to-string "date --date='next friday + 7 days' '+%Y-%m-%d'")))
+         (folder   (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update"))
+         (filename (s-concat folder "/biweekly-status-update-" date ".md")))
+    (find-file filename)))
+
 (defconst sbw/menu-common-commands
   (sbw/menu "Common actions"
             (sbw/menu-submenu ?d "Dashboard"
@@ -126,6 +132,8 @@
                                 (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
                                 (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
                                 ))
+            (sbw/menu-action ?m "Markdown scratchpad" (lambda () (find-file "~/trash/scratchpad.md")))
+            (sbw/menu-action ?s "Status update"       (lambda () (sbw/menu--open-current-status-update)))
             (sbw/menu-submenu ?t "Timers"
                       (sbw/menu "Timers"
                                 (sbw/menu-action ?p "Toggle pomodoro timer" 'sbw/pomodoro-timer-toggle)
@@ -137,3 +145,6 @@
             (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))
 
 (provide 'sbw-menu)
+
+
+

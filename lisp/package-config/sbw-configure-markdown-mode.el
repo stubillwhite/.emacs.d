@@ -52,7 +52,6 @@
         (when is-org-link
           (let* ((url     (match-string-no-properties 1))
                  (desc    (match-string-no-properties 2))
-                 (id      (read-string "Enter reference ID: "))
                  (md-link (concat "[" desc "](" url ")")))
             (replace-match md-link)))))
 
@@ -64,8 +63,8 @@
           (let* ((desc     (match-string-no-properties 1))
                  (url      (match-string-no-properties 2))
                  (id       (read-string "Enter reference ID: "))
-                 (ref-link (s-lex-format "[${desc}][${id}]\n\n[${id}]: ${url}")))
-            (replace-match ref-link)))))
+                 (ref-link (s-lex-format "[${desc}][${id}]\n[${id}]: ${url}")))
+            (replace-match ref-link t t)))))
     
     (defun sbw/markdown-reformat-org-tables ()
       (interactive)
@@ -75,10 +74,15 @@
           (while (search-forward "-+-" nil t)
             (replace-match "-|-")))))
 
+    (defun sbw/markdown-cleanup ()
+      (interactive)
+      (sbw/markdown-reformat-org-tables)
+      (markdown-cleanup-list-numbers))
+    
     (add-hook 'markdown-mode-hook
               (lambda ()
                 (when buffer-file-name
-                  (add-hook 'before-save-hook 'sbw/markdown-reformat-org-tables))))
+                  (add-hook 'before-save-hook 'sbw/markdown-cleanup))))
 
     (defun sbw/markdown--read-tags ()
       (let ((default-directory "~/trash/list-tags")) 

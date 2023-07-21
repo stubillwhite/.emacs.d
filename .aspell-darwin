@@ -1,4 +1,4 @@
-personal_ws-1.1 en 821 
+personal_ws-1.1 en 898 
 ACL
 ACLs
 ADFS
@@ -16,7 +16,11 @@ ASG
 ASGs
 ASJC
 AWS
+Abhijit
+Actuals
 Adamos
+Adi
+Adi's
 Aegisthus
 Ai
 Ai's
@@ -38,6 +42,7 @@ Aptara
 Artifactory
 Arun
 Arun's
+Ashish
 AssertJ
 Associativity
 Authenticator
@@ -58,6 +63,7 @@ Benoit
 Benoit's
 Berni
 Bici
+Bikramjit
 Bladzich
 Bladzich's
 Bootcamp
@@ -82,6 +88,7 @@ CSV
 CTO
 CVs
 Carpaccio
+ChatGPT
 Chetan
 Chetan's
 Chiffre
@@ -112,6 +119,7 @@ DAAS
 DAL
 DAOs
 DAWG
+DBU
 DKP
 DLQ
 DOI
@@ -119,9 +127,11 @@ DOIs
 DOM
 DPOP
 DPOPs
+DQ
 DS
 DSL
 DSOps
+DSR
 DTDs
 DTM
 Daniella
@@ -138,6 +148,7 @@ Dilshad
 Dimensionality
 Dimi
 Dimitrov
+Dockerise
 Dockerised
 DocuSign
 Dojo
@@ -146,6 +157,7 @@ Domiziana
 Domiziana's
 Dredd
 Dropwizard
+Dutta
 Dynus
 Dystopian
 EDM
@@ -189,12 +201,15 @@ Finne's
 Fragomen
 GC
 GDPR
+GPT
 GPUs
 Gabby's
 Gameification
 Gamification
 Ganesh
+Ganesh's
 Gautam
+GenAI
 Georgios
 Georgious
 Gettler
@@ -218,6 +233,7 @@ HPCC
 HackerRank
 Hadoop
 Hamid
+Harbinder
 Hari
 Harprit
 Harwood
@@ -237,6 +253,7 @@ Idris
 IllegalArgumentException
 Imagenet
 Imposter
+InnoData
 IntelliJ
 Interfolio
 Irina
@@ -255,6 +272,9 @@ JVM
 Jacek
 Jacek's
 Jackman
+Jaroslav
+Jawad
+Jeetendra
 Jemini
 Jeroen
 Jeroen's
@@ -263,10 +283,13 @@ Jupyter
 JupyterHub
 KD
 KF
+KMS
 KPO
 KPOs
 KRs
+KSBs
 Kabeiroi
+Kanaga
 Kanwar
 Karolina
 Karthik
@@ -283,18 +306,21 @@ Knime
 Kobby
 Kompromat
 Korn
+Kosovo
 Kotlin
 Kratt
 Kravutske
 Krishnan
 Krishnan's
 Kubernetes
+Kumar
 Kyriakos
 LAPD
 LD
 LIMF
 LLM
 LLMs
+LMFlow
 LSE
 LTR
 Lagom
@@ -314,9 +340,12 @@ Logentries
 Lucene
 Lucene's
 Lundahl
+MHub
+MLCosmos
 MLOps
 MLflow
 MSK
+Maaike
 Macbeths
 Macduff
 Macker
@@ -339,6 +368,7 @@ MongoDB
 Monoids
 Moulin
 Mulholland
+Mustafa
 MySQL
 NDCG
 NER
@@ -363,6 +393,8 @@ Newsflo
 Newsflo's
 Nikeil
 Nishant
+Nishant's
+Nitin
 Noella
 OCC
 OCCAP
@@ -382,8 +414,10 @@ Oli's
 OmniScience
 Onboarding
 OneDrive
+OpenAI
 OpenJDK
 OpenSearch
+OpsBank
 OpsGenie
 OrgHub
 Oryn
@@ -407,6 +441,7 @@ Percipio
 PersonHub
 Petersburg
 PhDs
+Pieri
 PlumX
 Pluralsight
 Polydorus
@@ -416,12 +451,18 @@ Postgres
 Prakruthy
 Prakruthy's
 Pris
+Priyanka
+Priyanka's
 Punchdrunk
 Punchdrunk's
 Puppetfile
 PyCharm
+PyLadies
 QE
 QEs
+Qualys
+RACI
+RASCI
 RCO
 RDBMS
 RDF
@@ -431,10 +472,13 @@ RELX
 REPL
 RESTful
 RETS
+RFT
 RIC
 RIs
 ROS
 RSS
+Rahul
+Rahul's
 Readha
 Reaxys
 Rebooking
@@ -445,6 +489,7 @@ Reinder's
 RelationalAI
 Repartitioning
 ResNet
+ResearcherGPT
 Reusability
 Reza
 Reza's
@@ -460,6 +505,7 @@ Royston's
 Runbook
 Ryun
 Ryun's
+SARs
 SBT
 SCS
 SCT
@@ -497,16 +543,21 @@ Schrauwen
 SciBite
 SciVal
 ScienceDirect
+ScienceDirect's
 Scimago
 Scopus
+ScopusGPT
 Scratchbox
+Sebright
 Seitl
 Semigroups
 Sensu
+Shantanu
 Shareback
 Shawshank
 Sheehan
 Sheetal
+Shivam's
 Shkodran
 Shkodran's
 Shobhna
@@ -523,10 +574,13 @@ SonarQube
 Spidergap
 Spotify
 Sriram
+Starmania
 Stefano
 Stefano's
+Stitcher
 Sulskus
 Svetlana
+Sydnee
 Synaptica
 Syntasa
 TAs
@@ -538,8 +592,10 @@ TIO
 TIO's
 TMS
 TP
+TPM
 TPR
 Taffey
+Talvinder
 Tanium
 Tatev
 TechDesk
@@ -550,6 +606,7 @@ Terraforming
 Terragrunt
 Tetteh
 Tettelaar
+Thakur
 That'll
 Theano
 Thierry
@@ -595,17 +652,24 @@ Venkata
 Vimeo
 Visteon
 Voight
+Vtool
 Wageningen
+Waghmode
+Wakchaure
 Whitelisting
 Whitespace
 Wiebke
 Wiebke's
+Wim
 Workstream
+Wytze
 XGBoost
 XNN
 XOCS
 Xuemin's
 YAML
+Yoshiko
+Yoshiko's
 ZIO
 Zaria
 Zendesk
@@ -621,6 +685,7 @@ anonymised
 appender
 architected
 architecting
+atomisation
 backfill
 backfilling
 balancer
@@ -658,6 +723,7 @@ deserialization
 deserialize
 dev
 differentiator
+disambiguating
 discardable
 discoverability
 dkp
@@ -675,6 +741,7 @@ generalisable
 glitchy
 hackery
 hashcode
+healthcheck
 hoc
 idempotence
 impedence
@@ -693,9 +760,11 @@ integrations
 interdependencies
 interoperable
 iteratively
+jitter
 kanban
 karting
 kata
+keystore
 kinesthetic
 lifecycle
 lockdown
@@ -717,6 +786,7 @@ namespace
 occurrance
 onboarding
 ontologies
+operationalise
 outlier
 outliers
 overfit
@@ -750,6 +820,8 @@ pseudonymising
 puppetcontrol
 puppeteering
 puppeting
+quantization
+queueing
 ramping
 rata
 reactively
@@ -770,6 +842,7 @@ runtime
 scalability
 scalable
 schemas
+sebright
 semigroup
 serialization
 serverless
@@ -782,6 +855,7 @@ stateful
 submodule
 submodules
 summarisation
+superset
 supertype
 sustainably
 teardown
@@ -796,6 +870,7 @@ traceability
 transactional
 trenchcoat
 triaged
+triaging
 trigram
 trigrams
 typeclass
@@ -808,6 +883,7 @@ unglamorous
 unintuitive
 unmarshaling
 unmarshall
+unsized
 upsize
 videographer
 votives
@@ -818,5 +894,6 @@ whitelists
 whitespace
 wireframes
 workspace
+workspaces
 workstream
 workstreams
