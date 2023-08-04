@@ -108,7 +108,13 @@
     (find-file filename)))
 
 (defconst sbw/menu-common-commands
-  (sbw/menu "Common actions"
+  (sbw/menu "Shortcut menu"
+            (sbw/menu-submenu ?c "Common tasks"
+                      (sbw/menu "Common tasks"
+                                (sbw/menu-action ?c "Clean up text" 'sbw/clean-up-text)
+                                (sbw/menu-action ?r "Markdown link to reference link" 'sbw/markdown--markdown-link-to-reference-link)
+                                (sbw/menu-action ?y "Yank buffer path" 'sbw/buffer-path-to-kill-ring)
+                                ))
             (sbw/menu-submenu ?d "Dashboard"
                       (sbw/menu "Dashboard"
                                 (sbw/menu-submenu ?s "Selection"
