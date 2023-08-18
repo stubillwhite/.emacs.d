@@ -115,6 +115,7 @@
   "Clean up whitespace and fancy punctuation in the current buffer."
   (interactive)
   (progn
+    (untabify (point-min) (point-max))
     (sbw/fix-smart-punctuation)
     (delete-trailing-whitespace)))
 
