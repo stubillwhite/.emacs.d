@@ -31,7 +31,7 @@
     (defun sbw/markdown--open-in-obsidian ()
       (interactive)
       (let* ((vault      "obsidian")
-             (vault-path "/Users/white1/Dropbox/Private/obsidian")
+             (vault-path "/Users/stubillwhite/Library/CloudStorage/Dropbox/Private/obsidian")
              (file       (s-replace (concat vault-path "/") "" (buffer-file-name)))
              (url        (concat "obsidian://open?vault=" (url-hexify-string vault) "&file=" (url-hexify-string file))))
         (shell-command (concat "open '" url "'"))))
