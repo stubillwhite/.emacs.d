@@ -27,11 +27,11 @@
       (interactive)
       (sbw/markdown-reformat-org-tables)
       (markdown-preview))
-    
+
     (defun sbw/markdown--open-in-obsidian ()
       (interactive)
       (let* ((vault      "obsidian")
-             (vault-path "/Users/stubillwhite/Library/CloudStorage/Dropbox/Private/obsidian")
+             (vault-path (file-truename "~/Library/CloudStorage/Dropbox/Private/obsidian"))
              (file       (s-replace (concat vault-path "/") "" (buffer-file-name)))
              (url        (concat "obsidian://open?vault=" (url-hexify-string vault) "&file=" (url-hexify-string file))))
         (shell-command (concat "open '" url "'"))))
@@ -127,3 +127,7 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
+
+
+
+
