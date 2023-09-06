@@ -77,8 +77,6 @@
                          (:name org-gcal)     ;; Org sync with Google Calendar
                          (:name org-download) ;; Drag and drop images to Emacs org-mode
 
-                         ;; (:name org-ai) ;; Minor mode for Emacs org-mode that provides access to OpenAI APIs
-
                          ;; Git
                          (:name magit) ;; Control Git from Emacs
  
