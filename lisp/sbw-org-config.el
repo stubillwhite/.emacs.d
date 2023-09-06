@@ -248,6 +248,9 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands '("ck" . "KD"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "ckt" "KD tasks" (sbw/org-config-projects ["current"] ["kd"])))
 
+(add-to-list 'org-agenda-custom-commands '("iw" . "Incubating"))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "iwt" "Work tasks" (sbw/org-config-projects ["incubating"] ["work"])))
+
 (add-to-list 'org-agenda-custom-commands '("cs" . "Selection"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cst" "Selection tasks" (sbw/ht-get sbw/org-config :selected-projects)))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-agenda            "csa" "selection agenda" 7 (sbw/ht-get sbw/org-config :selected-projects)))
@@ -278,6 +281,8 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defun sbw/org-config-agenda-focus-area-tasks  () (interactive) (sbw/org-config--open-agenda "cft"))
 (defun sbw/org-config-agenda-domain-tasks      () (interactive) (sbw/org-config--open-agenda "cdt"))
 (defun sbw/org-config-agenda-management-tasks  () (interactive) (sbw/org-config--open-agenda "cmt"))
+
+(defun sbw/org-config-agenda-incubating-work-tasks  () (interactive) (sbw/org-config--open-agenda "iwt"))
 
 ;; Agenda appearance
 

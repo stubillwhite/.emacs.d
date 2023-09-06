@@ -129,6 +129,7 @@
                                 (sbw/menu-action ?f "Focus area" 'sbw/org-config-agenda-focus-area-tasks)
                                 (sbw/menu-action ?d "Domain"     'sbw/org-config-agenda-domain-tasks)
                                 (sbw/menu-action ?m "Management" 'sbw/org-config-agenda-management-tasks)
+                                (sbw/menu-action ?i "Incubating" 'sbw/org-config-agenda-incubating-work-tasks)
                                 ))
             (sbw/menu-action ?f "Refresh" 'sbw/org-config-refresh)
             (sbw/menu-submenu ?r "Review"
