@@ -2,13 +2,14 @@
 
 FIREFOX_HOME="${HOME}/Library/Application Support/Firefox"
 
-function get-firefox-profile() {
-    if [[ $(grep '\[Profile[^0]\]' profiles.ini) ]]; then 
-        profilePath=$(grep -E '^\[Profile|^Path|^Default' profiles.ini | grep -1 '^Default=1' | grep '^Path' | gcut -c6-)
-    else 
-        profilePath=$(grep 'Path=' profiles.ini | gsed 's/^Path=//')
-    fi
-    echo "${profilePath}"
+function confirm() {
+    read -p "${1:-Are you sure? [y/n]} " response
+    case "$response" in
+        [Yy][Ee][Ss]|[Yy]) 
+            true ;;
+        *)
+            false ;;
+    esac
 }
 
 function firefox-add-config-setting() {
@@ -23,16 +24,24 @@ function firefox-add-config-setting() {
     fi
 }
 
-pushd "${FIREFOX_HOME}" > /dev/null
+echo 'WARNING: Ensure that Firefox is closed before running this script'
 
-firefoxProfile=$(get-firefox-profile)
+pushd "${FIREFOX_HOME}/Profiles" > /dev/null
 
-defaultsFile=${firefoxProfile}/prefs.js 
-cp -i ${defaultsFile} ${defaultsFile}.bak
+IFS=$'\n' && for firefoxProfile in $(ls -1d ./*)
+do
+    confirm "Insinuate into ${firefoxProfile} [y/n]?" ] && {
+        defaultsFile=${firefoxProfile}/prefs.js 
+        cp -i ${defaultsFile} ${defaultsFile}.bak
 
-firefox-add-config-setting "${defaultsFile}" 'network.protocol-handler.app.org-protocol'      '"/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"'
-firefox-add-config-setting "${defaultsFile}" 'network.protocol-handler.expose.org-protocol'   true
-firefox-add-config-setting "${defaultsFile}" 'network.protocol-handler.external.org-protocol' true
+        firefox-add-config-setting "${defaultsFile}" 'network.protocol-handler.app.org-protocol'      '"/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"'
+        firefox-add-config-setting "${defaultsFile}" 'network.protocol-handler.expose.org-protocol'   true
+        firefox-add-config-setting "${defaultsFile}" 'network.protocol-handler.external.org-protocol' true
+
+        echo
+    }
+done
 
 popd > /dev/null
+
 
