@@ -113,7 +113,6 @@
 (defun sbw/menu--open-current-status-update ()
   (let* ((most-recent-date (first (sbw/menu--dates-of-existing-status-reports)))
        (current-date     (s-trim-right (shell-command-to-string "date '+%Y-%m-%d'")))
-       (test             (s-lex-format "date --date='${most-recent-date} + 14 days' '+%Y-%m-%d'"))
        (next-date        (s-trim-right (shell-command-to-string (s-lex-format "date --date='${most-recent-date} + 14 days' '+%Y-%m-%d'"))))
        (target-date      (if (s-less? current-date most-recent-date) most-recent-date next-date))
        (folder           (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update"))
