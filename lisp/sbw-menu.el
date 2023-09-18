@@ -101,11 +101,24 @@
   "Returns a menu action to display a submenu, with the specified KEY binding, DESCRIPTION, and SUBMENU to display."
   `(sbw/menu-action ,key ,description (lambda () (sbw/menu-display ,submenu))))
 
+(defun sbw/menu--dates-of-existing-status-reports ()
+  (let* ((folder   (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update")))
+    (->> (f-files folder)
+         (-map (lambda (x) (f-filename x)))
+         (-map (lambda (x) (last (s-match "biweekly-status-update-\\(.+\\)\.md" x))))
+         (-flatten)
+         (-sort 's-less?)
+         (reverse))))
+
 (defun sbw/menu--open-current-status-update ()
-  (let* ((date     (s-trim-right (shell-command-to-string "date --date='next friday + 7 days' '+%Y-%m-%d'")))
-         (folder   (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update"))
-         (filename (s-concat folder "/biweekly-status-update-" date ".md")))
-    (find-file filename)))
+  (let* ((most-recent-date (first (sbw/menu--dates-of-existing-status-reports)))
+       (current-date     (s-trim-right (shell-command-to-string "date '+%Y-%m-%d'")))
+       (test             (s-lex-format "date --date='${most-recent-date} + 14 days' '+%Y-%m-%d'"))
+       (next-date        (s-trim-right (shell-command-to-string (s-lex-format "date --date='${most-recent-date} + 14 days' '+%Y-%m-%d'"))))
+       (target-date      (if (s-less? current-date most-recent-date) most-recent-date next-date))
+       (folder           (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update"))
+       (filename         (s-lex-format "${folder}/biweekly-status-update-${target-date}.md")))
+  (find-file filename)))
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Shortcut menu"
@@ -152,6 +165,4 @@
             (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))
 
 (provide 'sbw-menu)
-
-
 

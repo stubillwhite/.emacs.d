@@ -1,4 +1,4 @@
-personal_ws-1.1 en 932 
+personal_ws-1.1 en 939 
 ACL
 ACLs
 ADFS
@@ -59,6 +59,7 @@ Bacchae
 Backfill
 Backpressure
 Banquo
+Batalov
 Beks
 Bengaluru
 Benoit
@@ -71,6 +72,7 @@ Bladzich's
 Bootcamp
 Bucknall
 Bucknell
+Bundesliga
 Bytecode
 CARs
 CCBY
@@ -578,6 +580,7 @@ Semigroups
 Semmelweis
 Sensu
 Shantanu
+Shapley
 Shareback
 Shawshank
 Sheehan
@@ -702,6 +705,7 @@ Xuemin's
 YAML
 Yoshiko
 Yoshiko's
+Yury
 ZIO
 Zaria
 Zendesk
@@ -834,6 +838,8 @@ parameterising
 parsers
 performant
 personalisation
+peturbation
+peturbing
 pluggable
 polymorphism
 positivity
@@ -893,6 +899,7 @@ superset
 supertype
 sustainably
 teardown
+templating
 terraformcontrol
 timesheet
 timestamp
