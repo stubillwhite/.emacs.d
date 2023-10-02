@@ -124,7 +124,7 @@
             (sbw/menu-submenu ?c "Common tasks"
                       (sbw/menu "Common tasks"
                                 (sbw/menu-action ?c "Clean up text" 'sbw/clean-up-text)
-                                (sbw/menu-action ?r "Markdown link to reference link" 'sbw/markdown--markdown-link-to-reference-link)
+                                (sbw/menu-action ?l "Markdown link to reference link" 'sbw/markdown--markdown-link-to-reference-link)
                                 (sbw/menu-action ?y "Yank buffer path" 'sbw/buffer-path-to-kill-ring)
                                 ))
             (sbw/menu-submenu ?d "Dashboard"
@@ -151,7 +151,7 @@
                                 (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
                                 (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
                                 ))
-            (sbw/menu-action ?m "Markdown scratchpad" (lambda () (find-file "~/trash/scratchpad.md")))
+            (sbw/menu-action ?m "Markdown scratchpad" (lambda () (find-file (sbw/dropbox-subfolder "Private/obsidian/professional/Scratchpad.md"))))
             (sbw/menu-action ?s "Status update"       (lambda () (sbw/menu--open-current-status-update)))
             (sbw/menu-submenu ?t "Timers"
                       (sbw/menu "Timers"
