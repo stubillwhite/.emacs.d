@@ -28,6 +28,24 @@
       (sbw/markdown-reformat-org-tables)
       (markdown-preview))
 
+    (defun sbw/markdown-preview-with-mermaid-diagrams ()
+      (interactive)
+      (let* ((input-fnam     buffer-file-name)
+             (md-fnam        (concat (getenv "HOME") "/trash/markdown-preview.md"))
+             (html-fnam      (concat (file-name-sans-extension md-fnam) ".html"))
+             (css-fnam       (concat user-emacs-directory "lisp/package-config/markdown-light.css"))
+             (cmd-gen-md     (concat "mmdc --outputFormat=png -i '" input-fnam "' -o '" md-fnam "'"))
+             (cmd-gen-html   (concat "pandoc --filter mermaid-filter --from=gfm --to=html --metadata title='markdown-preview' --standalone --css '" css-fnam "' -o '" html-fnam "' '" md-fnam "'")))
+        (message "Formatting tables")
+        (sbw/markdown-reformat-org-tables)
+        (message "Generating images for Mermaid diagrams")
+        (shell-command cmd-gen-md)
+        (message "Generating html")
+        (shell-command cmd-gen-html)
+        (message (concat "Opening " html-fnam))
+        (shell-command (concat "open '" html-fnam "'"))
+        (message (concat "Generated " html-fnam))))
+
     (defun sbw/markdown--open-in-obsidian ()
       (interactive)
       (let* ((vault      "obsidian")
@@ -107,7 +125,7 @@
   ("M-4"       . markdown-insert-header-atx-4)
   ("M-5"       . markdown-insert-header-atx-5)
   ("M-6"       . markdown-insert-header-atx-6)
-  ("C-c m p"   . sbw/markdown-preview)
+  ("C-c m p"   . sbw/markdown-preview-with-mermaid-diagrams)
   ("C-c m w"   . sbw/markdown--to-word)
   ("C-c m e"   . markdown-export)
   ("C-c m h 0" . markdown-remove-header)
@@ -127,7 +145,5 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
-
-
 
 
