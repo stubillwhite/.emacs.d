@@ -30,7 +30,7 @@
 
     (defun sbw/markdown-preview-with-mermaid-diagrams ()
       (interactive)
-      (let* ((input-fnam     buffer-file-name)
+      (let* ((input-fnam     (concat (getenv "HOME") "/trash/markdown-original.md"))
              (md-fnam        (concat (getenv "HOME") "/trash/markdown-preview.md"))
              (html-fnam      (concat (file-name-sans-extension md-fnam) ".html"))
              (css-fnam       (concat user-emacs-directory "lisp/package-config/markdown-light.css"))
@@ -38,6 +38,8 @@
              (cmd-gen-html   (concat "pandoc --filter mermaid-filter --from=gfm --to=html --metadata title='markdown-preview' --standalone --css '" css-fnam "' -o '" html-fnam "' '" md-fnam "'")))
         (message "Formatting tables")
         (sbw/markdown-reformat-org-tables)
+        (message "Saving file")
+        (write-region (point-min) (point-max) input-fnam)
         (message "Generating images for Mermaid diagrams")
         (shell-command cmd-gen-md)
         (message "Generating html")
@@ -45,7 +47,7 @@
         (message (concat "Opening " html-fnam))
         (shell-command (concat "open '" html-fnam "'"))
         (message (concat "Generated " html-fnam))))
-
+    
     (defun sbw/markdown--open-in-obsidian ()
       (interactive)
       (let* ((vault      "obsidian")
