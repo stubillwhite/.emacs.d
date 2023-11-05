@@ -387,28 +387,3 @@
 
 (add-function :after after-focus-change-function #'sbw/right-align-tags)
 
-
-;; https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
-(use-package org-download
-  :after org
-  :defer nil
-  :init (progn
-          (defun sbw/org-download-insert-markdown-link ()
-            (interactive)
-            (org-download-screenshot)
-            (let ((path )
-                  (url  (concat "![[" org-download-path-last-file "]]")))
-              (insert url)))
-          
-          (setq
-           org-download-method            'directory
-           org-download-image-dir         "images"
-           org-download-heading-lvl       nil
-           org-download-timestamp         "%Y%m%d-%H%M%S_"
-           org-image-actual-width         300
-           org-download-screenshot-method "/usr/local/bin/pngpaste %s"))
-
-  :bind
-  ("C-M-y" . sbw/org-download-insert-markdown-link))
-
-
