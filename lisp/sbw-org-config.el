@@ -204,6 +204,20 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                     ((org-agenda-overriding-header (sbw/org-config--title "Schedule for the week"))
                      (org-agenda-span 7)
                      (org-agenda-files ,files)))
+            (tags-todo "TAGS=\":priority:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - priority"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        ;; (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))
+                        ))
+            (tags-todo "TAGS=\":admin:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - admin"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        ;; (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))
+                        ))
             (todo "STARTED"
                   ((org-agenda-overriding-header (sbw/org-config--title "Active tasks"))
                    (org-agenda-files ,files)
