@@ -1,7 +1,9 @@
-personal_ws-1.1 en 939 
+personal_ws-1.1 en 997 
 ACL
 ACLs
 ADFS
+ADHD
+ADHDers
 ADR
 ADRs
 ALF
@@ -28,6 +30,7 @@ Akila
 Akila's
 Akka
 Alchemical
+Almeida
 AlphaBeta
 Altmetric
 Altmetrics
@@ -37,8 +40,11 @@ Ami
 Anique
 Anonymise
 Anonymising
+Anthropic
+AppSync
 Appold
 Aptara
+Arcola
 Artifactory
 Arun
 Arun's
@@ -60,6 +66,7 @@ Backfill
 Backpressure
 Banquo
 Batalov
+Battersea
 Beks
 Bengaluru
 Benoit
@@ -67,8 +74,10 @@ Benoit's
 Berni
 Bici
 Bikramjit
+BingChat
 Bladzich
 Bladzich's
+Blanc
 Bootcamp
 Bucknall
 Bucknell
@@ -84,7 +93,9 @@ CKAN
 CLI
 CNNs
 COI
+COLAB
 CP
+CPUs
 CQRS
 CRS
 CSAQ
@@ -160,6 +171,7 @@ Dockerised
 DocuSign
 Dojo
 Dom
+Dom's
 Domiziana
 Domiziana's
 Dragos
@@ -168,6 +180,7 @@ Dropwizard
 Dutta
 Dynus
 Dystopian
+ECS
 EDM
 EID
 EIDs
@@ -178,6 +191,7 @@ ELS
 EMBASE
 EMR
 EOL
+EOS
 ESTR
 ETL
 Ebirah
@@ -206,6 +220,7 @@ FTEs
 FWCI
 Fady
 Felina
+Finborough
 Finne
 Finne's
 Fragomen
@@ -214,6 +229,7 @@ GDPR
 GPT
 GPUs
 Gabby's
+Galvanizing
 Gameification
 Gamification
 Ganesh
@@ -245,9 +261,11 @@ HPCC
 HackerRank
 Hadoop
 Hamid
+Hammersmith
 Harbinder
 Hari
 Harprit
+Harprit's
 Harwood
 Heike
 Heira
@@ -261,12 +279,15 @@ IPR
 ISSN
 ISSNs
 Iana
+Iana's
+IdeaScale
 Idempotence
 Idris
 IllegalArgumentException
 Imagenet
 Imposter
 Inferentia
+Inferentium
 InnoData
 IntelliJ
 Interfolio
@@ -291,6 +312,7 @@ Jawad
 Jawad's
 Jeetendra
 Jemini
+Jermyn
 Jeroen
 Jeroen's
 Jevon
@@ -310,6 +332,7 @@ Kanwar
 Karolina
 Karthik
 Karthik's
+Kashnitsky
 Kedro
 Keras
 KeyFe
@@ -331,16 +354,20 @@ Krishnan
 Krishnan's
 Kubernetes
 Kumar
+Kumsal
+Kumsal's
 Kyriakos
 LAPD
 LD
 LIMF
 LLM
+LLMOps
 LLMs
 LMFlow
 LSE
 LTR
 Ladly
+Lagavulin
 Lagom
 Lapsins
 Leetcode
@@ -352,6 +379,7 @@ LexisNexis
 Ligia
 Ligia's
 Liliane
+Lillet
 Lingpipe
 LinkedIn
 Logentries
@@ -376,6 +404,7 @@ Manol
 Mantawauk
 MarkLogic
 Mazeppa
+Meena
 Mendeley
 Mendeley's
 Mesos
@@ -460,13 +489,17 @@ Palantir
 Pamina
 Pancras
 Pangram
+Pankaj
 Parameterisation
 Parmeet
 Percipio
 PersonHub
 Petersburg
+Peychaud
 PhDs
 Pieri
+PineCone
+Pleasance
 PlumX
 Pluralsight
 Polydorus
@@ -505,6 +538,8 @@ RSS
 Raahul
 Raahul's
 Rasha
+Rasha's
+Raudaschl
 Readha
 Reaxys
 Rebooking
@@ -538,6 +573,7 @@ SCT
 SDG
 SDGs
 SDK
+SDLC
 SDPR
 SHACL
 SJR
@@ -553,19 +589,24 @@ SPM
 SQS
 SSDR
 SSO
+SSRN
 STMJ
 SUTD
 Saad
 SageMaker
 Sandeep
 Sandeep's
+Sangavi
+Sangavi's
 Santorini
 Saskia
 Savitskaya
+Scadding
 ScalaBridge
 Scalaz
 Schijvenaars
 Schrauwen
+Schrauwen's
 SciBite
 SciVal
 ScienceDirect
@@ -600,13 +641,17 @@ Solange
 Soleimanpour
 Solr
 SonarQube
+Southwark
 Spidergap
 Spotify
 Sriram
 Starmania
 Stefano
 Stefano's
+Steph
+Steph's
 Stitcher
+Stratford
 Suganya
 Sulskus
 Svetlana
@@ -629,6 +674,7 @@ Talvinder
 Tanium
 Tatev
 TechDesk
+TechHubs
 TensorFlow
 Terradata
 Terraform
@@ -701,6 +747,7 @@ Wytze
 XGBoost
 XNN
 XOCS
+Ximenez
 Xuemin's
 YAML
 Yoshiko
@@ -709,6 +756,7 @@ Yury
 ZIO
 Zaria
 Zendesk
+Zhang
 abstractive
 accessors
 activations
@@ -765,6 +813,7 @@ discoverability
 dkp
 embeddings
 empathic
+enablement
 explainability
 extractive
 forecasted
@@ -781,6 +830,7 @@ hashcode
 healthcheck
 hoc
 idempotence
+impactful
 impedence
 implementors
 implicits
@@ -789,6 +839,7 @@ incentivise
 incentivising
 inclusivity
 incrementing
+indexable
 influencer
 influencers
 injectable
@@ -797,6 +848,7 @@ integrations
 interdependencies
 interoperable
 iteratively
+janky
 jitter
 kanban
 karting
@@ -808,10 +860,12 @@ lockdown
 lowercasing
 maenads
 matchers
+mentorship
 microservice
 microservices
 minima
 minimalistic
+misclassified
 misrecognised
 mockist
 monad
@@ -873,6 +927,7 @@ reflowing
 remediated
 remediating
 repartitioning
+replicability
 replicant
 replicants
 reproducibility
@@ -892,6 +947,7 @@ siloing
 splitter
 splitters
 stateful
+submitters
 submodule
 submodules
 summarisation
@@ -901,6 +957,7 @@ sustainably
 teardown
 templating
 terraformcontrol
+th
 timesheet
 timestamp
 tmux
@@ -922,6 +979,7 @@ underfitting
 unenthused
 unglamorous
 unintuitive
+unlinked
 unmarshaling
 unmarshall
 unsized
