@@ -1,19 +1,3 @@
-;; (defun my/helm-buffers-list ()
-;;   ;; https://stackoverflow.com/questions/11403862/how-to-have-emacs-helm-list-offer-files-in-current-directory-as-options
-;;   (interactive)
-  
-;;   (unless helm-source-buffers-list
-;;     (setq helm-source-buffers-list
-;;           (helm-make-source "Buffers" 'helm-source-buffers)))
-
-;;   (helm-other-buffer '(helm-source-buffers-list
-;;                        helm-source-files-in-current-dir
-;;                        helm-source-bookmarks
-;;                        helm-source-recentf
-;;                        helm-source-bindir
-;;                        helm-source-projectile-files-list)
-;;                    "* my/helm-find-files *"))
-
 (setq sbw/package-list '(
                          ;; Package management
                          (:name use-package) ;; Easy package use
@@ -48,7 +32,7 @@
                          (:name avy)                 ;; Jump to things in Emacs tree-style
                          (:name ace-window)          ;; Quickly switch windows			 
                          (:name expand-region)       ;; Expand region by semantic units
-			 (:name drag-stuff)          ;; Drag stuff around in Emacs
+                         (:name drag-stuff)          ;; Drag stuff around in Emacs
                          (:name evil-nerd-commenter) ;; Efficient language-independent commenting
                          (:name key-chord)           ;; Map pairs of simultaneously pressed keys to commands
                          (:name hydra)               ;; Make Emacs bindings that stick around
@@ -60,9 +44,6 @@
 
                          ;; Parenthesis management
                          (:name smartparens)  ;; Improved paredit
-                         
-                         ;; Usability
-                         (:name key-chord)        ;; Map pairs of simultaneously pressed keys to commands
 
                          ;; Static checking
                          (:name flyspell)              ;; Spell checking
@@ -74,16 +55,10 @@
                          (:name org)          ;; Your life in plain text
                          (:name ob-async)     ;; Asynchronous src_block execution for org-babel
                          (:name htmlize)      ;; html org-mode reports
-                         (:name org-gcal)     ;; Org sync with Google Calendar
-                         (:name org-download) ;; Drag and drop images to Emacs org-mode
 
                          ;; Git
                          (:name magit) ;; Control Git from Emacs
  
-                         ;; Tramp
-                         (:name docker-tramp) ;; Tramp mode for Docker
-                         (:name helm-tramp)   ;; Helm for Tramp
-
                          ;; Regex
                          (:name visual-regexp)          ;; A regexp/replace command for Emacs with interactive visual feedback
                          (:name visual-regexp-steroids) ;; Extends visual-regexp to support other regexp engines
@@ -96,10 +71,6 @@
                          (:name clj-refactor) ;; Clojure refactoring functions
                          (:name cljr-helm)    ;; Helm wrapper for clj-refactor
 
-                         ;; ;; Elm
-                         (:name elm-mode)     ;; Elm mode for Emacs
-                         (:name flycheck-elm) ;; Flycheck for Elm
-
                          ;; Markdown
                          (:name markdown-mode) ;; Markdown mode
                          (:name markdown-toc)  ;; Generate a table of contents in a markdown file
@@ -107,9 +78,6 @@
                          ;; Text
                          (:name mw-thesaurus) ;; Merriam-Webster Thesaurus
 
-                         ;; Scala
-                         (:name scala-mode) ;; Scala mode for Emacs
-                         
                          ;; YAML
                          (:name yaml-mode)         ;; Emacs major mode for editing YAML files
                          (:name flycheck-yamllint) ;; YAML checker

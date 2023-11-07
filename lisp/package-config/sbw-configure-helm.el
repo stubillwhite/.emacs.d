@@ -6,7 +6,6 @@
     (require 'helm-projectile)
     (helm-projectile-on)
 
-    (require 'helm-config)
     (require 'helm-grep)
 
     ;; For some reason, helm-projectile-grep seems to reference this unset variable. Need to find out where this should

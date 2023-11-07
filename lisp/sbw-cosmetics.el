@@ -18,8 +18,8 @@
 (let* ((font-name (cond
                    ((sbw/is-windows?) "Monaco-10")
                    ((sbw/is-linux?)   "Monaco-10")
-                   ((sbw/is-darwin?)  "Monaco-12")
-                   ;; ((sbw/is-darwin?)  "FantasqueSansMono Nerd Font Mono-14")
+                   ;; ((sbw/is-darwin?)  "Monaco-12")
+                   ((sbw/is-darwin?)  "FantasqueSansM Nerd Font Mono-14")
                    )))
   (set-face-font 'fixed-pitch font-name)
   (set-face-font 'default     font-name))

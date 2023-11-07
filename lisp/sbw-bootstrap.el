@@ -11,11 +11,6 @@
 (setq custom-file (concat user-emacs-directory "emacs-customisations.el"))
 (load custom-file)
 
-(defun sbw/bootstrap-load-secrets ()
-  "Load encrypted secrets."
-  (interactive)
-  (require 'secrets "secrets.el.gpg"))
-
 (defun sbw/bootstrap--install-straight-if-required ()
   (let ((bootstrap-file    (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
         (bootstrap-version 4))
