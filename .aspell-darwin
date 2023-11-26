@@ -1,4 +1,4 @@
-personal_ws-1.1 en 997 
+personal_ws-1.1 en 1011 
 ACL
 ACLs
 ADFS
@@ -274,6 +274,7 @@ HipChat
 Hitchcockian
 Hoekstra
 IAM
+IHR
 ILR
 IPR
 ISSN
@@ -410,6 +411,7 @@ Mendeley's
 Mesos
 Metabase
 Metaflow
+Mev
 Milkroundabout
 Minh
 Minh's
@@ -451,6 +453,7 @@ Nitin
 Noella
 OCC
 OCCAP
+ODR
 OKR
 OKR's
 OKRs
@@ -471,6 +474,7 @@ Ontotext
 OpenAI
 OpenJDK
 OpenSearch
+Operationalising
 OpsBank
 OpsGenie
 OrgHub
@@ -588,12 +592,14 @@ SPI
 SPM
 SQS
 SSDR
+SSL
 SSO
 SSRN
 STMJ
 SUTD
 Saad
 SageMaker
+Samarasinghe
 Sandeep
 Sandeep's
 Sangavi
@@ -653,6 +659,7 @@ Steph's
 Stitcher
 Stratford
 Suganya
+Sujit
 Sulskus
 Svetlana
 Sydnee
@@ -713,6 +720,7 @@ UX
 Udacity
 Udemy
 Unburied
+Upskilling
 Uzma
 VGG
 VM
@@ -720,6 +728,7 @@ VPC
 VPCs
 VPN
 VR
+VTW
 Vallianatos
 Vanisha
 Varun
@@ -740,6 +749,7 @@ Whitelisting
 Whitespace
 Wiebke
 Wiebke's
+Wilmshurst
 Wim
 Workstream
 Wundergraph
@@ -765,6 +775,7 @@ aggregator
 aggregators
 algorithmically
 analytics
+anonymise
 anonymised
 appender
 architected
@@ -878,6 +889,7 @@ observability
 occurrance
 onboarding
 ontologies
+operationalisation
 operationalise
 outlier
 outliers
@@ -984,6 +996,8 @@ unmarshaling
 unmarshall
 unsized
 upsize
+upskilling
+vectorise
 videographer
 votives
 waypoint
