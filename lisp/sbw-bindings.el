@@ -114,6 +114,11 @@ _P_   Skip         _N_   Skip       _r_ Mark by regex
 _M-p_ Unmark       _M-n_ Unmark
 _q_   Quit
 "
+   ("o" sbw/mc-mark-previous-like-this-then-cycle-backward)
+   ("O" sbw/mc-skip-to-previous-like-this-then-cycle-backward)
+   ("m" sbw/mc-mark-next-like-this-then-cycle-forward)
+   ("M" sbw/mc-skip-to-next-like-this-then-cycle-forward)
+
    ("p" mc/mark-previous-like-this)
    ("P" mc/skip-to-previous-like-this)
    ("M-p" mc/unmark-previous-like-this)
