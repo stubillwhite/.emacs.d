@@ -75,6 +75,11 @@
                  (md-link (concat "[" desc "](" url ")")))
             (replace-match md-link)))))
 
+    (defun sbw/markdown--insert-file-header ()
+      (interactive)
+      (let* ((text (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))))
+        (markdown-insert-header 1 text)))
+    
     (defun sbw/markdown--markdown-link-to-reference-link ()
       (interactive)
       (let* ((regex      "\\[\\(.+\\)\\](\\(.+\\))")
@@ -137,6 +142,7 @@
   ("C-c m h 4" . markdown-insert-header-atx-4)
   ("C-c m h 5" . markdown-insert-header-atx-5)
   ("C-c m h 6" . markdown-insert-header-atx-6)
+  ("C-c m h f" . sbw/markdown--insert-file-header)
   ("C-c m i"   . markdown-insert-italic)
   ("C-c m b"   . markdown-insert-bold)
   ("C-c m c"   . markdown-insert-code)

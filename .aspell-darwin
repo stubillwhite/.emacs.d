@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1011 
+personal_ws-1.1 en 1032 
 ACL
 ACLs
 ADFS
@@ -40,6 +40,7 @@ Ami
 Anique
 Anonymise
 Anonymising
+Ansar
 Anthropic
 AppSync
 Appold
@@ -51,6 +52,8 @@ Arun's
 Ashish
 AssertJ
 Associativity
+Astra
+AstraDB
 Authenticator
 Autoencoders
 Avro
@@ -103,15 +106,19 @@ CSV
 CTO
 CVs
 Carpaccio
+Chakrabarty
 ChatGPT
 Chetan
 Chetan's
 Chiffre
+Chinar
+Chinar's
 Chinh
 Ciacco
 CiteScore
 Classloaders
 Classpath
+Cleland
 Clojure
 ClojureScript
 CloudHealth
@@ -177,6 +184,7 @@ Domiziana's
 Dragos
 Dredd
 Dropwizard
+Dunster
 Dutta
 Dynus
 Dystopian
@@ -195,6 +203,7 @@ EOS
 ESTR
 ETL
 Ebirah
+ElastiCache
 ElasticSearch
 Elasticache
 Elsevier
@@ -218,8 +227,10 @@ FROS
 FST
 FTEs
 FWCI
+Factuality
 Fady
 Felina
+Fenweh
 Finborough
 Finne
 Finne's
@@ -330,6 +341,7 @@ KSBs
 Kabeiroi
 Kanaga
 Kanwar
+Karaf
 Karolina
 Karthik
 Karthik's
@@ -345,6 +357,7 @@ Kingsley
 Kitson
 Knime
 Kobby
+Kohler
 Kompromat
 Korn
 Kosovo
@@ -406,6 +419,7 @@ Mantawauk
 MarkLogic
 Mazeppa
 Meena
+Meenakshisundaram
 Mendeley
 Mendeley's
 Mesos
@@ -570,6 +584,7 @@ Royston's
 Runbook
 Ryun
 Ryun's
+SAAS
 SARs
 SBT
 SCS
@@ -579,6 +594,7 @@ SDGs
 SDK
 SDLC
 SDPR
+SFTP
 SHACL
 SJR
 SLA
@@ -713,6 +729,7 @@ UAT
 UCSD
 UDF
 UI
+UMLS
 URI
 USD
 UUID
@@ -737,6 +754,7 @@ Venetia
 Venkat
 Venkat's
 Venkata
+Venkatraman
 Vimeo
 Visteon
 Voight
@@ -757,6 +775,7 @@ Wytze
 XGBoost
 XNN
 XOCS
+XSL
 Ximenez
 Xuemin's
 YAML
@@ -963,6 +982,7 @@ submitters
 submodule
 submodules
 summarisation
+sunsetting
 superset
 supertype
 sustainably
@@ -972,6 +992,7 @@ terraformcontrol
 th
 timesheet
 timestamp
+timezones
 tmux
 tokenisation
 tokenisers

@@ -121,6 +121,13 @@
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Shortcut menu"
+            (sbw/menu-submenu ?a "Analysis"
+                      (sbw/menu "Analysis"
+                                (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
+                                (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
+                                (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
+                                (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
+                                ))
             (sbw/menu-submenu ?c "Common tasks"
                       (sbw/menu "Common tasks"
                                 (sbw/menu-action ?c "Clean up text" 'sbw/clean-up-text)
@@ -144,14 +151,8 @@
                                 (sbw/menu-action ?i "Incubating" 'sbw/org-config-agenda-incubating-work-tasks)
                                 ))
             (sbw/menu-action ?f "Refresh" 'sbw/org-config-refresh)
-            (sbw/menu-submenu ?r "Review"
-                      (sbw/menu "Review"
-                                (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
-                                (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
-                                (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
-                                ))
             (sbw/menu-action ?m "Markdown scratchpad" (lambda () (find-file (sbw/dropbox-subfolder "Private/obsidian/professional/Scratchpad.md"))))
+            (sbw/menu-action ?r "Reading list"        (lambda () (find-file (sbw/dropbox-subfolder "Private/obsidian/professional/Reading list.md"))))
             (sbw/menu-action ?s "Status update"       (lambda () (sbw/menu--open-current-status-update)))
             (sbw/menu-submenu ?t "Timers"
                       (sbw/menu "Timers"
