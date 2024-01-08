@@ -24,5 +24,8 @@
 
 (sbw/bootstrap-require sbw/personal-package-list)
 
+;; Non-MELPA packages
 
-
+(straight-use-package
+ '(flymake-vale :type git :host github :repo "tpeacock19/flymake-vale"))
+(add-hook 'markdown-mode-hook #'flymake-vale-load)

@@ -74,12 +74,7 @@
                  (desc    (match-string-no-properties 2))
                  (md-link (concat "[" desc "](" url ")")))
             (replace-match md-link)))))
-
-    (defun sbw/markdown--insert-file-header ()
-      (interactive)
-      (let* ((text (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))))
-        (markdown-insert-header 1 text)))
-    
+  
     (defun sbw/markdown--markdown-link-to-reference-link ()
       (interactive)
       (let* ((regex      "\\[\\(.+\\)\\](\\(.+\\))")
@@ -109,6 +104,16 @@
                 (when buffer-file-name
                   (add-hook 'before-save-hook 'sbw/markdown-cleanup))))
 
+    (defun sbw/markdown--insert-file-header ()
+      (interactive)
+      (let* ((text (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))))
+        (markdown-insert-header 1 text)))
+
+    (defun sbw/markdown--insert-date-header ()
+      (interactive)
+      (let* ((text (format-time-string "%Y-%m-%d")))
+        (markdown-insert-header 1 text)))
+    
     (defun sbw/markdown--read-tags ()
       (let ((default-directory "~/trash/list-tags")) 
         (s-split "\n" (shell-command-to-string "source bin/activate && python list-tags.py && deactivate"))))
@@ -143,6 +148,7 @@
   ("C-c m h 5" . markdown-insert-header-atx-5)
   ("C-c m h 6" . markdown-insert-header-atx-6)
   ("C-c m h f" . sbw/markdown--insert-file-header)
+  ("C-c m h d" . sbw/markdown--insert-date-header)
   ("C-c m i"   . markdown-insert-italic)
   ("C-c m b"   . markdown-insert-bold)
   ("C-c m c"   . markdown-insert-code)
@@ -153,5 +159,4 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
-
 

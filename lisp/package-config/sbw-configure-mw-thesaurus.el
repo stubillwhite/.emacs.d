@@ -1,7 +1,8 @@
 (use-package mw-thesaurus
   :init
   (progn
-    (add-hook 'markdown-mode-hook 'mw-thesaurus-mode))
+    ;; (add-hook 'markdown-mode-hook 'mw-thesaurus-mode)
+    )
 
   :config
   (progn
@@ -13,12 +14,18 @@
     ;; (define-key mw-thesaurus-mode-map (kbd "<S-up>") 'windmove-up)
     ;; (define-key mw-thesaurus-mode-map (kbd "<S-down>") 'windmove-down)
 
+    ;; TODO: Occasionally results in other buffers becoming read-only
     (defun sbw/open-thesaurus ()
       (interactive)
       (let ((curr-window (selected-window)))
         (mw-thesaurus-lookup-at-point (point))
         (sbw/open-and-switch-to-window mw-thesaurus-buffer-name)
-        (select-window curr-window))))
+        (select-window curr-window)))
+
+    ;;    (defun sbw/open-thesaurus ()
+    ;;      (interactive)
+    ;;      (mw-thesaurus-lookup-at-point (point)))
+    )
 
   :bind
   ("<f5>" . sbw/open-thesaurus))
