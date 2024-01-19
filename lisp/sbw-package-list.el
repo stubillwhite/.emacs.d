@@ -9,7 +9,7 @@
                          (:name ht)              ;; The missing hash table library for Emacs
                          (:name s)               ;; Modern string API
                          (:name seq)             ;; Unified abstractions for sequences
-			 (:name nameless)        ;; Less is more. Hide package namespace in your emacs-lisp code
+                         (:name nameless)        ;; Less is more. Hide package namespace in your emacs-lisp code
 
                          ;; Completion
                          (:name helm)            ;; Incremental narrowing framework
@@ -20,7 +20,7 @@
                          (:name helm-flycheck)   ;; Show flycheck errors with Helm
                          (:name helm-flyspell)   ;; Helm extension for correcting words with Flyspell
                          (:name helm-dash)       ;; Browse Dash docsets inside Emacs
-     
+
                          ;; Auto-complete
                          (:name company)   ;; Auto-completion
                          (:name yasnippet) ;; Yet another snippet extension for Emacs
@@ -30,7 +30,7 @@
                          (:name diminish)            ;; Abbreviate minor mode indicators
                          (:name projectile)          ;; Project interaction library for Emacs
                          (:name avy)                 ;; Jump to things in Emacs tree-style
-                         (:name ace-window)          ;; Quickly switch windows			 
+                         (:name ace-window)          ;; Quickly switch windows
                          (:name expand-region)       ;; Expand region by semantic units
                          (:name drag-stuff)          ;; Drag stuff around in Emacs
                          (:name evil-nerd-commenter) ;; Efficient language-independent commenting
@@ -50,6 +50,7 @@
                          (:name flyspell-correct)      ;; Correcting words with flyspell via custom interface
                          (:name flyspell-correct-helm) ;; Correcting words with flyspell via custom interface
                          (:name flycheck)              ;; Syntax checking
+                         ;; (:name flymake-vale)          ;; Flymake support for Vale
 
                          ;; org-mode
                          (:name org)          ;; Your life in plain text
@@ -58,11 +59,11 @@
 
                          ;; Git
                          (:name magit) ;; Control Git from Emacs
- 
+
                          ;; Regex
                          (:name visual-regexp)          ;; A regexp/replace command for Emacs with interactive visual feedback
                          (:name visual-regexp-steroids) ;; Extends visual-regexp to support other regexp engines
-                         
+
                          ;; Languages
 
                          ;; Clojure
