@@ -124,6 +124,18 @@
     (setq org-archive-save-context-info
           '(time file ltags itags todo category olpath))
 
+    ;; Tags
+
+    (defun sbw/org-rename-tag (old new)
+      (interactive "scurrent tag: \nsnew name: ")
+      (org-map-entries
+       (lambda ()
+         (when (member old (org-get-tags))
+           (org-toggle-tag new 'on)
+           (org-toggle-tag old 'off)))
+       (format "+%s" old)
+       'agenda))
+
     ;; Clocking
     ;; Clock into a task should switch state to started if it is still in a stalled state
 
