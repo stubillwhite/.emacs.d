@@ -157,6 +157,31 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (defun sbw/org-config--title (title)
   (concat "\n" title "\n" (make-string (length title) ?-) "\n"))
 
+(defmacro sbw/org-config-black-prioritised-tasks (binding title files)
+  `(quote (,binding
+           ,title
+           ((tags-todo "TAGS=\":today:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - today"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))))))))
+
+(defmacro sbw/org-config--agenda-section (title pattern files)
+  `(quote (tags-todo ,pattern
+                     ((org-agenda-overriding-header (sbw/org-config--title ,title))
+                      (org-agenda-files ,files)
+                      (org-agenda-todo-ignore-scheduled t)
+                      (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))))))
+
+(defmacro sbw/org-config-white-prioritised-tasks (binding title files)
+  `(quote (,binding
+           ,title
+           (,(sbw/org-config--agenda-section "New priorities for today" "PRIORITY=\"A\"" ,files)))))
+
+;; (macroexp--expand-all '(sbw/org-config--agenda-section "New priorities for today" "PRIORITY=\"A\"" ,files))
+;; (macroexpand-all (sbw/org-config-white-prioritised-tasks "binding" "title" "my-files"))
+;; (macroexpand-all (sbw/org-config-black-prioritised-tasks "binding" "title" "my-files"))
+
 (defmacro sbw/org-config-prioritised-tasks (binding title files)
   `(quote (,binding
            ,title
@@ -164,48 +189,15 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                     ((org-agenda-overriding-header (sbw/org-config--title "Schedule for the day"))
                      (org-agenda-span 1)
                      (org-agenda-files ,files)))
-            (tags-todo "PRIORITY=\"A\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Priorities for today"))
+            (tags-todo "TAGS=\":today:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - today"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags-todo "MATRIX=\"urgent-important\"-PRIORITY=\"A\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Do it"))
-                        (org-agenda-files ,files)
-                        (org-agenda-todo-ignore-scheduled t)
-                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags-todo "MATRIX=\"not-urgent-important\"-PRIORITY=\"A\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Schedule it"))
-                        (org-agenda-files ,files)
-                        (org-agenda-todo-ignore-scheduled t)
-                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags-todo "MATRIX=\"urgent-not-important\"-PRIORITY=\"A\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Delegate it"))
-                        (org-agenda-files ,files)
-                        (org-agenda-todo-ignore-scheduled t)
-                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags-todo "MATRIX=\"not-urgent-not-important\"-PRIORITY=\"A\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - De-clutter it"))
-                        (org-agenda-files ,files)
-                        (org-agenda-todo-ignore-scheduled t)
-                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags-todo "MATRIX=\"\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "To prioritise"))
-                        (org-agenda-files ,files)
-                        (org-agenda-todo-ignore-scheduled t)
-                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (agenda ""
-                    ((org-agenda-overriding-header (sbw/org-config--title "Schedule for the week"))
-                     (org-agenda-span 7)
-                     (org-agenda-files ,files)))
-            (tags-todo "TAGS=\":priority:\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - priority"))
+                        ;; (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))
+                        ))
+            (tags-todo "TAGS=\":thisWeek:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - thisWeek"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
@@ -218,30 +210,41 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                         ;; (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))
                         ))
-            (todo "STARTED"
-                  ((org-agenda-overriding-header (sbw/org-config--title "Active tasks"))
-                   (org-agenda-files ,files)
-                   (org-agenda-todo-ignore-scheduled t)
-                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (todo "BLOCKED|POSTPONED"
-                  ((org-agenda-overriding-header (sbw/org-config--title "Stalled tasks"))
-                   (org-agenda-files ,files)
-                   (org-agenda-todo-ignore-scheduled t)
-                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (todo "TODO"
-                  ((org-agenda-overriding-header (sbw/org-config--title "Pending tasks"))
-                   (org-agenda-files ,files)
-                   (org-agenda-todo-ignore-scheduled t)
-                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (todo "DONE|CANCELLED"
-                  ((org-agenda-overriding-header (sbw/org-config--title "Completed tasks"))
-                   (org-agenda-files ,files)
-                   (org-agenda-todo-ignore-scheduled t)
-                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
-                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
+            (agenda ""
+                    ((org-agenda-overriding-header (sbw/org-config--title "Schedule for the week"))
+                     (org-agenda-span 7)
+                     (org-agenda-files ,files)))
+            (tags-todo "MATRIX=\"urgent-important\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Do it"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"not-urgent-important\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Schedule it"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"urgent-not-important\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - Delegate it"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"not-urgent-not-important\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Priority tasks - De-clutter it"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (tags-todo "MATRIX=\"\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "To prioritise"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            ))))
 
 (defmacro sbw/org-config-agenda (binding title days files)
   `(quote (,binding
@@ -254,7 +257,7 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-to-list 'org-agenda-custom-commands '("c" . "Custom agenda"))
 
 (add-to-list 'org-agenda-custom-commands '("cp" . "Personal"))
-(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-projects ["current"] ["personal"])))
+(add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cpt" "Personal tasks" (sbw/org-config-projects ["current"] ["kd"])))
 
 (add-to-list 'org-agenda-custom-commands '("cw" . "Work"))
 (add-to-list 'org-agenda-custom-commands (sbw/org-config-prioritised-tasks "cwt" "Work tasks" (sbw/org-config-projects ["current"] ["work"])))
