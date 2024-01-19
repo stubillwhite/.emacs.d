@@ -111,8 +111,8 @@
 
     (defun sbw/markdown--insert-date-header ()
       (interactive)
-      (let* ((text (format-time-string "%Y-%m-%d")))
-        (markdown-insert-header 1 text)))
+      (let* ((text (format-time-string "%Y-%m-%d %a")))
+        (markdown-insert-header 2 text)))
     
     (defun sbw/markdown--read-tags ()
       (let ((default-directory "~/trash/list-tags")) 
