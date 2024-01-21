@@ -131,6 +131,7 @@
             (sbw/menu-submenu ?c "Common tasks"
                       (sbw/menu "Common tasks"
                                 (sbw/menu-action ?c "Clean up text" 'sbw/clean-up-text)
+                                (sbw/menu-action ?e "Emacs docs" (lambda () (call-interactively #'shortdoc-display-group)))
                                 (sbw/menu-action ?l "Markdown link to reference link" 'sbw/markdown--markdown-link-to-reference-link)
                                 (sbw/menu-action ?y "Yank buffer path" 'sbw/buffer-path-to-kill-ring)
                                 ))
@@ -165,4 +166,3 @@
             (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))
 
 (provide 'sbw-menu)
-
