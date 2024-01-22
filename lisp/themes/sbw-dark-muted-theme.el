@@ -57,11 +57,11 @@
        (sbw-dark-muted-success             `((t (:inherit sbw-dark-muted-normal :foreground ,*success-fg*))))
        (sbw-dark-muted-warning             `((t (:inherit sbw-dark-muted-normal :foreground ,*warning-fg*))))
        (sbw-dark-muted-error               `((t (:inherit sbw-dark-muted-normal :foreground ,*error-fg*))))    
-       (sbw-dark-muted-emphasis            `((t (:inherit sbw-dark-muted-normal :foreground ,*emphasis-fg* :background ,*emphasis-bg*))))    
+       (sbw-dark-muted-emphasis            `((t (:inherit sbw-dark-muted-normal :foreground ,*emphasis-fg*  :background ,*emphasis-bg*))))    
        (sbw-dark-muted-demphasis           `((t (:inherit sbw-dark-muted-normal :foreground ,*demphasis-fg* :background ,*demphasis-bg*))))    
-       (sbw-dark-muted-match               `((t (:inherit sbw-dark-muted-normal :foreground ,*match-fg*    :background ,*match-bg*))))
+       (sbw-dark-muted-match               `((t (:inherit sbw-dark-muted-normal :foreground ,*match-fg*     :background ,*match-bg*))))
        (sbw-dark-muted-constant            `((t (:inherit sbw-dark-muted-normal :foreground ,*item-2*))))
-       (sbw-dark-muted-mismatch            `((t (:inherit sbw-dark-muted-normal :foreground ,*mismatch-fg* :background ,*mismatch-bg*))))
+       (sbw-dark-muted-mismatch            `((t (:inherit sbw-dark-muted-normal :foreground ,*mismatch-fg*  :background ,*mismatch-bg*))))
        (sbw-dark-muted-keyword             `((t (:inherit sbw-dark-muted-normal :foreground ,*item-3*))))
 
        (sbw-dark-muted-menu                `((t (:inherit sbw-dark-muted-normal                            :background ,*menu-bg*))))
@@ -183,13 +183,13 @@
     `(helm-match                          ((t (:inherit sbw-dark-muted-emphasis))))
     `(helm-selection                      ((t (:inherit sbw-dark-muted-menu-selection))))
     
-
     ;; helm-swoop
     `(helm-swoop-target-word-face         ((t (:inherit sbw-dark-muted-emphasis))))
     `(helm-swoop-target-line-face         ((t (:inherit sbw-dark-muted-selection))))
     `(helm-swoop-target-line-block-face   ((t (:inherit sbw-dark-muted-selection))))
     `(helm-source-header                  ((t (:inherit sbw-dark-muted-emphasis))))
-    
+
+    ;; Hydra
     `(hydra-face-blue                     ((t (:inherit sbw-dark-muted-keyword))))
     `(hydra-face-red                      ((t (:inherit sbw-dark-muted-error))))
 
@@ -256,6 +256,10 @@
     `(sh-heredoc                          ((t (:inherit sbw-dark-muted-string))))
     `(sh-quoted-exec                      ((t (:inherit sbw-dark-muted-keyword))))
 
+    ;; shortdoc
+    `(shortdoc-heading                    ((t (:inherit sbw-dark-muted-emphasis))))
+    `(shortdoc-section                    ((t (:inherit sbw-dark-muted-normal))))
+    
     ;; Smartparens
     `(sp-show-pair-match-face             ((t (:inherit sbw-dark-muted-match))))
     `(sp-show-pair-mismatch-face          ((t (:inherit sbw-dark-muted-mismatch))))
