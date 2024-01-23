@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1036 
+personal_ws-1.1 en 1040 
 ACL
 ACLs
 ADFS
@@ -202,6 +202,7 @@ EOS
 ESTR
 ETL
 Ebirah
+ElastiCache
 ElasticSearch
 Elasticache
 Elsevier
@@ -688,6 +689,7 @@ Sydnee
 Synaptica
 Syntasa
 TAs
+TBC
 TBD
 TDM
 TEKsystems
@@ -837,6 +839,8 @@ cryptocurrency
 curation
 cyber
 deliverables
+denormalise
+denormalises
 dereference
 deserialization
 deserialize

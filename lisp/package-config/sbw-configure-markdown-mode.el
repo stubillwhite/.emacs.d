@@ -33,7 +33,7 @@
       (lexical-let* ((input-fnam     (concat (getenv "HOME") "/trash/markdown-original.md"))
                      (md-fnam        (concat (getenv "HOME") "/trash/markdown-preview.md"))
                      (html-fnam      (concat (file-name-sans-extension md-fnam) ".html"))
-                     (mermaid-fnam   (concat (file-name-directory buffer-file-name) "/mermaid-filter.err"))
+                     (mermaid-fnam   (concat (if buffer-file-name (file-name-directory buffer-file-name) ".") "/mermaid-filter.err"))
                      (css-fnam       (concat user-emacs-directory "lisp/package-config/markdown-light.css"))
                      (cmd-gen-md     (concat "mmdc --outputFormat=png -i '" input-fnam "' -o '" md-fnam "'"))
                      (cmd-gen-html   (concat "pandoc --filter mermaid-filter --from=gfm --to=html --metadata title='markdown-preview' --standalone --css '" css-fnam "' -o '" html-fnam "' '" md-fnam "'")))
