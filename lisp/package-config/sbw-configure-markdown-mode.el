@@ -30,12 +30,13 @@
 
     (defun sbw/markdown-preview-with-mermaid-diagrams ()
       (interactive)
-      (let* ((input-fnam     (concat (getenv "HOME") "/trash/markdown-original.md"))
-             (md-fnam        (concat (getenv "HOME") "/trash/markdown-preview.md"))
-             (html-fnam      (concat (file-name-sans-extension md-fnam) ".html"))
-             (css-fnam       (concat user-emacs-directory "lisp/package-config/markdown-light.css"))
-             (cmd-gen-md     (concat "mmdc --outputFormat=png -i '" input-fnam "' -o '" md-fnam "'"))
-             (cmd-gen-html   (concat "pandoc --filter mermaid-filter --from=gfm --to=html --metadata title='markdown-preview' --standalone --css '" css-fnam "' -o '" html-fnam "' '" md-fnam "'")))
+      (lexical-let* ((input-fnam     (concat (getenv "HOME") "/trash/markdown-original.md"))
+                     (md-fnam        (concat (getenv "HOME") "/trash/markdown-preview.md"))
+                     (html-fnam      (concat (file-name-sans-extension md-fnam) ".html"))
+                     (mermaid-fnam   (concat (file-name-directory buffer-file-name) "/mermaid-filter.err"))
+                     (css-fnam       (concat user-emacs-directory "lisp/package-config/markdown-light.css"))
+                     (cmd-gen-md     (concat "mmdc --outputFormat=png -i '" input-fnam "' -o '" md-fnam "'"))
+                     (cmd-gen-html   (concat "pandoc --filter mermaid-filter --from=gfm --to=html --metadata title='markdown-preview' --standalone --css '" css-fnam "' -o '" html-fnam "' '" md-fnam "'")))
         (message "Formatting tables")
         (sbw/markdown-reformat-org-tables)
         (message "Saving file")
@@ -44,6 +45,7 @@
         (shell-command cmd-gen-md)
         (message "Generating html")
         (shell-command cmd-gen-html)
+        (when (and (f-exists? mermaid-fnam) (= 0 (f-size mermaid-fnam))) (f-delete mermaid-fnam))
         (message (concat "Opening " html-fnam))
         (shell-command (concat "open '" html-fnam "'"))
         (message (concat "Generated " html-fnam))))
@@ -159,4 +161,5 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
+
 
