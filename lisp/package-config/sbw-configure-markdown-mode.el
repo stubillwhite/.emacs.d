@@ -11,6 +11,11 @@
     (diminish 'org-src-mode)
     (diminish 'orgtbl-mode)
     (diminish 'eldoc-mode)
+
+    (setq-default
+     markdown-hide-urls        t          ;; Hide urls by default
+     markdown-url-compose-char '(8230)
+     )
     
     (when (sbw/is-darwin?)
       (setq
