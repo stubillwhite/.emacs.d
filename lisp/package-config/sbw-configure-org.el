@@ -81,6 +81,8 @@
     (require 'ob-clojure)
     (setq org-babel-clojure-backend 'cider)
 
+    (require 'orgtbl-aggregate)
+    
     (setq org-babel-default-header-args:clojure
           (cons '(:results . "replace output drawer")
                 (assq-delete-all :results org-babel-default-header-args)))
@@ -181,7 +183,7 @@
     (setq org-protocol-default-template-key nil)
 
     (defun sbw/org-extract-jira-description (s)
-      (let* ( (regex "^\\(.*\\) - \\(JIRA\\|Mendeley JIRA\\|Elsevier Technology JIRA\\)") )
+      (let* ( (regex "^\\(.*\\) - \\(Jira\\|JIRA\\|Mendeley JIRA\\|Elsevier Technology JIRA\\)") )
         (if (string-match regex s)
             (match-string 1 s)
           s)))

@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1040 
+personal_ws-1.1 en 1062 
 ACL
 ACLs
 ADFS
@@ -92,6 +92,7 @@ CEFs
 CENtree
 CKAN
 CLI
+CMS
 CNNs
 COI
 COLAB
@@ -106,6 +107,7 @@ CVs
 Carpaccio
 Chakrabarty
 ChatGPT
+Checkmarx
 Chetan
 Chetan's
 Chiffre
@@ -123,6 +125,7 @@ Cloudhealth
 Cognito
 Cognizant
 Collibra
+Compendex
 Coney
 Confluent's
 Connor
@@ -139,6 +142,8 @@ DAOs
 DAWG
 DBS
 DBU
+DEng
+DGS
 DKP
 DLQ
 DOI
@@ -218,6 +223,7 @@ Ethawi
 Etherium
 Evise
 Expedia
+Expedia's
 Explainability
 FDM
 FP
@@ -266,9 +272,11 @@ Griffiths
 GroundTruth
 HATEOAS
 HBase
+HMRC
 HNSW
 HPCC
 HRMC
+Hackathons
 HackerRank
 Hadoop
 Hamid
@@ -312,7 +320,9 @@ Iryna
 Ivo
 Ivo's
 JARs
+JFrog
 JIRA
+JIT
 JPA
 JS
 JSON
@@ -380,6 +390,7 @@ LAPD
 LD
 LIMF
 LLM
+LLMLingua
 LLMOps
 LLMs
 LMFlow
@@ -403,6 +414,7 @@ Lingpipe
 LinkedIn
 Logentries
 Logstash
+Lua
 Lucene
 Lucene's
 Lundahl
@@ -422,6 +434,7 @@ Manisha
 Manol
 Mantawauk
 MarkLogic
+Marklogic
 Matharu
 Mazeppa
 Meena
@@ -465,6 +478,7 @@ Newington
 Newsfeed
 Newsflo
 Newsflo's
+NiFi
 Nikeil
 Nishant
 Nishant's
@@ -500,6 +514,7 @@ OrgHub
 Oryn
 Overton
 Oysho
+PAYE
 PDFs
 PDP
 PDPs
@@ -513,7 +528,9 @@ Pamina
 Pancras
 Pangram
 Pankaj
+Pankaj's
 Parameterisation
+Parimala
 Parmeet
 Pasquereau
 Patil
@@ -563,6 +580,7 @@ ROS
 RSS
 Raahul
 Raahul's
+Rajoy
 Rasha
 Rasha's
 Rashid
@@ -753,6 +771,7 @@ VPC
 VPCs
 VPN
 VR
+VSI
 VTW
 Vallianatos
 Vanisha
@@ -763,6 +782,7 @@ Venkat
 Venkat's
 Venkata
 Vimeo
+Vipin
 Visteon
 Voight
 Vtool
@@ -784,6 +804,7 @@ XGBoost
 XNN
 XOCS
 Ximenez
+Xray
 Xuemin's
 YAML
 Yoshiko
@@ -838,6 +859,7 @@ crowdsource
 cryptocurrency
 curation
 cyber
+decrypt
 deliverables
 denormalise
 denormalises

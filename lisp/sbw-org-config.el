@@ -251,6 +251,12 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                         (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
+            (todo "DONE|CANCELLED"
+                  ((org-agenda-overriding-header (sbw/org-config--title "Completed tasks"))
+                   (org-agenda-files ,files)
+                   (org-agenda-todo-ignore-scheduled t)
+                   (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                   (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
             ))))
 
 (defmacro sbw/org-config-agenda (binding title days files)

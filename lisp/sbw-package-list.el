@@ -53,9 +53,10 @@
                          ;; (:name flymake-vale)          ;; Flymake support for Vale
 
                          ;; org-mode
-                         (:name org)          ;; Your life in plain text
-                         (:name ob-async)     ;; Asynchronous src_block execution for org-babel
-                         (:name htmlize)      ;; html org-mode reports
+                         (:name org)              ;; Your life in plain text
+                         (:name ob-async)         ;; Asynchronous src_block execution for org-babel
+                         (:name orgtbl-aggregate) ;; Aggregation for org-mode tables
+                         (:name htmlize)          ;; html org-mode reports
 
                          ;; Git
                          (:name magit) ;; Control Git from Emacs
