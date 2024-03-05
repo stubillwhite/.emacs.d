@@ -119,6 +119,13 @@
        (filename         (s-lex-format "${folder}/biweekly-status-update-${target-date}.md")))
   (find-file filename)))
 
+(defun sbw/menu--toggle-prose-checker ()
+  (interactive)
+  (do
+      (flymake-mode)
+      ;; (flymake-vale-maybe-load)
+    ))
+
 (defconst sbw/menu-common-commands
   (sbw/menu "Shortcut menu"
             (sbw/menu-submenu ?a "Analysis"
@@ -133,6 +140,8 @@
                                 (sbw/menu-action ?c "Clean up text" 'sbw/clean-up-text)
                                 (sbw/menu-action ?e "Emacs docs" (lambda () (call-interactively #'shortdoc-display-group)))
                                 (sbw/menu-action ?l "Markdown link to reference link" 'sbw/markdown--markdown-link-to-reference-link)
+                                (sbw/menu-action ?g "Grab text" 'sbw/markdown-grab-text)
+                                (sbw/menu-action ?p "Toggle prose checker" 'sbw/menu--toggle-prose-checker)
                                 (sbw/menu-action ?y "Yank buffer path" 'sbw/buffer-path-to-kill-ring)
                                 ))
             (sbw/menu-submenu ?d "Dashboard"

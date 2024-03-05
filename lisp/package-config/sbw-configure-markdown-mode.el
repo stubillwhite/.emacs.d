@@ -116,7 +116,7 @@
     (defun sbw/markdown--insert-date-header ()
       (interactive)
       (let* ((text (format-time-string "%Y-%m-%d %a")))
-        (markdown-insert-header 2 text)))
+        (markdown-insert-header 3 text)))
     
     (defun sbw/markdown--read-tags ()
       (let ((default-directory "~/trash/list-tags")) 
@@ -131,6 +131,10 @@
     (defun sbw/markdown-insert-tag ()
       (interactive)
       (insert (sbw/markdown-select-tag)))
+
+    (defun sbw/markdown-grab-text ()
+      (interactive)
+      (insert (shell-command-to-string "screencapture -i ~/trash/tmp.png && tesseract ~/trash/tmp.png - 2>/dev/null")))
     )
 
   :bind
@@ -163,5 +167,4 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
-
 
