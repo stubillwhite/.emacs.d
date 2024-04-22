@@ -1,0 +1,41 @@
+# -*- mode: snippet -*-
+# name: mermaid-quadrant:
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# key: mermaid-quadrant:
+# --
+
+\`\`\`mermaid
+%%{
+  init: {
+    "themeVariables": {
+        "quadrant1Fill":         "#222222",
+        "quadrant2Fill":         "#222222",
+        "quadrant3Fill":         "#222222",
+        "quadrant4Fill":         "#222222",
+        "quadrantPointFill":     "#DDDDDD",
+        "quadrantPointTextFill": "#DDDDDD"
+    } 
+  }
+}%%
+quadrantChart
+  x-axis horizontalTitle
+  y-axis verticalTitle
+
+  quadrant-1 TR
+  quadrant-2 TL
+  quadrant-3 BL
+  quadrant-4 BR
+
+  %% TR
+  foo: [0.7, 0.7]
+
+  %% TL
+  bar: [0.4, 0.7]
+  
+  %% BR
+  baz: [0.6, 0.4]
+
+  %% BL
+  gonk: [0.3, 0.4]
+\`\`\`
+
