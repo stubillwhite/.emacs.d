@@ -154,21 +154,6 @@
 
   :config
   (progn
-    ;; Link type for opening a file in a running Eclipse instance
-    (org-add-link-type "eclipse"
-                       (lambda (path)
-                         (start-process-shell-command "Eclipse" nil (concat "\"c:\\Program Files\\DevComponents\\Eclipse\\eclipse.exe\" --launcher.openFile " path))))
-
-    ;; Link type for opening a file in Vim
-    (org-add-link-type "vim"
-                       (lambda (path)
-                         (start-process-shell-command "Vim" nil (concat "gvim.exe " path))))
-
-    ;; Link type for opening a file in Atom
-    (org-add-link-type "atom"
-                       (lambda (path)
-                         (start-process-shell-command "Atom" nil (concat "C:\\Users\\IBM_ADMIN\\my_local_stuff\\home\\utils\\bin\\atom-windows\\Atom\\Atom.exe " path))))
-         
     ;; TODO Sort this out
     (defun org-sort-list-by-checkbox-type-1 ()
       (if (looking-at org-list-full-item-re)

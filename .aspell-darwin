@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1062 
+personal_ws-1.1 en 1101 
 ACL
 ACLs
 ADFS
@@ -10,6 +10,7 @@ ALF
 AMIs
 ANDs
 ANI
+APIM
 APIs
 APM
 ARN
@@ -49,6 +50,7 @@ Artifactory
 Arun
 Arun's
 Ashish
+Asimina
 AssertJ
 Associativity
 Authenticator
@@ -84,6 +86,7 @@ Bucknell
 Bundesliga
 Bute
 Bytecode
+CAO
 CARs
 CCBY
 CDN
@@ -105,6 +108,7 @@ CSV
 CTO
 CVs
 Carpaccio
+Cataloging
 Chakrabarty
 ChatGPT
 Checkmarx
@@ -112,6 +116,7 @@ Chetan
 Chetan's
 Chiffre
 Chinh
+Chinh's
 Ciacco
 CiteScore
 Classloaders
@@ -134,7 +139,9 @@ Coretex
 Correndo
 Coursera
 Covariance
+Crossref
 CrowdStrike
+Cryptographic
 Cuda
 DAAS
 DAL
@@ -168,6 +175,8 @@ Databricks
 Dataview
 Deakin
 Deckard
+Deepika
+Depreciations
 Destructuring
 DevOps
 Dilshad
@@ -206,6 +215,7 @@ EOL
 EOS
 ESTR
 ETL
+ETSR
 Ebirah
 ElastiCache
 ElasticSearch
@@ -251,6 +261,8 @@ Ganesh
 Ganesh's
 Gautam
 Gautam's
+Geetha
+Geetha's
 GenAI
 Georgios
 Georgious
@@ -287,6 +299,7 @@ Harish
 Harprit
 Harprit's
 Harwood
+Havock
 Heike
 Heira
 Hibberd
@@ -320,6 +333,7 @@ Iryna
 Ivo
 Ivo's
 JARs
+JDK
 JFrog
 JIRA
 JIT
@@ -328,6 +342,7 @@ JS
 JSON
 JSP
 JSX
+JUnit
 JVM
 Jacek
 Jacek's
@@ -385,6 +400,7 @@ Kubernetes
 Kumar
 Kumsal
 Kumsal's
+Kuyek
 Kyriakos
 LAPD
 LD
@@ -409,6 +425,7 @@ LexisNexis
 Ligia
 Ligia's
 Liliane
+Liliane's
 Lillet
 Lingpipe
 LinkedIn
@@ -420,6 +437,7 @@ Lucene's
 Lundahl
 MCC
 MHub
+MICAs
 MLCosmos
 MLOps
 MLflow
@@ -449,6 +467,7 @@ Minh
 Minh's
 Misclassified
 Mockito
+Modularity
 Mongo
 MongoDB
 Monoids
@@ -491,6 +510,7 @@ OKR
 OKR's
 OKRs
 OOP
+ORCID
 ORM
 ORs
 OSX
@@ -505,6 +525,7 @@ Onboarding
 OneDrive
 Ontotext
 OpenAI
+OpenAlex
 OpenJDK
 OpenSearch
 Operationalising
@@ -519,10 +540,14 @@ PDFs
 PDP
 PDPs
 PII
+PIPs
+PMO
 POC
 POJO
 POJOs
 PTSD
+PTU
+PTUs
 Palantir
 Pamina
 Pancras
@@ -544,6 +569,7 @@ PineCone
 Pleasance
 PlumX
 Pluralsight
+PnL
 Polydorus
 Polymestor
 Polyxena
@@ -581,10 +607,12 @@ RSS
 Raahul
 Raahul's
 Rajoy
+Rajoy's
 Rasha
 Rasha's
 Rashid
 Raudaschl
+Ravi
 Readha
 Reaxys
 Rebooking
@@ -639,6 +667,7 @@ SSRN
 STMJ
 SUTD
 Saad
+Sadler
 SageMaker
 Samarasinghe
 Sandeep
@@ -719,6 +748,7 @@ TP
 TPM
 TPR
 Taffey
+Takanami
 Talvinder
 Tanium
 Tatev
@@ -753,10 +783,12 @@ TypeScript
 Tyrell
 Tyrell's
 UAT
+UCS
 UCSD
 UDF
 UI
 URI
+URIs
 USD
 UUID
 UX
@@ -828,6 +860,7 @@ appender
 architected
 architecting
 atomisation
+avant
 backfill
 backfilling
 balancer
@@ -857,6 +890,7 @@ convolutional
 covariant
 crowdsource
 cryptocurrency
+cryptographic
 curation
 cyber
 decrypt
@@ -884,6 +918,7 @@ functor
 functors
 funders
 funsies
+garde
 generalisable
 glitchy
 hackathon
@@ -891,6 +926,7 @@ hackery
 hashcode
 healthcheck
 hoc
+ideation
 idempotence
 impactful
 impedence
@@ -928,6 +964,7 @@ microservices
 minima
 minimalistic
 misclassified
+misconfiguration
 misrecognised
 mockist
 monad
@@ -966,6 +1003,7 @@ prepend
 prepends
 preprocessed
 prized
+productionisation
 productionise
 productionised
 productionising
@@ -1007,6 +1045,7 @@ serverless
 sightlines
 siloed
 siloing
+slimes
 splitter
 splitters
 stateful
