@@ -141,16 +141,20 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
      (progn
        (sbw/org-config-select original-workflows original-categories))))
 
-(defun sbw/org-config-new-file (workflow category project)
-  "Create a new file with specified WORKFLOW, CATEGORY, and PROJECT prompting for those values if run interactively"
-  (interactive "sWorkflow: \nsCategory: \nsProject: ")
-  (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-config-new-file-template.org")))
+(defun sbw/org-config-new-file ()
+  "Create a new file with prompted WORKFLOW, CATEGORY, and PROJECT"
+  (interactive)
+  (let* ( (workflow (completing-read "Workflow: " (sbw/org-config-workflows)))
+          (category (completing-read "Category: " (sbw/org-config-categories)))
+          (project  (completing-read "Project: "  (-map (lambda (f) (f-no-ext (f-filename f))) (sbw/org-config-projects (list workflow) (list category)))))
+          (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-config-new-file-template.org")))
           (path     (s-lex-format "${org-directory}/${workflow}/${category}/${project}.org")) )
-    (apply 'f-mkdir (f-split (f-dirname path)))
-    (f-write (->> content
-                  (s-replace-all `(("${category}" . ,project)))) 'utf-8 path)
-    (sbw/org-config-refresh)
-    (message "Created and added %s" path)))
+    (when (not (f-exists? path))
+      (apply 'f-mkdir (f-split (f-dirname path)))
+      (f-write (->> content
+                    (s-replace-all `(("${category}" . ,project)))) 'utf-8 path)
+      (sbw/org-config-refresh)
+      (message "Created and added %s" path))))
 
 ;; Agenda
 
@@ -210,6 +214,12 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
             ;;             ;;                                 (sbw/skip-if-has-tags))))
             ;;             (org-agenda-skip-function 'sbw/skip-if-categorised)
             ;;             ))
+            (tags-todo "TAGS=\":weekend:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - weekend"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))                        
+                        ))
             (tags-todo "TAGS=\":today:\""
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - today"))
                         (org-agenda-files ,files)

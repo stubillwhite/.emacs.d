@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1101 
+personal_ws-1.1 en 1113 
 ACL
 ACLs
 ADFS
@@ -101,6 +101,7 @@ COI
 COLAB
 CP
 CPUs
+CPW
 CQRS
 CRS
 CSAQ
@@ -152,6 +153,7 @@ DBU
 DEng
 DGS
 DKP
+DKP's
 DLQ
 DOI
 DOIs
@@ -409,6 +411,7 @@ LLM
 LLMLingua
 LLMOps
 LLMs
+LLVM
 LMFlow
 LSE
 LTR
@@ -451,6 +454,7 @@ Mahesh
 Manisha
 Manol
 Mantawauk
+Manthena
 MarkLogic
 Marklogic
 Matharu
@@ -472,6 +476,7 @@ Mongo
 MongoDB
 Monoids
 Moorthy
+Moquin
 Moulin
 Mulholland
 Mustafa
@@ -491,6 +496,7 @@ Navid
 Neela
 Neela's
 Negroni
+Neha
 Nespresso
 Newflo
 Newington
@@ -503,6 +509,7 @@ Nishant
 Nishant's
 Nitin
 Noella
+OBII
 OCC
 OCCAP
 ODR
@@ -521,6 +528,7 @@ Officevibe
 Oli
 Oli's
 OmniScience
+OmniScienceExtension
 Onboarding
 OneDrive
 Ontotext
@@ -613,6 +621,7 @@ Rasha's
 Rashid
 Raudaschl
 Ravi
+Ravi's
 Readha
 Reaxys
 Rebooking
@@ -875,6 +884,7 @@ booleans
 bootcamp
 buddying
 burstable
+cardinality
 classpath
 codebase
 codebases
@@ -973,6 +983,7 @@ monoid
 mortem
 mortems
 namespace
+namespaces
 observability
 occurrance
 onboarding
@@ -1086,6 +1097,7 @@ unmarshaling
 unmarshall
 unsized
 upsize
+upsizing
 upskilling
 vectorise
 videographer
