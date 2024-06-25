@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1113 
+personal_ws-1.1 en 1127 
 ACL
 ACLs
 ADFS
@@ -66,6 +66,7 @@ BOS
 Bacchae
 Backfill
 Backpressure
+Baldur's
 Banquo
 Batalov
 Battersea
@@ -81,6 +82,7 @@ Bladzich
 Bladzich's
 Blanc
 Bootcamp
+Bridgerton
 Bucknall
 Bucknell
 Bundesliga
@@ -89,6 +91,7 @@ Bytecode
 CAO
 CARs
 CCBY
+CCK
 CDN
 CEF
 CEFs
@@ -286,6 +289,7 @@ Griffiths
 GroundTruth
 HATEOAS
 HBase
+HITL
 HMRC
 HNSW
 HPCC
@@ -312,6 +316,7 @@ Hoyng
 IAM
 ICR
 IHR
+IIP
 ILR
 IPR
 ISSN
@@ -457,6 +462,7 @@ Mantawauk
 Manthena
 MarkLogic
 Marklogic
+Matcher
 Matharu
 Mazeppa
 Meena
@@ -504,6 +510,7 @@ Newsfeed
 Newsflo
 Newsflo's
 NiFi
+Niall
 Nikeil
 Nishant
 Nishant's
@@ -520,6 +527,7 @@ OOP
 ORCID
 ORM
 ORs
+OSGI
 OSX
 Observability
 Odersky
@@ -596,6 +604,7 @@ PyLadies
 QE
 QEs
 Qualys
+Quickstart
 RACI
 RASCI
 RCO
@@ -609,6 +618,7 @@ RESTful
 RETS
 RFT
 RIC
+RIPP
 RIs
 ROS
 RSS
@@ -662,6 +672,7 @@ SJR
 SLA
 SLAs
 SLT
+SME
 SNM
 SNS
 SPARQL
@@ -920,6 +931,7 @@ dropdown
 embeddings
 empathic
 enablement
+enrichments
 explainability
 extractive
 forecasted
@@ -932,6 +944,7 @@ garde
 generalisable
 glitchy
 hackathon
+hackathons
 hackery
 hashcode
 healthcheck
@@ -1018,6 +1031,7 @@ productionisation
 productionise
 productionised
 productionising
+profiler
 programatically
 promotable
 prototyped
