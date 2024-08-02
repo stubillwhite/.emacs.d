@@ -73,6 +73,32 @@ _y_: ?y? year      _q_: quit          _L__l__c_: ?l?
              (org-agenda-redo)))
       ("q" (message "Abort") :exit t))
 
+
+    (defun sbw/configure-hydra-org-set-timescale-tag (tag)
+      (let* ((tags '(catchup today thisWeek nextWeek)))
+        (-map (lambda (x) (org-agenda-set-tags (symbol-name x) 'off)) tags)
+        (when tag 
+          (org-agenda-set-tags tag 'on))))
+    
+    (defhydra hydra-org-agenda-retag-view (:color :amaranth :hint nil)
+      "
+^Navigate^           ^Modify^
+^============================================================
+_C-n_: next item     _d_: today
+_C-p_: prev item     _w_: this week
+^^                   _n_: next week
+^^                   _c_: clear
+
+_q_: quit 
+"
+      ("C-n" (lambda () (interactive) (org-agenda-next-item 1)))
+      ("C-p" (lambda () (interactive) (org-agenda-previous-item 1)))
+      ("d" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag "today")))
+      ("w" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag "thisWeek")))
+      ("n" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag "nextWeek")))
+      ("c" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag nil)))
+      ("q" (message "Done") :exit t))
+    
     (defhydra hydra-org-set-matrix (:color :amaranth :hint nil)
       "
 ^Urgency^
