@@ -214,8 +214,8 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
             ;;             ;;                                 (sbw/skip-if-has-tags))))
             ;;             (org-agenda-skip-function 'sbw/skip-if-categorised)
             ;;             ))
-            (tags-todo "TAGS=\":weekend:\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - weekend"))
+            (tags-todo "TAGS=\":catchup:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - catchup"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))                        
