@@ -1,3 +1,5 @@
+;;; sbw/bootstrap.el --- Functions for managing bootstrapping the system
+
 (require 'cl)
 (require 'cl-lib)
 

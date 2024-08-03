@@ -2,6 +2,14 @@
 
 Personal Emacs configuration, probably not very useful to others.
 
+TODO:
+
+- Move to https://github.com/progfolio/elpaca
+- Look at https://orgmode.org/worg/org-contrib/org-mac-link.html
+- Look at https://github.com/ndwarshuis/org-ml
+- Look at https://github.com/victorhge/iedit
+- Look at https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/
+
 ## Installation notes ##
 
 ## Linux ###

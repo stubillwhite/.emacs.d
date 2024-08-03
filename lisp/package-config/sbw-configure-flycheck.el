@@ -15,7 +15,10 @@
 
     ;; Disable annoying checkers
     (setq-default flycheck-disabled-checkers
-                  '(emacs-lisp-checkdoc)))
+                  '(emacs-lisp-checkdoc))
+
+    ;; Inherit current load path when checking syntax
+    (setq flycheck-emacs-lisp-load-path 'inherit))
 
   :config
   (progn

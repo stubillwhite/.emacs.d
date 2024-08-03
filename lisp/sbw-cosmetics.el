@@ -1,3 +1,5 @@
+(require 'sbw-common-config)
+
 ;; Color theme, don't warn about executing code
 (load-theme 'sbw-dark-muted t)
 
@@ -18,7 +20,6 @@
 (let* ((font-name (cond
                    ((sbw/is-windows?) "Monaco-10")
                    ((sbw/is-linux?)   "Monaco-10")
-                   ;; ((sbw/is-darwin?)  "Monaco-12")
                    ((sbw/is-darwin?)  "FantasqueSansM Nerd Font Mono-14")
                    )))
   (set-face-font 'fixed-pitch font-name)
