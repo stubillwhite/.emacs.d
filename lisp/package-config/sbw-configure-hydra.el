@@ -73,22 +73,33 @@ _y_: ?y? year      _q_: quit          _L__l__c_: ?l?
              (org-agenda-redo)))
       ("q" (message "Abort") :exit t))
 
-
-    (defun sbw/configure-hydra-org-set-timescale-tag (tag)
-      (let* ((tags '(catchup today thisWeek nextWeek)))
+    (defun sbw/configure-hydra-org-clear-tags-and-matrix ()
+      (let* ((tags '(catchup today thisWeek nextWeek admin)))
         (-map (lambda (x) (org-agenda-set-tags (symbol-name x) 'off)) tags)
-        (when tag 
-          (org-agenda-set-tags tag 'on))))
+        (sbw/org-delete-property "MATRIX")
+        (message "Cleared tags and matrix")))
+    
+    (defun sbw/configure-hydra-org-set-timescale-tag (tag)
+      (sbw/configure-hydra-org-clear-tags-and-matrix)
+      (org-agenda-set-tags tag 'on)
+      (message (concat "Tagged '" tag "'")))
+
+    (defun sbw/configure-hydra-org-set-matrix (matrix)
+      (sbw/configure-hydra-org-clear-tags-and-matrix)
+      (sbw/org-set-property "MATRIX" matrix)
+      (message (concat "Matrix set to '" matrix "'")))
     
     (defhydra hydra-org-agenda-retag-view (:color :amaranth :hint nil)
       "
-^Navigate^           ^Modify^
+^Navigate^           ^Schedule^        ^Matrix^
 ^============================================================
-_C-n_: next item     _d_: today
-_C-p_: prev item     _w_: this week
-^^                   _n_: next week
-^^                   _c_: clear
+_C-n_: next item     _d_: today        _1_: do it
+_C-p_: prev item     _w_: this week    _2_: schedule it
+^^                   _n_: next week    _3_: delegate it
+^^                   _a_: admin        _4_: de-clutter it
 
+_c_: clear
+_r_: refresh
 _q_: quit 
 "
       ("C-n" (lambda () (interactive) (org-agenda-next-item 1)))
@@ -96,7 +107,13 @@ _q_: quit
       ("d" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag "today")))
       ("w" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag "thisWeek")))
       ("n" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag "nextWeek")))
-      ("c" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag nil)))
+      ("a" (lambda () (interactive) (sbw/configure-hydra-org-set-timescale-tag "admin")))
+      ("1" (lambda () (interactive) (sbw/configure-hydra-org-set-matrix "urgent-important")))
+      ("2" (lambda () (interactive) (sbw/configure-hydra-org-set-matrix "not-urgent-important")))
+      ("3" (lambda () (interactive) (sbw/configure-hydra-org-set-matrix "urgent-not-important")))
+      ("4" (lambda () (interactive) (sbw/configure-hydra-org-set-matrix "not-urgent-not-important")))
+      ("c" (lambda () (interactive) (sbw/configure-hydra-org-clear-tags-and-matrix)))
+      ("r" (lambda () (interactive) (org-agenda-redo)))
       ("q" (message "Done") :exit t))
     
     (defhydra hydra-org-set-matrix (:color :amaranth :hint nil)
