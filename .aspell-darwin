@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1169 
+personal_ws-1.1 en 1146 
 ACL
 ACLs
 ADFS
@@ -68,7 +68,6 @@ Backfill
 Backpressure
 Baldur's
 Banquo
-Basak
 Batalov
 Battersea
 Beks
@@ -97,10 +96,8 @@ CDN
 CEF
 CEFs
 CENtree
-CHD
 CKAN
 CLI
-CMDP
 CMS
 CNNs
 COI
@@ -183,14 +180,12 @@ DataForce
 DataSets
 Databricks
 Dataview
-Davin
 Deakin
 Deckard
 Deepika
 Depreciations
 Destructuring
 DevOps
-Dhoopa
 Dilshad
 Dilshad's
 Dimensionality
@@ -227,7 +222,6 @@ EMBASE
 EMR
 EOL
 EOS
-EOY
 ESTR
 ETL
 ETSR
@@ -239,7 +233,6 @@ Elsevier
 Elsevier's
 Embase
 Embiggen
-Emecz
 Empathic
 Emursive
 Ensmallen
@@ -251,7 +244,6 @@ Evise
 Expedia
 Expedia's
 Explainability
-FAPESP
 FDM
 FP
 FPE
@@ -295,7 +287,6 @@ Gloomhaven
 Goertzen
 Gradle
 Grafana
-Grampurohit
 GraphDB
 GraphQL
 Graviton
@@ -419,7 +410,6 @@ Kravutske
 Krishnan
 Krishnan's
 Kubernetes
-Kuiper
 Kumar
 Kumsal
 Kumsal's
@@ -569,7 +559,6 @@ OpsBank
 OpsGenie
 OrgHub
 Oryn
-Oscares
 Overton
 Oysho
 PAYE
@@ -597,7 +586,6 @@ Parimala
 Parmeet
 Pasquereau
 Patil
-Pavel
 Percipio
 PersonHub
 Petersburg
@@ -615,7 +603,6 @@ Polyxena
 Postgres
 Prakruthy
 Prakruthy's
-Prasann
 Preetha
 Pris
 Priyanka
@@ -650,7 +637,6 @@ Raahul
 Raahul's
 Rajoy
 Rajoy's
-Ramesh
 Rasha
 Rasha's
 Rashid
@@ -678,14 +664,12 @@ Rinke
 Rinke's
 Roadmunk
 Rodan
-Rolf
 Rosi
 Royale
 Royston's
 Runbook
 Ryun
 Ryun's
-Ryzhov
 SARs
 SBT
 SCS
@@ -750,7 +734,6 @@ Shareback
 Shawshank
 Sheehan
 Sheetal
-Shinha
 Shivam's
 Shkodran
 Shkodran's
@@ -802,11 +785,9 @@ Taffey
 Takanami
 Talvinder
 Tanium
-Tarun
 Tatev
 TechDesk
 TechHubs
-Templated
 TensorFlow
 Terradata
 Terraform
@@ -821,7 +802,6 @@ Thevenot
 Thierry
 ThoughtWorks
 Thoughtworks
-Tibits
 Timezones
 TopBraid
 Toplu
@@ -867,7 +847,6 @@ Venetia
 Venkat
 Venkat's
 Venkata
-Vero
 Vimeo
 Vipin
 Visteon
@@ -917,7 +896,6 @@ appender
 architected
 architecting
 atomisation
-autocomplete
 avant
 backfill
 backfilling
@@ -934,12 +912,12 @@ bootcamp
 buddying
 burstable
 cardinality
+centricity
 classpath
 codebase
 codebases
 codec
 collegial
-commoditised
 comparator
 complects
 composability
@@ -955,7 +933,6 @@ curation
 cyber
 decrypt
 deliverables
-denormalisation
 denormalise
 denormalises
 dereference
@@ -973,7 +950,6 @@ empathic
 enablement
 enrichments
 explainability
-explainer
 extractive
 forecasted
 functioaltity
@@ -1128,7 +1104,6 @@ teardown
 templating
 terraformcontrol
 th
-tibits
 timesheet
 timestamp
 tmux
