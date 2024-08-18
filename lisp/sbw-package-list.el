@@ -15,7 +15,6 @@
                          (:name helm)            ;; Incremental narrowing framework
                          (:name helm-projectile) ;; Helm integration for projectile
                          (:name helm-swoop)      ;; Efficiently skipping between matches
-                         (:name helm-ag)         ;; The silver searcher with Helm interface
                          (:name helm-rg)         ;; Ripgrep with Helm interface
                          (:name helm-descbinds)  ;; A helm frontend for describe-bindings
                          (:name helm-flycheck)   ;; Show flycheck errors with Helm
