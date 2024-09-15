@@ -135,6 +135,15 @@
     (defun sbw/markdown-grab-text ()
       (interactive)
       (insert (shell-command-to-string "screencapture -i ~/trash/tmp.png && tesseract ~/trash/tmp.png - 2>/dev/null")))
+
+    (defun sbw/markdown-metadata-update-date ()
+      (interactive)
+      (let* ((regex     "^updated: \\([[:digit:]]\\{4\\}-[[:digit:]]\\{2\\}-[[:digit:]]\\{2\\}\\)")
+             (curr-date (s-trim-right (shell-command-to-string "date '+%Y-%m-%d'"))))
+        (goto-char (point-min))
+        (when (re-search-forward regex nil t)
+          (replace-match curr-date nil nil nil 1)
+          (message (concat "Updated metadata date to " curr-date)))))
     )
 
   :bind
@@ -162,6 +171,7 @@
   ("C-c m c"   . markdown-insert-code)
   ("C-c m l"   . markdown-insert-link)
   ("C-c m o"   . sbw/markdown--open-in-obsidian)
+  ("C-c m m d" . sbw/markdown-metadata-update-date)
   ("M-<right>" . markdown-demote)
   ("M-<left>"  . markdown-promote)
   ("C-c m r"   . markdown-insert-reference-link-dwim))

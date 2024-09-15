@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1146 
+personal_ws-1.1 en 1172 
 ACL
 ACLs
 ADFS
@@ -33,11 +33,13 @@ Akka
 Alchemical
 Almeida
 AlphaBeta
+Alroe
 Altmetric
 Altmetrics
 Amberley's
 Amberly
 Ami
+Andrey
 Anique
 Anonymise
 Anonymising
@@ -53,6 +55,7 @@ Ashish
 Asimina
 AssertJ
 Associativity
+Atti
 Authenticator
 Autoencoders
 Avro
@@ -63,6 +66,7 @@ BCIM
 BDD
 BLEU
 BOS
+BRID
 Bacchae
 Backfill
 Backpressure
@@ -77,10 +81,13 @@ Benoit's
 Berni
 Bici
 Bikramjit
+Bikramjit's
 BingChat
+Bissan
 Bladzich
 Bladzich's
 Blanc
+Bo
 Bootcamp
 Bridgerton
 Bucknall
@@ -98,6 +105,7 @@ CEFs
 CENtree
 CKAN
 CLI
+CMDP
 CMS
 CNNs
 COI
@@ -186,6 +194,7 @@ Deepika
 Depreciations
 Destructuring
 DevOps
+Dhoopa
 Dilshad
 Dilshad's
 Dimensionality
@@ -241,9 +250,11 @@ Erlang
 Ethawi
 Etherium
 Evise
+Excession
 Expedia
 Expedia's
 Explainability
+FAPESP
 FDM
 FP
 FPE
@@ -326,6 +337,7 @@ ILR
 IPR
 ISSN
 ISSNs
+ISTIC
 Iana
 Iana's
 IdeaScale
@@ -387,6 +399,7 @@ Kanaga
 Kanwar
 Karaf
 Karolina
+Karpenter
 Karthik
 Karthik's
 Kashnitsky
@@ -400,6 +413,7 @@ Kinesis
 Kingsley
 Kitson
 Knime
+Knovel
 Kobby
 Kompromat
 Korn
@@ -446,6 +460,7 @@ Lingpipe
 LinkedIn
 Logentries
 Logstash
+Loktev
 Lua
 Lucene
 Lucene's
@@ -499,6 +514,7 @@ NDCG
 NER
 NFRs
 NHS
+NIIT
 NLA
 NLP
 NVIDIA
@@ -563,6 +579,7 @@ Overton
 Oysho
 PAYE
 PDFs
+PDL
 PDP
 PDPs
 PII
@@ -571,6 +588,7 @@ PMO
 POC
 POJO
 POJOs
+POMs
 PTSD
 PTU
 PTUs
@@ -586,6 +604,7 @@ Parimala
 Parmeet
 Pasquereau
 Patil
+Pavan
 Percipio
 PersonHub
 Petersburg
@@ -698,6 +717,7 @@ SSO
 SSRN
 STMJ
 SUTD
+SVP
 Saad
 Sadler
 SageMaker
@@ -739,12 +759,14 @@ Shkodran
 Shkodran's
 Shobhna
 Shobhna's
+Shona
 Shoreditch
 Shraddha
 Silverpoint
 Sinha
 Sivapriya
 Smit
+Soanes
 Solange
 Soleimanpour
 Solr
@@ -765,6 +787,7 @@ Stratford
 Suganya
 Sujit
 Sulskus
+Surabhi
 Svetlana
 Sydnee
 Synaptica
@@ -781,6 +804,7 @@ TMS
 TP
 TPM
 TPR
+TSI
 Taffey
 Takanami
 Talvinder
@@ -840,6 +864,7 @@ VR
 VSI
 VTW
 Vallianatos
+VanderMeer
 Vanisha
 Varun
 Vectorise
@@ -1106,6 +1131,7 @@ terraformcontrol
 th
 timesheet
 timestamp
+timezones
 tmux
 tokenisation
 tokenisers

@@ -7,4 +7,4 @@
   :bind
   ("C-;" . flyspell-correct-word-generic))
 
-(provide 'sbw-configure-dash)
+(provide 'sbw-configure-flyspell-correct)
