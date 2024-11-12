@@ -18,6 +18,8 @@
       (trace-function 'beacon--blink)
       )
 
+    (setq beacon-blink-when-window-scrolls nil)
+
     (defun sbw/beacon-mode-debug-off ()
       (interactive)
       (untrace-all)))
