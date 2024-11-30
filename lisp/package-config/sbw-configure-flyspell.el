@@ -27,7 +27,7 @@
 
     ;; Spelling program
     (when (sbw/is-darwin?)
-      (setq ispell-program-name "/usr/local/bin/aspell"))
+      (setq ispell-program-name "/opt/homebrew/bin/aspell"))
     
     ;; Personal dictionary location        
     (setq ispell-personal-dictionary

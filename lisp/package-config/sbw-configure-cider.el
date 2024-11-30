@@ -42,7 +42,7 @@
     ;; Leiningen
     (setq cider-lein-command
           (if (sbw/is-darwin?)
-              "/usr/local/bin/lein"
+              "/opt/homebrew/bin/lein"
             "~/tools/bin/lein"))
 
     ;; Boot
