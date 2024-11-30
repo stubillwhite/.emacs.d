@@ -112,19 +112,19 @@
 
 (defun sbw/menu--open-current-status-update ()
   (let* ((most-recent-date (first (sbw/menu--dates-of-existing-status-reports)))
-       (current-date     (s-trim-right (shell-command-to-string "date '+%Y-%m-%d'")))
-       (next-date        (s-trim-right (shell-command-to-string (s-lex-format "date --date='${most-recent-date} + 14 days' '+%Y-%m-%d'"))))
+       (current-date     (s-trim-right (shell-command-to-string "gdate '+%Y-%m-%d'")))
+       (next-date        (s-trim-right (shell-command-to-string (s-lex-format "gdate --date='${most-recent-date} + 14 days' '+%Y-%m-%d'"))))
        (target-date      (if (s-less? current-date most-recent-date) most-recent-date next-date))
        (folder           (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update"))
        (filename         (s-lex-format "${folder}/biweekly-status-update-${target-date}.md")))
   (find-file filename)))
 
-(defun sbw/menu--toggle-prose-checker ()
-  (interactive)
-  (do
-      (flymake-mode)
-      ;; (flymake-vale-maybe-load)
-    ))
+;; (defun sbw/menu--toggle-prose-checker ()
+;;   (interactive)
+;;   (do
+;;       (flymake-mode)
+;;       ;; (flymake-vale-maybe-load)
+;;     ))
 
 (defconst sbw/menu-common-commands
   (sbw/menu "Shortcut menu"
