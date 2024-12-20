@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: dashboard:
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# key: dashboard:
+# --
+
+---
+tags:
+  - dashboard
+updated: `(s-trim-right (shell-command-to-string "date --date='next friday + 7 days' '+%Y-%m-%d'"))`
+---
+
+# `(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))` #
+
+## Current status ##
+
+- ...
+
+## Links ##
+
+- ...
+
+## Timeline ##
+

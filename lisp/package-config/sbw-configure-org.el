@@ -20,33 +20,33 @@
     ;; General settings
 
     (setq 
-     org-list-empty-line-terminates-plain-lists t                            ;; Single empty line terminates plain lists
-     org-blank-before-new-entry                 '( (heading         . nil)   ;; No blank lines before headings
-                                                   (plain-list-item . nil) ) ;; No blank lines before plain list items
-     org-clock-into-drawer                      t                            ;; Clock into drawers
-     org-src-fontify-natively                   t                            ;; Fontify embedded code blocks
-     org-ellipsis                               "\u2026"                     ;; Small ellipsis character
-     org-emphasis-alist                         ()                           ;; Don't be fancy
-     org-agenda-fontify-priorities              nil                          ;; Don't let priority change task representation
-     org-duration-format                        'h:mm                        ;; Display durations in hours, not days
-     org-indent-mode                            t                            ;; Use indent mode
-     org-log-into-drawer                        t                            ;; Log into drawers
-     org-log-done                               'time                        ;; Timestamp task completion so it can be used in reports
-     org-M-RET-may-split-line                   nil                          ;; Don't split lines
-     org-return-follows-link                    t                            ;; Easy link navigation
-     org-use-property-inheritance               t                            ;; Child items should inherit all from parents
-     org-default-priority                       ?B                           ;; Default priority for unprioritised items
-     appt-display-interval                      5                            ;; Reminder for an appointment every five minutes...
-     appt-message-warning-time                  15                           ;; ...starting fifteeen minutes before it is due
-     org-frame-title-format-backup              sbw/frame-title-format       ;; Override title frame title format
-     org-tag-alist                              nil                          ;; No tags
-     org-startup-folded                         'content                     ;; Display content when first opening org files
-     org-hide-block-startup                     t                            ;; Do not display code block content when opening org files
-     org-context-in-file-links                  nil                          ;; Don't store position when creating file links
-     org-src-window-setup                       'current-window              ;; Edit source blocks in the current frame
-     org-image-actual-width                     '(40)                        ;; Default 100px, unless there is a #+ATTR.*: width="200"
-     org-use-speed-commands                     t                            ;; Enable speed commands
-     org-export-with-latex                      'imagemagick                 ;; Export LaTeX snippets
+     org-list-empty-line-terminates-plain-lists    t                            ;; Single empty line terminates plain lists
+     org-blank-before-new-entry                    '( (heading         . nil)   ;; No blank lines before headings
+                                                      (plain-list-item . nil) ) ;; No blank lines before plain list items
+     org-clock-into-drawer                         t                            ;; Clock into drawers
+     org-src-fontify-natively                      t                            ;; Fontify embedded code blocks
+     org-ellipsis                                  "\u2026"                     ;; Small ellipsis character
+     org-emphasis-alist                            ()                           ;; Don't be fancy
+     org-agenda-fontify-priorities                 nil                          ;; Don't let priority change task representation
+     org-duration-format                           'h:mm                        ;; Display durations in hours, not days
+     org-indent-mode                               t                            ;; Use indent mode
+     org-log-into-drawer                           t                            ;; Log into drawers
+     org-log-done                                  'time                        ;; Timestamp task completion so it can be used in reports
+     org-M-RET-may-split-line                      nil                          ;; Don't split lines
+     org-return-follows-link                       t                            ;; Easy link navigation
+     org-use-property-inheritance                  t                            ;; Child items should inherit all from parents
+     org-default-priority                          ?B                           ;; Default priority for unprioritised items
+     appt-display-interval                         5                            ;; Reminder for an appointment every five minutes...
+     appt-message-warning-time                     15                           ;; ...starting fifteeen minutes before it is due
+     org-frame-title-format-backup                 sbw/frame-title-format       ;; Override title frame title format
+     org-tag-alist                                 nil                          ;; No tags
+     org-startup-folded                            'content                     ;; Display content when first opening org files
+     org-hide-block-startup                        t                            ;; Do not display code block content when opening org files
+     org-context-in-file-links                     nil                          ;; Don't store position when creating file links
+     org-src-window-setup                          'current-window              ;; Edit source blocks in the current frame
+     org-image-actual-width                        '(40)                        ;; Default 100px, unless there is a #+ATTR.*: width="200"
+     org-use-speed-commands                        t                            ;; Enable speed commands
+     org-export-with-latex                         'imagemagick                 ;; Export LaTeX snippets
      )
 
     ;; Babel
@@ -126,6 +126,25 @@
     (setq org-archive-save-context-info
           '(time file ltags itags todo category olpath))
 
+    ;; New headings should include created property and markdown content
+
+    (defun sbw/org-heading-set-created-property ()
+      (save-excursion
+        (org-back-to-heading)
+        (org-set-property "CREATED" (format-time-string "%Y-%m-%d %T"))))
+
+    (defun sbw/org-heading-set-content ()
+      (save-excursion
+        (org-back-to-heading)
+        (goto-char (org-element-property :end (org-element-at-point)))
+        (insert "\n#+begin_src markdown\n#+end_src\n\n")))
+
+    (defun sbw/org-heading-set-defaults ()
+      (sbw/org-heading-set-created-property)
+      (sbw/org-heading-set-content))
+
+    (add-hook 'org-insert-heading-hook #'sbw/org-heading-set-defaults)
+    
     ;; Tags
 
     (defun sbw/org-rename-tag (old new)
@@ -189,9 +208,20 @@
     
     (setq org-capture-templates
           '( ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-              "* TODO %?%(sbw/org-capture-todo-task)")
+              "* TODO %?%(sbw/org-capture-todo-task)"
+              :before-finalize sbw/org-heading-set-defaults)
              ("j" "JIRA task" entry (file+headline org-default-notes-file "Tasks")
-              "* TODO %?%(sbw/org-capture-jira-task)") ))
+              "* TODO %?%(sbw/org-capture-jira-task)"
+              :before-finalize sbw/org-heading-set-defaults) ))
+
+    ;; TODO: Adding created timestamp
+    ;; https://emacs.stackexchange.com/questions/45270/in-org-mode-how-can-i-make-a-post-capture-hook-run-only-for-certain-capture-tem
+    ;; 
+    ;; (add-hook 'org-capture-before-finalize-hook
+    ;;       (lambda ()
+    ;;         (if org-note-abort
+    ;;             (message "WHITE aborted")
+    ;;           (org-todo "TODO"))))
 
     ;; Bookmarklet
     ;; javascript:location.href='org-protocol://store-markdown-link?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title)
@@ -387,3 +417,10 @@
 
 (add-function :after after-focus-change-function #'sbw/right-align-tags)
 
+
+(defun sbw/org-heading-display-content ()
+  (interactive)
+  (save-excursion
+    (org-back-to-heading)
+    (print (org-element-property :contents-begin (org-element-at-point)))
+    (print (org-element-property :contents-end (org-element-at-point)))))
