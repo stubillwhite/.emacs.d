@@ -141,13 +141,14 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
      (progn
        (sbw/org-config-select original-workflows original-categories))))
 
-(defun sbw/org-config-new-file ()
+(defun sbw/org-config-new-file (workflow category project)
   "Create a new file with prompted WORKFLOW, CATEGORY, and PROJECT"
-  (interactive)
-  (let* ( (workflow (completing-read "Workflow: " (sbw/org-config-workflows)))
+  (interactive
+   (let* ((workflow (completing-read "Workflow: " (sbw/org-config-workflows)))
           (category (completing-read "Category: " (sbw/org-config-categories)))
-          (project  (completing-read "Project: "  (-map (lambda (f) (f-no-ext (f-filename f))) (sbw/org-config-projects (list workflow) (list category)))))
-          (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-config-new-file-template.org")))
+          (project  (completing-read "Project: "  (-map (lambda (f) (f-no-ext (f-filename f))) (sbw/org-config-projects (list workflow) (list category))))))
+     (list workflow category project)))
+  (let* ( (content  (f-read-text (s-lex-format "${sbw/lisp-path}/sbw-org-config-new-file-template.org")))
           (path     (s-lex-format "${org-directory}/${workflow}/${category}/${project}.org")) )
     (when (not (f-exists? path))
       (apply 'f-mkdir (f-split (f-dirname path)))
