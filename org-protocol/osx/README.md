@@ -8,7 +8,7 @@
 - Save it in Application (not the default Script) File Format as org-protocol.app
 
     on open location this_URL
-        do shell script "/usr/local/bin/emacsclient \"" & this_URL & "\""
+        do shell script "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient \"" & this_URL & "\""
     end open location
 
 ## Configure the application ##
