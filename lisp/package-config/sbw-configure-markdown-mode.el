@@ -139,7 +139,7 @@
     (defun sbw/markdown-metadata-update-date ()
       (interactive)
       (let* ((regex     "^updated: \\([[:digit:]]\\{4\\}-[[:digit:]]\\{2\\}-[[:digit:]]\\{2\\}\\)")
-             (curr-date (s-trim-right (shell-command-to-string "date '+%Y-%m-%d'"))))
+             (curr-date (s-trim-right (shell-command-to-string "gdate '+%Y-%m-%d'"))))
         (goto-char (point-min))
         (when (re-search-forward regex nil t)
           (replace-match curr-date nil nil nil 1)
