@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1201 
+personal_ws-1.1 en 1216 
 ACL
 ACLs
 ADFS
@@ -59,6 +59,7 @@ Asimina
 AssertJ
 Associativity
 Atti
+Atti's
 Authenticator
 Autoencoders
 Avro
@@ -106,8 +107,10 @@ CDN
 CEF
 CEFs
 CENtree
+CHD
 CKAN
 CLI
+CMDB
 CMDP
 CMS
 CNNs
@@ -124,6 +127,7 @@ CTO
 CVs
 Carpaccio
 Cataloging
+Cerebus
 Chakrabarty
 ChatGPT
 Checkmarx
@@ -146,6 +150,7 @@ Codecademy
 Cognito
 Cognizant
 Collibra
+Commoditisation
 Compendex
 Coney
 Confluent's
@@ -251,6 +256,7 @@ Ebirah
 ElastiCache
 ElasticSearch
 Elasticache
+Elham
 Elsevier
 Elsevier's
 Embase
@@ -303,6 +309,7 @@ Georgios
 Georgious
 Gettler
 Ghidorah
+Giani
 Gianluca
 Gigan
 Girdhar
@@ -365,6 +372,7 @@ Inferentia
 Inferentium
 InnoData
 Innodata
+InsightGraph
 IntelliJ
 Interfolio
 Irina
@@ -378,6 +386,7 @@ JFrog
 JIRA
 JIT
 JPA
+JQL
 JS
 JSON
 JSP
@@ -403,6 +412,7 @@ JupyterHub
 KD
 KF
 KMS
+KPIs
 KPO
 KPOs
 KRs
@@ -582,6 +592,7 @@ Oli
 Oli's
 OmniScience
 OmniScienceExtension
+Onboarded
 Onboarding
 OneDrive
 Ontotext
@@ -700,6 +711,7 @@ Reza's
 Rhian
 Rhian's
 Rimmer
+Rimmer's
 Rinke
 Rinke's
 Roadmunk
@@ -770,6 +782,7 @@ Seitl
 Semigroups
 Semmelweis
 Sensu
+Shaan
 Shantanu
 Shapley
 Shareback
@@ -1119,12 +1132,14 @@ reactively
 rebalance
 recommender
 recommenders
+recurse
 reflow
 reflowing
 remediated
 remediating
 repartitioning
 replicability
+replicable
 replicant
 replicants
 reproducibility
