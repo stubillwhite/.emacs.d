@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1216 
+personal_ws-1.1 en 1218 
 ACL
 ACLs
 ADFS
@@ -184,6 +184,7 @@ DPOP
 DPOPs
 DPR
 DQ
+DQX
 DS
 DSL
 DSM
@@ -253,6 +254,7 @@ ESTR
 ETL
 ETSR
 Ebirah
+Egambaram
 ElastiCache
 ElasticSearch
 Elasticache

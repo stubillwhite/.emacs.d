@@ -101,6 +101,7 @@
     (defun sbw/markdown-cleanup ()
       (interactive)
       (sbw/markdown-reformat-org-tables)
+      (sbw/markdown-metadata-update-date)
       (markdown-cleanup-list-numbers))
     
     (add-hook 'markdown-mode-hook
@@ -138,12 +139,13 @@
 
     (defun sbw/markdown-metadata-update-date ()
       (interactive)
-      (let* ((regex     "^updated: \\([[:digit:]]\\{4\\}-[[:digit:]]\\{2\\}-[[:digit:]]\\{2\\}\\)")
-             (curr-date (s-trim-right (shell-command-to-string "gdate '+%Y-%m-%d'"))))
-        (goto-char (point-min))
-        (when (re-search-forward regex nil t)
-          (replace-match curr-date nil nil nil 1)
-          (message (concat "Updated metadata date to " curr-date)))))
+      (save-excursion
+        (let* ((regex     "^updated: \\([[:digit:]]\\{4\\}-[[:digit:]]\\{2\\}-[[:digit:]]\\{2\\}\\)")
+               (curr-date (s-trim-right (shell-command-to-string "gdate '+%Y-%m-%d'"))))
+          (goto-char (point-min))
+          (when (re-search-forward regex nil t)
+            (replace-match curr-date nil nil nil 1)
+            (message (concat "Updated metadata date to " curr-date))))))
     )
 
   :bind
