@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1218 
+personal_ws-1.1 en 1223 
 ACL
 ACLs
 ADFS
@@ -121,6 +121,7 @@ CPUs
 CPW
 CQRS
 CRS
+CSAB
 CSAQ
 CSV
 CTO
@@ -247,6 +248,7 @@ EKS
 ELB
 ELS
 EMBASE
+EMMeT
 EMR
 EOL
 EOS
@@ -524,6 +526,7 @@ Mesos
 Metabase
 Metaflow
 Mev
+Mev's
 Milkroundabout
 Minh
 Minh's
@@ -999,6 +1002,7 @@ curation
 cyber
 decrypt
 deliverables
+denormalisation
 denormalise
 denormalises
 dereference
@@ -1041,6 +1045,7 @@ implementors
 implicits
 imposter
 incentivise
+incentivised
 incentivising
 inclusivity
 incrementing
