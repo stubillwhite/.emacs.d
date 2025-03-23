@@ -221,8 +221,8 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                    (org-agenda-todo-ignore-scheduled t)
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                    (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags-todo "TAGS=\":catchup:\""
-                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - catchup"))
+            (tags-todo "TAGS=\":attention:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - attention"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))                        
