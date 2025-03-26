@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1223 
+personal_ws-1.1 en 1229 
 ACL
 ACLs
 ADFS
@@ -609,6 +609,7 @@ Operationalising
 OpsBank
 OpsGenie
 OrgHub
+Organization
 Oryn
 Overton
 Oysho
@@ -730,6 +731,7 @@ Ryun
 Ryun's
 SARs
 SBT
+SCImago
 SCS
 SCT
 SDG
@@ -778,7 +780,6 @@ SciBite
 SciVal
 ScienceDirect
 ScienceDirect's
-Scimago
 Scopus
 ScopusGPT
 Scratchbox
@@ -1013,6 +1014,7 @@ differentiator
 disambiguating
 discardable
 discoverability
+discoverable
 dkp
 dropdown
 embeddings
@@ -1080,12 +1082,15 @@ misclassified
 misconfiguration
 misprioritised
 misrecognised
+mlcosmos
 mockist
 monad
 monads
+monetisable
 monoid
 mortem
 mortems
+munge
 namespace
 namespaces
 observability
@@ -1212,6 +1217,7 @@ vectorise
 videographer
 votives
 w
+walkthroughs
 waypoint
 whitelist
 whitelisted
