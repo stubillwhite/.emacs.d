@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1229 
+personal_ws-1.1 en 1234 
 ACL
 ACLs
 ADFS
@@ -200,6 +200,7 @@ Daryna
 DataBrew
 DataDefenders
 DataForce
+DataPulse
 DataSets
 Databricks
 Dataview
@@ -295,6 +296,7 @@ Floris
 Fragomen
 GC
 GDPR
+GHAS
 GPT
 GPUs
 Gabby's
@@ -349,6 +351,7 @@ Harwood
 Havock
 Heike
 Heira
+Henk
 Hibberd
 HipChat
 Hitchcockian
@@ -498,6 +501,7 @@ Lucene
 Lucene's
 Lundahl
 MCC
+MCP
 MHub
 MICAs
 MLCosmos
@@ -729,6 +733,7 @@ Royston's
 Runbook
 Ryun
 Ryun's
+SAAS
 SARs
 SBT
 SCImago
@@ -917,6 +922,7 @@ Venkat's
 Venkata
 Vimeo
 Vipin
+Vipul
 Visteon
 Voidspace
 Voight
@@ -937,6 +943,8 @@ Workstream
 Wundergraph
 Wytze
 XGBoost
+XLT
+XMT
 XNN
 XOCS
 Ximenez
@@ -1015,7 +1023,6 @@ disambiguating
 discardable
 discoverability
 discoverable
-dkp
 dropdown
 embeddings
 empathic
@@ -1183,7 +1190,6 @@ sustainably
 teardown
 templating
 terraformcontrol
-th
 timesheet
 timestamp
 timezones
@@ -1216,7 +1222,6 @@ upskilling
 vectorise
 videographer
 votives
-w
 walkthroughs
 waypoint
 whitelist

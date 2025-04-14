@@ -98,12 +98,20 @@
           (while (search-forward "-+-" nil t)
             (replace-match "-|-")))))
 
+    (defun sbw/markdown--is-dashboard? ()
+      (save-excursion
+        (let* ((regex     "^  - \\(dashboard\\|one-on-one\\)$"))
+          (goto-char (point-min))
+          (re-search-forward regex nil t))))
+
     (defun sbw/markdown-cleanup ()
       (interactive)
       (sbw/markdown-reformat-org-tables)
-      (sbw/markdown-metadata-update-date)
-      (markdown-cleanup-list-numbers))
-    
+      (markdown-cleanup-list-numbers)
+      (markdown-toc-refresh-toc)
+      (when (sbw/markdown--is-dashboard?)
+        (sbw/markdown-metadata-update-date)))
+
     (add-hook 'markdown-mode-hook
               (lambda ()
                 (when buffer-file-name
