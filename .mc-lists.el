@@ -21,6 +21,7 @@
         markdown-insert-header-atx-1
         markdown-insert-header-atx-2
         markdown-insert-header-atx-3
+        markdown-insert-header-atx-4
         org-beginning-of-line
         org-delete-char
         org-end-of-line

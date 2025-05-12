@@ -6,6 +6,11 @@
     ;; (setq yas-snippet-dirs (concat user-emacs-directory "snippets"))
     (yas-global-mode)
     ;; (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+
+    (defun sbw-test-yasnippet ()
+      (interactive)
+      (yas-expand-snippet (yas-lookup-snippet "theatre:")))
+    
     )
 
   :config

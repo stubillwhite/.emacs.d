@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1244 
+personal_ws-1.1 en 1261 
 ACL
 ACLs
 ADFS
@@ -20,6 +20,7 @@ ASGs
 ASJC
 AWS
 Abhijit
+Abhijit's
 Actuals
 Adamos
 Adi
@@ -169,6 +170,7 @@ Cryptographic
 Cuda
 DAAS
 DABs
+DAGs
 DAL
 DAOs
 DAWG
@@ -185,6 +187,7 @@ DOM
 DPOP
 DPOPs
 DPR
+DPRs
 DQ
 DQX
 DS
@@ -362,6 +365,8 @@ Hitchcockian
 Hoekstra
 Hoyng
 IAM
+IAW
+IC
 ICR
 IHR
 IIP
@@ -456,6 +461,7 @@ Kompromat
 Korn
 Kosovo
 Kotlin
+Krasting's
 Kratt
 Kravutske
 Krishnan
@@ -670,6 +676,7 @@ Prakruthy
 Prakruthy's
 Prasann
 Preetha
+Preparer
 Pris
 Priyanka
 Priyanka's
@@ -684,6 +691,7 @@ Qualys
 Quickstart
 RACI
 RASCI
+RBAC
 RCO
 RDBMS
 RDF
@@ -704,6 +712,7 @@ Raahul
 Raahul's
 Rajoy
 Rajoy's
+Ramage's
 Rasha
 Rasha's
 Rashid
@@ -839,6 +848,7 @@ Straive
 Stratford
 Suganya
 Sujit
+Sujit's
 Sulskus
 Surabhi
 Svetlana
@@ -862,6 +872,7 @@ TPRs
 TSI
 Taffey
 Takanami
+Talend
 Talvinder
 Tanium
 Tatev
@@ -908,6 +919,7 @@ UX
 Udacity
 Udemy
 Unburied
+Underspend
 Upskilling
 Uzma
 VGG
@@ -958,6 +970,7 @@ Ximenez
 Xray
 Xuemin's
 YAML
+Yamini
 Yoshiko
 Yoshiko's
 Yury
@@ -998,7 +1011,9 @@ buddying
 burstable
 cardinality
 centricity
+checkboxes
 classpath
+clawback
 codebase
 codebases
 codec
@@ -1031,6 +1046,7 @@ discardable
 discoverability
 discoverable
 dropdown
+durational
 embeddings
 empathic
 enablement
@@ -1226,6 +1242,7 @@ unlinked
 unmarshaling
 unmarshall
 unsized
+unstaged
 upsize
 upsizing
 upskilling
