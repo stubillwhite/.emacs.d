@@ -106,12 +106,24 @@
 
     (defun sbw/markdown-cleanup ()
       (interactive)
-      (sbw/markdown-reformat-org-tables)
-      (markdown-cleanup-list-numbers)
-      (markdown-toc-refresh-toc)
-      (when (sbw/markdown--is-dashboard?)
-        (sbw/markdown-metadata-update-date)))
+      (let* ((hidden? (outline-invisible-p (line-end-position)))) 
+        (sbw/markdown-reformat-org-tables)
+        (markdown-cleanup-list-numbers)
+        (sbw/markdown-refresh-toc-respecting-visibility)
+        (when (sbw/markdown--is-dashboard?)
+          (sbw/markdown-metadata-update-date))))
 
+    (defun sbw/markdown-refresh-toc-respecting-visibility ()
+      (interactive)
+      (save-excursion
+        (goto-char (markdown-toc--toc-start))
+        (next-line)
+        (let* ((toc-hidden? (outline-invisible-p (line-end-position))))
+          (markdown-toc-refresh-toc)
+          (when toc-hidden?
+            (next-line)
+            (hide-subtree)))))
+    
     (add-hook 'markdown-mode-hook
               (lambda ()
                 (when buffer-file-name
@@ -187,4 +199,3 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
-
