@@ -5,6 +5,13 @@
   :config
   (progn
 
+    (use-package markdown-toc
+      :init
+      (progn
+        (setq
+         markdown-toc-header-toc-title "## Table of contents ##")))
+
+    
     (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
     (add-hook 'markdown-mode-hook 'auto-fill-mode)
 
@@ -194,6 +201,7 @@
   ("C-c m l"   . markdown-insert-link)
   ("C-c m o"   . sbw/markdown--open-in-obsidian)
   ("C-c m m d" . sbw/markdown-metadata-update-date)
+  ("C-c m t"   . markdown-toc-generate-toc)  
   ("M-<right>" . markdown-demote)
   ("M-<left>"  . markdown-promote)
   ("C-c m r"   . markdown-insert-reference-link-dwim))
