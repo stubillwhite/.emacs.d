@@ -122,14 +122,15 @@
 
     (defun sbw/markdown-refresh-toc-respecting-visibility ()
       (interactive)
-      (save-excursion
-        (goto-char (markdown-toc--toc-start))
-        (next-line)
-        (let* ((toc-hidden? (outline-invisible-p (line-end-position))))
-          (markdown-toc-refresh-toc)
-          (when toc-hidden?
-            (next-line)
-            (hide-subtree)))))
+      (when (markdown-toc--toc-already-present-p)
+        (save-excursion
+          (goto-char (markdown-toc--toc-start))
+          (next-line)
+          (let* ((toc-hidden? (outline-invisible-p (line-end-position))))
+            (markdown-toc-refresh-toc)
+            (when toc-hidden?
+              (next-line)
+              (hide-subtree))))))
     
     (add-hook 'markdown-mode-hook
               (lambda ()
@@ -207,3 +208,5 @@
   ("C-c m r"   . markdown-insert-reference-link-dwim))
 
 (provide 'sbw-configure-markdown-mode)
+
+
