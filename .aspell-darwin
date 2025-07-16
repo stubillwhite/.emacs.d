@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1273 
+personal_ws-1.1 en 1294 
 ACL
 ACLs
 ADFS
@@ -62,6 +62,7 @@ Arun
 Arun's
 Ashish
 Asimina
+Asmina
 AssertJ
 Associativity
 Atti
@@ -84,6 +85,7 @@ Backpressure
 Baldur's
 Banquo
 Batalov
+Bathory
 Battersea
 Beks
 Bengaluru
@@ -144,6 +146,7 @@ Chetan's
 Chiffre
 Chinh
 Chinh's
+Christiana
 Ciacco
 CiteScore
 Classloaders
@@ -203,6 +206,7 @@ DSR
 DSWG
 DTDs
 DTM
+DX
 Daniella
 Darragh
 Daryna
@@ -231,6 +235,7 @@ Dimi
 Dimitrov
 Dinesh
 Discworld
+Divya
 Dockerise
 Dockerised
 DocuSign
@@ -247,6 +252,7 @@ Dredd
 Dropwizard
 Dumbre
 Dunster
+Duranj
 Dutta
 Dynus
 Dystopian
@@ -268,6 +274,7 @@ EOS
 ESTR
 ETL
 ETSR
+EasyBI
 Ebirah
 Egambaram
 ElastiCache
@@ -371,6 +378,7 @@ HipChat
 Hitchcockian
 Hoekstra
 Hoyng
+IAC
 IAM
 IAW
 IC
@@ -380,6 +388,7 @@ IIP
 ILR
 IPR
 ISDP
+ISIC
 ISSN
 ISSNs
 ISTIC
@@ -561,6 +570,7 @@ Mongo
 MongoDB
 Monoids
 Monsterhearts
+Monzo
 Moorthy
 Moquin
 Moulin
@@ -737,6 +747,7 @@ Reflow
 Reinder
 Reinder's
 RelationalAI
+Renate
 Repartitioning
 ResNet
 ResearcherGPT
@@ -798,6 +809,8 @@ Sandeep's
 Sangavi
 Sangavi's
 Santorini
+Sarina
+Sasi
 Saskia
 Savitskaya
 Scadding
@@ -825,6 +838,7 @@ Shareback
 Shawshank
 Sheehan
 Sheetal
+Shinha
 Shivam's
 Shkodran
 Shkodran's
@@ -847,6 +861,7 @@ Spidergap
 Spotify
 Sriram
 Starmania
+SteerCo
 Stefano
 Stefano's
 Stepanenko
@@ -930,6 +945,7 @@ Udemy
 Unburied
 Underspend
 Upskilling
+Uri
 Uzma
 VGG
 VM
@@ -950,8 +966,10 @@ Venkat
 Venkat's
 Venkata
 Vimeo
+Vinith
 Vipin
 Vipul
+Vipul's
 Visteon
 Voidspace
 Voight
@@ -1035,6 +1053,7 @@ composable
 contactless
 contravariant
 convolutional
+copiloting
 covariant
 crowdsource
 cryptocurrency
@@ -1109,6 +1128,7 @@ karting
 kata
 keystore
 kinesthetic
+leaderboard
 lifecycle
 lockdown
 lowercasing
@@ -1123,6 +1143,7 @@ misclassified
 misconfiguration
 misprioritised
 misrecognised
+mitigations
 mlcosmos
 mockist
 monad
