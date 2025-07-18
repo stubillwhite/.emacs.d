@@ -172,6 +172,7 @@
                       (sbw/menu "Tech radar"
                                 (sbw/menu-action ?e "Edit tech radar"              (lambda () (find-file (sbw/dropbox-subfolder "Private/org/current/work/tech-radar.org"))))
                                 (sbw/menu-action ?g "Generate and open tech radar" 'sbw/org-tech-radar-regenerate-and-open)))
+            (sbw/menu-action ?w "Window" 'sbw/hydra-window/body)
             (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))
 
 (provide 'sbw-menu)

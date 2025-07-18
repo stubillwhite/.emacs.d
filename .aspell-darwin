@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1294 
+personal_ws-1.1 en 1298 
 ACL
 ACLs
 ADFS
@@ -200,6 +200,7 @@ DQ
 DQX
 DS
 DSL
+DSLC
 DSM
 DSOps
 DSR
@@ -1039,6 +1040,7 @@ buddying
 burstable
 cardinality
 centricity
+chatbot
 checkboxes
 classpath
 clawback
@@ -1146,6 +1148,7 @@ misrecognised
 mitigations
 mlcosmos
 mockist
+modularity
 monad
 monads
 monetisable
@@ -1165,6 +1168,7 @@ outlier
 outliers
 overfit
 overfitting
+overhyped
 parallelisation
 parallelise
 parallelised
