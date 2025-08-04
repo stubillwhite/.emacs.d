@@ -111,6 +111,10 @@
           (goto-char (point-min))
           (re-search-forward regex nil t))))
 
+    (defun sbw/markdown--is-markdown-file? ()
+      (interactive)
+      (when (s-equals? "md" (f-ext buffer-file-name)) t))
+    
     (defun sbw/markdown-cleanup ()
       (interactive)
       (let* ((hidden? (outline-invisible-p (line-end-position)))) 
@@ -135,7 +139,7 @@
     
     (add-hook 'markdown-mode-hook
               (lambda ()
-                (when buffer-file-name
+                (when (and buffer-file-name (sbw/markdown--is-markdown-file?)) 
                   (add-hook 'before-save-hook 'sbw/markdown-cleanup))))
 
     (defun sbw/markdown--insert-file-header ()
