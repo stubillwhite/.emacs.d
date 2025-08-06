@@ -6,28 +6,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
-   '((sbw/dropbox-subfolder "Private/org/current/kd/concept.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/consumption.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/data-quality.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/dkp-future.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/dkp.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/engineering-culture.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/helix.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/kd-kf-integration.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/kd-recruitment.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/knowledge-formation.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/line-management.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/meetings.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/ml-ops.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/pdp.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/personal-development.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/taxonomies.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/tech-associates.org")
-     (sbw/dropbox-subfolder "Private/org/current/kd/women-in-tech.org")))
+   '("/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/actions.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/concept.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/consumption.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/core-complete.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/data-engineering.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/data-quality.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/devex.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/dkp.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/engineering-culture.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/foundations.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/generative-ai.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/hackathon.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/insight-graph.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/internal-mobility.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/line-management.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/meetings.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/ml-ops.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/model-evaluation.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/offsite.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/personal-development.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/reuse.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/kd/tech-associates.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal/personal-interests.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/dance.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/hundred-ten-one.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/natalia.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/project-ideas.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/punchdrunk.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/recruitment.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/sleep-no-more.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/technology.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/theatre.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/personal-old/travel.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/brown-bag-group.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/coding-group.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/elsevier-tech-radar.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/elsevier.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/haskell.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/pd-legacy.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/recommenders.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/recruitment.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/retention.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/scala.org" "/Users/white1/Library/CloudStorage/Dropbox/Private/org/current/work/tech-radar.org"))
  '(safe-local-variable-values
    '((cider-refresh-after-fn . "integrant.repl/resume")
-     (cider-refresh-before-fn . "integrant.repl/suspend")
-     )))
+     (cider-refresh-before-fn . "integrant.repl/suspend"))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
