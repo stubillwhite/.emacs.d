@@ -1,4 +1,5 @@
-personal_ws-1.1 en 1318 
+personal_ws-1.1 en 1325 
+ABCD
 ACL
 ACLs
 ADFS
@@ -73,6 +74,7 @@ Authenticator
 Autoencoders
 Avro
 Ayce
+Ayce's
 BASSC
 BAU
 BCIM
@@ -310,6 +312,7 @@ FDM
 FP
 FPE
 FROS
+FSM
 FST
 FTEs
 FWCI
@@ -324,6 +327,7 @@ Fragomen
 GBA
 GC
 GDPR
+GHA
 GHAS
 GPT
 GPUs
@@ -793,6 +797,7 @@ SDGs
 SDK
 SDLC
 SDPR
+SEs
 SHACL
 SJR
 SLA
@@ -1054,6 +1059,7 @@ brutalist
 buddying
 burstable
 cardinality
+centric
 centricity
 chatbot
 chatbots
@@ -1271,6 +1277,7 @@ teardown
 templating
 terraformcontrol
 th
+tiering
 timesheet
 timestamp
 timezones

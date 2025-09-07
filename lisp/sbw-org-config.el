@@ -216,6 +216,12 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
             ;;             (org-agenda-skip-function 'sbw/skip-if-categorised)
             ;;             ))
             
+            (tags-todo "TAGS=\":focus:\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - focus"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))                        
+                        ))
             (tags-todo "TAGS=\":attention:\""
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - attention"))
                         (org-agenda-files ,files)
