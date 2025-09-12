@@ -17,6 +17,7 @@
 
 (defun sbw/org-utils--replace-urls-with-descriptions (s)
   (let* ( (str s) )
+    ;; (while (string-match org-link-any-re str)
     (while (string-match org-bracket-link-regexp str)
       (let* ( (url   (match-string 1 str))
               (descr (match-string 3 str))
@@ -24,6 +25,12 @@
         (setq str
               (replace-regexp-in-string (regexp-quote (match-string 0 str)) repl str))))
     str))
+
+;; (print (sbw/org-utils--replace-urls-with-descriptions "Languages to learn - Go ([[file+sys:/Users/white1/Library/CloudStorage/Dropbox/Apps/Manning\\ Books/100\\ Go\\ Mistakes\\ and\\ How\\ to\\ Avoid\\ Them/100_Go_Mistakes_and_How_to_Avoid_Them.pdf][100 Go Mistakes and How to Avoid Them]] and [[https://go.dev/doc/effective_go][Effective Go]])"))
+
+;; TODO: Make a test
+;; (print (sbw/org-utils--replace-urls-with-descriptions "pretext ([[file+sys:path\\ with\\ spaces][description]])"))
+;; (print (sbw/org-utils--replace-urls-with-descriptions "pretext ([[file+sys:just-url]])"))
 
 (defun sbw/org-utils--extract-string (x)
   (when x

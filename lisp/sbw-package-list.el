@@ -54,6 +54,7 @@
 
                          ;; org-mode
                          (:name org)              ;; Your life in plain text
+                         (:name org-contrib)      ;; Additions to org-mode
                          (:name ob-async)         ;; Asynchronous src_block execution for org-babel
                          (:name orgtbl-aggregate) ;; Aggregation for org-mode tables
                          (:name htmlize)          ;; html org-mode reports

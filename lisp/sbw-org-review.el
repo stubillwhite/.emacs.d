@@ -40,7 +40,8 @@
      closed
      (time-less-p start closed)
      (time-less-p closed end)
-     (equal (sbw/ht-get x :state) "DONE"))))
+     (or (equal (sbw/ht-get x :state) "DONE")
+         (equal (sbw/ht-get x :state) "CANCELLED")))))
 
 (defun sbw/org-review-completed-tasks--collect-by-category (summaries)
   (sbw/collect-by (lambda (y) (sbw/ht-get y :category)) summaries))
@@ -263,11 +264,12 @@
    :end       end
    :filename  filename))
 
+;; TODO: Should add a focus report
 (defun sbw/org-review-config-for-weekly-report (time)
   "Returns the configuration to generate a weekly report."
   (let* ( (end-date (sbw/time-from-org-string "Sat"))
           (start    (sbw/time-adjust-by end-date -7))
-          (end      (sbw/time-adjust-by end-date -1)) )
+          (end      (sbw/time-adjust-by end-date 0)) )
     (sbw/org-review-config
      (sbw/org-review--build-title "Weekly report" start end)
      (sbw/ht-get sbw/org-config :all-projects)

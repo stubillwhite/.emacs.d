@@ -126,6 +126,10 @@
     (setq org-archive-save-context-info
           '(time file ltags itags todo category olpath))
 
+    ;; Repeating tasks should clear all checkboxes in the subtree
+
+    (add-hook 'org-todo-repeat-hook #'org-reset-checkbox-state-subtree)
+
     ;; New headings should include created property and markdown content
 
     (defun sbw/org-heading-set-created-property ()
@@ -424,3 +428,5 @@
     (org-back-to-heading)
     (print (org-element-property :contents-begin (org-element-at-point)))
     (print (org-element-property :contents-end (org-element-at-point)))))
+
+
