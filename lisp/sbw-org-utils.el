@@ -31,6 +31,7 @@
 ;; TODO: Make a test
 ;; (print (sbw/org-utils--replace-urls-with-descriptions "pretext ([[file+sys:path\\ with\\ spaces][description]])"))
 ;; (print (sbw/org-utils--replace-urls-with-descriptions "pretext ([[file+sys:just-url]])"))
+;; (print (sbw/org-utils--replace-urls-with-descriptions "pretext ([[https://url][description]])"))
 
 (defun sbw/org-utils--extract-string (x)
   (when x
