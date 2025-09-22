@@ -344,7 +344,34 @@
       (if (eq major-mode 'org-agenda-mode)
           (sbw/org-agenda-apply-to-headline (lambda () (org-priority)))
         (org-priority)))
-    
+
+    ;; Align tags to far right on focus change
+
+    (defun sbw/set-org-tags-column-based-on-window-size ()
+      "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
+      (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
+
+    (defun sbw/right-align-tags ()
+      "Right-align the all tags in the buffer."
+      (interactive)
+      (sbw/set-org-tags-column-based-on-window-size)
+      (org-align-all-tags)
+      (redisplay t))
+
+    (add-function :after after-focus-change-function #'sbw/right-align-tags)
+
+    ;; Strip tags when closing tasks
+
+    (defun sbw/org-config--remove-tags-when-done ()
+      (interactive)
+      (let* ((state (org-no-properties (org-get-todo-state))))
+        (when (or (s-equals? state "DONE")
+                  (s-equals? state "CANCELLED"))
+          (sbw/org-set-property "ARCHIVED-TAGS" (org-make-tag-string (org-get-tags)))
+          (org-set-tags '()))))
+
+    (add-hook 'org-after-todo-state-change-hook 'sbw/org-config--remove-tags-when-done)
+
     ;; Stuff to rationalise
     
     (setq org-fontify-done-headline t)
@@ -396,37 +423,5 @@
 
 (provide 'sbw-configure-org-mode)
 
-
-(defun focus-test ()
-  (progn
-    (setq org-tags-column (- 0 (window-body-width)))
-    (org-align-tags)))
-
-(defun sbw/org--enable-tags-realignment ()
-  (add-function :after after-focus-change-function #'focus-test)
-  )
-
-  ;; (add-function :after after-focus-change-function #'focus-test)
-
-    (defun sbw/set-org-tags-column-based-on-window-size ()
-      "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
-      (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
-
-    (defun sbw/right-align-tags ()
-      "Right-align the all tags in the buffer."
-      (interactive)
-      (sbw/set-org-tags-column-based-on-window-size)
-      (org-align-all-tags)
-      (redisplay t))
-
-(add-function :after after-focus-change-function #'sbw/right-align-tags)
-
-
-(defun sbw/org-heading-display-content ()
-  (interactive)
-  (save-excursion
-    (org-back-to-heading)
-    (print (org-element-property :contents-begin (org-element-at-point)))
-    (print (org-element-property :contents-end (org-element-at-point)))))
 
 

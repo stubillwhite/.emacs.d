@@ -380,17 +380,6 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
 (add-hook 'org-finalize-agenda-hook 'sbw/org-config--refresh-appointments-from-agenda 'append)
 (appt-activate t)
 
-;; Strip tags when closing tasks
-
-(defun sbw/org-config--remove-tags-when-done ()
-  (interactive)
-  (let* ((state (org-no-properties (org-get-todo-state))))
-    (when (or (s-equals? state "DONE")
-              (s-equals? state "CANCELLED"))
-      (org-set-tags '()))))
-
-(add-hook 'org-after-todo-state-change-hook 'sbw/org-config--remove-tags-when-done)
-
 ;; Archiving
 
 (defun sbw/org-config--refile-immediate ()

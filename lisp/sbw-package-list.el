@@ -50,6 +50,7 @@
                          (:name flyspell-correct)      ;; Correcting words with flyspell via custom interface
                          (:name flyspell-correct-helm) ;; Correcting words with flyspell via custom interface
                          (:name flycheck)              ;; Syntax checking
+                         (:name flycheck-projectile)   ;; Project-wide flycheck errors 
                          ;; (:name flymake-vale)          ;; Flymake support for Vale
 
                          ;; org-mode
