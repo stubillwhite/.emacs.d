@@ -34,6 +34,14 @@
                     (expected  (funcall file-text "new-clocked-time-report-expected.txt"))
                     (actual    (sbw/org-review-new-clocked-time-generate-report config summaries)) )
       (should (string= actual expected))))
+
+  ;; TODO Fix up
+  (ert-deftest sbw/org-review-tagged-tasks-generate-report-then-expected-report ()
+    "sbw/org-review-new-clocked-time-generate-report then expected report"
+    (lexical-let* ( (summaries (sbw/org-utils-heading-summaries-for-file (funcall test-file "new-clocked-time-report-input.org")))
+                    (expected  (funcall file-text "new-clocked-time-report-expected.txt"))
+                    (actual    (sbw/org-review-new-clocked-time-generate-report config summaries)) )
+      (should (string= actual expected))))
   )
 
 (defun sbw/test-new-report ()

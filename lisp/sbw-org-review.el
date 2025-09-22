@@ -61,6 +61,23 @@
        (sbw/org-review-completed-tasks--construct-report)))
 
 ;;
+;; Report: Tagged tasks
+;;
+
+(defun sbw/org-review-completed-tasks--completed-in-period? (tag x)
+  (or
+   (s-contains? tag (sbw/ht-get x :tags))
+   (s-contains? tag (sbw/ht-get x :archived-tags))
+   ))
+
+(defun sbw/org-review-tagged-tasks-generate-report (config summaries tag)
+  (->> summaries
+       (-filter (-partial 'sbw/org-review-completed-tasks--completed-in-period? config))
+       (-filter (-partial 'sbw/org-review-tagged-tasks--has-tag? tag))
+       (sbw/org-review-completed-tasks--collect-by-category)
+       (sbw/org-review-completed-tasks--construct-report)))
+
+;;
 ;; Report: Clocked time
 ;;
 
@@ -194,13 +211,6 @@
          (sbw/pprint-as-json)
          )))
 
-
-
-
-
-
-
-
 ;;
 ;; Master report
 ;;
@@ -235,6 +245,14 @@
      (sbw/org-review--markdown-header 2 "Activity")
      (sbw/org-review--markdown-body "Time spent on both completed and still incomplete tasks.")
      (sbw/org-review-clocked-time-generate-report config summaries))))
+
+(defun sbw/org-review--build-report (config)
+  (let* ( (summaries (sbw/org-review--heading-summaries config)) )
+    (concat
+     (sbw/org-review--markdown-header 1 (sbw/ht-get config :title))
+     (sbw/org-review--markdown-header 2 "Focus tasks")
+     (sbw/org-review-tagged-tasks-generate-report config summaries "focus")
+     )))
 
 (defun sbw/org-review-generate (config)
   "Generates the report from the configuration."
