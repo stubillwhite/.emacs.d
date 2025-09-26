@@ -1,0 +1,29 @@
+* category-one
+:PROPERTIES:
+:CATEGORY: category-one
+:END:
+** TODO category-one-task-one                                                       :selectedTag:
+:LOGBOOK:
+:END:
+** STARTED category-one-task-two                                                     :anotherTag:
+:LOGBOOK:
+:END:      
+
+* category-two
+:PROPERTIES:
+:CATEGORY: category-two
+:END:
+** STARTED category-two-task-one                                                    :selectedTag:
+:LOGBOOK:
+:END:      
+** STARTED category-two-task-two
+:LOGBOOK:
+:END:      
+** DONE category-two-task-three
+CLOSED: [2025-09-24 Wed 22:20]
+:PROPERTIES:
+:ARCHIVED-TAGS: :selectedTag:
+:END:
+:LOGBOOK:
+- State "DONE"       from "STARTED"    [2025-09-24 Wed 22:20]
+:END:      

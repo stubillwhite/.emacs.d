@@ -64,15 +64,15 @@
 ;; Report: Tagged tasks
 ;;
 
-(defun sbw/org-review-completed-tasks--completed-in-period? (tag x)
+;; TODO - Function naming
+(defun sbw/org-review-tagged-tasks--has-tag? (tag x)
   (or
-   (s-contains? tag (sbw/ht-get x :tags))
-   (s-contains? tag (sbw/ht-get x :archived-tags))
+   (-contains? (sbw/ht-get x :tags) tag)
+   (-contains? (sbw/ht-get x :archived-tags) tag)
    ))
 
 (defun sbw/org-review-tagged-tasks-generate-report (config summaries tag)
   (->> summaries
-       (-filter (-partial 'sbw/org-review-completed-tasks--completed-in-period? config))
        (-filter (-partial 'sbw/org-review-tagged-tasks--has-tag? tag))
        (sbw/org-review-completed-tasks--collect-by-category)
        (sbw/org-review-completed-tasks--construct-report)))
@@ -207,8 +207,7 @@
          (-filter -some-time-clocked-in-period?)
          (sbw/org-review-clocked-time--collect-by-category)
          (sbw/org-review-new-clocked-time--add-category-totals)
-         ;; (sbw/org-review-clocked-time--construct-report)
-         (sbw/pprint-as-json)
+         (sbw/org-review-clocked-time--construct-report)
          )))
 
 ;;
@@ -246,7 +245,7 @@
      (sbw/org-review--markdown-body "Time spent on both completed and still incomplete tasks.")
      (sbw/org-review-clocked-time-generate-report config summaries))))
 
-(defun sbw/org-review--build-report (config)
+(defun sbw/org-review--build-tagged-report (config)
   (let* ( (summaries (sbw/org-review--heading-summaries config)) )
     (concat
      (sbw/org-review--markdown-header 1 (sbw/ht-get config :title))
@@ -259,6 +258,13 @@
   (message "Generating report...")
   (let* ( (inhibit-message t) )
     (sbw/org-review--write-report config (sbw/org-review--build-report config))))
+
+(defun sbw/org-review-generate-tagged (config)
+  "Generates the report from the configuration."
+  (message "Generating report...")
+  (let* ( (inhibit-message t) )
+    (sbw/org-review--write-report config (sbw/org-review--build-tagged-report config))))
+
 
 (defun sbw/org-review--format-date (time)
   (format-time-string "%Y-%m-%d" time))

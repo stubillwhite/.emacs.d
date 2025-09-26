@@ -28,6 +28,14 @@
   (when x
     (sbw/org-utils--replace-urls-with-descriptions (substring-no-properties x))))
 
+(defun sbw/org-utils--parse-archived-tags (archived-tags-string)
+  "Parse archived tags string like ':tag1:tag2:' into a list of strings like ('tag1' 'tag2')."
+  (when archived-tags-string
+    (->> archived-tags-string
+         (s-split ":")
+         (-filter (lambda (x) (not (s-blank? x))))
+         (-map 'sbw/org-utils--extract-string))))
+
 (defun sbw/org-utils--extract-timestamp (x)
   (when x
     (date-to-time x)))
@@ -69,8 +77,8 @@
       (puthash :point          x summary)
       (puthash :category       (sbw/org-utils--extract-string (org-entry-get-with-inheritance "CATEGORY")) summary)
       (puthash :state          (sbw/org-utils--extract-string (org-get-todo-state)) summary)
-      (puthash :tags           (-map (lambda (x) (sbw/org-utils--extract-string x)) (org-get-tags)) summary)
-      (puthash :archived-tags  (cdr (assoc "ARCHIVED-TAGS" (org-entry-properties))) summary)
+      (puthash :tags           (or (-map (lambda (x) (sbw/org-utils--extract-string x)) (org-get-tags)) '()) summary)
+      (puthash :archived-tags  (or (sbw/org-utils--parse-archived-tags (cdr (assoc "ARCHIVED-TAGS" (org-entry-properties)))) '()) summary)
       (puthash :heading        (sbw/org-utils--extract-string (org-get-heading nil t)) summary)
       (puthash :level          (funcall outline-level) summary)
       (puthash :clock          (sbw/org-utils--extract-clock) summary)
