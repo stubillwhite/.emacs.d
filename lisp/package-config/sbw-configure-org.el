@@ -9,7 +9,7 @@
 
     ;; Org files
 
-    (setq org-directory (sbw/dropbox-subfolder "Private/org"))
+    (setq org-directory (sbw/dropbox-subfolder "org"))
 
     (defun sbw/org-files (&rest dirs)
       "Return a list of the org files in directories DIRS."

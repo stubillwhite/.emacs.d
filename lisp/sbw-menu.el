@@ -102,7 +102,7 @@
   `(sbw/menu-action ,key ,description (lambda () (sbw/menu-display ,submenu))))
 
 (defun sbw/menu--dates-of-existing-status-reports ()
-  (let* ((folder   (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update")))
+  (let* ((folder   (sbw/dropbox-subfolder "obsidian/professional/Reports/Bi-weekly status update")))
     (->> (f-files folder)
          (-map (lambda (x) (f-filename x)))
          (-map (lambda (x) (last (s-match "biweekly-status-update-\\(.+\\)\.md" x))))
@@ -115,7 +115,7 @@
        (current-date     (s-trim-right (shell-command-to-string "gdate '+%Y-%m-%d'")))
        (next-date        (s-trim-right (shell-command-to-string (s-lex-format "gdate --date='${most-recent-date} + 14 days' '+%Y-%m-%d'"))))
        (target-date      (if (or (s-equals? current-date most-recent-date) (s-less? current-date most-recent-date)) most-recent-date next-date))
-       (folder           (sbw/dropbox-subfolder "Private/obsidian/professional/Reports/Bi-weekly status update"))
+       (folder           (sbw/dropbox-subfolder "obsidian/professional/Reports/Bi-weekly status update"))
        (filename         (s-lex-format "${folder}/biweekly-status-update-${target-date}.md")))
   (find-file filename)))
 
@@ -161,10 +161,10 @@
                                 (sbw/menu-action ?m "Management" 'sbw/org-config-agenda-management-tasks)
                                 (sbw/menu-action ?i "Incubating" 'sbw/org-config-agenda-incubating-work-tasks)
                                 ))
-            (sbw/menu-action ?f "Focus log" (lambda () (find-file (sbw/dropbox-subfolder "Private/obsidian/professional/Elsevier/People/Stuart White - Focus log.md"))))
-            (sbw/menu-action ?m "Markdown scratchpad" (lambda () (find-file (sbw/dropbox-subfolder "Private/obsidian/professional/Scratchpad.md"))))
+            (sbw/menu-action ?f "Focus log" (lambda () (find-file (sbw/dropbox-subfolder "obsidian/professional/Elsevier/People/Stuart White - Focus log.md"))))
+            (sbw/menu-action ?m "Markdown scratchpad" (lambda () (find-file (sbw/dropbox-subfolder "obsidian/professional/Scratchpad.md"))))
             (sbw/menu-action ?p "Refresh project" 'sbw/org-config-refresh)
-            (sbw/menu-action ?r "Reading list"        (lambda () (find-file (sbw/dropbox-subfolder "Private/obsidian/professional/Reading list.md"))))
+            (sbw/menu-action ?r "Reading list"        (lambda () (find-file (sbw/dropbox-subfolder "obsidian/professional/Reading list.md"))))
             (sbw/menu-action ?s "Status update"       (lambda () (sbw/menu--open-current-status-update)))
             (sbw/menu-submenu ?t "Timers"
                       (sbw/menu "Timers"
@@ -172,7 +172,7 @@
                                 (sbw/menu-action ?s "Toggle summary timer"  'sbw/summarise-timer-toggle)))
             (sbw/menu-submenu ?x "Tech radar"
                       (sbw/menu "Tech radar"
-                                (sbw/menu-action ?e "Edit tech radar"              (lambda () (find-file (sbw/dropbox-subfolder "Private/org/current/work/tech-radar.org"))))
+                                (sbw/menu-action ?e "Edit tech radar"              (lambda () (find-file (sbw/dropbox-subfolder "org/current/work/tech-radar.org"))))
                                 (sbw/menu-action ?g "Generate and open tech radar" 'sbw/org-tech-radar-regenerate-and-open)))
             (sbw/menu-action ?w "Window" 'sbw/hydra-window/body)
             (sbw/menu-action ?z "Zsh" '(lambda () (interactive) (ansi-term "zsh")))))

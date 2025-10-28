@@ -18,7 +18,7 @@
   (let* ((dropbox-folder (cond
                           ((sbw/is-linux?)   "~/Dropbox")
                           ((sbw/is-windows?) "/cygdrive/c/Users/IBM_ADMIN/Dropbox")
-                          ((sbw/is-darwin?)  "~/Library/CloudStorage/Dropbox"))))
+                          ((sbw/is-darwin?)  "~/dev/my-stuff"))))
     (concat dropbox-folder "/" path)))
 
 (provide 'sbw-common-config)
