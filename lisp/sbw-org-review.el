@@ -50,7 +50,7 @@
   (concat
    (sbw/org-review-utils--concat-categories
     (sbw/org-review-utils--concat-summaries summary-map
-                                            (lambda (x) (format "    - %s\n" (sbw/ht-get x :heading))))
+                                            (lambda (x) (format "    - %s %s\n" (sbw/ht-get x :state) (sbw/ht-get x :heading))))
     (lambda (x) (format "- %s\n" x)))
    "\n"))
 
@@ -74,6 +74,7 @@
 (defun sbw/org-review-tagged-tasks-generate-report (config summaries tag)
   (->> summaries
        (-filter (-partial 'sbw/org-review-tagged-tasks--has-tag? tag))
+       (-filter (-partial 'sbw/org-review-completed-tasks--completed-in-period? config))
        (sbw/org-review-completed-tasks--collect-by-category)
        (sbw/org-review-completed-tasks--construct-report)))
 
@@ -264,7 +265,6 @@
   (message "Generating report...")
   (let* ( (inhibit-message t) )
     (sbw/org-review--write-report config (sbw/org-review--build-tagged-report config))))
-
 
 (defun sbw/org-review--format-date (time)
   (format-time-string "%Y-%m-%d" time))
