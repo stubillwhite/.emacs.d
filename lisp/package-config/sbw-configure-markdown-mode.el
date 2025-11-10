@@ -59,12 +59,17 @@
         (when (and (f-exists? mermaid-fnam) (= 0 (f-size mermaid-fnam))) (f-delete mermaid-fnam))
         (message (concat "Generated " html-fnam))))
     
+    ;; Usual format for the url is "obsidian://open?vault=URL_ENCODED_VAULT_NAME&file=URL_ENCODED_PATH_WITHIN_VAULT"
+    ;; However, Obsidian cannot cope with vaults that have the same name at different paths; so instead we omit the
+    ;; vault name and specify a full path to the file and Obsidian will resolve to the vault by itself (if it has
+    ;; been opened previously)
+    ;;
+    ;; https://forum.obsidian.md/t/allow-obsidian-uri-to-support-vaults-at-different-paths-with-the-same-name/53102/3
+    ;; https://help.obsidian.md/Extending+Obsidian/Obsidian+URI
     (defun sbw/markdown--open-in-obsidian ()
       (interactive)
-      (let* ((vault      "obsidian")
-             (vault-path (file-truename (sbw/dropbox-subfolder "obsidian")))
-             (file       (s-replace (concat vault-path "/") "" (buffer-file-name)))
-             (url        (concat "obsidian://open?vault=" (url-hexify-string vault) "&file=" (url-hexify-string file))))
+      (let* ((file (buffer-file-name))
+             (url  (concat "obsidian://open?path=" (url-hexify-string file))))
         (shell-command (concat "open '" url "'"))))
 
     (defun sbw/markdown--to-word ()
@@ -215,5 +220,7 @@
   )
 
 (provide 'sbw-configure-markdown-mode)
+
+
 
 
