@@ -3,5 +3,5 @@
 "quality-adopt","ADOPT","Quality","false",""
 "techniques-adopt","ADOPT","Techniques","false",""
 "engineering-trial","TRIAL","Engineering","false","<p>Description containing ""quoted"" text</p>"
-"engineering-assess","ASSESS","Engineering","false",""
+"engineering-assess","ASSESS","Engineering","false","<p>Description containing text with a % sign</p>"
 "engineering-hold","HOLD","Engineering","false",""

@@ -16,6 +16,9 @@ Description for engineering-adopt is here
 Description containing "quoted" text
 #+end_src
 *** ASSESS engineering-assess
+#+begin_src markdown
+Description containing text with a % sign
+#+end_src
 *** HOLD engineering-hold
 ** Infrastructure
 :PROPERTIES:

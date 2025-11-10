@@ -37,6 +37,7 @@
           (description (sbw/org-tech-radar--extract-description raw-text)))
     (->> (list heading state category is-new description)
          (-map (lambda (s) (s-replace-all `(("\"" . "\"\"")) s)))
+         (-map (lambda (s) (s-replace-all `(("%" . "%%")) s)))
          (s-join "\",\"")
          (s-append "\"")
          (s-prepend "\""))))
