@@ -366,14 +366,14 @@
                          (sbw/collect-by (lambda (y) (sbw/ht-get y :filename)))
                          (sbw/ht-map-vals (lambda (xs) (length xs))))))
     (s-concat
-     (sbw/org-review--markdown-header 1 "Current task counts")
+     (sbw/org-review--markdown-header 1 "Tasks per file")
      "| File | Task count |\n"
      "|-|-|\n"
      (apply 's-concat (ht-map (lambda (k v) (format "| %s | %s |\n" k (number-to-string v))) counts)))
     ))
 
 (defun sbw/org-review--write-tasks-per-file (report)
-  (let* ((filename             (s-concat sbw/org-report-dir "/current-task-counts.md"))
+  (let* ((filename             (s-concat sbw/org-report-dir "/tasks-per-file.md"))
          (revert-without-query (list filename)))
     (f-mkdir (f-dirname filename))
     (with-temp-file filename (insert report))
@@ -382,8 +382,10 @@
     nil))
 
 (defun sbw/org-review-tasks-per-file ()
-  "TODO"
+  "Generates a report of tasks per Org file"
   (interactive)
-  (sbw/org-review--write-tasks-per-file (sbw/org-review--get-tasks-per-file)))
+  (sbw/org-review--write-tasks-per-file (sbw/org-review--get-tasks-per-file))
+  (next-line 1)
+  (org-table-align))
 
 (provide 'sbw-org-review)
