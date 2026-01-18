@@ -130,11 +130,12 @@
   (sbw/menu "Shortcut menu"
             (sbw/menu-submenu ?a "Analysis"
                       (sbw/menu "Analysis"
-                                (sbw/menu-action ?w "Weekly report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
-                                (sbw/menu-action ?m "Monthly report" (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
-                                (sbw/menu-action ?p "Period report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
-                                (sbw/menu-action ?s "Sprint report"  (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
-                                (sbw/menu-action ?f "Focus report"   (lambda () (sbw/org-review-generate-tagged (sbw/org-review-config-for-weekly-report (current-time)))))
+                                (sbw/menu-action ?w "Weekly report"      (lambda () (sbw/org-review-generate (sbw/org-review-config-for-weekly-report (current-time)))))
+                                (sbw/menu-action ?m "Monthly report"     (lambda () (sbw/org-review-generate (sbw/org-review-config-for-monthly-report (current-time)))))
+                                (sbw/menu-action ?p "Period report"      (lambda () (sbw/org-review-generate (sbw/org-review-config-for-period))))
+                                (sbw/menu-action ?s "Sprint report"      (lambda () (sbw/org-review-generate (sbw/org-review-config-for-sprint-report (current-time)))))
+                                (sbw/menu-action ?f "Focus report"       (lambda () (sbw/org-review-generate-tagged (sbw/org-review-config-for-weekly-report (current-time)))))
+                                (sbw/menu-action ?t "Task count report"  (lambda () (sbw/org-review-tasks-per-file)))
                                 ))
             (sbw/menu-submenu ?c "Common tasks"
                       (sbw/menu "Common tasks"

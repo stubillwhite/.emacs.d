@@ -385,7 +385,8 @@
   "Generates a report of tasks per Org file"
   (interactive)
   (sbw/org-review--write-tasks-per-file (sbw/org-review--get-tasks-per-file))
-  (next-line 1)
+  (goto-char 0)
+  (next-line 2)
   (org-table-align))
 
 (provide 'sbw-org-review)
