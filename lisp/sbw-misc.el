@@ -22,6 +22,19 @@
   auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 (make-directory temporary-file-directory :no-error-if-exists)
 
+;; Read-only files
+(defvar auto-read-only-patterns `("*?\log$" ,(concat (getenv "HOME")   "/Downloads")) 
+  "File paths matching any pattern in list will be started in read-only-mode")
+
+(defun should-be-read-only-p (file) 
+  "Returns t if file should be read-only"
+  (-any? 'identity (mapcar (lambda (x) (string-match-p x file)) auto-read-only-patterns)))
+
+(defun auto-read-only-maybe () 
+  (if (should-be-read-only-p buffer-file-name) (read-only-mode t)))
+
+(add-hook 'find-file-hook 'auto-read-only-maybe)
+
 ;; General settings
 (setq
   inhibit-startup-message             t   ;; No splash screen
@@ -102,6 +115,7 @@
                    ?\x201C "\""
                    ?\x201D "\""
                    ?\x00A0 " "
+                   ?\x2192 "=>"
                    ?\x2026 "...") ))
     (save-excursion
       (-map
