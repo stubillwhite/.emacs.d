@@ -163,6 +163,7 @@
                                 (sbw/menu-action ?i "Incubating" 'sbw/org-config-agenda-incubating-work-tasks)
                                 ))
             (sbw/menu-action ?f "Focus log" (lambda () (find-file (sbw/dropbox-subfolder "obsidian/professional/Elsevier/People/Direct Reports/Stuart White/Stuart White - Focus log.md"))))
+            (sbw/menu-action ?i "Insert snippet" 'yas-insert-snippet)
             (sbw/menu-action ?m "Markdown scratchpad" (lambda () (find-file (sbw/dropbox-subfolder "obsidian/professional/Scratchpad.md"))))
             (sbw/menu-action ?p "Refresh project" 'sbw/org-config-refresh)
             (sbw/menu-action ?r "Reading list"        (lambda () (find-file (sbw/dropbox-subfolder "obsidian/professional/Reading list.md"))))

@@ -292,6 +292,7 @@
    :filename  filename))
 
 ;; TODO: Should add a focus report
+;; TODO: Should use time or else remove parameter
 (defun sbw/org-review-config-for-weekly-report (time)
   "Returns the configuration to generate a weekly report."
   (let* ( (end-date (sbw/time-from-org-string "Sat"))

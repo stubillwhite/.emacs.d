@@ -66,10 +66,9 @@
     ;;
     ;; https://forum.obsidian.md/t/allow-obsidian-uri-to-support-vaults-at-different-paths-with-the-same-name/53102/3
     ;; https://help.obsidian.md/Extending+Obsidian/Obsidian+URI
-    (defun sbw/markdown--open-in-obsidian ()
-      (interactive)
-      (let* ((file (buffer-file-name))
-             (url  (concat "obsidian://open?path=" (url-hexify-string file))))
+    (defun sbw/markdown--open-in-obsidian (file)
+      (interactive (list (buffer-file-name)))
+      (let* ((url  (concat "obsidian://open?path=" (url-hexify-string file))))
         (shell-command (concat "open '" url "'"))))
 
     (defun sbw/markdown--to-word ()
@@ -173,7 +172,7 @@
 
     (defun sbw/markdown-grab-text ()
       (interactive)
-      (insert (shell-command-to-string "screencapture -i ~/trash/tmp.png && tesseract ~/trash/tmp.png - 2>/dev/null")))
+      (insert (shell-command-to-string "/Users/white1/dev/my-stuff/shell-utils/grab-text")))
 
     (defun sbw/markdown-metadata-update-date ()
       (interactive)

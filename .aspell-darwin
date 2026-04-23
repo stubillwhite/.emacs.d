@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1392 
+personal_ws-1.1 en 1411 
 ABCD
 ACL
 ACLs
@@ -82,6 +82,7 @@ Ayce
 Ayce's
 BASSC
 BAU
+BCE
 BCIM
 BDD
 BDUF
@@ -127,6 +128,7 @@ CEF
 CEFs
 CENtree
 CHD
+CIDR
 CKAI
 CKAN
 CLI
@@ -137,6 +139,7 @@ CNNs
 COI
 COLAB
 CP
+CPLD
 CPUs
 CPW
 CQRS
@@ -170,6 +173,7 @@ ClojureScript
 CloudHealth
 CloudTrail
 CloudWatch
+CloudZero
 Cloudhealth
 Codecademy
 Cognito
@@ -199,6 +203,7 @@ DAAS
 DABs
 DAGs
 DAL
+DAO
 DAOs
 DAWG
 DBS
@@ -340,6 +345,7 @@ Finne's
 Floris
 Fragomen
 GBA
+GBP
 GC
 GCP
 GDPR
@@ -421,6 +427,7 @@ IHR
 IIP
 ILR
 IPR
+IPs
 ISDP
 ISIC
 ISSN
@@ -576,6 +583,7 @@ MICAs
 MLCosmos
 MLOps
 MLflow
+MOAB
 MSA
 MSK
 MWAA
@@ -633,6 +641,7 @@ Natalino
 Nataliya
 Nataliya's
 Nau
+Naveen
 Navid
 Neela
 Neela's
@@ -710,6 +719,8 @@ PTSD
 PTU
 PTUs
 Palantir
+Pallavi
+Pallavi's
 Pamina
 Pancras
 Pangram
@@ -895,6 +906,8 @@ Seitl
 Semigroups
 Semmelweis
 Sensu
+Senthil
+Senthil's
 Shaan
 Shantanu
 Shantanu's
@@ -915,6 +928,7 @@ Shoreditch
 Shraddha
 Silverpoint
 Sinha
+Siobhan
 Sivapriya
 Smit
 Soanes
@@ -939,6 +953,7 @@ Stitcher
 Straive
 Stratford
 Suganya
+Suganya's
 Sujit
 Sujit's
 Sulskus
@@ -964,6 +979,8 @@ TPM
 TPR
 TPRs
 TSI
+TTRPG
+TTRPGs
 Taffey
 Takanami
 Talend
@@ -1153,6 +1170,7 @@ deserialization
 deserialize
 dev
 differentiator
+differentiators
 directiveness
 disambiguating
 discardable
@@ -1300,6 +1318,7 @@ recalibrate
 recommender
 recommenders
 recurse
+redux
 reflow
 reflowing
 reframing
@@ -1314,6 +1333,7 @@ replicants
 reproducibility
 roadmap
 roadmaps
+roundtripping
 runbook
 runtime
 scalability
