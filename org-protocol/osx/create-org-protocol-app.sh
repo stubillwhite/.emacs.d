@@ -12,7 +12,7 @@
 # Deliberately has no CFBundleURLTypes so macOS doesn't register it as a
 # scheme handler, keeping org-protocol.app as the system-level handler.
 
-APP_PATH="/Users/white1/dev/my-stuff/.emacs.d/org-protocol/osx/OrgProtocolHandler.app"
+APP_PATH="$HOME/dev/my-stuff/.emacs.d/org-protocol/osx/OrgProtocolHandler.app"
 
 echo "Building ${APP_PATH}..."
 
