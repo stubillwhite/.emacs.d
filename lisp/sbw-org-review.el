@@ -365,13 +365,21 @@
          (counts    (->> (sbw/org-review--heading-summaries config)
                          (-filter (lambda (x) (= (ht-get x :level) 2)))
                          (sbw/collect-by (lambda (y) (sbw/ht-get y :filename)))
-                         (sbw/ht-map-vals (lambda (xs) (length xs))))))
+                         (sbw/ht-map-vals (lambda (xs) (length xs)))))
+         (max-count (apply 'max (ht-values counts)))
+         (bar-width 40))
     (s-concat
      (sbw/org-review--markdown-header 1 "Tasks per file")
-     "| File | Task count |\n"
-     "|-|-|\n"
-     (apply 's-concat (ht-map (lambda (k v) (format "| %s | %s |\n" k (number-to-string v))) counts)))
-    ))
+     "| File | Task count | Bar |\n"
+     "|-|-|-|\n"
+     (apply 's-concat
+            (ht-map (lambda (k v)
+                      (let ((bar-len (round (* bar-width (/ (float v) max-count)))))
+                        (format "| %s | %s | %s |\n"
+                                k
+                                (number-to-string v)
+                                (make-string bar-len ?█))))
+                    counts)))))
 
 (defun sbw/org-review--write-tasks-per-file (report)
   (let* ((filename             (s-concat sbw/org-report-dir "/tasks-per-file.md"))

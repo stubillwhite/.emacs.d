@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1411 
+personal_ws-1.1 en 1447 
 ABCD
 ACL
 ACLs
@@ -22,6 +22,9 @@ ASJC
 AWS
 Abhijit
 Abhijit's
+Abhinaya
+Abinaya
+Abinaya's
 Actuals
 Adamos
 Adi
@@ -89,6 +92,7 @@ BDUF
 BLEU
 BOS
 BRID
+BST
 Bacchae
 Backfill
 Backpressure
@@ -103,6 +107,7 @@ Bengaluru
 Benoit
 Benoit's
 Berni
+Bhu's
 Bici
 Bikramjit
 Bikramjit's
@@ -114,6 +119,7 @@ Blanc
 Bo
 Bootcamp
 Bridgerton
+Broadchurch
 Bucknall
 Bucknell
 Bundesliga
@@ -247,6 +253,7 @@ Deakin
 Deckard
 DeepSeek
 Deepika
+Dependabot
 Depreciations
 Dereferencing
 Destructuring
@@ -351,6 +358,7 @@ GCP
 GDPR
 GHA
 GHAS
+GHCP
 GPT
 GPUs
 Gabby's
@@ -456,6 +464,7 @@ Iryna
 Ivo
 Ivo's
 JARs
+JATS
 JDK
 JFrog
 JIRA
@@ -482,6 +491,7 @@ Jermyn
 Jeroen
 Jeroen's
 Jevon
+Jira
 Jitendra
 Joao
 JumpStart
@@ -508,11 +518,13 @@ Karpenter
 Karthik
 Karthik's
 Kashnitsky
+Kaushik
 Kedro
 Keras
 KeyFe
 Keybase
 Keycloak
+Keyzers
 Kibana
 Kinesis
 Kinga
@@ -547,6 +559,7 @@ LLMOps
 LLMs
 LLVM
 LMFlow
+LOC
 LSE
 LTR
 Ladly
@@ -560,6 +573,7 @@ Leiter
 Lemmatize
 Lemmatizer
 LexisNexis
+Leyla
 Ligia
 Ligia's
 Liliane
@@ -572,6 +586,7 @@ Lipwig
 Logentries
 Logstash
 Loktev
+Louiza
 Lua
 Lucene
 Lucene's
@@ -593,6 +608,7 @@ Macbeths
 Macduff
 Macker
 Mahesh
+Mahesh's
 Maksym
 Manisha
 Manol
@@ -624,6 +640,7 @@ Monsterhearts
 Monzo
 Moorthy
 Moquin
+Morrissey
 Moulin
 Mulholland
 Mustafa
@@ -715,6 +732,7 @@ POJO
 POJOs
 POMs
 POTAD
+PRs
 PTSD
 PTU
 PTUs
@@ -796,6 +814,7 @@ Rajoy
 Rajoy's
 Rakesh
 Ramage's
+Ramesh's
 Ramped
 Rasha
 Rasha's
@@ -844,10 +863,12 @@ Ryun's
 SAAS
 SAIP
 SARs
+SBF
 SBT
 SCImago
 SCS
 SCT
+SDD
 SDG
 SDGs
 SDK
@@ -861,6 +882,7 @@ SLAs
 SLG
 SLT
 SME
+SMEs
 SNM
 SNS
 SPARQL
@@ -909,6 +931,8 @@ Sensu
 Senthil
 Senthil's
 Shaan
+Shaan's
+Shaghar
 Shantanu
 Shantanu's
 Shapley
@@ -958,9 +982,11 @@ Sujit
 Sujit's
 Sulskus
 Sumanth
+Sunthar
 Surabhi
 Svetlana
 Sydnee
+Syeeda
 Synaptica
 Syntasa
 Synthwave
@@ -1060,6 +1086,7 @@ Vipul
 Vipul's
 Visteon
 Vitalii
+Vivek
 Voidspace
 Voight
 Vtool
@@ -1075,14 +1102,17 @@ Wiebke's
 Wilmshurst
 Wim
 Wix
+Wobbes
 Workstream
 Wundergraph
 Wytze
+XFAB
 XGBoost
 XLT
 XMT
 XNN
 XOCS
+XPath
 Ximenez
 Xpergia
 Xray
@@ -1205,6 +1235,7 @@ handedly
 hashcode
 healthcheck
 hoc
+hospitability
 ideation
 idempotence
 impactful
@@ -1225,6 +1256,7 @@ inlining
 integrations
 interdependencies
 interoperable
+invariants
 iteratively
 janky
 jitter
@@ -1235,10 +1267,12 @@ kata
 keystore
 kinesthetic
 leaderboard
+leaderboards
 lifecycle
 lockdown
 lowercasing
 maenads
+matcher
 matchers
 mentorship
 microservice
@@ -1293,6 +1327,7 @@ practiced
 pre
 prepend
 prepends
+preprint
 preprocessed
 prized
 productionisation
@@ -1392,6 +1427,7 @@ unmarshaling
 unmarshall
 unsized
 unstaged
+unsynchronised
 upsize
 upsizing
 upskilling

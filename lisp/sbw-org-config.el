@@ -216,25 +216,25 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
             ;;             (org-agenda-skip-function 'sbw/skip-if-categorised)
             ;;             ))
             
-            (tags-todo "TAGS=\":focus:\""
+            (tags-todo "TAGS={:focus:}"
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - focus"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))                        
                         ))
-            (tags-todo "TAGS=\":attention:\""
+            (tags-todo "TAGS={:attention:}"
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - attention"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))                        
                         ))
-            (tags-todo "TAGS=\":today:\"-TODO=\"BLOCKED\""
+            (tags-todo "TAGS={:today:}-TODO=\"BLOCKED\""
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - today"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))                        
                         ))
-            (tags-todo "TAGS=\":thisWeek:\"-TODO=\"BLOCKED\""
+            (tags-todo "TAGS={:thisWeek:}-TODO=\"BLOCKED\""
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - thisWeek"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
@@ -246,13 +246,13 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                    (org-agenda-todo-ignore-scheduled t)
                    (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                    (org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if 'scheduled 'deadline)))))
-            (tags-todo "TAGS=\":nextWeek:\"-TODO=\"BLOCKED\""
+            (tags-todo "TAGS={:nextWeek:}-TODO=\"BLOCKED\""
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - nextWeek"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                         ))
-            (tags-todo "TAGS=\":admin:\"-TODO=\"BLOCKED\""
+            (tags-todo "TAGS={:admin:}-TODO=\"BLOCKED\""
                        ((org-agenda-overriding-header (sbw/org-config--title "Tags - admin"))
                         (org-agenda-files ,files)
                         (org-agenda-todo-ignore-scheduled t)
