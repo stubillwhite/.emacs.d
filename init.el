@@ -29,3 +29,10 @@
 (straight-use-package
  '(flymake-vale :type git :host github :repo "tpeacock19/flymake-vale"))
 (add-hook 'markdown-mode-hook #'flymake-vale-load)
+
+(straight-use-package
+ '(org-ai :type git :host github :repo "rksm/org-ai"
+          :local-repo "org-ai"
+          :files ("*.el" "README.md" "snippets")))
+
+(put 'upcase-region 'disabled nil)

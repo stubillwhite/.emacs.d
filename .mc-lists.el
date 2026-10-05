@@ -10,7 +10,9 @@
         cljr-slash
         cua--prefix-override-handler
         cua-clear-rectangle-mark
+        cua-copy-handler
         cua-copy-region
+        cua-cut-handler
         cua-cut-region
         cua-paste
         evilnc-comment-or-uncomment-lines
@@ -31,12 +33,14 @@
         org-metaleft
         org-metaright
         org-self-insert-command
+        org-set-tags-command
         org-shiftright
         orgtbl-ctrl-c-ctrl-c
         orgtbl-hijacker-command-101
         orgtbl-hijacker-command-109
         orgtbl-hijacker-command-3
         orgtbl-hijacker-command-7
+        orgtbl-hijacker-command-8
         orgtbl-self-insert-command
         sbw/unfill-paragraph
         sp-backward-delete-char
@@ -63,6 +67,7 @@
         multiple-cursors-mode
         org-edit-src-save
         org-meta-return
+        org-shifttab
         orgtbl-hijacker-command-100
         orgtbl-hijacker-command-102
         orgtbl-hijacker-command-105
@@ -78,4 +83,5 @@
         sbw/hydra-multiple-cursors/mc/unmark-next-like-this
         sbw/hydra-multiple-cursors/mc/unmark-previous-like-this
         sbw/hydra-multiple-cursors/nil
+        sbw/hydra-multiple-cursors/sbw/mc-mark-previous-like-this-then-cycle-backward
         ))

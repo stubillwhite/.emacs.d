@@ -258,6 +258,12 @@ called interactively, prompt to select WORKFLOWS and CATEGORIES."
                         (org-agenda-todo-ignore-scheduled t)
                         (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
                         ))
+            (tags-todo "-TAGS={:focus:}-TAGS={:attention:}-TAGS={:today:}-TAGS={:thisWeek:}-TAGS={:nextWeek:}-TAGS={:admin:}-TODO=\"BLOCKED\""
+                       ((org-agenda-overriding-header (sbw/org-config--title "Tags - to review"))
+                        (org-agenda-files ,files)
+                        (org-agenda-todo-ignore-scheduled t)
+                        (org-agenda-sorting-strategy '(todo-state-down priority-down category-up alpha-up))
+                        ))
             (agenda ""
                     ((org-agenda-overriding-header (sbw/org-config--title "Schedule for the week"))
                      (org-agenda-span 7)
