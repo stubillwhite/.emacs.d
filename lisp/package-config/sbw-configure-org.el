@@ -351,14 +351,34 @@
       "Set org-tags-column to right-align based on window size. Assumes that org-ellipsis is a string."
       (setq org-tags-column (- (- (window-width) (length org-ellipsis)))))
 
-    (defun sbw/right-align-tags ()
+    (defun sbw/org-right-align-tags-in-buffer ()
       "Right-align the all tags in the buffer."
       (interactive)
       (sbw/set-org-tags-column-based-on-window-size)
       (org-align-all-tags)
       (redisplay t))
 
-    (add-function :after after-focus-change-function #'sbw/right-align-tags)
+    (defun sbw/org-sort-tags ()
+      "Sort the tags of the current Org heading alphabetically."
+      (interactive)
+      (org-back-to-heading t)
+      (-some->> (org-get-tags nil t)
+        (-sort #'string<)
+        (org-set-tags)))
+
+    (defun sbw/org-sort-tags-in-buffer ()
+      "Sort tags on every heading in the buffer."
+      (interactive)
+      (org-with-wide-buffer
+       (org-map-entries #'sbw/org-sort-tags)))
+
+    (defun sbw/org-format-tags ()
+      "Format tags in the buffer"
+      (interactive)
+      (sbw/org-right-align-tags-in-buffer)
+      (sbw/org-sort-tags-in-buffer))
+    
+    (add-function :after after-focus-change-function #'sbw/org-format-tags)
 
     ;; Strip tags when closing tasks
 
